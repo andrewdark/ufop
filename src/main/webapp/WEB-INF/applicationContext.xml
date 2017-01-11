@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="${jdbc.driverClassName}"
+          p:url="${jdbc.url}"
+          p:username="${jdbc.username}"
+          p:password="${jdbc.password}"
+    />
+    <context:property-placeholder location="WEB-INF/properties/jdbc.properties"/>
+
+
+    <security:http auto-config="true" use-expressions="true">
+        <security:form-login login-page="/" login-processing-url="/login" username-parameter="username"
+                             password-parameter="password"
+
+                             default-target-url="/"
+                             authentication-failure-url="/"
+                             always-use-default-target="true"
+
+        />
+
+        <security:logout />
+
+        <security:intercept-url pattern="/my_office" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMINISTRATOR')"/>
+    </security:http>
+
+
+    <security:authentication-manager>
+        <security:authentication-provider>
+
+            <security:password-encoder hash="bcrypt"/>
+            <security:jdbc-user-service data-source-ref="dataSource"
+                                        users-by-username-query=
+                                                "SELECT username,pwd, isblock FROM user_table WHERE lower(username)=lower(?)"
+                                        authorities-by-username-query=
+                                                "SELECT u.username, r.role_name FROM user_table u INNER JOIN role_table r ON (u.role=r.id) WHERE username =?  "/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+
+</beans>
