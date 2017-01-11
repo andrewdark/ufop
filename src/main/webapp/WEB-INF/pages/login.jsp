@@ -47,6 +47,6 @@
 <sec:authorize access="isAuthenticated()">
     <sec:authentication property="principal.username" var="username"/>
     <a id="welcome" href="/my_office"><span>welcome</span> <span class="user_name">${username}</span></a>
-    <a href="<c:url value='/j_spring_security_logout' />" > Logout</a>
+    <a href="<c:url value='/logout' />" > Logout</a>
 </sec:authorize>
 

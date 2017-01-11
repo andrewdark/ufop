@@ -24,8 +24,6 @@
 
         />
 
-        <security:logout />
-
         <security:intercept-url pattern="/my_office" access="isAuthenticated()"/>
         <security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMINISTRATOR')"/>
     </security:http>
