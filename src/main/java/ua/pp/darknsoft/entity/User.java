@@ -8,7 +8,7 @@ import java.time.LocalDate;
  */
 public class User implements Serializable{
     private String username;
-    private String mail;
+    private String email;
     private String pwd;
     private String confirm_pwd;
     private LocalDate datereg;
@@ -22,12 +22,12 @@ public class User implements Serializable{
         this.username = username;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPwd() {

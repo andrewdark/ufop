@@ -1,33 +1,41 @@
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Andrew
-  Date: 11.01.2017
-  Time: 9:54
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-Регистрация нового пользователя
-<sec:authorize var="loggedIn" access="isAuthenticated()" />
-<br />
-<c:choose>
-    <c:when test="${loggedIn}">
-        You are loged in
-    </c:when>
-    <c:otherwise>
-        You are logged out
-        ${loggedIn}
-    </c:otherwise>
-</c:choose>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<sec:authorize access="isAnonymous()">
-    SEC anonimous
-</sec:authorize>
-<sec:authorize access="isAuthenticated()">
-    ${pageContext.request.userPrincipal.name}
-    SEC authenticated
-</sec:authorize>
-<sec:authorize access="!isAuthenticated()">
-    <br />SEC NO authenticated
-</sec:authorize>
+
+<style type="text/css">
+    span.error {
+        color: red;
+    }
+</style>
+REGISTRATION<br />
+<form:form action="${pageContext.servletContext.contextPath}/adduser" method="post">
+    <table>
+        <tr>
+            <td><form:label path="username">username:</form:label></td>
+            <td><form:input path="username" ></form:input></td>
+            <td><span class="error" ><form:errors path="username" /></span></td>
+        </tr>
+        <tr>
+            <td><form:label path="pwd">password:</form:label></td>
+            <td><form:password path="pwd" ></form:password></td>
+            <td><span class="error" ><form:errors path="pwd" /></span></td>
+        </tr>
+        <tr>
+            <td><form:label path="confirm_pwd">confirm pwd:</form:label></td>
+            <td><form:password path="confirm_pwd" ></form:password></td>
+            <td><span class="error" ><form:errors path="confirm_pwd" /></span></td>
+        </tr>
+        <tr>
+            <td><form:label path="email">e-mail:</form:label></td>
+            <td><form:input path="email" ></form:input></td>
+            <td><span class="error" ><form:errors path="email" /></span></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"/></td>
+            <td><input type="reset" value="Reset" /></td>
+            <td></td>
+        </tr>
+    </table>
+
+
+
+</form:form>

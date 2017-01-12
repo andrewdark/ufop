@@ -35,7 +35,7 @@
             <security:password-encoder hash="bcrypt"/>
             <security:jdbc-user-service data-source-ref="dataSource"
                                         users-by-username-query=
-                                                "SELECT username,pwd, isblock FROM user_table WHERE lower(username)=lower(?)"
+                                                "SELECT username,pwd, enabled FROM user_table WHERE lower(username)=lower(?)"
                                         authorities-by-username-query=
                                                 "SELECT u.username, r.role_name FROM user_table u INNER JOIN role_table r ON (u.role=r.id) WHERE username =?  "/>
         </security:authentication-provider>

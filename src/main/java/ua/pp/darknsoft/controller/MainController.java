@@ -20,6 +20,11 @@ public class MainController {
         return "default";
     }
 
+    @RequestMapping(value = "/message", method = RequestMethod.GET)
+    public String message(){
+        return "message";
+    }
+
     @RequestMapping(value = "/my_office")
     public String my_officen(){
         return "my_office";

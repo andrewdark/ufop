@@ -11,13 +11,13 @@ import java.sql.Types;
  */
 public class InsertUser extends SqlUpdate{
 
-    private final static String SQL_INSERT_USER="INSERT INTO user_table(username,pwd,email) VALUES (:username,:pwd,:useremail)";
+    private final static String SQL_INSERT_USER="INSERT INTO user_table(username,pwd,email) VALUES (:username,:pwd,:email)";
 
     public InsertUser(DataSource dataSource){
         super(dataSource,SQL_INSERT_USER);
         super.declareParameter(new SqlParameter("username", Types.VARCHAR));
         super.declareParameter(new SqlParameter("pwd", Types.VARCHAR));
-        super.declareParameter(new SqlParameter("useremail", Types.VARCHAR));
+        super.declareParameter(new SqlParameter("email", Types.VARCHAR));
 
     }
 

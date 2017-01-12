@@ -28,7 +28,7 @@ public class SelectUser extends MappingSqlQuery{
         User user = new User();
         user.setUsername(rs.getString("username"));
         user.setPwd(rs.getString("pwd"));
-        user.setMail(rs.getString("email"));
+        user.setEmail(rs.getString("email"));
         return user;
     }
 }

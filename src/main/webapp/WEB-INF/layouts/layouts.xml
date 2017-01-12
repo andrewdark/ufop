@@ -23,4 +23,8 @@
     <definition extends="default" name="legal_entity">
         <put-attribute name="body" value="/WEB-INF/pages/body/legal_entity.jsp" />
     </definition>
+    <definition extends="default" name="message">
+        <put-attribute name="body" value="/WEB-INF/pages/body/message.jsp" />
+    </definition>
+
 </tiles-definitions>
