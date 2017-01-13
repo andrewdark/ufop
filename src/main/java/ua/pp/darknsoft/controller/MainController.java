@@ -30,6 +30,21 @@ public class MainController {
         return "my_office";
     }
 
+    @RequestMapping(value = "/catalog")
+    public String catalog(){
+        return "catalog";
+    }
+
+    @RequestMapping(value = "/search")
+    public String search(){
+        return "search";
+    }
+
+    @RequestMapping(value = "/chat")
+    public String chat(){
+        return "chat";
+    }
+
     @RequestMapping(value = "/registration")
     public String registration(){
         return "registration";

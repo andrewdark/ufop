@@ -11,13 +11,18 @@
 <head>
     <title>UFOP</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/js/jquery-ui-1.12.1.custom/jquery-ui.css"/>
+    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/main.js"></script>
 </head>
 <body>
 <div class="main">
     <div class="header">
         <div class="header_resize">
             <div class="slider">
-                <div id="coin-slider"><a href="#"><img src="resources/images/slide1.jpg" width="960" height="500"
+                <div id="coin-slider"><a href="/"><img src="resources/images/40fe6b04a2ea.png" width="360" height="240"
                                                        alt=""/> </a></div>
             </div>
             <div class="menu_nav">

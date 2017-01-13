@@ -11,12 +11,12 @@ import java.sql.Types;
  */
 public class UpdateUser extends SqlUpdate{
 
-    private final static String SQL_UPDATE_USER="UPDATE user_table SET pwd=:userpwd WHERE username=:username";
+    private final static String SQL_UPDATE_USER="UPDATE user_table SET pwd=:pwd WHERE username=:username";
 
     public UpdateUser(DataSource dataSource){
         super(dataSource,SQL_UPDATE_USER);
         super.declareParameter(new SqlParameter("username", Types.VARCHAR));
-        super.declareParameter(new SqlParameter("userpwd", Types.VARCHAR));
+        super.declareParameter(new SqlParameter("pwd", Types.VARCHAR));
         //super.declareParameter(new SqlParameter("useremail", Types.VARCHAR));
 
     }

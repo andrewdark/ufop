@@ -26,7 +26,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -36,7 +36,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.3.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:4.3.5.RELEASE" level="project" />
@@ -90,5 +89,6 @@
     <orderEntry type="library" name="Maven: jstl:jstl:1.2" level="project" />
     <orderEntry type="library" name="Maven: postgresql:postgresql:9.1-901-1.jdbc4" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.3.5.RELEASE" level="project" />
   </component>
 </module>

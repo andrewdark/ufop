@@ -1,7 +1,10 @@
 package ua.pp.darknsoft.dao;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.user.DeleteUser;
 import ua.pp.darknsoft.dao.crud.user.InsertUser;
 import ua.pp.darknsoft.dao.crud.user.SelectUser;
@@ -18,7 +21,9 @@ import java.util.Map;
 /**
  * Created by Dark on 11.01.2017.
  */
-@Repository
+
+@Service
+@Scope(value="session",proxyMode= ScopedProxyMode.TARGET_CLASS)
 public class UserDaoImpl implements UserDao,Serializable{
     private DataSource dataSource;
     private InsertUser insertUser;
