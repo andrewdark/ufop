@@ -41,5 +41,11 @@
     <definition extends="default" name="chat">
         <put-attribute name="body" value="/WEB-INF/pages/body/chat.jsp" />
     </definition>
+    <definition extends="default" name="viewlocation">
+        <put-attribute name="body" value="/WEB-INF/pages/body/catalog/viewlocation.jsp" />
+    </definition>
+    <definition extends="default" name="addlocation">
+        <put-attribute name="body" value="/WEB-INF/pages/body/catalog/addlocation.jsp" />
+    </definition>
 
 </tiles-definitions>

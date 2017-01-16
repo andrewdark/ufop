@@ -53,6 +53,8 @@ a {
 }
 .logo {
     position:relative;
+    top:100px;
+    left:35%;
     padding:0;
     float:none;
     float:left;

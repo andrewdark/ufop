@@ -30,9 +30,9 @@ REGISTRATION<br />
             <td><span class="error" ><form:errors path="email" /></span></td>
         </tr>
         <tr>
+            <td></td>
             <td><input type="submit" value="Submit"/></td>
             <td><input type="reset" value="Reset" /></td>
-            <td></td>
         </tr>
     </table>
 

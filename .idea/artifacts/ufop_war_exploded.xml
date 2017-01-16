@@ -22,6 +22,8 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:4.2.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.3.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.3.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context-support:4.3.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-extras:3.0.7" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-core:3.0.7" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-api:3.0.7" />
@@ -61,7 +63,8 @@
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
           <element id="library" level="project" name="Maven: postgresql:postgresql:9.1-901-1.jdbc4" />
           <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.3.5.RELEASE" />
+          <element id="library" level="project" name="Maven: javax.mail:mail:1.4.7" />
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

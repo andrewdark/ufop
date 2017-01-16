@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="footer_resize">
-    <p class="lf">Copyright &copy; <a href="darknsoft.pp.ua">darknsoft</a>. All Rights Reserved</p>
+    <p class="lf">Copyright &copy; <a href="http://darknsoft.pp.ua">darknsoft</a>. All Rights Reserved</p>
     <p class="rf">Get More <a target="_blank" href="https://github.com/andrewdark">Free java project</a> By <a target="_blank" href="https://github.com/andrewdark">Andrew Dark</a></p>
     <div style="clear:both;"></div>
 </div>

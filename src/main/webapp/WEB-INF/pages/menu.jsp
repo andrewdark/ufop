@@ -1,3 +1,4 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -6,7 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<h2 class="star"><span>Sidebar</span> Menu</h2>
+<h2 class="star"><span>Меню користувача</span></h2>
 <div class="clr"></div>
 
 <ul id="menu">
@@ -78,4 +79,21 @@
         </ul>
     </li>
     <li class="ui-state-disabled"><div>Specials (n/a)</div></li>
+    <sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
+        <hr />
+        <li><div>Користувачі</div>
+            <ul>
+                <li><div>Перегляд користувачів</div></li>
+                <li><div>Видалити користувача</div></li>
+                <li><div>Редагування користувача</div></li>
+            </ul>
+        </li>
+        <li><div>Довідники</div>
+            <ul>
+                <li><div>location_type</div></li>
+                <li><div>location</div></li>
+                <li><div>kved_catalog</div></li>
+            </ul>
+        </li>
+    </sec:authorize>
 </ul>

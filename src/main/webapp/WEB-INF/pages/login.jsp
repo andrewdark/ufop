@@ -12,7 +12,7 @@
 
 <c:set var="labelusername" value="login" />
 <c:set var="labelpwd" value="password" />
-<h2 class="star"><span>Log in page</span></h2>
+<h2 class="star"><span>Авторизація</span></h2>
 <div class="clr"></div>
 <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
 <sec:authorize access="isAnonymous()">
@@ -30,8 +30,8 @@
 
             <input name="submit" type="submit" class="btn btn-default" id="submitBtn" value="Войти"/>
             <div class="reg-restore">
-                <span><a href=/registration>Регистрация</a></span>
-                <span><a href="/restore">Восстановить пароль</a></span>
+                <span><a href=/registration>Реєстрація</a></span>
+                <span><a href="/restore">Відновити пароль</a></span>
             </div>
 
         </div>
@@ -40,13 +40,13 @@
         <p style="color: red; ">
 
             <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
-            <span><a href="/restore">Восстановить пароль</a></span>
+
         </p>
     </c:if>
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
     <sec:authentication property="principal.username" var="username"/>
     <a id="welcome" href="/my_office"><span>welcome</span> <span class="user_name">${username}</span></a>
-    <a href="<c:url value='/logout' />" > Logout</a>
+    <a href="<c:url value='/logout' />" > Вийти</a>
 </sec:authorize>
 

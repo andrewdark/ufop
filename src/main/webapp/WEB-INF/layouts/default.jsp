@@ -11,7 +11,6 @@
 <head>
     <title>UFOP</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/css/main.css"/>
-    <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/js/jquery-ui-1.12.1.custom/jquery-ui.css"/>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.1.1.js"></script>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
