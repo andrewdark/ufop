@@ -91,7 +91,7 @@
         <li><div>Довідники</div>
             <ul>
                 <li><div>location_type</div></li>
-                <li><div>location</div></li>
+                <li><div><a href="/addlocation">location</a></div></li>
                 <li><div>kved_catalog</div></li>
             </ul>
         </li>

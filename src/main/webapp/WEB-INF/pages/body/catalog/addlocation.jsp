@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -8,4 +9,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 add location
-<form:select path="category" items="${cat}" id="sel" />
+<select>
+<c:forEach items="${loctype}" var="loctype">
+    <option value="${loctype.id}">${loctype.type}</option>
+</c:forEach>
+</select>

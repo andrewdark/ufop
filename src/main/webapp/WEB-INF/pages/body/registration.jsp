@@ -1,17 +1,20 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <style type="text/css">
     span.error {
         color: red;
     }
 </style>
-REGISTRATION<br />
+<div class="article">
+    <h2><span>РЕЄСТРАЦІЯ</span> НОВОГО КОРИСТУВАЧА</h2>
+    <div class="clr"></div>
+    <div class="post_content">
 <form:form action="${pageContext.servletContext.contextPath}/adduser" method="post">
     <table>
         <tr>
             <td><form:label path="username">username:</form:label></td>
-            <td><form:input path="username" ></form:input></td>
+            <td><form:input path="username"></form:input></td>
             <td><span class="error" ><form:errors path="username" /></span></td>
         </tr>
         <tr>
@@ -39,3 +42,6 @@ REGISTRATION<br />
 
 
 </form:form>
+    </div>
+    <div class="clr"></div>
+</div>
