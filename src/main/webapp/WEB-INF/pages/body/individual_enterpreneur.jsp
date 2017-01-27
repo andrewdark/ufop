@@ -7,3 +7,19 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">ФОП</a></li>
+        <li><a href="#tabs-2">Комерційні об'єкти</a></li>
+        <li><a href="#tabs-3">Контактна інформація</a></li>
+    </ul>
+    <div id="tabs-1">
+        <p>Відомості про фізичну особу підприємця</p>
+    </div>
+    <div id="tabs-2">
+        <p>Перелік комерційних об'єктів</p>
+    </div>
+    <div id="tabs-3">
+        <p>Перелік контактних осіб</p>
+    </div>
+</div>

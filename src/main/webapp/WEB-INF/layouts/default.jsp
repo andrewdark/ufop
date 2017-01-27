@@ -1,4 +1,5 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -55,6 +56,11 @@
                 <div id="menu_gadget" class="gadget">
                     <tiles:insertAttribute name="menu_gadget" ignore="true"/>
                 </div>
+                <sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
+                    <div id="admin_gadget" class="gadget">
+                        <tiles:insertAttribute name="admin_gadget" ignore="true"/>
+                    </div>
+                </sec:authorize>
                 <div id="login_gadget" class="gadget">
                     <tiles:insertAttribute name="login_gadget" ignore="true"/>
                 </div>

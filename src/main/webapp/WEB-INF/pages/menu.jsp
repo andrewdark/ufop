@@ -13,17 +13,17 @@
 <ul id="menu">
     <li><div>Перегляд</div>
         <ul>
-            <li><div>Фізична особа підприємець</div></li>
-            <li><div>Юридична особа</div></li>
+            <li><div><a href="/individual_enterpreneur">Фізична особа підприємець</a></div></li>
+            <li><div><a href="/legal_entity">Юридична особа</a></div></li>
             <li><div>Комерційні об'єкти</div></li>
         </ul>
     </li>
     <li><div>Реєстрація</div>
         <ul>
-        <li><div>Фізична особа підприємець</div></li>
-        <li><div>Юридична особа</div></li>
-        <li><div>Комерційні об'єкти</div></li>
-    </ul>
+            <li><div><a href="/contact">Фізична особа підприємець</a></div></li>
+            <li><div><a href="/entitycontact">Юридична особа</a></div></li>
+            <li><div>Комерційні об'єкти</div></li>
+        </ul>
     </li>
     <li class="ui-state-disabled"><div>Звернення громадян</div>
         <ul>
@@ -79,21 +79,6 @@
         </ul>
     </li>
     <li class="ui-state-disabled"><div>Specials (n/a)</div></li>
-    <sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
-        <hr />
-        <li><div>Користувачі</div>
-            <ul>
-                <li><div>Перегляд користувачів</div></li>
-                <li><div>Видалити користувача</div></li>
-                <li><div>Редагування користувача</div></li>
-            </ul>
-        </li>
-        <li><div>Довідники</div>
-            <ul>
-                <li><div>location_type</div></li>
-                <li><div><a href="/addlocation">location</a></div></li>
-                <li><div>kved_catalog</div></li>
-            </ul>
-        </li>
-    </sec:authorize>
+
+
 </ul>

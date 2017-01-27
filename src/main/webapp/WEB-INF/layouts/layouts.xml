@@ -8,6 +8,7 @@
         <put-attribute name="menu_nav" value="/WEB-INF/pages/menu_nav.jsp"/>
         <put-attribute name="login_gadget" value="/WEB-INF/pages/login.jsp"/>
         <put-attribute name="menu_gadget" value="/WEB-INF/pages/menu.jsp"/>
+        <put-attribute name="admin_gadget" value="/WEB-INF/pages/adminmenu.jsp"/>
         <put-attribute name="header" value="/WEB-INF/pages/header.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/pages/footer.jsp"/>
     </definition>
@@ -46,6 +47,27 @@
     </definition>
     <definition extends="default" name="addlocation">
         <put-attribute name="body" value="/WEB-INF/pages/body/catalog/addlocation.jsp" />
+    </definition>
+    <definition extends="default" name="commercialobject">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/commercialobject.jsp" />
+    </definition>
+    <definition extends="default" name="contact">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/contact.jsp" />
+    </definition>
+    <definition extends="default" name="individualentrepreneur">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/individualentrepreneur.jsp" />
+    </definition>
+    <definition extends="default" name="kved">
+    <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/kved.jsp" />
+    </definition>
+    <definition extends="default" name="entitycommercialobject">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterofentity/entitycommercialobject.jsp" />
+    </definition>
+    <definition extends="default" name="entitycontact">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterofentity/entitycontact.jsp" />
+    </definition>
+    <definition extends="default" name="legalentity">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterofentity/legalentity.jsp" />
     </definition>
 
 </tiles-definitions>
