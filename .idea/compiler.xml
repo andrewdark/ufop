@@ -9,8 +9,8 @@
         <module name="ufop" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ufop" target="1.6" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="ufop" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

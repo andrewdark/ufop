@@ -51,7 +51,7 @@ public class MainController {
     //------------------------------------------------------------------------------------------------------------------
     @RequestMapping(value = "/individual_enterpreneur")
     public String individual_enterpreneur(){
-        return "individual_enterpreneur";
+        return "IndividualEnterpreneur";
     }
     @RequestMapping(value = "/legal_entity")
     public String legal_entity(){
