@@ -69,5 +69,10 @@
     <definition extends="default" name="legalentity">
         <put-attribute name="body" value="/WEB-INF/pages/body/masterofentity/legalentity.jsp" />
     </definition>
-
+    <definition extends="default" name="viewslist_individual">
+        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_individual.jsp" />
+    </definition>
+    <definition extends="default" name="viewslist_entity">
+        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_entity.jsp" />
+    </definition>
 </tiles-definitions>

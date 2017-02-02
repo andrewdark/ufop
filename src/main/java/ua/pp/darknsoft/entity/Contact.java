@@ -1,16 +1,17 @@
 package ua.pp.darknsoft.entity;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
  * Created by Andrew on 30.01.2017.
  */
 public class Contact {
-    private int id;
+    private Long id;
     private String first_name;
     private String last_name;
     private String patronymic_name;
-    private int rntc;
+    private Long rntc;
     private String series_of_passport;
     private int number_of_passport;
     private String a_stay_address;
@@ -18,17 +19,18 @@ public class Contact {
     private String tel;
     private String fax;
     private String email;
-    private LocalDate datereg;
-    private LocalDate birthday;
+    private Timestamp datereg;
+    private String owner;
+    private Date birthday;
     private String organization;
     private String position;
     private String description;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,11 +58,11 @@ public class Contact {
         this.patronymic_name = patronymic_name;
     }
 
-    public int getRntc() {
+    public Long getRntc() {
         return rntc;
     }
 
-    public void setRntc(int rntc) {
+    public void setRntc(Long rntc) {
         this.rntc = rntc;
     }
 
@@ -120,19 +122,23 @@ public class Contact {
         this.email = email;
     }
 
-    public LocalDate getDatereg() {
+    public Timestamp getDatereg() {
         return datereg;
     }
 
-    public void setDatereg(LocalDate datereg) {
+    public void setDatereg(Timestamp datereg) {
         this.datereg = datereg;
     }
 
-    public LocalDate getBirthday() {
+    public String getOwner() { return owner; }
+
+    public void setOwner(String owner) { this.owner = owner; }
+
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

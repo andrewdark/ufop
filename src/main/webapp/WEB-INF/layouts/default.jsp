@@ -11,6 +11,9 @@
 <html>
 <head>
     <title>UFOP</title>
+    <link rel="shortcut icon" href="${pageContext.servletContext.contextPath}/resources/images/od_obl.png"/>
+    <link rel="icon" type="image/x-icon" href="${pageContext.servletContext.contextPath}/resources/images/od_obl.png"/>
+    <link rel="logo" href="${pageContext.servletContext.contextPath}/resources/images/od_obl.png"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/js/jquery-ui-1.12.1.custom/jquery-ui.css"/>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.1.1.js"></script>

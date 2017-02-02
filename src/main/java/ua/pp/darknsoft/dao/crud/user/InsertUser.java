@@ -18,6 +18,7 @@ public class InsertUser extends SqlUpdate{
         super.declareParameter(new SqlParameter("username", Types.VARCHAR));
         super.declareParameter(new SqlParameter("pwd", Types.VARCHAR));
         super.declareParameter(new SqlParameter("email", Types.VARCHAR));
+        compile();
 
     }
 

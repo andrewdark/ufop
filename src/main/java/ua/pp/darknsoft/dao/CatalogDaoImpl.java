@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service
 @Scope(value="session",proxyMode= ScopedProxyMode.TARGET_CLASS)
-public class CatalogDaoImpl implements CatalogDao, Serializable{
+public class CatalogDaoImpl implements CatalogDao,Serializable{
     private DataSource dataSource;
     private SelectLocationType selectLocationType;
 

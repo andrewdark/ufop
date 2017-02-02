@@ -11,7 +11,7 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content">
-        <form:form action="${pageContext.servletContext.contextPath}/" method="get">
+        <form:form action="" method="get">
             <table>
                 <tr>
                     <td>Адреса</td>

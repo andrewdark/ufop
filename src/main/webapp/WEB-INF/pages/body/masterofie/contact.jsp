@@ -11,32 +11,38 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content">
-        <form:form action="${pageContext.servletContext.contextPath}/individualentrepreneur" method="get">
+        <form:form action="${pageContext.servletContext.contextPath}/addContactpost" method="post">
             <table>
                 <tr>
-                    <td>Ім'я:</td>
-                    <td><input type="text" /></td>
-                    <td></td>
+                    <td><form:label path="last_name">Прізвище:</form:label></td>
+                    <td><form:input htmlEscape="true" path="last_name" class="form-control" maxlength="128"/></td>
+                    <td><span class="error" ><form:errors path="last_name" /></span></td>
                 </tr>
                 <tr>
-                    <td>Прізвище:</td>
-                    <td><input type="text" /></td>
-                    <td></td>
+                    <td><form:label path="first_name">Ім'я:</form:label></td>
+                    <td><form:input htmlEscape="true" path="first_name" class="form-control" maxlength="128"/></td>
+                    <td><span class="error" ><form:errors path="first_name" /></span></td>
                 </tr>
                 <tr>
-                    <td>По батькові:</td>
-                    <td><input type="text" /></td>
-                    <td></td>
+                    <td><form:label path="patronymic_name">По батькові:</form:label></td>
+                    <td><form:input htmlEscape="true" path="patronymic_name" class="form-control" maxlength="128"/></td>
+                    <td><span class="error" ><form:errors path="patronymic_name" /></span></td>
                 </tr>
                 <tr>
-                    <td>ІПН фізичної особи:</td>
-                    <td><input type="text" maxlength="10"/></td>
-                    <td></td>
+                    <td><form:label path="rntc">ІПН фізичної особи:</form:label></td>
+                    <td><form:input htmlEscape="true" path="rntc" class="form-control" maxlength="10"/></td>
+                    <td><span class="error" ><form:errors path="rntc" /></span></td>
                 </tr>
                 <tr>
-                    <td>Код\серія паспорту:</td>
-                    <td><input type="text" size="2" maxlength="2"/><input type="text" maxlength="10"/></td>
-                    <td></td>
+                    <td><form:label path="series_of_passport">Код\серія паспорту:</form:label></td>
+                    <td>
+                        <form:input htmlEscape="true" path="series_of_passport" class="form-control" size="2" maxlength="2"/>
+                        <form:input htmlEscape="true" path="number_of_passport" class="form-control" size="10" maxlength="10"/>
+                    </td>
+                    <td>
+                        <span class="error" ><form:errors path="series_of_passport" /></span>
+                        <span class="error" ><form:errors path="number_of_passport" /></span>
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
