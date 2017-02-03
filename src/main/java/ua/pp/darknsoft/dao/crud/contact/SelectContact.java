@@ -36,7 +36,7 @@ public class SelectContact extends MappingSqlQuery<Contact> {
         contact.setEmail(resultSet.getString("email"));
         contact.setDatereg(resultSet.getTimestamp("datereg"));
         contact.setOwner(resultSet.getString("username"));
-        contact.setBirthday(resultSet.getDate("birthday"));
+        contact.setBirthday(resultSet.getString("birthday"));
         contact.setOrganization(resultSet.getString("organization"));
         contact.setPosition(resultSet.getString("position"));
         contact.setDescription(resultSet.getString("description"));

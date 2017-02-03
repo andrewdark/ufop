@@ -1,5 +1,6 @@
 package ua.pp.darknsoft.dao;
 
+import ua.pp.darknsoft.entity.LocationCatalog;
 import ua.pp.darknsoft.entity.LocationType;
 
 import java.util.List;
@@ -9,4 +10,6 @@ import java.util.List;
  */
 public interface CatalogDao {
     List<LocationType> getLocationType();
+
+    List<LocationCatalog> getLocationTop();
 }

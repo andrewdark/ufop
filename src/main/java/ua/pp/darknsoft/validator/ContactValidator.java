@@ -20,7 +20,7 @@ public class ContactValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Contact contact = (Contact) o;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "last_name", "last-name.empty", "Last name must not be empty.");
-
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "last_name", "last-name.empty", "* Обов'язкове поле");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "first_name", "first-name.empty", "* Обов'язкове поле");
     }
 }

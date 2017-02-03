@@ -10,9 +10,9 @@ public class IndividualEnterpreneur {
     private int contact_link;
     private String a_place_of_reg;
     private String n_place_of_reg;
-    private int rntc;
+    private String rntc;
     private String series_of_passport;
-    private int number_of_passport;
+    private String number_of_passport;
     private int risk_group;
     private boolean if_pdf;
     private LocalDate datereg;
@@ -50,11 +50,11 @@ public class IndividualEnterpreneur {
         this.n_place_of_reg = n_place_of_reg;
     }
 
-    public int getRntc() {
+    public String getRntc() {
         return rntc;
     }
 
-    public void setRntc(int rntc) {
+    public void setRntc(String rntc) {
         this.rntc = rntc;
     }
 
@@ -66,11 +66,11 @@ public class IndividualEnterpreneur {
         this.series_of_passport = series_of_passport;
     }
 
-    public int getNumber_of_passport() {
+    public String getNumber_of_passport() {
         return number_of_passport;
     }
 
-    public void setNumber_of_passport(int number_of_passport) {
+    public void setNumber_of_passport(String number_of_passport) {
         this.number_of_passport = number_of_passport;
     }
 

@@ -21,7 +21,7 @@ public class Contact {
     private String email;
     private Timestamp datereg;
     private String owner;
-    private Date birthday;
+    private String birthday;
     private String organization;
     private String position;
     private String description;
@@ -134,11 +134,11 @@ public class Contact {
 
     public void setOwner(String owner) { this.owner = owner; }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

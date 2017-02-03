@@ -5,14 +5,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ua.pp.darknsoft.dao.CatalogDao;
 import ua.pp.darknsoft.entity.Contact;
+import ua.pp.darknsoft.entity.LocationType;
 import ua.pp.darknsoft.validator.ContactValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by Andrew on 27.01.2017.
@@ -21,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 public class MasterController {
     @Autowired
     ContactValidator contactValidator;
+    @Autowired
+    CatalogDao catalogDao;
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------MASTER OF INDIVIDUAL ENTERPRENEUR-----------------------------------------
     //------------------------------------------------------------------------------------------------------------------
@@ -29,7 +32,15 @@ public class MasterController {
     public String addContact(@ModelAttribute Contact myContact, Model uiModel){
         uiModel.addAttribute("title","Введіть дані Фізичної особи");
 
+        try{
+            uiModel.addAttribute("locationTop",catalogDao.getLocationTop());
+
+        }catch (Exception ex){
+            uiModel.addAttribute("ex",ex);
+        }
+        BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
         uiModel.addAttribute("command", myContact);
+        uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
         return "contact";
     }
     @PreAuthorize("isAuthenticated()")
@@ -89,5 +100,23 @@ public class MasterController {
         uiModel.addAttribute("title","Додайте дані про комерційний об'єкт");
         return "legalentity";
     }
+    //------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------AJAX HELPER---------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    @RequestMapping(value = "/ajax_select_loc", produces = {"application/json; charset=UTF-8"})
+    @ResponseBody
+    public String ajax_select_loc(@RequestParam(defaultValue = "0") String x, Model uiModel) {
+        int level = 0;
+        String html = "";
+        List<LocationType> allLoctype = catalogDao.getLocationType();
+        try {
 
+
+        } catch (Exception e) {
+            return "Error: " + e;
+        }
+
+
+        return html + "DO SMTH";
+    }
 }
