@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by Dark on 09.11.2016.
  */
 public class SelectUser extends MappingSqlQuery{
-    private static final String SQL_CHECK_USER="SELECT username,pwd,email FROM user_table WHERE username=:username";
+    private static final String SQL_CHECK_USER="SELECT id,username,pwd,email FROM user_table WHERE username=:username";
 
     public SelectUser(DataSource ds) {
         super(ds, SQL_CHECK_USER);
@@ -26,6 +26,7 @@ public class SelectUser extends MappingSqlQuery{
     @Override
     protected Object mapRow(ResultSet rs, int i) throws SQLException {
         User user = new User();
+        user.setId(rs.getInt("id"));
         user.setUsername(rs.getString("username"));
         user.setPwd(rs.getString("pwd"));
         user.setEmail(rs.getString("email"));

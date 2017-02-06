@@ -11,9 +11,9 @@ public class Contact {
     private String first_name;
     private String last_name;
     private String patronymic_name;
-    private Long rntc;
+    private String rntc;
     private String series_of_passport;
-    private int number_of_passport;
+    private String number_of_passport;
     private String a_stay_address;
     private String n_stay_address;
     private String tel;
@@ -58,11 +58,11 @@ public class Contact {
         this.patronymic_name = patronymic_name;
     }
 
-    public Long getRntc() {
+    public String getRntc() {
         return rntc;
     }
 
-    public void setRntc(Long rntc) {
+    public void setRntc(String rntc) {
         this.rntc = rntc;
     }
 
@@ -74,11 +74,11 @@ public class Contact {
         this.series_of_passport = series_of_passport;
     }
 
-    public int getNumber_of_passport() {
+    public String getNumber_of_passport() {
         return number_of_passport;
     }
 
-    public void setNumber_of_passport(int number_of_passport) {
+    public void setNumber_of_passport(String number_of_passport) {
         this.number_of_passport = number_of_passport;
     }
 

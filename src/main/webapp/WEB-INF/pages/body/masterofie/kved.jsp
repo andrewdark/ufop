@@ -1,4 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -11,26 +13,26 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content">
-        <p>Місце здійснення підприємницької діяльності</p>
-        <form:form action="" method="get">
+    <div id="kved_message"></div>
+
             <table>
                 <tr>
-                    <td>Назва:</td>
-                    <td><input type="text" /></td>
+                    <td>ID ФОП:</td>
+                    <td><input type="text" disabled="disabled" value="myValue" id="fopid"/></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>Адреса:</td>
-                    <td><input type="text" /></td>
+                    <td>КВЕД:</td>
+                    <td><input type="text" id="kvedname"/></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><button type="submit"><img src="resources/images/add.jpg"/></button></td>
+                    <td><button type="button" onclick="inject_kved()"><img src="resources/images/add.jpg"/></button></td>
                     <td></td>
                 </tr>
             </table>
-        </form:form>
+
     </div>
 
     <div class="clr"></div>

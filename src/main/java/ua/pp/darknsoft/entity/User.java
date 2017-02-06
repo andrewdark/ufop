@@ -7,12 +7,21 @@ import java.time.LocalDate;
  * Created by Dark on 11.01.2017.
  */
 public class User implements Serializable{
+    private int id;
     private String username;
     private String email;
     private String pwd;
     private String confirm_pwd;
     private LocalDate datereg;
     private boolean isEnabled;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;

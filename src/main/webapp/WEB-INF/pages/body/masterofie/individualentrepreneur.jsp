@@ -14,8 +14,18 @@
         <form:form action="${pageContext.servletContext.contextPath}/kved" method="get">
             <table>
                 <tr>
+                    <td>Id фіз. Особи:</td>
+                    <td><input type="text" value="${sendContact.id}" disabled/></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Код ІПН:</td>
+                    <td><input type="text" value="${sendContact.rntc}" disabled/></td>
+                    <td></td>
+                </tr>
+                <tr>
                     <td>Місце реєстрації:</td>
-                    <td><input type="text" /></td>
+                    <td><input type="text"/></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -29,12 +39,14 @@
                 </tr>
                 <tr>
                     <td>Платник ПДВ:</td>
-                    <td><input type="checkbox" /></td>
+                    <td><input type="checkbox"/></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><button type="submit"><img src="resources/images/next_step.jpg"/></button></td>
+                    <td>
+                        <button type="submit"><img src="resources/images/next_step.jpg"/></button>
+                    </td>
                     <td></td>
                 </tr>
             </table>
