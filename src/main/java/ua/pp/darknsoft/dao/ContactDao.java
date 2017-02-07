@@ -11,4 +11,6 @@ public interface ContactDao {
     List<Contact> selectContact();
 
     long insert(Contact contact);
+
+    String SelectContactByRntc(String rntc);
 }

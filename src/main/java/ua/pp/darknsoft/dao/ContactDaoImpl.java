@@ -46,11 +46,13 @@ public class ContactDaoImpl implements ContactDao, Serializable {
 
     @Override
     public long insert(Contact contact) {
+        if(contact.getBirthday().isEmpty())contact.setBirthday("0001-01-01");
         String sql = "INSERT INTO contact_table (first_name,last_name,owner,patronymic_name,a_stay_address,n_stay_address," +
                 "series_of_passport,number_of_passport,tel,fax,email,birthday,organization,\"position\",description) " +
                 "VALUES (:first_name,:last_name,(SELECT id FROM user_table WHERE username =:owner),:patronymic_name,:a_stay_address,:n_stay_address," +
                 ":series_of_passport,:number_of_passport,:tel,:fax,:email,:birthday::DATE,:organization,:position,:description)";
-        Map<String, Object> bind = new HashMap<>(3);
+
+        Map<String, Object> bind = new HashMap<>();
         bind.put("first_name", contact.getFirst_name());
         bind.put("last_name", contact.getLast_name());
         bind.put("patronymic_name", contact.getPatronymic_name());
@@ -68,7 +70,10 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         bind.put("description",contact.getDescription());
         if(contact.getRntc().length()==10){
             bind.put("rntc", contact.getRntc());
-            sql = "INSERT INTO contact_table (first_name,last_name,rntc,owner) VALUES (:first_name,:last_name,:rntc,(SELECT id FROM user_table WHERE username =:owner))";
+            sql = "INSERT INTO contact_table (rntc,first_name,last_name,owner,patronymic_name,a_stay_address,n_stay_address," +
+                    "series_of_passport,number_of_passport,tel,fax,email,birthday,organization,\"position\",description) " +
+                    "VALUES (:rntc,:first_name,:last_name,(SELECT id FROM user_table WHERE username =:owner),:patronymic_name,:a_stay_address,:n_stay_address," +
+                    ":series_of_passport,:number_of_passport,:tel,:fax,:email,:birthday::DATE,:organization,:position,:description)";
         }
 
 
@@ -83,12 +88,12 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         Map<String, Object> keys = keyHolder.getKeys();
         return (Long) keys.get("id");
     }
-
-    public Contact SelectContactByRntc(String rntc){
-        String sql = "SELECT * FROM contact_table WHERE rntc=:rntc";
-        Map<String, Object> bind = new HashMap<>(3);
+    @Override
+    public String SelectContactByRntc(String rntc){
+        String sql = "SELECT rntc FROM contact_table WHERE rntc=:rntc";
+        Map<String, Object> bind = new HashMap<>();
         bind.put("rntc",rntc);
 
-        return namedParameterJdbcTemplate.queryForObject(sql,bind,Contact.class);
+        return (String) namedParameterJdbcTemplate.queryForObject(sql,bind,String.class);
     }
 }

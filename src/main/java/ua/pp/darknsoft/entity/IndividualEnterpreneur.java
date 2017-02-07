@@ -6,8 +6,8 @@ import java.time.LocalDate;
  * Created by Andrew on 30.01.2017.
  */
 public class IndividualEnterpreneur {
-    private int id;
-    private int contact_link;
+    private Long id;
+    private Long contact_link;
     private String a_place_of_reg;
     private String n_place_of_reg;
     private String rntc;
@@ -16,21 +16,22 @@ public class IndividualEnterpreneur {
     private int risk_group;
     private boolean if_pdf;
     private LocalDate datereg;
+    private String Owner;
     private String description;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getContact_link() {
+    public Long getContact_link() {
         return contact_link;
     }
 
-    public void setContact_link(int contact_link) {
+    public void setContact_link(Long contact_link) {
         this.contact_link = contact_link;
     }
 
@@ -96,6 +97,14 @@ public class IndividualEnterpreneur {
 
     public void setDatereg(LocalDate datereg) {
         this.datereg = datereg;
+    }
+
+    public String getOwner() {
+        return Owner;
+    }
+
+    public void setOwner(String owner) {
+        Owner = owner;
     }
 
     public String getDescription() {

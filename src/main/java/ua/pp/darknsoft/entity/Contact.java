@@ -1,11 +1,14 @@
 package ua.pp.darknsoft.entity;
 
+import org.springframework.stereotype.Service;
+
 import java.sql.Timestamp;
 import java.sql.Date;
 
 /**
  * Created by Andrew on 30.01.2017.
  */
+@Service
 public class Contact {
     private Long id;
     private String first_name;

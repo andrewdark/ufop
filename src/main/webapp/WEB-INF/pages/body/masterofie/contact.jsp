@@ -13,7 +13,7 @@
     <div class="clr"></div>
     <div class="post_content">
         <form:form action="${pageContext.servletContext.contextPath}/addContactpost" method="post">
-            <table>
+            <table width="100%">
                 <tr>
                     <td><form:label path="last_name">Прізвище:</form:label></td>
                     <td><form:input htmlEscape="true" path="last_name" class="form-control" maxlength="128"/></td>
