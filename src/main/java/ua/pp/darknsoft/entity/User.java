@@ -14,6 +14,7 @@ public class User implements Serializable{
     private String confirm_pwd;
     private LocalDate datereg;
     private boolean isEnabled;
+    private long contact_link;
 
     public int getId() {
         return id;
@@ -69,5 +70,13 @@ public class User implements Serializable{
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public long getContact_link() {
+        return contact_link;
+    }
+
+    public void setContact_link(long contact_link) {
+        this.contact_link = contact_link;
     }
 }

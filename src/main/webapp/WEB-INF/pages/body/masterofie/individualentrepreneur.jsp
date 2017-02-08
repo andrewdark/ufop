@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -11,35 +12,54 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content">
-        <form:form action="${pageContext.servletContext.contextPath}/kved" method="get">
+        <c:set var="bool" value="false"/>
+        <c:if test="${empty sendContact.rntc}">
+           <c:set var="bool" value="false"/>
+       </c:if>
+
+        <form:form action="${pageContext.servletContext.contextPath}/individualentrepreneurpost" method="post">
             <table>
                 <tr>
-                    <td>Id фіз. Особи:</td>
-                    <td><input type="text" value="${sendContact.id}" disabled/></td>
+                    <td><form:label path="contact_link">Id фіз. Особи:</form:label></td>
+                    <td><form:input htmlEscape="true" path="contact_link" value="${sendContact.id}" /></td>
+                    <td><span class="error"><form:errors path="contact_link"/></span></td>
+                </tr>
+                <tr>
+                    <td><form:label path="rntc">ІПН фізичної особи:</form:label></td>
+                    <td><form:input htmlEscape="true" path="rntc" class="form-control" maxlength="10" value="${sendContact.rntc}"/></td>
+                    <td><span class="error"><form:errors path="rntc"/></span></td>
+                </tr>
+                <tr>
+                    <td><form:label path="series_of_passport">Код\серія паспорту:</form:label></td>
+                    <td>
+                        <form:input htmlEscape="true" path="series_of_passport" class="form-control" size="2"
+                                    maxlength="2" />
+                        <form:input htmlEscape="true" path="number_of_passport" class="form-control" size="10"
+                                    maxlength="10" />
+                    </td>
+                    <td>
+                        <span class="error"><form:errors path="series_of_passport"/></span>
+                        <span class="error"><form:errors path="number_of_passport"/></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><form:label path="a_place_of_reg" >Адреса реєстрації:</form:label></td>
+                    <td><form:input id="loc2" htmlEscape="true" path="a_place_of_reg" class="form-control" /></td>
+                    <td><span class="error"><form:errors path="a_place_of_reg"/></span></td>
+                </tr>
+                <tr>
+                    <td><form:label path="n_place_of_reg">Номер будівлі:</form:label></td>
+                    <td><form:input htmlEscape="true" path="n_place_of_reg" class="form-control" maxlength="10"/></td>
+                    <td><span class="error"><form:errors path="n_place_of_reg"/></span></td>
+                </tr>
+                <tr>
+                    <td><form:label path="risk_group">Ступінь ризику:</form:label></td>
+                    <td><form:select path="risk_group" items="${risk}" /></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>Код ІПН:</td>
-                    <td><input type="text" value="${sendContact.rntc}" disabled/></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Місце реєстрації:</td>
-                    <td><input type="text"/></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Ступінь ризику:</td>
-                    <td><select>
-                        <option value="1">Висока</option>
-                        <option value="2">Середня</option>
-                        <option value="3">Низька</option>
-                    </select></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Платник ПДВ:</td>
-                    <td><input type="checkbox"/></td>
+                    <td><form:label path="if_pdv">Платник ПДВ:</form:label></td>
+                    <td><form:checkbox path="if_pdv"/></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -51,6 +71,11 @@
                 </tr>
             </table>
         </form:form>
+        <a onclick="look('hide1'); return false;" href="#">Довідка</a>
+        <div id="hide1" style="display: none;">
+            <li />Заповніть обов'язково поля ID та код ІПН.<br />
+            <li />Серію паспорта заповнюємо латинськими буквами
+        </div>
     </div>
     <div class="clr"></div>
 </div>

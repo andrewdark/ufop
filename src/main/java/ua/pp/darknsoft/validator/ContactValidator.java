@@ -23,7 +23,7 @@ public class ContactValidator implements Validator {
     @Autowired
     ContactDao contactDao;
 
-
+    private final static Pattern EMAIL_PATTERN = Pattern.compile(".+@.+\\.[a-z]+");
     private final static Pattern RNTC_PATTERN = Pattern.compile("^[0-9]+$");
     private final static Pattern SR_PASSPORT_PATTERN = Pattern.compile("^[a-zA-Z]+$");
     @Override
@@ -52,9 +52,18 @@ public class ContactValidator implements Validator {
             if(!isNumber(contact.getNumber_of_passport())){
                 errors.rejectValue("number_of_passport", "number_of_passport", "Не вірний формат");
             }
+            if(!contact.getEmail().isEmpty()){
+                if (!isEmail(contact.getEmail())) {
+                    errors.rejectValue("email", "email.notDog", "Not @email format");
+                }
+            }
+
         }
     }
 
     private boolean isSrPassport(String value) { return SR_PASSPORT_PATTERN.matcher(value).matches(); }
     private boolean isNumber(String value) { return RNTC_PATTERN.matcher(value).matches(); }
+    private boolean isEmail(String value) {
+        return EMAIL_PATTERN.matcher(value).matches();
+    }
 }

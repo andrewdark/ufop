@@ -10,15 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.pp.darknsoft.dao.CatalogDao;
 import ua.pp.darknsoft.dao.ContactDao;
+import ua.pp.darknsoft.dao.IndividualEntrepreneurDao;
 import ua.pp.darknsoft.dao.UserDao;
-import ua.pp.darknsoft.entity.Contact;
-import ua.pp.darknsoft.entity.KvedCatalog;
-import ua.pp.darknsoft.entity.KvedUfop;
-import ua.pp.darknsoft.entity.LocationType;
+import ua.pp.darknsoft.entity.*;
 import ua.pp.darknsoft.validator.ContactValidator;
+import ua.pp.darknsoft.validator.IndividualEnterpreneurValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Andrew on 27.01.2017.
@@ -27,6 +28,8 @@ import java.util.List;
 public class MasterController {
     @Autowired
     ContactValidator contactValidator;
+    @Autowired
+    IndividualEnterpreneurValidator individualEnterpreneurValidator;
     @Autowired
     CatalogDao catalogDao;
     @Autowired
@@ -71,10 +74,12 @@ public class MasterController {
         try {
 
             contact.setOwner(SecurityContextHolder.getContext().getAuthentication().getName().toString());
-            sendContact.setId(contactDao.insert(contact));
+            sendContact.setId(contactDao.insert(contact)); //send owner of the individual entrepreneur information
             sendContact.setRntc(contact.getRntc());
+            sendContact.setSeries_of_passport(contact.getSeries_of_passport());
+            sendContact.setNumber_of_passport(contact.getNumber_of_passport());
         }catch (Exception ex){
-            uiModel.addAttribute("ex",ex+"<br/ >"+contact.getBirthday());
+            uiModel.addAttribute("ex",ex);
             sendContact.setId(0L);
             return "message";
         }
@@ -83,16 +88,50 @@ public class MasterController {
         redirectAttributes.addFlashAttribute("sendContact",sendContact);
         return rdrct+"/individualentrepreneur";
     }
-
+    //next form
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "/individualentrepreneur")
-    public String addIndividualentrepreneur(Model uiModel){
+    @RequestMapping(value = "/individualentrepreneur", method = RequestMethod.GET)
+    public String addIndividualentrepreneur(@ModelAttribute IndividualEnterpreneur individualEnterpreneur, Model uiModel){
         uiModel.addAttribute("title","Введіть дані стосовно ФОП");
-        Contact idcontact=(Contact)uiModel.asMap().get("sendContact");
+       //Contact idcontact=(Contact)uiModel.asMap().get("sendContact");
 
+
+        Map<Integer,String> risk = new LinkedHashMap<Integer,String>(); //select on the view
+        risk.put(1,"Висока");risk.put(2,"Середня");risk.put(3,"Низька");
+        uiModel.addAttribute("risk",risk);
+        BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b2");
+        uiModel.addAttribute("command", individualEnterpreneur);
+        uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
         return "individualentrepreneur";
     }
-    //@PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/individualentrepreneurpost", method = RequestMethod.POST)
+    public String individualentrepreneurpost(@ModelAttribute IndividualEnterpreneur individualEnterpreneur, HttpServletRequest httpServletRequest,
+                                             RedirectAttributes redirectAttributes,Model uiModel, BindingResult bindingResult){
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+
+
+        individualEnterpreneurValidator.validate(individualEnterpreneur, bindingResult);
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("b2", bindingResult);
+            return rdrct + "/individualentrepreneur";
+        }
+        try {
+
+           //write in to the base
+        }catch (Exception ex){
+            uiModel.addAttribute("ex",ex);
+            return "message";
+        }
+
+        return rdrct+"/kved";
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/kved")
     public String addKved(Model uiModel){
         uiModel.addAttribute("title","Додайте КВЕД(можна декілька)");

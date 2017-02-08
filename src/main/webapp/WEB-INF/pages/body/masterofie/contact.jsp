@@ -100,7 +100,8 @@
         </form:form>
         <a onclick="look('hide1'); return false;" href="#">Довідка</a>
         <div id="hide1" style="display: none;">
-            Заповніть обов'язково поля Прізвище та ім'я.
+            <li />Заповніть обов'язково поля Прізвище та Ім'я.<br />
+            <li />Серію паспорта заповнюємо латинськими буквами
         </div>
     </div>
     <div class="clr"></div>
@@ -114,6 +115,6 @@
             </c:forEach>
         </select><br />
         <input type="text" id="level2" /><br />
-        <a href="javascript:PopUpHide()">Hide popup</a>
+        <a href="javascript:PopUpHide()">Додати адресу</a>
     </div>
 </div>

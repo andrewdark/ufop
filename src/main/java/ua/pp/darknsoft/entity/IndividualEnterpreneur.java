@@ -14,7 +14,7 @@ public class IndividualEnterpreneur {
     private String series_of_passport;
     private String number_of_passport;
     private int risk_group;
-    private boolean if_pdf;
+    private boolean if_pdv;
     private LocalDate datereg;
     private String Owner;
     private String description;
@@ -83,12 +83,12 @@ public class IndividualEnterpreneur {
         this.risk_group = risk_group;
     }
 
-    public boolean isIf_pdf() {
-        return if_pdf;
+    public boolean isIf_pdv() {
+        return if_pdv;
     }
 
-    public void setIf_pdf(boolean if_pdf) {
-        this.if_pdf = if_pdf;
+    public void setIf_pdv(boolean if_pdv) {
+        this.if_pdv = if_pdv;
     }
 
     public LocalDate getDatereg() {

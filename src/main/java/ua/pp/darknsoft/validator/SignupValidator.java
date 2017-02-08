@@ -74,9 +74,5 @@ public class SignupValidator implements Validator {
         return EMAIL_PATTERN.matcher(value).matches();
     }
 
-    private boolean isLogin(String value) {
-
-        return LOGIN_PATTERN.matcher(value).matches();
-
-    }
+    private boolean isLogin(String value) { return LOGIN_PATTERN.matcher(value).matches(); }
 }
