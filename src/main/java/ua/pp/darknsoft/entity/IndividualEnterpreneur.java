@@ -6,8 +6,8 @@ import java.time.LocalDate;
  * Created by Andrew on 30.01.2017.
  */
 public class IndividualEnterpreneur {
-    private Long id;
-    private Long contact_link;
+    private long id;
+    private long contact_link;
     private String a_place_of_reg;
     private String n_place_of_reg;
     private String rntc;
@@ -19,19 +19,19 @@ public class IndividualEnterpreneur {
     private String Owner;
     private String description;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Long getContact_link() {
+    public long getContact_link() {
         return contact_link;
     }
 
-    public void setContact_link(Long contact_link) {
+    public void setContact_link(long contact_link) {
         this.contact_link = contact_link;
     }
 

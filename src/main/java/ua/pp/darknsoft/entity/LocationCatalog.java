@@ -9,6 +9,7 @@ public class LocationCatalog {
     private String name;
     private int type;
     private String note;
+    private int nlevel; //depth
 
     public int getId() {
         return id;
@@ -49,4 +50,8 @@ public class LocationCatalog {
     public void setNote(String note) {
         this.note = note;
     }
+
+    public int getNlevel() { return nlevel; }
+
+    public void setNlevel(int nlevel) { this.nlevel = nlevel; }
 }

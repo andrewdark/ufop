@@ -34,6 +34,7 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         this.dataSource=dataSource;
         this.selectLocationType = new SelectLocationType(dataSource);
         this.selectLocationTop = new SelectLocationTop(dataSource);
+        this.selectLocationByTreemark = new SelectLocationByTreemark(dataSource);
     }
     @Override
     public List<LocationType> getLocationType(){
@@ -45,10 +46,16 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         return selectLocationTop.execute();
     }
 
-    public List<LocationCatalog> getLocationByTreemark(String treemark){
+    @Override
+    public List<LocationCatalog> getLocationByTreemark(String treemark, int level){
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("treemark", treemark.toLowerCase());
-
-        return selectLocationByTreemark.executeByNamedParam(paramMap);
+        paramMap.put("nlevel",level);
+        List<LocationCatalog> downloc = selectLocationByTreemark.executeByNamedParam(paramMap);
+        if(downloc.isEmpty()){
+            LocationCatalog lc = new LocationCatalog();
+            lc.setId(0); lc.setLtree("0.0"); lc.setName("No data");
+        }
+        return downloc;
     }
 }

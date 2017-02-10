@@ -13,11 +13,12 @@ import java.sql.Types;
  * Created by Andrew on 03.02.2017.
  */
 public class SelectLocationByTreemark extends MappingSqlQuery<LocationCatalog> {
-    private static final String SQL_SELECT_LOCATION_CATALOG="SELECT * FROM location_table WHERE treemark<@:treemark ORDER BY id";
+    private static final String SQL_SELECT_LOCATION_CATALOG="SELECT *,nlevel(treemark) FROM location_table WHERE treemark<@:treemark::ltree AND nlevel(treemark) = :nlevel ORDER BY id";
 
     public SelectLocationByTreemark(DataSource ds){
         super(ds, SQL_SELECT_LOCATION_CATALOG);
         super.declareParameter(new SqlParameter("treemark", Types.VARCHAR));
+        super.declareParameter(new SqlParameter("nlevel", Types.INTEGER));
     }
 
     @Override
@@ -28,6 +29,7 @@ public class SelectLocationByTreemark extends MappingSqlQuery<LocationCatalog> {
         locationCatalog.setName(resultSet.getString("name"));
         locationCatalog.setType(resultSet.getInt("type"));
         locationCatalog.setNote(resultSet.getString("note"));
+        locationCatalog.setNlevel(resultSet.getInt("nlevel"));
 
         return locationCatalog;
     }

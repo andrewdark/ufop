@@ -18,6 +18,7 @@ import ua.pp.darknsoft.validator.IndividualEnterpreneurValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -169,19 +170,25 @@ public class MasterController {
     //------------------------------------------------------------------------------------------------------------------
     @RequestMapping(value = "/ajax_select_loc", produces = {"application/json; charset=UTF-8"})
     @ResponseBody
-    public String ajax_select_loc(@RequestParam(defaultValue = "0") String x, Model uiModel) {
-        int level = 0;
-        String html = "";
-        List<LocationType> allLoctype = catalogDao.getLocationType();
-        try {
+    public String ajax_select_loc(@RequestParam(defaultValue = "15") String treemark, @RequestParam(defaultValue = "2") String nlevel, Model uiModel) {
 
+        String html = "hello world";
+        String option = "<option disabled>Виберіть населений пункт</option>";
+        int level=0;
+        try {
+            level = Integer.parseInt(nlevel);
+            List<LocationCatalog> downloc = catalogDao.getLocationByTreemark(treemark,Integer.parseInt(nlevel));
+            for(int i=0;i<=downloc.size()-1;i++){
+                option = option + "<option value=\""+downloc.get(i).getLtree()+"\">"+downloc.get(i).getName()+"</option>";
+            }
 
         } catch (Exception e) {
             return "Error: " + e;
         }
 
+        html="<select id=\"my_selecttop"+(level)+"\" onchange=\"looplocationdown("+(level+1)+")\">"+option+"</select>";
 
-        return html + "DO SMTH";
+        return html;
     }
     @ResponseBody
     @RequestMapping(value = "ajax_add_kved", produces = {"application/json; charset=UTF-8"})
@@ -195,4 +202,23 @@ public class MasterController {
 
         return param2;
     }
+    //------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------PROGRAMMING TEST----------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    @RequestMapping(value = "/test")
+    public String test(Model uiModel){
+        LocationCatalog lc = new LocationCatalog();
+        List<LocationCatalog> test = new LinkedList();
+
+
+        try{
+            List<LocationCatalog> downloc = catalogDao.getLocationByTreemark("15.1",3);
+            uiModel.addAttribute("test",downloc);
+        }catch (Exception ex){
+            uiModel.addAttribute("ex",ex);
+            return "message";
+        }
+        return "test";
+    }
+
 }

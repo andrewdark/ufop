@@ -21,7 +21,7 @@
             <table>
                 <tr>
                     <td><form:label path="contact_link">Id фіз. Особи:</form:label></td>
-                    <td><form:input htmlEscape="true" path="contact_link" value="${sendContact.id}" /></td>
+                    <td><form:input htmlEscape="true" id ="contact_link" path="contact_link" value="${sendContact.id}" onclick="SetContact_link_Show()"/></td>
                     <td><span class="error"><form:errors path="contact_link"/></span></td>
                 </tr>
                 <tr>
@@ -33,9 +33,9 @@
                     <td><form:label path="series_of_passport">Код\серія паспорту:</form:label></td>
                     <td>
                         <form:input htmlEscape="true" path="series_of_passport" class="form-control" size="2"
-                                    maxlength="2" />
+                                    maxlength="2" value="${sendContact.series_of_passport}"/>
                         <form:input htmlEscape="true" path="number_of_passport" class="form-control" size="10"
-                                    maxlength="10" />
+                                    maxlength="10" value="${sendContact.number_of_passport}"/>
                     </td>
                     <td>
                         <span class="error"><form:errors path="series_of_passport"/></span>
@@ -78,4 +78,11 @@
         </div>
     </div>
     <div class="clr"></div>
+</div>
+<div class="b-popup" id="setContact_link_popup">
+
+    <div class="b-popup-content">
+        Not support yet<br />
+        <a href="javascript:SetContact_link_Hide()">Змінити Contact_Link</a>
+    </div>
 </div>
