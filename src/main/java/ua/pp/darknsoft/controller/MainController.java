@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ua.pp.darknsoft.dao.CatalogDao;
@@ -39,12 +40,19 @@ public class MainController {
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------VIEWS LIST----------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
-    @RequestMapping(value = "/viewslisti", method = RequestMethod.GET)
-    public String viewsListi(Model uiModel){
-        List<Contact> ufop = contactDao.selectContact();
+    @RequestMapping(value = "/viewslisti/{pageid}", method = RequestMethod.GET)
+    public String viewsListi(@PathVariable int pageid, Model uiModel){
+        int total = 5;
+        int pageid1=1;
+        if(pageid==1){}
+        else{
+            pageid1=(pageid-1)*total+1;
+        }
+        List<Contact> ufop = contactDao.selectContact(total,pageid1);
         String link="/individual_enterpreneur";
         uiModel.addAttribute("ufop",ufop);
         uiModel.addAttribute("viewmore",link);
+        uiModel.addAttribute("page_id",pageid);
         return "viewslist_individual";
     }
     @RequestMapping(value = "/viewslistu", method = RequestMethod.GET)

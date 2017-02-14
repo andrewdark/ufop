@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Andrew on 31.01.2017.
  */
 public interface ContactDao {
-    List<Contact> selectContact();
+    List<Contact> selectContact(int total, int pageid);
 
     long insert(Contact contact);
 

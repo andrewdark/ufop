@@ -25,7 +25,7 @@
     <div class="header">
         <div class="header_resize">
             <div class="slider">
-                <div id="coin-slider"><a href="/"><img src="resources/images/40fe6b04a2ea.png" width="360" height="240"
+                <div id="coin-slider"><a href="/"><img src="/resources/images/40fe6b04a2ea.png" width="360" height="240"
                                                        alt=""/> </a></div>
             </div>
             <div class="menu_nav">
@@ -51,7 +51,7 @@
                         <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80"
                                value="Search our ste:" type="text"/>
                         </span>
-                        <input name="button_search" src="resources/images/search.gif" class="button_search"
+                        <input name="button_search" src="/resources/images/search.gif" class="button_search"
                                type="image"/>
                     </form>
                 </div>

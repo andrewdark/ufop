@@ -40,8 +40,12 @@ public class ContactDaoImpl implements ContactDao, Serializable {
     }
 
     @Override
-    public List<Contact> selectContact() {
-        return selectContact.execute();
+    public List<Contact> selectContact(int total, int pageid) {
+        Map<String,Object> bind = new HashMap<>();
+        bind.put("total",total);
+        bind.put("pageid",pageid);
+
+        return selectContact.executeByNamedParam(bind);
     }
 
     @Override

@@ -1,21 +1,25 @@
 package ua.pp.darknsoft.dao.crud.contact;
 
+import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import ua.pp.darknsoft.entity.Contact;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 /**
  * Created by Andrew on 02.02.2017.
  */
 public class SelectContact extends MappingSqlQuery<Contact> {
 
-    private final static String SELECT_CONTACT_SQL="SELECT c.*,u.username FROM contact_table c INNER JOIN user_table u ON(c.owner=u.id)ORDER BY c.id";
+    private final static String SELECT_CONTACT_SQL="SELECT c.*,u.username FROM contact_table c INNER JOIN user_table u ON(c.owner=u.id)ORDER BY c.id LIMIT :total OFFSET :pageid";
 
     public SelectContact(DataSource ds) {
         super(ds, SELECT_CONTACT_SQL);
+        super.declareParameter(new SqlParameter("total", Types.INTEGER));
+        super.declareParameter(new SqlParameter("pageid", Types.INTEGER));
     }
 
 

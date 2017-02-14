@@ -46,7 +46,10 @@ function looplocationdown(level) {
         var aj = "treemark=" + $("#my_selecttop2 option:selected").val()+"&nlevel=3";
         $("#LocationType3").load("/ajax_select_loc", aj);
     }
-
+    if(level==4){
+        var aj = "treemark=" + $("#my_selecttop3 option:selected").val()+"&nlevel=4";
+        $("#LocationType4").load("/ajax_select_loc", aj);
+    }
     // $.ajax({url:"/ajax_select_loc",
     //
     //     success:function(result){
