@@ -41,7 +41,7 @@ public class ContactValidator implements Validator {
             try{
                there_is = contactDao.SelectContactByRntc(contact.getRntc());
             }catch (Exception ex){
-                there_is="NAN";
+                there_is = "0000000000";
             }
             if(there_is.equals(contact.getRntc())){errors.rejectValue("rntc", "rntc.there_is", "ІПН вже існує"); }
         }

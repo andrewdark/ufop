@@ -3,12 +3,12 @@ package ua.pp.darknsoft.entity;
 import java.sql.Timestamp;
 
 /**
- * Created by Andrew on 08.02.2017.
+ * Created by Andrew on 15.02.2017.
  */
-public class KvedsIndividual {
+public class EntitysKveds {
     private long id;
-    private long link_individual;
-    private long link_kved_catalog;
+    private long entrepreneur_link;
+    private long kved_catalog_link;
     private Timestamp datereg;
     private int owner;
 
@@ -20,20 +20,20 @@ public class KvedsIndividual {
         this.id = id;
     }
 
-    public long getLink_individual() {
-        return link_individual;
+    public long getEntrepreneur_link() {
+        return entrepreneur_link;
     }
 
-    public void setLink_individual(long link_individual) {
-        this.link_individual = link_individual;
+    public void setEntrepreneur_link(long entrepreneur_link) {
+        this.entrepreneur_link = entrepreneur_link;
     }
 
-    public long getLink_kved_catalog() {
-        return link_kved_catalog;
+    public long getKved_catalog_link() {
+        return kved_catalog_link;
     }
 
-    public void setLink_kved_catalog(long link_kved_catalog) {
-        this.link_kved_catalog = link_kved_catalog;
+    public void setKved_catalog_link(long kved_catalog_link) {
+        this.kved_catalog_link = kved_catalog_link;
     }
 
     public Timestamp getDatereg() {

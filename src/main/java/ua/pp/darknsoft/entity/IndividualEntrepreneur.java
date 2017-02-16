@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * Created by Andrew on 30.01.2017.
  */
-public class IndividualEnterpreneur {
+public class IndividualEntrepreneur {
     private long id;
     private long contact_link;
     private String a_place_of_reg;

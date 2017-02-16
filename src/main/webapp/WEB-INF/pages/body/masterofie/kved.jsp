@@ -18,7 +18,7 @@
             <table>
                 <tr>
                     <td>ID ФОП:</td>
-                    <td><input type="text" disabled="disabled" value="myValue" id="fopid"/></td>
+                    <td><input type="text" disabled="disabled" value="${sendIE.id}" id="fopid"/></td>
                     <td></td>
                 </tr>
                 <tr>

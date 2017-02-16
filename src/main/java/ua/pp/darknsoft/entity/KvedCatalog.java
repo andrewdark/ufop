@@ -9,6 +9,7 @@ public class KvedCatalog {
     private String label;
     private String name;
     private String description;
+    private int nlevel;
 
     public int getId() {
         return id;
@@ -49,4 +50,8 @@ public class KvedCatalog {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public int getNlevel() { return nlevel; }
+
+    public void setNlevel(int nlevel) { this.nlevel = nlevel; }
 }

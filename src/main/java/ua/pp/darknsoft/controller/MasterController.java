@@ -36,6 +36,8 @@ public class MasterController {
     @Autowired
     ContactDao contactDao;
     @Autowired
+    IndividualEntrepreneurDao individualEntrepreneurDao;
+    @Autowired
     UserDao userDao;
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------MASTER OF INDIVIDUAL ENTERPRENEUR-----------------------------------------
@@ -92,7 +94,7 @@ public class MasterController {
     //next form
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/individualentrepreneur", method = RequestMethod.GET)
-    public String addIndividualentrepreneur(@ModelAttribute IndividualEnterpreneur individualEnterpreneur, Model uiModel){
+    public String addIndividualentrepreneur(@ModelAttribute IndividualEntrepreneur individualEntrepreneur, Model uiModel){
         uiModel.addAttribute("title","Введіть дані стосовно ФОП");
        //Contact idcontact=(Contact)uiModel.asMap().get("sendContact");
 
@@ -101,37 +103,39 @@ public class MasterController {
         risk.put(1,"Висока");risk.put(2,"Середня");risk.put(3,"Низька");
         uiModel.addAttribute("risk",risk);
         BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b2");
-        uiModel.addAttribute("command", individualEnterpreneur);
+        uiModel.addAttribute("command", individualEntrepreneur);
         uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
         return "individualentrepreneur";
     }
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/individualentrepreneurpost", method = RequestMethod.POST)
-    public String individualentrepreneurpost(@ModelAttribute IndividualEnterpreneur individualEnterpreneur, HttpServletRequest httpServletRequest,
-                                             RedirectAttributes redirectAttributes,Model uiModel, BindingResult bindingResult){
+    public String individualentrepreneurpost(@ModelAttribute IndividualEntrepreneur individualEntrepreneur, HttpServletRequest httpServletRequest,
+                                             RedirectAttributes redirectAttributes, Model uiModel, BindingResult bindingResult){
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
+        IndividualEntrepreneur sendIE = new IndividualEntrepreneur();
 
-
-        individualEnterpreneurValidator.validate(individualEnterpreneur, bindingResult);
+        individualEnterpreneurValidator.validate(individualEntrepreneur, bindingResult);
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("b2", bindingResult);
             return rdrct + "/individualentrepreneur";
         }
         try {
+            individualEntrepreneur.setOwner(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+            sendIE.setId(individualEntrepreneurDao.insertIE(individualEntrepreneur));
 
            //write in to the base
         }catch (Exception ex){
             uiModel.addAttribute("ex",ex);
             return "message";
         }
-
+        redirectAttributes.addFlashAttribute("sendIE",sendIE);
         return rdrct+"/kved";
     }
-
+    //next form
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/kved")
     public String addKved(Model uiModel){
