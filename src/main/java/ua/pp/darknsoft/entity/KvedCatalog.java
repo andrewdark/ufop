@@ -5,7 +5,7 @@ package ua.pp.darknsoft.entity;
  */
 public class KvedCatalog {
     private int id;
-    private String ltree;
+    private String treemark;
     private String label;
     private String name;
     private String description;
@@ -19,12 +19,12 @@ public class KvedCatalog {
         this.id = id;
     }
 
-    public String getLtree() {
-        return ltree;
+    public String getTreemark() {
+        return treemark;
     }
 
-    public void setLtree(String ltree) {
-        this.ltree = ltree;
+    public void setTreemark(String treemark) {
+        this.treemark = treemark;
     }
 
     public String getLabel() {

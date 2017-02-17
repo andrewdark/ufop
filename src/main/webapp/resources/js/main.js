@@ -77,6 +77,8 @@ $(document).ready(function () {
     //Скрыть PopUp при загрузке страницы
     // PopUpHide();
     $("#popup1").hide();
+    $("#popup2").hide();
+    $("#popup3").hide();
     $("#setContact_link_popup").hide();
     document.getElementById("contact_link").onkeypress = function(e) {
         e = e || event;
@@ -125,4 +127,38 @@ function SetContact_link_Show() {
 function SetContact_link_Hide() {
     $("#setContact_link_popup").hide();
 }
+// ------------------KVED Add------------------------- //
+//Функция отображения PopUp
+function KvedPopUpShow() {
+    $("#popup3").show();
+}
+//Функция скрытия PopUp
+function KvedPopUpHide() {
+    $("#kvedname").val($("#my_selecttop3 option:selected").val() );
+    $("#popup3").hide();
+}
+function SetKved_link_Show() {
+    $("#setContact_link_popup").show().focus();
+
+}
+function SetKved_link_Hide() {
+    $("#setContact_link_popup").hide();
+}
+function loopkveddown(level) {
+    if (level == 2) {
+        var aj = "treemark=" + $("#my_selecttop1 option:selected").val() + "&nlevel=2";
+        $("#KvedType2").load("/ajax_select_kved", aj);
+       // $("#KvedType3").html("");
+        //$("#KvedType4").html("");
+    }
+    if (level == 3) {
+        var aj = "treemark=" + $("#my_selecttop2 option:selected").val() + "&nlevel=3";
+        $("#KvedType3").load("/ajax_select_kved", aj);
+        //$("#KvedType4").html("");
+    }
+    if (level == 4) {
+        var aj = "treemark=" + $("#my_selecttop3 option:selected").val() + "&nlevel=4";
+        $("#KvedType4").load("/ajax_select_kved", aj);
+    }
+};
 

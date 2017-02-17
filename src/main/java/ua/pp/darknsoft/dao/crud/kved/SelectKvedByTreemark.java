@@ -14,7 +14,7 @@ import java.sql.Types;
  * Created by Andrew on 16.02.2017.
  */
 public class SelectKvedByTreemark extends MappingSqlQuery<KvedCatalog> {
-    private static final String SQL_SELECT_LOCATION_CATALOG="SELECT *,nlevel(treemark) FROM location_table WHERE treemark<@:treemark::ltree AND nlevel(treemark) = :nlevel ORDER BY id";
+    private static final String SQL_SELECT_LOCATION_CATALOG="SELECT *,nlevel(treemark) FROM kved_catalog_table WHERE treemark<@:treemark::ltree AND nlevel(treemark) = :nlevel ORDER BY id";
 
     public SelectKvedByTreemark(DataSource ds){
         super(ds, SQL_SELECT_LOCATION_CATALOG);
@@ -26,7 +26,7 @@ public class SelectKvedByTreemark extends MappingSqlQuery<KvedCatalog> {
     protected KvedCatalog mapRow(ResultSet resultSet, int i) throws SQLException {
         KvedCatalog kvedCatalog = new KvedCatalog();
         kvedCatalog.setId(resultSet.getInt("id"));
-        kvedCatalog.setLtree(resultSet.getString("treemark"));
+        kvedCatalog.setTreemark(resultSet.getString("treemark"));
         kvedCatalog.setName(resultSet.getString("name"));
         kvedCatalog.setLabel(resultSet.getString("label"));
         kvedCatalog.setDescription(resultSet.getString("description"));

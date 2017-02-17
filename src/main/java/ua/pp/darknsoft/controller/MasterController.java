@@ -8,10 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ua.pp.darknsoft.dao.CatalogDao;
-import ua.pp.darknsoft.dao.ContactDao;
-import ua.pp.darknsoft.dao.IndividualEntrepreneurDao;
-import ua.pp.darknsoft.dao.UserDao;
+import ua.pp.darknsoft.dao.*;
 import ua.pp.darknsoft.entity.*;
 import ua.pp.darknsoft.validator.ContactValidator;
 import ua.pp.darknsoft.validator.IndividualEnterpreneurValidator;
@@ -39,6 +36,8 @@ public class MasterController {
     IndividualEntrepreneurDao individualEntrepreneurDao;
     @Autowired
     UserDao userDao;
+    @Autowired
+    KvedDao kvedDao;
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------MASTER OF INDIVIDUAL ENTERPRENEUR-----------------------------------------
     //------------------------------------------------------------------------------------------------------------------
@@ -136,12 +135,21 @@ public class MasterController {
         return rdrct+"/kved";
     }
     //next form
-    @PreAuthorize("isAuthenticated()")
+    //@PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/kved")
     public String addKved(Model uiModel){
         uiModel.addAttribute("title","Додайте КВЕД(можна декілька)");
+        try{
+            List<KvedCatalog> kvedTop1 = kvedDao.getKvedTop();
+            uiModel.addAttribute("kvedTop1",kvedTop1);
+        }catch (Exception ex){
+            uiModel.addAttribute("ex",ex);
+            return "message";
+        }
+
         return "kved";
     }
+    //next form
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/commercialobject")
     public String addCommercialobject(Model uiModel){
@@ -149,7 +157,7 @@ public class MasterController {
         return "commercialobject";
     }
     //------------------------------------------------------------------------------------------------------------------
-    //----------------------------------------MASTER OF ENTITY ---------------------------------------------------------
+    //--------------------------------------- MASTER OF ENTITY ---------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/entitycommercialobject")
@@ -195,13 +203,31 @@ public class MasterController {
         return html;
     }
     @ResponseBody
-    @RequestMapping(value = "ajax_add_kved", produces = {"application/json; charset=UTF-8"})
-    public String ajax_add_kved(@RequestParam String param1,@RequestParam String param2){
+    @RequestMapping(value = "ajax_select_kved", produces = {"application/json; charset=UTF-8"})
+    public String ajax_select_kved(@RequestParam(defaultValue = "1") String treemark, @RequestParam(defaultValue = "2") String nlevel, Model uiModel){
+        String html = "hello world";
+        String option = "<option disabled>Виберіть Квед</option>";
+        int level=0;
+        List<KvedCatalog> downkved = kvedDao.getKvedByTreemark(treemark,Integer.parseInt(nlevel));
+        try {
+            level = Integer.parseInt(nlevel);
 
-        return param2;
+            for(int i=0;i<=downkved.size()-1;i++){
+
+                option = option + "<option value=\""+downkved.get(i).getTreemark()+"\">"+downkved.get(i).getLabel()+"-"+downkved.get(i).getName()+"</option>";
+            }
+
+        } catch (Exception ex) {
+            uiModel.addAttribute("ex",ex);
+
+            return "Error: " + ex;
+        }
+        html="<select id=\"my_selecttop"+(level)+"\" onchange=\"loopkveddown("+(level+1)+")\">"+option+"</select>";
+
+        return html;
     }
     @ResponseBody
-    @RequestMapping(value = "ajax_add_commercialobject", produces = {"application/json; charset=UTF-8"})
+    @RequestMapping(value = "ajax_select_commercialobject", produces = {"application/json; charset=UTF-8"})
     public String ajax_add_commercialobject(@RequestParam String param1,@RequestParam String param2){
 
         return param2;
@@ -211,13 +237,13 @@ public class MasterController {
     //------------------------------------------------------------------------------------------------------------------
     @RequestMapping(value = "/test")
     public String test(Model uiModel){
-        LocationCatalog lc = new LocationCatalog();
-        List<LocationCatalog> test = new LinkedList();
+
 
 
         try{
-            List<LocationCatalog> downloc = catalogDao.getLocationByTreemark("15.1",3);
-            uiModel.addAttribute("test",downloc);
+            List<KvedCatalog> downkved = kvedDao.getKvedByTreemark("G",3);
+            uiModel.addAttribute("test",downkved);
+            uiModel.addAttribute("test1",downkved.size());
         }catch (Exception ex){
             uiModel.addAttribute("ex",ex);
             return "message";

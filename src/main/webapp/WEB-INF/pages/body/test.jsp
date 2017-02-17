@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+size: ${test1}
 <c:forEach var="test" items="${test}">
-    id:${test.id} -- LTree:${test.ltree} -- Name:${test.name}<br />
+    id:${test.id} -- -- Name:${test.name}<br />
 </c:forEach>

@@ -11,7 +11,7 @@ import java.util.List;
 public interface KvedDao {
     void createEntrepreneursKveds(EntrepreneursKveds entrepreneursKveds);
 
-    List<KvedCatalog> getLocationTop();
+    List<KvedCatalog> getKvedTop();
 
-    List<KvedCatalog> getLocationByTreemark(String treemark, int level);
+    List<KvedCatalog> getKvedByTreemark(String treemark, int level);
 }
