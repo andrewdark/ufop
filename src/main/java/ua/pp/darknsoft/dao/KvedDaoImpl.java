@@ -6,6 +6,7 @@ package ua.pp.darknsoft.dao;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.kved.InsertKvedsEntrepreneur;
 import ua.pp.darknsoft.dao.crud.kved.SelectKvedByTreemark;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 @Service
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class KvedDaoImpl implements KvedDao, Serializable{
+public class KvedDaoImpl implements KvedDao, Serializable {
     DataSource dataSource;
     InsertKvedsEntrepreneur insertKvedsEntrepreneur;
     SelectKvedTop selectKvedTop;
@@ -37,6 +38,7 @@ public class KvedDaoImpl implements KvedDao, Serializable{
         this.selectKvedTop = new SelectKvedTop(dataSource);
         this.selectKvedByTreemark = new SelectKvedByTreemark(dataSource);
     }
+    @PreAuthorize(value = "isAuthenticated()")
     @Override
     public void createEntrepreneursKveds(EntrepreneursKveds entrepreneursKveds) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -49,23 +51,24 @@ public class KvedDaoImpl implements KvedDao, Serializable{
     }
 
     @Override
-    public List<KvedCatalog> getKvedTop(){
+    public List<KvedCatalog> getKvedTop() {
         return selectKvedTop.execute();
     }
 
     @Override
-    public List<KvedCatalog> getKvedByTreemark(String treemark, int level){
+    public List<KvedCatalog> getKvedByTreemark(String treemark, int level) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("treemark", treemark);
-        paramMap.put("nlevel",level);
+        paramMap.put("nlevel", level);
         List<KvedCatalog> downloc = selectKvedByTreemark.executeByNamedParam(paramMap);
-        if(downloc.isEmpty()){
+        if (downloc.isEmpty()) {
             KvedCatalog lc = new KvedCatalog();
-            lc.setId(0); lc.setTreemark("0.0"); lc.setName("No data");
+            lc.setId(0);
+            lc.setTreemark("0.0");
+            lc.setName("No data");
         }
         return downloc;
     }
-
 
 
 }

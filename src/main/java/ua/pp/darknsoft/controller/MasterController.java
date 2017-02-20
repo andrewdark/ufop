@@ -38,6 +38,8 @@ public class MasterController {
     UserDao userDao;
     @Autowired
     KvedDao kvedDao;
+    @Autowired
+    CommercialObjectDao commercialObjectDao;
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------MASTER OF INDIVIDUAL ENTERPRENEUR-----------------------------------------
     //------------------------------------------------------------------------------------------------------------------
@@ -75,7 +77,7 @@ public class MasterController {
         }
         try {
 
-            contact.setOwner(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+            contact.setOwner(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
             sendContact.setId(contactDao.insert(contact)); //send owner of the individual entrepreneur information
             sendContact.setRntc(contact.getRntc());
             sendContact.setSeries_of_passport(contact.getSeries_of_passport());
@@ -123,7 +125,7 @@ public class MasterController {
             return rdrct + "/individualentrepreneur";
         }
         try {
-            individualEntrepreneur.setOwner(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+            individualEntrepreneur.setOwner(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
             sendIE.setId(individualEntrepreneurDao.insertIE(individualEntrepreneur));
 
            //write in to the base
@@ -135,7 +137,7 @@ public class MasterController {
         return rdrct+"/kved";
     }
     //next form
-    //@PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/kved")
     public String addKved(Model uiModel){
         uiModel.addAttribute("title","Додайте КВЕД(можна декілька)");
@@ -149,6 +151,19 @@ public class MasterController {
 
         return "kved";
     }
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/kvedpost", method = RequestMethod.POST)
+    public String kvedpost(@RequestParam String ufop_id, HttpServletRequest httpServletRequest,
+                                             RedirectAttributes redirectAttributes, Model uiModel) {
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+redirectAttributes.addFlashAttribute("ufop_id", ufop_id);
+        return rdrct+"/commercialobject";
+    }
+
     //next form
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/commercialobject")
@@ -203,7 +218,7 @@ public class MasterController {
         return html;
     }
     @ResponseBody
-    @RequestMapping(value = "ajax_select_kved", produces = {"application/json; charset=UTF-8"})
+    @RequestMapping(value = "/ajax_select_kved", produces = {"application/json; charset=UTF-8"})
     public String ajax_select_kved(@RequestParam(defaultValue = "1") String treemark, @RequestParam(defaultValue = "2") String nlevel, Model uiModel){
         String html = "hello world";
         String option = "<option disabled>Виберіть Квед</option>";
@@ -226,8 +241,45 @@ public class MasterController {
 
         return html;
     }
+
     @ResponseBody
-    @RequestMapping(value = "ajax_select_commercialobject", produces = {"application/json; charset=UTF-8"})
+    @RequestMapping(value = "/ajax_add_kved", produces = {"application/json; charset=UTF-8"})
+    public String ajax_add_kved(@RequestParam String param1,@RequestParam String param2){
+        EntrepreneursKveds entrepreneursKveds = new EntrepreneursKveds();
+        if(param1.isEmpty()) return "Error: ID ФОП is Empty";
+        if(param2.isEmpty()) return "Error: КВЕД is Empty";
+        try{
+            entrepreneursKveds.setEntrepreneur_link(Long.parseLong(param1));
+            entrepreneursKveds.setKved_catalog_link(param2);
+            entrepreneursKveds.setOwner(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
+            kvedDao.createEntrepreneursKveds(entrepreneursKveds);
+        }catch (Exception ex){
+            return "Error: "+ex;
+        }
+        return "added";
+    }
+    @ResponseBody
+    @RequestMapping(value = "/ajax_add_co", produces = {"application/json; charset=UTF-8"})
+    public String ajax_add_co(@RequestParam String param1,@RequestParam String param2){
+
+        if(param1.isEmpty()) return "Error: ID ФОП is Empty";
+        if(param2.isEmpty()) return "Error: Адреса is Empty";
+        CommercialObject commercialObject = new CommercialObject();
+        try{
+            commercialObject.setUfop_link(Long.parseLong(param1));
+            commercialObject.setA_obj_location("addrr");
+            commercialObject.setN_obj_location("number");
+            commercialObject.setOwner(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
+
+            commercialObjectDao.createCommObj(commercialObject);
+        }catch (Exception ex){
+            return "Error: "+ex;
+        }
+        return "added p1:"+param1+" p2:"+param2;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax_select_commercialobject", produces = {"application/json; charset=UTF-8"})
     public String ajax_add_commercialobject(@RequestParam String param1,@RequestParam String param2){
 
         return param2;

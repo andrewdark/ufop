@@ -39,6 +39,13 @@
 
     <div class="clr"></div>
 </div>
+
+<form method="post" action="/kvedpost">
+<input type="hidden" id="ufop_id" name="ufop_id" value="${sendIE.id}" />
+    <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}"/>
+    <button type="submit"><img src="/resources/images/next_step.jpg"/></button>
+</form>
+
 <div class="d_right"><a href="/commercialobject"><img src="resources/images/next_step.jpg"/></a></div>
 <div class="b-popup" id="popup3">
     ${ex}<br/>

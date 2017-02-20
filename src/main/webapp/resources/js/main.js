@@ -11,21 +11,7 @@ function looplocation() {
     var aj = "x=" + $("#my_select option:selected").val();
     $("#setlocselection").load("/ajax", aj);
 };
-function inject_kved() {
-   var param1=$("#fopid").val();
-   var param2=$("#kvedname").val();
-    var param = "param1="+param1+"&param2="+param2;
-    $("#kved_message").load("/ajax_add_kved",param);
-    // $.ajax({url:"/ajax_add_kved",
-    //     data:param,
-    //     success:function(result){
-    //         $("#kved_message").html(result);
-    //
-    //     }
-    // });
 
-
-}
 function looplocationtop() {
    // var aj = "x=" + $("#my_selecttop option:selected").val();
    // $("#setloc_popup").load("/ajax_select_loc", aj);
@@ -161,4 +147,17 @@ function loopkveddown(level) {
         $("#KvedType4").load("/ajax_select_kved", aj);
     }
 };
+function inject_kved() {
+    var param1=$("#fopid").val();
+    var param2=$("#kvedname").val();
+    var param = "param1="+param1+"&param2="+param2;
+    $("#kved_message").load("/ajax_add_kved",param);
 
+}
+// ------------------COMMERCIAL Obj Add------------------------- //
+function inject_co() {
+    var param1=$("#fopidco").val();
+    var param2=$("#addressco").val();
+    var param = "param1="+param1+"&param2="+param2;
+    $("#co_message").load("/ajax_add_co",param);
+}

@@ -8,9 +8,9 @@ import java.sql.Timestamp;
 public class EntrepreneursKveds {
     private long id;
     private long entrepreneur_link;
-    private long kved_catalog_link;
+    private String kved_catalog_link;
     private Timestamp datereg;
-    private int owner;
+    private String owner;
 
     public long getId() {
         return id;
@@ -28,9 +28,9 @@ public class EntrepreneursKveds {
         this.entrepreneur_link = entrepreneur_link;
     }
 
-    public long getKved_catalog_link() { return kved_catalog_link; }
+    public String getKved_catalog_link() { return kved_catalog_link; }
 
-    public void setKved_catalog_link(long kved_catalog_link) {
+    public void setKved_catalog_link(String kved_catalog_link) {
         this.kved_catalog_link = kved_catalog_link;
     }
 
@@ -42,11 +42,11 @@ public class EntrepreneursKveds {
         this.datereg = datereg;
     }
 
-    public int getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(int owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 }
