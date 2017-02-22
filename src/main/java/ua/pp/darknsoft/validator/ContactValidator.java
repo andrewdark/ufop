@@ -39,7 +39,7 @@ public class ContactValidator implements Validator {
             if(!isNumber(contact.getRntc())||contact.getRntc().length()!=10){errors.rejectValue("rntc", "rntc.notDog", "Не вірний формат");}
             String there_is="";
             try{
-               there_is = contactDao.SelectContactByRntc(contact.getRntc());
+               there_is = contactDao.getContactByRntc(contact.getRntc());
             }catch (Exception ex){
                 there_is = "0000000000";
             }

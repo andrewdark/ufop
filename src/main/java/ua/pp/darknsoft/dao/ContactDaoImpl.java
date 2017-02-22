@@ -40,7 +40,7 @@ public class ContactDaoImpl implements ContactDao, Serializable {
     }
 
     @Override
-    public List<Contact> selectContact(int total, int pageid) {
+    public List<Contact> getContact(int total, int pageid) {
         Map<String,Object> bind = new HashMap<>();
         bind.put("total",total);
         bind.put("pageid",pageid);
@@ -93,7 +93,7 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         return (Long) keys.get("id");
     }
     @Override
-    public String SelectContactByRntc(String rntc){
+    public String getContactByRntc(String rntc){
         String sql = "SELECT rntc FROM contact_table WHERE rntc=:rntc";
         Map<String, Object> bind = new HashMap<>();
         bind.put("rntc",rntc);

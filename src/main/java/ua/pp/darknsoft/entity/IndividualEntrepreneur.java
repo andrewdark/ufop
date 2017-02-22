@@ -1,6 +1,6 @@
 package ua.pp.darknsoft.entity;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 /**
  * Created by Andrew on 30.01.2017.
@@ -8,6 +8,7 @@ import java.time.LocalDate;
 public class IndividualEntrepreneur {
     private long id;
     private long contact_link;
+    private Contact contact;
     private String a_place_of_reg;
     private String n_place_of_reg;
     private String rntc;
@@ -15,7 +16,7 @@ public class IndividualEntrepreneur {
     private String number_of_passport;
     private int risk_group;
     private boolean if_pdv;
-    private LocalDate datereg;
+    private Timestamp datereg;
     private String Owner;
     private String description;
 
@@ -91,11 +92,11 @@ public class IndividualEntrepreneur {
         this.if_pdv = if_pdv;
     }
 
-    public LocalDate getDatereg() {
+    public Timestamp getDatereg() {
         return datereg;
     }
 
-    public void setDatereg(LocalDate datereg) {
+    public void setDatereg(Timestamp datereg) {
         this.datereg = datereg;
     }
 
@@ -114,4 +115,9 @@ public class IndividualEntrepreneur {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Contact getContact() { return contact; }
+
+    public void setContact(Contact contact) { this.contact = contact; }
+
 }

@@ -10,9 +10,9 @@ import java.sql.SQLException;
 /**
  * Created by Andrew on 20.02.2017.
  */
-public class getCommercialObjType extends MappingSqlQuery<CommercialObjectType>{
+public class GetCommercialObjType extends MappingSqlQuery<CommercialObjectType>{
     private static final String SQL_SELECT_COMMOBJTYPE="SELECT * FROM commercial_object_type_table";
-    public getCommercialObjType(DataSource ds) {
+    public GetCommercialObjType(DataSource ds) {
         super(ds,SQL_SELECT_COMMOBJTYPE);
     }
     @Override

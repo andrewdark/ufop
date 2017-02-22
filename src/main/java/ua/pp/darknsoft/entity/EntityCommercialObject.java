@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 /**
  * Created by Andrew on 30.01.2017.
  */
-public class CommercialObject {
+public class EntityCommercialObject {
     private long id;
     private long ufop_link;
     private int obj_type;

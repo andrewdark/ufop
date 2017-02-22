@@ -3,7 +3,7 @@ package ua.pp.darknsoft.entity;
 /**
  * Created by Andrew on 16.02.2017.
  */
-public class CheckOutTime {
+public class EntrepreneurCheckOutTime {
     private long id;
     private long ufop_link;
     private String inspection_plane_date;
@@ -11,9 +11,7 @@ public class CheckOutTime {
     private String expiration_date;
     private String inspection_cs_link;
 
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
     public void setId(long id) {
         this.id = id;

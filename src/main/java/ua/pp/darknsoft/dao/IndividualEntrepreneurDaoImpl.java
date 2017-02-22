@@ -8,12 +8,14 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
+import ua.pp.darknsoft.dao.crud.etrepreneur.SelectIE;
 import ua.pp.darknsoft.entity.IndividualEntrepreneur;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,13 +26,22 @@ import java.util.Map;
 public class IndividualEntrepreneurDaoImpl implements IndividualEntrepreneurDao, Serializable {
     DataSource dataSource;
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    SelectIE selectIE;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.selectIE = new SelectIE(dataSource);
     }
 
+    @Override
+    public List<IndividualEntrepreneur> getEntrepreneur(int total, int pageid) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("total", total);
+        bind.put("pageid", pageid);
+        return selectIE.executeByNamedParam(bind);
+    }
 
     @Override
     public String SelectIEByRntc(String rntc) {

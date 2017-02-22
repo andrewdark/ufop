@@ -10,7 +10,7 @@ import java.sql.Date;
  */
 @Service
 public class Contact {
-    private Long id;
+    private long id;
     private String first_name;
     private String last_name;
     private String patronymic_name;
@@ -29,11 +29,11 @@ public class Contact {
     private String position;
     private String description;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -522,8 +522,8 @@ span.error {
     top:0px;
 }
 .b-popup .b-popup-content{
-    margin:200px auto 0px auto;
-    width:200px;
+    margin:200px 1000px 0px auto;
+    width:650px;
     height: 100px;
     padding:10px;
     background-color: #c5c5c5;

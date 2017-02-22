@@ -49,7 +49,7 @@
                 </tr>
                 <tr>
                     <td><form:label path="a_stay_address" >Адреса реєстрації:</form:label></td>
-                    <td><form:input id="loc1" htmlEscape="true" path="a_stay_address" class="form-control" maxlength="24" onclick="javascript:PopUpShow()"/></td>
+                    <td><form:input id="loc1" htmlEscape="true" path="a_stay_address" class="form-control" maxlength="24" onclick="javascript:LocPopUpShow()"/></td>
                     <td><span class="error"><form:errors path="a_stay_address"/></span></td>
                 </tr>
                 <tr>
@@ -118,6 +118,6 @@
         <div id="LocationType3"></div>
         <div id="LocationType4"></div>
         <div id="LocationType5"></div>
-        <a href="javascript:PopUpHide()">Додати адресу</a>
+        <a href="javascript:LocPopUpHide()">Додати адресу</a>
     </div>
 </div>

@@ -3,14 +3,17 @@ package ua.pp.darknsoft.dao;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import ua.pp.darknsoft.dao.crud.commercialobj.GetCommercialObjType;
 import ua.pp.darknsoft.dao.crud.commercialobj.InsertCommercialObject;
 import ua.pp.darknsoft.dao.crud.commercialobj.SelectCommercialObjectByUfop;
-import ua.pp.darknsoft.entity.CommercialObject;
+import ua.pp.darknsoft.entity.CommercialObjectType;
+import ua.pp.darknsoft.entity.EntrepreneurCommercialObject;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,24 +25,33 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     DataSource dataSource;
     InsertCommercialObject insertCommercialObject;
     SelectCommercialObjectByUfop selectCommercialObjectByUfop;
+    GetCommercialObjType getCommercialObjType;
+
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.insertCommercialObject = new InsertCommercialObject(dataSource);
         this.selectCommercialObjectByUfop = new SelectCommercialObjectByUfop(dataSource);
+        this.getCommercialObjType = new GetCommercialObjType(dataSource);
     }
-@Override
-    public void createCommObj(CommercialObject commercialObject) {
+
+    @Override
+    public void createCommObj(EntrepreneurCommercialObject entrepreneurCommercialObject) {
         Map<String, Object> bind = new HashMap<String, Object>();
-        bind.put("ufop_link", commercialObject.getUfop_link());
-        bind.put("obj_type", commercialObject.getObj_type());
-        bind.put("obj_name", commercialObject.getObj_name());
-        bind.put("a_obj_location", commercialObject.getA_obj_location());
-        bind.put("n_obj_location", commercialObject.getN_obj_location());
-        bind.put("owner", commercialObject.getOwner());
+        bind.put("ufop_link", entrepreneurCommercialObject.getUfop_link());
+        bind.put("obj_type", entrepreneurCommercialObject.getObj_type());
+        bind.put("obj_name", entrepreneurCommercialObject.getObj_name());
+        bind.put("a_obj_location", entrepreneurCommercialObject.getA_obj_location());
+        bind.put("n_obj_location", entrepreneurCommercialObject.getN_obj_location());
+        bind.put("owner", entrepreneurCommercialObject.getOwner());
 
         insertCommercialObject.updateByNamedParam(bind);
+    }
+
+    @Override
+    public List<CommercialObjectType> getCommObjType() {
+        return getCommercialObjType.execute();
     }
 
 }

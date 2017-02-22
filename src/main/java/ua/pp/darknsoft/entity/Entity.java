@@ -3,16 +3,16 @@ package ua.pp.darknsoft.entity;
 import java.time.LocalDate;
 
 /**
- * Created by Andrew on 15.02.2017.
+ * Created by Andrew on 21.02.2017.
  */
-public class OrganizationEntity {
+public class Entity {
     private long id;
-    private String Name;
+    private String name;
     private String code_edrpoy;
     private String a_place_of_reg;
-    private String n_place_of_reg;
+    private String character;
     private LocalDate datereg;
-    private String Owner;
+    private String owner;
     private String description;
 
     public long getId() {
@@ -23,16 +23,16 @@ public class OrganizationEntity {
         this.id = id;
     }
 
-    public String getCode_edrpoy() {
-        return code_edrpoy;
-    }
-
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
+    }
+
+    public String getCode_edrpoy() {
+        return code_edrpoy;
     }
 
     public void setCode_edrpoy(String code_edrpoy) {
@@ -47,12 +47,12 @@ public class OrganizationEntity {
         this.a_place_of_reg = a_place_of_reg;
     }
 
-    public String getN_place_of_reg() {
-        return n_place_of_reg;
+    public String getCharacter() {
+        return character;
     }
 
-    public void setN_place_of_reg(String n_place_of_reg) {
-        this.n_place_of_reg = n_place_of_reg;
+    public void setCharacter(String character) {
+        this.character = character;
     }
 
     public LocalDate getDatereg() {
@@ -64,11 +64,11 @@ public class OrganizationEntity {
     }
 
     public String getOwner() {
-        return Owner;
+        return owner;
     }
 
     public void setOwner(String owner) {
-        Owner = owner;
+        this.owner = owner;
     }
 
     public String getDescription() {

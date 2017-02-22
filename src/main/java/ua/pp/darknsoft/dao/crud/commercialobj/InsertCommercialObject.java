@@ -14,7 +14,7 @@ import java.sql.Types;
  */
 public class InsertCommercialObject extends SqlUpdate {
 
-    private final static String SQL_INSERT_CommObj="INSERT INTO commercial_object_table(ufop_link,obj_type,obj_name,a_obj_location,n_obj_location,owner)" +
+    private final static String SQL_INSERT_CommObj="INSERT INTO comm_obj_entrepreneur_table(ufop_link,obj_type,obj_name,a_obj_location,n_obj_location,owner)" +
             " VALUES (:ufop_link,:obj_type,:obj_name,:a_obj_location,:n_obj_location,(SELECT id FROM user_table WHERE username =:owner))";
 
     public InsertCommercialObject(DataSource dataSource){

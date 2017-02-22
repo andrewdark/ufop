@@ -17,31 +17,33 @@
             <table>
                 <tr>
                     <td>ID ФОП:</td>
-                    <td><input type="text" disabled="disabled" value="${ufop_id}" id="fopidco"/></td>
+                    <td><input type="text" disabled="disabled" value="${ufop_id}" id="co_input01"/></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>Адреса: </td>
-                    <td><input type="text" id="addressco"/></td>
+                    <td><input type="text" id="co_input02"/></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>№ будівлі: </td>
-                    <td><input type="text" id="nbudco"/></td>
+                    <td><input type="text" id="co_input03"/></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>Тип об'єкта: </td>
-                    <td><select>
-                        <option value="1">МАФ</option>
-                        <option value="2">Ларьок</option>
-                        <option value="3">Магазин</option>
+                    <td><select id="co_select01">
+                        <option disabled>Вкажіть тип КО</option>
+                        <c:forEach var="co" items="${co}">
+                            <option value="${co.id}">${co.name}</option>
+                        </c:forEach>
+
                     </select></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>Назва</td>
-                    <td><input type="text" id="nameco"/></td>
+                    <td><input type="text" id="co_input04"/></td>
                     <td></td>
                 </tr>
                 <tr>

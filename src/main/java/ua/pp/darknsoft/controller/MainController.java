@@ -12,14 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ua.pp.darknsoft.dao.CatalogDao;
 import ua.pp.darknsoft.dao.ContactDao;
-import ua.pp.darknsoft.dao.ContactDaoImpl;
+import ua.pp.darknsoft.dao.IndividualEntrepreneurDao;
 import ua.pp.darknsoft.entity.Contact;
-import ua.pp.darknsoft.entity.LocationCatalog;
-import ua.pp.darknsoft.entity.LocationType;
+import ua.pp.darknsoft.entity.IndividualEntrepreneur;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,6 +33,8 @@ public class MainController {
     ContactDao contactDao;
     @Autowired
     CatalogDao catalogDao;
+    @Autowired
+    IndividualEntrepreneurDao individualEntrepreneurDao;
 
     @RequestMapping(value = "/")
     public String main(){
@@ -40,21 +43,49 @@ public class MainController {
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------VIEWS LIST----------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
-    @RequestMapping(value = "/viewslisti/{pageid}", method = RequestMethod.GET)
-    public String viewsListi(@PathVariable int pageid, Model uiModel){
+    @RequestMapping(value = "/viewslistcontact/{pageid}", method = RequestMethod.GET)
+    public String viewsListContact(@PathVariable int pageid, Model uiModel){
+//        if(pageid<=0){
+//            uiModel.addAttribute("ex","Не вірна сторінка"); return "message";}
         int total = 5;
-        int pageid1=1;
-        if(pageid==1){}
+        int pageid1=pageid;
+        if(pageid==1){pageid1=0;}
         else{
-            pageid1=(pageid-1)*total+1;
+            pageid1=(pageid1-1)*total+1;
         }
-        List<Contact> ufop = contactDao.selectContact(total,pageid1);
+        List<Contact> ufop = contactDao.getContact(total,pageid1);
         String link="/individual_enterpreneur";
         uiModel.addAttribute("ufop",ufop);
         uiModel.addAttribute("viewmore",link);
         uiModel.addAttribute("page_id",pageid);
+        return "viewslist_contact";
+    }
+    @RequestMapping(value = "/viewslisti/{pageid}", method = RequestMethod.GET)
+    public String viewsListi(@PathVariable int pageid, Model uiModel){
+
+        if(pageid<=0){
+            uiModel.addAttribute("ex","Не вірна сторінка"); return "message";}
+        int total = 5;
+        int pageid1=pageid;
+        if(pageid==1){pageid1=0;}
+        else{
+            pageid1=(pageid1-1)*total+1;
+        }
+        List<IndividualEntrepreneur> ufop = new LinkedList<IndividualEntrepreneur>();
+        ufop = individualEntrepreneurDao.getEntrepreneur(total,pageid1);
+        if(ufop.isEmpty()){
+            uiModel.addAttribute("ex","isEmpty");
+            return "message";
+        }
+        uiModel.addAttribute("u_size",ufop.size());
+        String link="/individual_enterpreneur";
+        uiModel.addAttribute("ufop",ufop);
+        uiModel.addAttribute("viewmore",link);
+        uiModel.addAttribute("page_id",pageid);
+        uiModel.addAttribute("total_page","t");
         return "viewslist_individual";
     }
+
     @RequestMapping(value = "/viewslistu", method = RequestMethod.GET)
     public String viewsListu(Model uiModel){
         List<String> uop = new ArrayList<String>();

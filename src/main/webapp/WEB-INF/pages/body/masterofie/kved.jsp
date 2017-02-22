@@ -43,17 +43,18 @@
 <form method="post" action="/kvedpost">
 <input type="hidden" id="ufop_id" name="ufop_id" value="${sendIE.id}" />
     <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}"/>
-    <button type="submit"><img src="/resources/images/next_step.jpg"/></button>
+    <div class="d_right"><button type="submit"><img src="/resources/images/next_step.jpg"/></button></div>
 </form>
 
-<div class="d_right"><a href="/commercialobject"><img src="resources/images/next_step.jpg"/></a></div>
+
 <div class="b-popup" id="popup3">
     ${ex}<br/>
 
 
     <div class="b-popup-content" id="setkved_popup">
 
-        <select id="my_selecttop1" name="my_selecttop" onchange="loopkveddown(2)">
+        <select id="my_selecttop1" name="my_selecttop" onchange="loopkveddown(2)" onmousedown="$(':first-child', this).remove(); this.onmousedown = null;">
+            <option value=""></option>
             <c:forEach items="${kvedTop1}" var="kvedTop1">
                 <option value="${kvedTop1.treemark}">${kvedTop1.label} - ${kvedTop1.name}</option>
             </c:forEach>

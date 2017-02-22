@@ -21,27 +21,7 @@ function looplocationtop() {
     //         $("#setloc_popup").html(result)}
     // });
 };
-//func search location DOWN
-function looplocationdown(level) {
-    if(level==2){
-        var aj = "treemark=" + $("#my_selecttop1 option:selected").val()+"&nlevel=2";
-        $("#LocationType2").load("/ajax_select_loc", aj);
-        $("#LocationType3").html("");
-    }
-    if(level==3){
-        var aj = "treemark=" + $("#my_selecttop2 option:selected").val()+"&nlevel=3";
-        $("#LocationType3").load("/ajax_select_loc", aj);
-    }
-    if(level==4){
-        var aj = "treemark=" + $("#my_selecttop3 option:selected").val()+"&nlevel=4";
-        $("#LocationType4").load("/ajax_select_loc", aj);
-    }
-    // $.ajax({url:"/ajax_select_loc",
-    //
-    //     success:function(result){
-    //         $("#setloc_popup").html(result)}
-    // });
-};
+
 
 $(function () {
     $("#datepicker").datepicker();
@@ -96,13 +76,39 @@ $(document).ready(function () {
         return null; // специальная клавиша
     }
 });
+//--------------------LOCATION ADD---------------------------------
+var count_loc=1;
+
+//func search location DOWN
+function looplocationdown(level) {
+    count_loc=level;
+    if(level==2){
+        var aj = "treemark=" + $("#my_selecttop1 option:selected").val()+"&nlevel=2";
+        $("#LocationType2").load("/ajax_select_loc", aj);
+        $("#LocationType3").html("");
+        $("#LocationType4").html("");
+    }
+    if(level==3){
+        var aj = "treemark=" + $("#my_selecttop2 option:selected").val()+"&nlevel=3";
+        $("#LocationType3").load("/ajax_select_loc", aj);
+        $("#LocationType4").html("");
+    }
+    if(level==4){
+        var aj = "treemark=" + $("#my_selecttop3 option:selected").val()+"&nlevel=4";
+        $("#LocationType4").load("/ajax_select_loc", aj);
+    }
+};
+
 //Функция отображения PopUp
-function PopUpShow() {
+function LocPopUpShow() {
     $("#popup1").show();
 }
 //Функция скрытия PopUp
-function PopUpHide() {
-    $("#loc1").val($("#my_selecttop1 option:selected").val() );
+function LocPopUpHide() {
+    if(count_loc== 1) $("#loc1").val($("#my_selecttop1 option:selected").val() );
+    if(count_loc== 2) $("#loc1").val($("#my_selecttop2 option:selected").val() );
+    if(count_loc== 3) $("#loc1").val($("#my_selecttop3 option:selected").val() );
+    if(count_loc== 4) $("#loc1").val($("#my_selecttop4 option:selected").val() );
     $("#popup1").hide();
 }
 
@@ -119,8 +125,13 @@ function KvedPopUpShow() {
     $("#popup3").show();
 }
 //Функция скрытия PopUp
+var count_kved=1;
 function KvedPopUpHide() {
-    $("#kvedname").val($("#my_selecttop3 option:selected").val() );
+    //alert(count_kved);
+    if(count_kved == 1)$("#kvedname").val($("#my_selecttop1 option:selected").val() );
+    if(count_kved == 2)$("#kvedname").val($("#my_selecttop2 option:selected").val() );
+    if(count_kved == 3)$("#kvedname").val($("#my_selecttop3 option:selected").val() );
+    if(count_kved == 4)$("#kvedname").val($("#my_selecttop4 option:selected").val() );
     $("#popup3").hide();
 }
 function SetKved_link_Show() {
@@ -131,16 +142,18 @@ function SetKved_link_Hide() {
     $("#setContact_link_popup").hide();
 }
 function loopkveddown(level) {
+    count_kved=level;
     if (level == 2) {
         var aj = "treemark=" + $("#my_selecttop1 option:selected").val() + "&nlevel=2";
         $("#KvedType2").load("/ajax_select_kved", aj);
-       // $("#KvedType3").html("");
-        //$("#KvedType4").html("");
+
+        $("#KvedType3").html("");
+        $("#KvedType4").html("");
     }
     if (level == 3) {
         var aj = "treemark=" + $("#my_selecttop2 option:selected").val() + "&nlevel=3";
         $("#KvedType3").load("/ajax_select_kved", aj);
-        //$("#KvedType4").html("");
+        $("#KvedType4").html("");
     }
     if (level == 4) {
         var aj = "treemark=" + $("#my_selecttop3 option:selected").val() + "&nlevel=4";
@@ -156,8 +169,12 @@ function inject_kved() {
 }
 // ------------------COMMERCIAL Obj Add------------------------- //
 function inject_co() {
-    var param1=$("#fopidco").val();
-    var param2=$("#addressco").val();
-    var param = "param1="+param1+"&param2="+param2;
+    var p1=$("#co_input01").val();
+    var p2=$("#co_input02").val();
+    var p3=$("#co_input03").val();
+    var p4=$("#co_select01 option:selected").val();
+    var p5=$("#co_input04").val();
+
+    var param = "p1="+p1+"&p2="+p2+"&p3="+p3+"&p4="+p4+"&p5="+p5;
     $("#co_message").load("/ajax_add_co",param);
 }
