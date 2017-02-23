@@ -1,24 +1,29 @@
 package ua.pp.darknsoft.dao.crud.catalog;
 
+import ognl.IntHashMap;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import ua.pp.darknsoft.entity.LocationCatalog;
+import ua.pp.darknsoft.entity.LocationType;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Andrew on 03.02.2017.
  */
 public class SelectLocationByTreemark extends MappingSqlQuery<LocationCatalog> {
-    private static final String SQL_SELECT_LOCATION_CATALOG="SELECT *,nlevel(treemark) FROM location_table WHERE treemark<@:treemark::ltree AND nlevel(treemark) = :nlevel ORDER BY id";
+    private static final String SQL_SELECT_LOCATION_CATALOG="SELECT l.*,t.type stype,nlevel(l.treemark) FROM location_table l INNER JOIN location_type_table t ON(t.id=l.type) WHERE l.treemark<@:treemark::ltree AND nlevel(l.treemark) = :nlevel ORDER BY l.id";
 
     public SelectLocationByTreemark(DataSource ds){
         super(ds, SQL_SELECT_LOCATION_CATALOG);
         super.declareParameter(new SqlParameter("treemark", Types.VARCHAR));
         super.declareParameter(new SqlParameter("nlevel", Types.INTEGER));
+
     }
 
     @Override
@@ -28,9 +33,11 @@ public class SelectLocationByTreemark extends MappingSqlQuery<LocationCatalog> {
         locationCatalog.setLtree(resultSet.getString("treemark"));
         locationCatalog.setName(resultSet.getString("name"));
         locationCatalog.setType(resultSet.getInt("type"));
+        locationCatalog.setStype(resultSet.getString("stype"));
         locationCatalog.setNote(resultSet.getString("note"));
         locationCatalog.setNlevel(resultSet.getInt("nlevel"));
 
         return locationCatalog;
     }
+
 }

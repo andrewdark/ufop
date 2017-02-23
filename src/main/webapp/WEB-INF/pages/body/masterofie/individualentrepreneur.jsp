@@ -44,12 +44,12 @@
                 </tr>
                 <tr>
                     <td><form:label path="a_place_of_reg" >Адреса реєстрації:</form:label></td>
-                    <td><form:input id="loc2" htmlEscape="true" path="a_place_of_reg" class="form-control" /></td>
+                    <td><form:input id="loc1" htmlEscape="true" path="a_place_of_reg" class="form-control" onclick="javascript:LocPopUpShow()"/></td>
                     <td><span class="error"><form:errors path="a_place_of_reg"/></span></td>
                 </tr>
                 <tr>
                     <td><form:label path="n_place_of_reg">Номер будівлі:</form:label></td>
-                    <td><form:input htmlEscape="true" path="n_place_of_reg" class="form-control" maxlength="10"/></td>
+                    <td><form:input htmlEscape="true" path="n_place_of_reg" class="form-control" maxlength="35"/></td>
                     <td><span class="error"><form:errors path="n_place_of_reg"/></span></td>
                 </tr>
                 <tr>
@@ -84,5 +84,21 @@
     <div class="b-popup-content">
         Not support yet<br />
         <a href="javascript:SetContact_link_Hide()">Змінити Contact_Link</a>
+    </div>
+</div>
+<div class="b-popup" id="popup1">
+    ${ex}<br />
+    <div class="b-popup-content" id="setloc_popup">
+        <select id="my_selecttop1" name="my_selecttop" onchange="looplocationdown(2)">
+            <c:forEach items="${locationTop}" var="locationTop">
+                <option value="${locationTop.id}">${locationTop.name}</option>
+            </c:forEach>
+        </select><br />
+        <div id="LocationType2"></div>
+        <div id="LocationType3"></div>
+        <div id="LocationType4"></div>
+        <div id="LocationType5"></div>
+        <div id="LocationType6"></div>
+        <a href="javascript:LocPopUpHide()">Додати адресу</a>
     </div>
 </div>

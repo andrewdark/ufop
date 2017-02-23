@@ -13,8 +13,8 @@ function looplocation() {
 };
 
 function looplocationtop() {
-   // var aj = "x=" + $("#my_selecttop option:selected").val();
-   // $("#setloc_popup").load("/ajax_select_loc", aj);
+    // var aj = "x=" + $("#my_selecttop option:selected").val();
+    // $("#setloc_popup").load("/ajax_select_loc", aj);
     // $.ajax({url:"/ajax_select_loc",
     //
     //     success:function(result){
@@ -46,7 +46,7 @@ $(document).ready(function () {
     $("#popup2").hide();
     $("#popup3").hide();
     $("#setContact_link_popup").hide();
-    document.getElementById("contact_link").onkeypress = function(e) {
+    document.getElementById("contact_link").onkeypress = function (e) {
         e = e || event;
 
         if (e.ctrlKey || e.altKey || e.metaKey) return;
@@ -77,24 +77,28 @@ $(document).ready(function () {
     }
 });
 //--------------------LOCATION ADD---------------------------------
-var count_loc=1;
+var count_loc = 1;
 
 //func search location DOWN
 function looplocationdown(level) {
-    count_loc=level;
-    if(level==2){
-        var aj = "treemark=" + $("#my_selecttop1 option:selected").val()+"&nlevel=2";
+    count_loc = level;
+    if (level == 2) {
+        var aj = "treemark=" + $("#my_selecttop1 option:selected").val() + "&nlevel=2";
         $("#LocationType2").load("/ajax_select_loc", aj);
         $("#LocationType3").html("");
         $("#LocationType4").html("");
     }
-    if(level==3){
-        var aj = "treemark=" + $("#my_selecttop2 option:selected").val()+"&nlevel=3";
+    if (level == 3) {
+        var aj = "treemark=" + $("#my_selecttop2 option:selected").val() + "&nlevel=3";
         $("#LocationType3").load("/ajax_select_loc", aj);
         $("#LocationType4").html("");
     }
-    if(level==4){
-        var aj = "treemark=" + $("#my_selecttop3 option:selected").val()+"&nlevel=4";
+    if (level == 4) {
+        var aj = "treemark=" + $("#my_selecttop3 option:selected").val() + "&nlevel=4";
+        $("#LocationType4").load("/ajax_select_loc", aj);
+    }
+    if (level == 5) {
+        var aj = "treemark=" + $("#my_selecttop4 option:selected").val() + "&nlevel=5";
         $("#LocationType4").load("/ajax_select_loc", aj);
     }
 };
@@ -105,10 +109,38 @@ function LocPopUpShow() {
 }
 //Функция скрытия PopUp
 function LocPopUpHide() {
-    if(count_loc== 1) $("#loc1").val($("#my_selecttop1 option:selected").val() );
-    if(count_loc== 2) $("#loc1").val($("#my_selecttop2 option:selected").val() );
-    if(count_loc== 3) $("#loc1").val($("#my_selecttop3 option:selected").val() );
-    if(count_loc== 4) $("#loc1").val($("#my_selecttop4 option:selected").val() );
+    if (count_loc == 1) {
+        if ($("#my_selecttop1 option:selected").val().length > 1) {
+            $("#loc1").val($("#my_selecttop1 option:selected").val());
+        } else {
+            $("#loc1").val("1");
+        }
+    }
+    ;
+    if (count_loc == 2) {
+        if ($("#my_selecttop2 option:selected").val().length > 1) {
+            $("#loc1").val($("#my_selecttop2 option:selected").val());
+        } else {
+            $("#loc1").val($("#my_selecttop1 option:selected").val());
+        }
+    }
+    ;
+    if (count_loc == 3) {
+        if ($("#my_selecttop3 option:selected").val().length > 1) {
+            $("#loc1").val($("#my_selecttop3 option:selected").val());
+        } else {
+            $("#loc1").val($("#my_selecttop2 option:selected").val());
+        }
+    }
+    ;
+    if (count_loc == 4) {
+        if ($("#my_selecttop4 option:selected").val().length > 1) {
+            $("#loc1").val($("#my_selecttop4 option:selected").val());
+        } else {
+            $("#loc1").val($("#my_selecttop3 option:selected").val());
+        }
+    }
+    ;
     $("#popup1").hide();
 }
 
@@ -125,13 +157,46 @@ function KvedPopUpShow() {
     $("#popup3").show();
 }
 //Функция скрытия PopUp
-var count_kved=1;
+var count_kved = 1;
 function KvedPopUpHide() {
-    //alert(count_kved);
-    if(count_kved == 1)$("#kvedname").val($("#my_selecttop1 option:selected").val() );
-    if(count_kved == 2)$("#kvedname").val($("#my_selecttop2 option:selected").val() );
-    if(count_kved == 3)$("#kvedname").val($("#my_selecttop3 option:selected").val() );
-    if(count_kved == 4)$("#kvedname").val($("#my_selecttop4 option:selected").val() );
+    alert(count_kved);
+    if (count_kved == 1) $("#kvedname").val($("#my_selecttop1 option:selected").val());
+    if (count_kved == 2) {
+        if ($("#my_selecttop2 option:selected").val().length > 1) {
+            $("#kvedname").val($("#my_selecttop2 option:selected").val());
+        } else {
+            $("#kvedname").val($("#my_selecttop1 option:selected").val());
+        }
+    }
+    ;
+    if (count_kved == 3) {
+        if ($("#my_selecttop3 option:selected").val().length > 1) {
+            $("#kvedname").val($("#my_selecttop3 option:selected").val());
+        } else {
+            $("#kvedname").val($("#my_selecttop2 option:selected").val());
+        }
+    }
+    ;
+    if (count_kved == 4) {
+        if ($("#my_selecttop4 option:selected").val().length > 1) {
+            $("#kvedname").val($("#my_selecttop4 option:selected").val());
+        }
+        else {
+            $("#kvedname").val($("#my_selecttop3 option:selected").val());
+        }
+
+    }
+    ;
+    if (count_kved == 5) {
+        if ($("#my_selecttop5 option:selected").val().length > 1) {
+            $("#kvedname").val($("#my_selecttop5 option:selected").val());
+        }
+        else {
+            $("#kvedname").val($("#my_selecttop4 option:selected").val());
+        }
+
+    }
+    ;
     $("#popup3").hide();
 }
 function SetKved_link_Show() {
@@ -142,7 +207,7 @@ function SetKved_link_Hide() {
     $("#setContact_link_popup").hide();
 }
 function loopkveddown(level) {
-    count_kved=level;
+    count_kved = level;
     if (level == 2) {
         var aj = "treemark=" + $("#my_selecttop1 option:selected").val() + "&nlevel=2";
         $("#KvedType2").load("/ajax_select_kved", aj);
@@ -159,22 +224,26 @@ function loopkveddown(level) {
         var aj = "treemark=" + $("#my_selecttop3 option:selected").val() + "&nlevel=4";
         $("#KvedType4").load("/ajax_select_kved", aj);
     }
+    if (level == 5) {
+        var aj = "treemark=" + $("#my_selecttop4 option:selected").val() + "&nlevel=5";
+        $("#KvedType5").load("/ajax_select_kved", aj);
+    }
 };
 function inject_kved() {
-    var param1=$("#fopid").val();
-    var param2=$("#kvedname").val();
-    var param = "param1="+param1+"&param2="+param2;
-    $("#kved_message").load("/ajax_add_kved",param);
+    var param1 = $("#fopid").val();
+    var param2 = $("#kvedname").val();
+    var param = "param1=" + param1 + "&param2=" + param2;
+    $("#kved_message").load("/ajax_add_kved", param);
 
 }
 // ------------------COMMERCIAL Obj Add------------------------- //
 function inject_co() {
-    var p1=$("#co_input01").val();
-    var p2=$("#co_input02").val();
-    var p3=$("#co_input03").val();
-    var p4=$("#co_select01 option:selected").val();
-    var p5=$("#co_input04").val();
+    var p1 = $("#co_input01").val();
+    var p2 = $("#loc1").val();
+    var p3 = $("#co_input03").val();
+    var p4 = $("#co_select01 option:selected").val();
+    var p5 = $("#co_input04").val();
 
-    var param = "p1="+p1+"&p2="+p2+"&p3="+p3+"&p4="+p4+"&p5="+p5;
-    $("#co_message").load("/ajax_add_co",param);
+    var param = "p1=" + p1 + "&p2=" + p2 + "&p3=" + p3 + "&p4=" + p4 + "&p5=" + p5;
+    $("#co_message").load("/ajax_add_co", param);
 }

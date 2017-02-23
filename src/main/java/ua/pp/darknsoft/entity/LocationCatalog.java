@@ -8,6 +8,7 @@ public class LocationCatalog {
     private String ltree;
     private String name;
     private int type;
+    private String stype;
     private String note;
     private int nlevel; //depth
 
@@ -42,6 +43,10 @@ public class LocationCatalog {
     public void setType(int type) {
         this.type = type;
     }
+
+    public String getStype() { return stype; }
+
+    public void setStype(String stype) { this.stype = stype; }
 
     public String getNote() {
         return note;

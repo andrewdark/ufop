@@ -99,7 +99,12 @@ public class MasterController {
         uiModel.addAttribute("title", "Введіть дані стосовно ФОП");
         //Contact idcontact=(Contact)uiModel.asMap().get("sendContact");
 
+        try {
+            uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
 
+        } catch (Exception ex) {
+            uiModel.addAttribute("ex", ex);
+        }
         Map<Integer, String> risk = new LinkedHashMap<Integer, String>(); //select on the view
         risk.put(1, "Висока");
         risk.put(2, "Середня");
@@ -176,9 +181,14 @@ public class MasterController {
         Map<Integer, String> select = new HashMap<Integer, String>();
         uiModel.addAttribute("title", "Додайте дані про комерційний об'єкт");
         try {
-            List<CommercialObjectType> co = new LinkedList<CommercialObjectType>();
-            co = commercialObjectDao.getCommObjType();
-            uiModel.addAttribute("co", co);
+
+
+        } catch (Exception ex) {
+            uiModel.addAttribute("ex", ex);
+        }
+        try {
+            uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
+            uiModel.addAttribute("co", commercialObjectDao.getCommObjType());
         } catch (Exception ex) {
             uiModel.addAttribute("ex", ex);
             return "message";
@@ -218,20 +228,24 @@ public class MasterController {
     public String ajax_select_loc(@RequestParam(defaultValue = "15") String treemark, @RequestParam(defaultValue = "2") String nlevel, Model uiModel) {
 
         String html = "hello world";
-        String option = "<option disabled>Виберіть населений пункт</option>";
+        String option = "<option disabled>Виберіть населений пункт</option><option value=\"\"></option>";
+        long start = 0L ,stop = 0l,traceTime = 0l;
         int level = 0;
         try {
             level = Integer.parseInt(nlevel);
+            start = System.nanoTime();
             List<LocationCatalog> downloc = catalogDao.getLocationByTreemark(treemark, Integer.parseInt(nlevel));
+            stop = System.nanoTime();
+            traceTime = stop-start;
             for (int i = 0; i <= downloc.size() - 1; i++) {
-                option = option + "<option value=\"" + downloc.get(i).getLtree() + "\">" + downloc.get(i).getName() + "</option>";
+                option = option + "<option value=\"" + downloc.get(i).getLtree() + "\">" + downloc.get(i).getName() +" - "+ downloc.get(i).getStype()+"</option>";
             }
 
         } catch (Exception e) {
             return "Error: " + e;
         }
 
-        html = "<select id=\"my_selecttop" + (level) + "\" onchange=\"looplocationdown(" + (level + 1) + ")\">" + option + "</select>";
+        html = "<select id=\"my_selecttop" + (level) + "\" onchange=\"looplocationdown(" + (level + 1) + ")\">" + option + "</select>"+"Время: "+traceTime;
 
         return html;
     }
@@ -240,7 +254,7 @@ public class MasterController {
     @RequestMapping(value = "/ajax_select_kved", produces = {"application/json; charset=UTF-8"})
     public String ajax_select_kved(@RequestParam(defaultValue = "1") String treemark, @RequestParam(defaultValue = "2") String nlevel, Model uiModel) {
         String html = "hello world";
-        String option = "<option disabled>Виберіть Квед</option>";
+        String option = "<option disabled>Виберіть Квед</option><option value=\"\"></option>";
         int level = 0;
         List<KvedCatalog> downkved = kvedDao.getKvedByTreemark(treemark, Integer.parseInt(nlevel));
         try {

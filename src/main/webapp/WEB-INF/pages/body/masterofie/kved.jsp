@@ -63,6 +63,7 @@
         <div id="KvedType3"></div>
         <div id="KvedType4"></div>
         <div id="KvedType5"></div>
+        <div id="KvedType6"></div>
         <a href="javascript:KvedPopUpHide()">Додати КВЕД</a>
     </div>
 </div>

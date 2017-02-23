@@ -22,7 +22,7 @@
                 </tr>
                 <tr>
                     <td>Адреса: </td>
-                    <td><input type="text" id="co_input02"/></td>
+                    <td><input type="text" id="loc1" onclick="javascript:LocPopUpShow()"/></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -57,3 +57,19 @@
     <div class="clr"></div>
 </div>
 <div class="d_right"><a href="/"><img src="resources/images/done.jpg"/></a></div>
+
+<div class="b-popup" id="popup1">
+    ${ex}<br />
+    <div class="b-popup-content" id="setloc_popup">
+        <select id="my_selecttop1" name="my_selecttop" onchange="looplocationdown(2)">
+            <c:forEach items="${locationTop}" var="locationTop">
+                <option value="${locationTop.id}">${locationTop.name}-${locationTop.type}</option>
+            </c:forEach>
+        </select><br />
+        <div id="LocationType2"></div>
+        <div id="LocationType3"></div>
+        <div id="LocationType4"></div>
+        <div id="LocationType5"></div>
+        <a href="javascript:LocPopUpHide()">Додати адресу</a>
+    </div>
+</div>
