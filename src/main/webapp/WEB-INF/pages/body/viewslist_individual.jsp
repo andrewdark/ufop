@@ -29,10 +29,10 @@
 </c:forEach>
 <%--paginator--%>
 <c:if test="${empty ufop}">
+    ${ex}
     <p class="pages">
         <small>Page ${page_id} of NAN</small>
-        <a href="/viewslisti/${page_id-1}">&laquo;</a><a
-            href="/viewslisti/${page_id-1}">${page_id-1}</a><span>${page_id}</span>
+        <a href="/viewslisti/${page_id-1}">&laquo;</a><a href="/viewslisti/${page_id-1}">${page_id-1}</a><span>${page_id}</span>
     </p>
 </c:if>
 <c:if test="${not empty ufop and pageid !=1}">

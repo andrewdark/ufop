@@ -64,4 +64,4 @@
 
     <div class="clr"></div>
 </div>
-<div class="d_right"><a href="/commercialobject"><img src="resources/images/next_step.jpg"/></a></div>
+<div class="d_right_brdr_red"><a href="/commercialobject"><img src="resources/images/next_step.jpg"/></a></div>

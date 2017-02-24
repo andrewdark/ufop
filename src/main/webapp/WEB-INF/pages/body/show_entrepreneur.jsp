@@ -11,9 +11,12 @@
 <div id="tabs">
     <ul>
         <li><a href="#tabs-1">ФОП</a></li>
-        <li><a href="#tabs-2">Комерційні об'єкти</a></li>
-        <li><a href="#tabs-3">Контактна інформація</a></li>
+        <li><a href="#tabs-2">КВЕД</a></li>
+        <li><a href="#tabs-3">Комерційні об'єкти</a></li>
+        <li><a href="#tabs-4">Перевірки</a></li>
+        <li><a href="#tabs-5">Контактна інформація</a></li>
     </ul>
+
     <div id="tabs-1">
         <div class="container">
             <div class="box">
@@ -45,10 +48,18 @@
         </p>
     </div>
     <div id="tabs-2">
+        <p>Перелік КВЕД</p>
+        ${ci}
+    </div>
+    <div id="tabs-3">
         <p>Перелік комерційних об'єктів</p>
         ${co}
     </div>
-    <div id="tabs-3">
+    <div id="tabs-4">
+        <p>Перелік планових та позапланових перевірок</p>
+        ${ci}
+    </div>
+    <div id="tabs-5">
         <p>Перелік контактних осіб</p>
         ${ci}
     </div>

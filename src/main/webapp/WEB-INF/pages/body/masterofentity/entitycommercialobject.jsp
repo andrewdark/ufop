@@ -33,4 +33,4 @@
     </div>
     <div class="clr"></div>
 </div>
-<div class="d_right"><a href="/"><img src="resources/images/done.jpg"/></a></div>
+<div class="d_right_brdr_red"><a href="/"><img src="resources/images/done.jpg"/></a></div>

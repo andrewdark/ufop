@@ -75,15 +75,13 @@ public class MainController {
         }
         List<IndividualEntrepreneur> ufop = new LinkedList<IndividualEntrepreneur>();
         ufop = individualEntrepreneurDao.getEntrepreneur(total,pageid1);
-        if(ufop.isEmpty()){
-            uiModel.addAttribute("ex","isEmpty");
-            return "message";
-        }
+
         uiModel.addAttribute("u_size",ufop.size());
 
         uiModel.addAttribute("ufop",ufop);
         uiModel.addAttribute("page_id",pageid);
         uiModel.addAttribute("total_page","t");
+        if(ufop.isEmpty()){ uiModel.addAttribute("ex","Нажаль, немає жодного запису"); }
         return "viewslist_individual";
     }
 
