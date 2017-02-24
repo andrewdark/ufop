@@ -10,6 +10,8 @@ import java.util.List;
 public interface IndividualEntrepreneurDao {
     List<IndividualEntrepreneur> getEntrepreneur(int total, int pageid);
 
+    List<IndividualEntrepreneur> getEntrepreneurById(long id);
+
     String SelectIEByRntc(String rntc);
 
     long insertIE(IndividualEntrepreneur ie);

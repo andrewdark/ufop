@@ -27,8 +27,8 @@
     <definition extends="default" name="my_office">
         <put-attribute name="body" value="/WEB-INF/pages/body/my_office.jsp" />
     </definition>
-    <definition extends="default" name="individual_enterpreneur">
-        <put-attribute name="body" value="/WEB-INF/pages/body/individual_enterpreneur.jsp" />
+    <definition extends="default" name="show_entrepreneur">
+        <put-attribute name="body" value="/WEB-INF/pages/body/show_entrepreneur.jsp" />
     </definition>
     <definition extends="default" name="legal_entity">
         <put-attribute name="body" value="/WEB-INF/pages/body/legal_entity.jsp" />

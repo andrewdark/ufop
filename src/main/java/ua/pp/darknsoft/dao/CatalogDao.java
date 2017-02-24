@@ -14,4 +14,6 @@ public interface CatalogDao {
     List<LocationCatalog> getLocationTop();
 
     List<LocationCatalog> getLocationByTreemark(String treemark, int level);
+
+    List<LocationCatalog> getParentLocationByTreemark(String treemark);
 }

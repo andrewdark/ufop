@@ -104,6 +104,7 @@ public class MasterController {
 
         } catch (Exception ex) {
             uiModel.addAttribute("ex", ex);
+            return "message";
         }
         Map<Integer, String> risk = new LinkedHashMap<Integer, String>(); //select on the view
         risk.put(1, "Висока");

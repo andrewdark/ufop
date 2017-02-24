@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.catalog.SelectLocationByTreemark;
 import ua.pp.darknsoft.dao.crud.catalog.SelectLocationTop;
 import ua.pp.darknsoft.dao.crud.catalog.SelectLocationType;
+import ua.pp.darknsoft.dao.crud.catalog.SelectParentLocationByTreemark;
 import ua.pp.darknsoft.entity.LocationCatalog;
 import ua.pp.darknsoft.entity.LocationType;
 
@@ -28,6 +29,7 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
     private SelectLocationType selectLocationType;
     private SelectLocationTop selectLocationTop;
     private SelectLocationByTreemark selectLocationByTreemark;
+    private SelectParentLocationByTreemark selectParentLocationByTreemark;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource){
@@ -35,6 +37,7 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         this.selectLocationType = new SelectLocationType(dataSource);
         this.selectLocationTop = new SelectLocationTop(dataSource);
         this.selectLocationByTreemark = new SelectLocationByTreemark(dataSource);
+        this.selectParentLocationByTreemark = new SelectParentLocationByTreemark(dataSource);
     }
     @Override
     public List<LocationType> getLocationType(){
@@ -57,5 +60,11 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
             lc.setId(0); lc.setLtree("0.0"); lc.setName("No data");
         }
         return downloc;
+    }
+    @Override
+    public List<LocationCatalog> getParentLocationByTreemark(String treemark){
+        Map<String, Object> bind = new HashMap<String, Object>();
+        bind.put("treemark", treemark);
+        return selectParentLocationByTreemark.executeByNamedParam(bind);
     }
 }

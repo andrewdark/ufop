@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.etrepreneur.SelectIE;
+import ua.pp.darknsoft.dao.crud.etrepreneur.SelectIEById;
 import ua.pp.darknsoft.entity.IndividualEntrepreneur;
 
 import javax.annotation.Resource;
@@ -27,12 +28,14 @@ public class IndividualEntrepreneurDaoImpl implements IndividualEntrepreneurDao,
     DataSource dataSource;
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     SelectIE selectIE;
+    SelectIEById selectIEById;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         this.selectIE = new SelectIE(dataSource);
+        this.selectIEById = new SelectIEById(dataSource);
     }
 
     @Override
@@ -41,6 +44,12 @@ public class IndividualEntrepreneurDaoImpl implements IndividualEntrepreneurDao,
         bind.put("total", total);
         bind.put("pageid", pageid);
         return selectIE.executeByNamedParam(bind);
+    }
+    @Override
+    public List<IndividualEntrepreneur> getEntrepreneurById(long id){
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("id",id);
+        return selectIEById.executeByNamedParam(bind);
     }
 
     @Override

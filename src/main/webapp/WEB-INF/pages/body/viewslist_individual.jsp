@@ -11,7 +11,7 @@
 <c:forEach var="ufop" items="${ufop}">
     <div class="article">
         <h2><span>ІПН ${ufop.rntc}</span></h2>
-        <p class="infopost">Id: ID Date reg: <span class="date">${ufop.datereg}</span> by <a href="#">${ufop.owner}</a>
+        <p class="infopost">Id: ${ufop.id} Date reg: <span class="date">${ufop.datereg}</span> by <a href="#">${ufop.owner}</a>
             &nbsp;&nbsp;&bull;&nbsp;&nbsp;
             Filed under <a href="#">templates</a>, <a href="#">internet</a> &nbsp;&nbsp;&bull;&nbsp;&nbsp;
 
@@ -22,7 +22,7 @@
             <p>
                 Власник:   <b>${ufop.contact.first_name} ${ufop.contact.last_name}</b>
             </p>
-            <p class="spec"><a href="${viewmore}" class="rm">Read more</a></p>
+            <p class="spec"><a href="/show_entrepreneur/?id=${ufop.id}" class="rm">Див. деталі</a></p>
         </div>
         <div class="clr"></div>
     </div>

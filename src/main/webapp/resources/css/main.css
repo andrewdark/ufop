@@ -505,7 +505,13 @@ a {
     outline:none;
 }
 .d_right{
-    border:1px solid red;
+    /* border:1px solid red; */
+    width:165px;
+    height:50px;
+    float:right;
+}
+.d_right_brdr_red{
+    /* border:1px solid red; */
     width:150px;
     height:50px;
     float:right;
@@ -530,3 +536,13 @@ span.error {
     border-radius:5px;
     box-shadow: 0px 0px 10px #000;
 }
+.show_info_title{
+    font-style:italic;
+    text-decoration:underline;
+}
+/* в ряд*/
+.container{overflow:hidden;width:100%}
+.box{white-space:nowrap}
+.box div{width:49%;display:inline-block;}
+.box .ta_l{text-align:left;}
+.box .ta_r{text-align:right;}

@@ -159,7 +159,7 @@ function KvedPopUpShow() {
 //Функция скрытия PopUp
 var count_kved = 1;
 function KvedPopUpHide() {
-    alert(count_kved);
+    //alert(count_kved);
     if (count_kved == 1) $("#kvedname").val($("#my_selecttop1 option:selected").val());
     if (count_kved == 2) {
         if ($("#my_selecttop2 option:selected").val().length > 1) {

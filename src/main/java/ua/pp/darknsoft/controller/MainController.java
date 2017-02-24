@@ -1,6 +1,7 @@
 package ua.pp.darknsoft.controller;
 
 import com.sun.org.apache.xml.internal.resolver.Catalog;
+import freemarker.ext.beans.StringModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ua.pp.darknsoft.dao.CatalogDao;
 import ua.pp.darknsoft.dao.ContactDao;
 import ua.pp.darknsoft.dao.IndividualEntrepreneurDao;
@@ -78,9 +80,8 @@ public class MainController {
             return "message";
         }
         uiModel.addAttribute("u_size",ufop.size());
-        String link="/individual_enterpreneur";
+
         uiModel.addAttribute("ufop",ufop);
-        uiModel.addAttribute("viewmore",link);
         uiModel.addAttribute("page_id",pageid);
         uiModel.addAttribute("total_page","t");
         return "viewslist_individual";
@@ -123,12 +124,43 @@ public class MainController {
         return "chat";
     }
     //------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------SHOW DETAILS--------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    @RequestMapping(value = "/show_entrepreneur")
+    public String showEntrepreneur(@RequestParam(defaultValue = "1") String id, Model uiModel){
+
+
+        try{
+            IndividualEntrepreneur ie = individualEntrepreneurDao.getEntrepreneurById(Long.parseLong(id)).get(0);
+            if(ie.getA_place_of_reg().length()>0) {
+                uiModel.addAttribute("fulladdress",catalogDao.getParentLocationByTreemark(ie.getA_place_of_reg()));
+            }
+            uiModel.addAttribute("ie",ie);
+            uiModel.addAttribute("co","commercialObject: "+Long.parseLong(id)*2);
+            uiModel.addAttribute("ci","contactInformation about:");
+        }catch(IndexOutOfBoundsException ex){
+            uiModel.addAttribute("ex", "Такого підприємця не знайдено");
+            return "message";
+        }
+        catch (NumberFormatException ex){
+            uiModel.addAttribute("ex", "не вірна вказівка на підприємця");
+            return "message";
+        }
+        catch (Exception ex){
+            uiModel.addAttribute("ex", ex);
+            return "message";
+        }
+        try{
+
+        }catch (IndexOutOfBoundsException ex){
+
+        }
+        return "show_entrepreneur";
+    }
+    //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------LEFT MENU---------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
-    @RequestMapping(value = "/individual_enterpreneur")
-    public String individual_enterpreneur(){
-        return "individual_enterpreneur";
-    }
+
     @RequestMapping(value = "/legal_entity")
     public String legal_entity(){
         return "legal_entity";
