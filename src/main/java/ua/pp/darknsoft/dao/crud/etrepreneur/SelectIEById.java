@@ -46,7 +46,7 @@ public class SelectIEById extends MappingSqlQuery<IndividualEntrepreneur> {
     }
 
     public Contact getContactByid(long id){
-        Map<String,Long> bind = new HashMap<>();
+        Map<String,Long> bind = new HashMap<String,Long>();
         bind.put("id",id);
 
         try{

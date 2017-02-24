@@ -239,7 +239,7 @@ public class MasterController {
             stop = System.nanoTime();
             traceTime = stop-start;
             for (int i = 0; i <= downloc.size() - 1; i++) {
-                option = option + "<option value=\"" + downloc.get(i).getLtree() + "\">" + downloc.get(i).getName() +"</option>";
+                option = option + "<option value=\"" + downloc.get(i).getLtree() + "\">" + downloc.get(i).getName() + " - "+ downloc.get(i).getStype()+"</option>";
             }
 
         } catch (Exception e) {

@@ -63,7 +63,7 @@
     <div class="b-popup-content" id="setloc_popup">
         <select id="my_selecttop1" name="my_selecttop" onchange="looplocationdown(2)">
             <c:forEach items="${locationTop}" var="locationTop">
-                <option value="${locationTop.id}">${locationTop.name}-${locationTop.type}</option>
+                <option value="${locationTop.id}">${locationTop.name}</option>
             </c:forEach>
         </select><br />
         <div id="LocationType2"></div>
