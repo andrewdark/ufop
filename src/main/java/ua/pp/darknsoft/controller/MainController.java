@@ -47,8 +47,7 @@ public class MainController {
     //------------------------------------------------------------------------------------------------------------------
     @RequestMapping(value = "/viewslistcontact/{pageid}", method = RequestMethod.GET)
     public String viewsListContact(@PathVariable int pageid, Model uiModel){
-//        if(pageid<=0){
-//            uiModel.addAttribute("ex","Не вірна сторінка"); return "message";}
+
         int total = 5;
         int pageid1=pageid;
         if(pageid==1){pageid1=0;}
