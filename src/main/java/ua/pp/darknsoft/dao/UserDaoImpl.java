@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDao,Serializable{
     public void createUser(User user) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
 
-        paramMap.put("username", user.getUsername());
+        paramMap.put("username", user.getUsername().toLowerCase());
         paramMap.put("pwd", user.getPwd());
         paramMap.put("email", user.getEmail());
 
@@ -54,13 +54,13 @@ public class UserDaoImpl implements UserDao,Serializable{
 
     public List<User> findUserByName(String username) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        paramMap.put("username", username);
+        paramMap.put("username", username.toLowerCase());
         return selectUser.executeByNamedParam(paramMap);
     }
-
+    @PreAuthorize(value = "authenticated")
     public void updateUser(User user) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        paramMap.put("username", user.getUsername());
+        paramMap.put("username", user.getUsername().toLowerCase());
         //paramMap.put("useremail",user.getUseremail());
         paramMap.put("pwd", user.getPwd());
         updateUser.updateByNamedParam(paramMap);
@@ -68,7 +68,7 @@ public class UserDaoImpl implements UserDao,Serializable{
     @PreAuthorize(value = "authenticated")
     public void deleteUser(String username) {
         Map<String,Object> paramMap = new HashMap<String,Object>();
-        paramMap.put("username",username);
+        paramMap.put("username",username.toLowerCase());
         deleteUser.updateByNamedParam(paramMap);
 
     }

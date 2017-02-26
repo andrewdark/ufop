@@ -66,7 +66,7 @@ public class IndividualEntrepreneurDaoImpl implements IndividualEntrepreneurDao,
         String sql = "INSERT INTO individual_entrepreneur_table (contact_link,a_place_of_reg,n_place_of_reg,series_of_passport,number_of_passport," +
                 "if_pdv,risk_group,owner) " +
                 "VALUES (:contact_link,:a_place_of_reg,:n_place_of_reg,:series_of_passport,:number_of_passport," +
-                ":if_pdv,:risk_group,(SELECT id FROM user_table WHERE username =:owner))";
+                ":if_pdv,:risk_group,(SELECT id FROM user_table WHERE LOWER(username) =LOWER(:owner)))";
 
         Map<String, Object> bind = new HashMap<>();
         bind.put("contact_link", ie.getContact_link());
@@ -77,13 +77,13 @@ public class IndividualEntrepreneurDaoImpl implements IndividualEntrepreneurDao,
         bind.put("number_of_passport", ie.getNumber_of_passport());
         bind.put("if_pdv", ie.isIf_pdv());
         bind.put("risk_group", ie.getRisk_group());
-        bind.put("owner", ie.getOwner());
+        bind.put("owner", ie.getOwner().toLowerCase());
         if (ie.getRntc().length() == 10) {
             bind.put("rntc", ie.getRntc());
             sql = "INSERT INTO individual_entrepreneur_table (contact_link,a_place_of_reg,n_place_of_reg,series_of_passport,number_of_passport," +
                     "if_pdv,risk_group,owner,rntc) " +
                     "VALUES (:contact_link,:a_place_of_reg,:n_place_of_reg,:series_of_passport,:number_of_passport," +
-                    ":if_pdv,:risk_group,(SELECT id FROM user_table WHERE username =:owner),:rntc)";
+                    ":if_pdv,:risk_group,(SELECT id FROM user_table WHERE LOWER(username) =LOWER(:owner)),:rntc)";
         }
 
         SqlParameterSource paramSource = new MapSqlParameterSource(bind);

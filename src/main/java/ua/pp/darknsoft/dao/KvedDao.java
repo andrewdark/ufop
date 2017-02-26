@@ -11,7 +11,9 @@ import java.util.List;
 public interface KvedDao {
     void createEntrepreneursKveds(EntrepreneursKveds entrepreneursKveds);
 
-    List<KvedCatalog> getKvedTop();
+    List<KvedCatalog> getKvedCatalogTop();
 
-    List<KvedCatalog> getKvedByTreemark(String treemark, int level);
+    List<KvedCatalog> getKvedCatalogByTreemark(String treemark, int level);
+
+    List<EntrepreneursKveds> getEntrepreneursKvedsByEntrepreneurLink(long e_link);
 }

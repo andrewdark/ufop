@@ -5,7 +5,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.commercialobj.GetCommercialObjType;
 import ua.pp.darknsoft.dao.crud.commercialobj.InsertCommercialObject;
-import ua.pp.darknsoft.dao.crud.commercialobj.SelectCommercialObjectByUfop;
 import ua.pp.darknsoft.entity.CommercialObjectType;
 import ua.pp.darknsoft.entity.EntrepreneurCommercialObject;
 
@@ -24,7 +23,7 @@ import java.util.Map;
 public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializable {
     DataSource dataSource;
     InsertCommercialObject insertCommercialObject;
-    SelectCommercialObjectByUfop selectCommercialObjectByUfop;
+
     GetCommercialObjType getCommercialObjType;
 
 
@@ -32,7 +31,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.insertCommercialObject = new InsertCommercialObject(dataSource);
-        this.selectCommercialObjectByUfop = new SelectCommercialObjectByUfop(dataSource);
+
         this.getCommercialObjType = new GetCommercialObjType(dataSource);
     }
 
@@ -44,7 +43,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
         bind.put("obj_name", entrepreneurCommercialObject.getObj_name());
         bind.put("a_obj_location", entrepreneurCommercialObject.getA_obj_location());
         bind.put("n_obj_location", entrepreneurCommercialObject.getN_obj_location());
-        bind.put("owner", entrepreneurCommercialObject.getOwner());
+        bind.put("owner", entrepreneurCommercialObject.getOwner().toLowerCase());
 
         insertCommercialObject.updateByNamedParam(bind);
     }

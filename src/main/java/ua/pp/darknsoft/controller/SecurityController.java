@@ -57,6 +57,7 @@ public class SecurityController {
             redirectAttributes.addFlashAttribute("b", bindingResult);
             return rdrct + "/registration";
         } else {
+            myUser.setUsername(myUser.getUsername().toLowerCase());
             myUser.setPwd(passwordEncoder.encode(myUser.getPwd()));
             myUser.setDatereg(LocalDate.now());
             try {

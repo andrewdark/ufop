@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 public class IndividualEnterpreneurValidator implements Validator {
     @Autowired
     IndividualEntrepreneurDao individualEntrepreneurDao;
-
     private final static Pattern RNTC_PATTERN = Pattern.compile("^[0-9]+$");
     private final static Pattern SR_PASSPORT_PATTERN = Pattern.compile("^[a-zA-Z]+$");
 
@@ -64,7 +63,6 @@ public class IndividualEnterpreneurValidator implements Validator {
     private boolean isSrPassport(String value) {
         return SR_PASSPORT_PATTERN.matcher(value).matches();
     }
-
     private boolean isNumber(String value) {
         return RNTC_PATTERN.matcher(value).matches();
     }

@@ -49,7 +49,14 @@
     </div>
     <div id="tabs-2">
         <p>Перелік КВЕД</p>
-        ${ci}
+        <table>
+            <c:forEach items="${kveds}" var="kveds">
+                <tr>
+                    <td>${kveds.kved_catalog_label}</td>
+                    <td>${kveds.kved_catalog_name}</td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
     <div id="tabs-3">
         <p>Перелік комерційних об'єктів</p>

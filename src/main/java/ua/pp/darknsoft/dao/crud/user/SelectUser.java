@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by Dark on 09.11.2016.
  */
 public class SelectUser extends MappingSqlQuery{
-    private static final String SQL_CHECK_USER="SELECT id,username,pwd,email,contact_link FROM user_table WHERE username=:username";
+    private static final String SQL_CHECK_USER="SELECT id,username,pwd,email,contact_link FROM user_table WHERE LOWER(username)=LOWER(:username)";
 
     public SelectUser(DataSource ds) {
         super(ds, SQL_CHECK_USER);

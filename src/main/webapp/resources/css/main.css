@@ -546,3 +546,5 @@ span.error {
 .box div{width:49%;display:inline-block;}
 .box .ta_l{text-align:left;}
 .box .ta_r{text-align:right;}
+.name{font-weight:bold;}
+.desc{text-transform:lowercase; font-size:10px;}

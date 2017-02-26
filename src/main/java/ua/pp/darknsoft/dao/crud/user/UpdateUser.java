@@ -11,7 +11,7 @@ import java.sql.Types;
  */
 public class UpdateUser extends SqlUpdate{
 
-    private final static String SQL_UPDATE_USER="UPDATE user_table SET pwd=:pwd WHERE username=:username";
+    private final static String SQL_UPDATE_USER="UPDATE user_table SET pwd=:pwd WHERE WHERE LOWER(username)=LOWER(:username)";
 
     public UpdateUser(DataSource dataSource){
         super(dataSource,SQL_UPDATE_USER);

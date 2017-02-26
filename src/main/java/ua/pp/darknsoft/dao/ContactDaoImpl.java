@@ -53,7 +53,7 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         if(contact.getBirthday().isEmpty())contact.setBirthday("0001-01-01");
         String sql = "INSERT INTO contact_table (first_name,last_name,owner,patronymic_name,a_stay_address,n_stay_address," +
                 "series_of_passport,number_of_passport,tel,fax,email,birthday,organization,\"position\",description) " +
-                "VALUES (:first_name,:last_name,(SELECT id FROM user_table WHERE username =:owner),:patronymic_name,:a_stay_address,:n_stay_address," +
+                "VALUES (:first_name,:last_name,(SELECT id FROM user_table WHERE LOWER (username) = LOWER (:owner)),:patronymic_name,:a_stay_address,:n_stay_address," +
                 ":series_of_passport,:number_of_passport,:tel,:fax,:email,:birthday::DATE,:organization,:position,:description)";
 
         Map<String, Object> bind = new HashMap<>();
@@ -76,7 +76,7 @@ public class ContactDaoImpl implements ContactDao, Serializable {
             bind.put("rntc", contact.getRntc());
             sql = "INSERT INTO contact_table (rntc,first_name,last_name,owner,patronymic_name,a_stay_address,n_stay_address," +
                     "series_of_passport,number_of_passport,tel,fax,email,birthday,organization,\"position\",description) " +
-                    "VALUES (:rntc,:first_name,:last_name,(SELECT id FROM user_table WHERE username =:owner),:patronymic_name,:a_stay_address,:n_stay_address," +
+                    "VALUES (:rntc,:first_name,:last_name,(SELECT id FROM user_table WHERE LOWER (username) = LOWER (:owner)),:patronymic_name,:a_stay_address,:n_stay_address," +
                     ":series_of_passport,:number_of_passport,:tel,:fax,:email,:birthday::DATE,:organization,:position,:description)";
         }
 

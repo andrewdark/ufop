@@ -39,7 +39,7 @@ public class MasterController {
     CommercialObjectDao commercialObjectDao;
 
     //------------------------------------------------------------------------------------------------------------------
-    //----------------------------------------MASTER OF INDIVIDUAL ENTERPRENEUR-----------------------------------------
+    //----------------------------------------MASTER OF INDIVIDUAL ENTREPRENEUR-----------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/contact")
@@ -82,9 +82,9 @@ public class MasterController {
             sendContact.setSeries_of_passport(contact.getSeries_of_passport());
             sendContact.setNumber_of_passport(contact.getNumber_of_passport());
         } catch (Exception ex) {
-            uiModel.addAttribute("ex", ex);
+            redirectAttributes.addFlashAttribute("ex", ex);
             sendContact.setId(0L);
-            return "message";
+            return rdrct + "/message";
         }
 
 
@@ -139,8 +139,8 @@ public class MasterController {
 
             //write in to the base
         } catch (Exception ex) {
-            uiModel.addAttribute("ex", ex);
-            return "message";
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return rdrct + "message";
         }
         redirectAttributes.addFlashAttribute("sendIE", sendIE);
         return rdrct + "/kved";
@@ -152,7 +152,7 @@ public class MasterController {
     public String addKved(Model uiModel) {
         uiModel.addAttribute("title", "Додайте КВЕД(можна декілька)");
         try {
-            List<KvedCatalog> kvedTop1 = kvedDao.getKvedTop();
+            List<KvedCatalog> kvedTop1 = kvedDao.getKvedCatalogTop();
             uiModel.addAttribute("kvedTop1", kvedTop1);
         } catch (Exception ex) {
             uiModel.addAttribute("ex", ex);
@@ -177,7 +177,7 @@ public class MasterController {
 
     //next form
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "/commercialobject")
+    @RequestMapping(value = "/commercialobject", method = RequestMethod.GET)
     public String addCommercialobject(Model uiModel) {
         Map<Integer, String> select = new HashMap<Integer, String>();
         uiModel.addAttribute("title", "Додайте дані про комерційний об'єкт");
@@ -227,26 +227,21 @@ public class MasterController {
     @RequestMapping(value = "/ajax_select_loc", produces = {"application/json; charset=UTF-8"})
     @ResponseBody
     public String ajax_select_loc(@RequestParam(defaultValue = "15") String treemark, @RequestParam(defaultValue = "2") String nlevel, Model uiModel) {
-
         String html = "hello world";
         String option = "<option disabled>Виберіть населений пункт</option><option value=\"\"></option>";
-        long start = 0L ,stop = 0l,traceTime = 0l;
         int level = 0;
         try {
             level = Integer.parseInt(nlevel);
-            start = System.nanoTime();
             List<LocationCatalog> downloc = catalogDao.getLocationByTreemark(treemark, Integer.parseInt(nlevel));
-            stop = System.nanoTime();
-            traceTime = stop-start;
             for (int i = 0; i <= downloc.size() - 1; i++) {
-                option = option + "<option value=\"" + downloc.get(i).getLtree() + "\">" + downloc.get(i).getName() + " - "+ downloc.get(i).getStype()+"</option>";
+                option = option + "<option value=\"" + downloc.get(i).getLtree() + "\">" + downloc.get(i).getName() + " - " + downloc.get(i).getStype().toLowerCase() + "</option>";
             }
 
         } catch (Exception e) {
             return "Error: " + e;
         }
 
-        html = "<select id=\"my_selecttop" + (level) + "\" onchange=\"looplocationdown(" + (level + 1) + ")\">" + option + "</select>"+"Время: "+traceTime;
+        html = "<select id=\"my_selecttop" + (level) + "\" onchange=\"looplocationdown(" + (level + 1) + ")\">" + option + "</select>";
 
         return html;
     }
@@ -257,7 +252,7 @@ public class MasterController {
         String html = "hello world";
         String option = "<option disabled>Виберіть Квед</option><option value=\"\"></option>";
         int level = 0;
-        List<KvedCatalog> downkved = kvedDao.getKvedByTreemark(treemark, Integer.parseInt(nlevel));
+        List<KvedCatalog> downkved = kvedDao.getKvedCatalogByTreemark(treemark, Integer.parseInt(nlevel));
         try {
             level = Integer.parseInt(nlevel);
 
@@ -331,7 +326,7 @@ public class MasterController {
 
 
         try {
-            List<KvedCatalog> downkved = kvedDao.getKvedByTreemark("G", 3);
+            List<KvedCatalog> downkved = kvedDao.getKvedCatalogByTreemark("G", 3);
             uiModel.addAttribute("test", downkved);
             uiModel.addAttribute("test1", downkved.size());
         } catch (Exception ex) {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.pp.darknsoft.dao.CatalogDao;
 import ua.pp.darknsoft.dao.ContactDao;
 import ua.pp.darknsoft.dao.IndividualEntrepreneurDao;
+import ua.pp.darknsoft.dao.KvedDao;
 import ua.pp.darknsoft.entity.Contact;
 import ua.pp.darknsoft.entity.IndividualEntrepreneur;
 
@@ -37,6 +38,8 @@ public class MainController {
     CatalogDao catalogDao;
     @Autowired
     IndividualEntrepreneurDao individualEntrepreneurDao;
+    @Autowired
+    KvedDao kvedDao;
 
     @RequestMapping(value = "/")
     public String main(){
@@ -132,6 +135,7 @@ public class MainController {
             if(ie.getA_place_of_reg().length()>0) {
                 uiModel.addAttribute("fulladdress",catalogDao.getParentLocationByTreemark(ie.getA_place_of_reg()));
             }
+            uiModel.addAttribute("kveds",kvedDao.getEntrepreneursKvedsByEntrepreneurLink(Long.parseLong(id)));
             uiModel.addAttribute("ie",ie);
             uiModel.addAttribute("co","commercialObject: "+Long.parseLong(id)*2);
             uiModel.addAttribute("ci","contactInformation about:");

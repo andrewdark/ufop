@@ -22,7 +22,7 @@ public class ContactValidator implements Validator {
     }
     @Autowired
     ContactDao contactDao;
-
+    private final static Pattern DATE_PATTERN = Pattern.compile("[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])");
     private final static Pattern EMAIL_PATTERN = Pattern.compile(".+@.+\\.[a-z]+");
     private final static Pattern RNTC_PATTERN = Pattern.compile("^[0-9]+$");
     private final static Pattern SR_PASSPORT_PATTERN = Pattern.compile("^[a-zA-Z]+$");
@@ -58,12 +58,22 @@ public class ContactValidator implements Validator {
                 }
             }
 
+
         }
+        if(!contact.getBirthday().isEmpty()){
+            if(!isDate(contact.getBirthday())){
+                errors.rejectValue("birthday","date.notDog","Не вірний формат. РРРР-ММ-ДД");
+            }
+        }
+
     }
 
     private boolean isSrPassport(String value) { return SR_PASSPORT_PATTERN.matcher(value).matches(); }
     private boolean isNumber(String value) { return RNTC_PATTERN.matcher(value).matches(); }
     private boolean isEmail(String value) {
         return EMAIL_PATTERN.matcher(value).matches();
+    }
+    private boolean isDate(String value) {
+        return DATE_PATTERN.matcher(value).matches();
     }
 }
