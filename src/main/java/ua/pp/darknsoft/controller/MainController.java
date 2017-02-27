@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ua.pp.darknsoft.dao.CatalogDao;
-import ua.pp.darknsoft.dao.ContactDao;
-import ua.pp.darknsoft.dao.IndividualEntrepreneurDao;
-import ua.pp.darknsoft.dao.KvedDao;
+import ua.pp.darknsoft.dao.*;
 import ua.pp.darknsoft.entity.Contact;
+import ua.pp.darknsoft.entity.EntrepreneurCommercialObject;
 import ua.pp.darknsoft.entity.IndividualEntrepreneur;
 
 
@@ -40,6 +38,8 @@ public class MainController {
     IndividualEntrepreneurDao individualEntrepreneurDao;
     @Autowired
     KvedDao kvedDao;
+    @Autowired
+    CommercialObjectDao commercialObjectDao;
 
     @RequestMapping(value = "/")
     public String main(){
@@ -132,12 +132,19 @@ public class MainController {
 
         try{
             IndividualEntrepreneur ie = individualEntrepreneurDao.getEntrepreneurById(Long.parseLong(id)).get(0);
+            List<EntrepreneurCommercialObject> co = commercialObjectDao.getCommObjEntrepreneurByUfop_link(ie.getId());
+
             if(ie.getA_place_of_reg().length()>0) {
                 uiModel.addAttribute("fulladdress",catalogDao.getParentLocationByTreemark(ie.getA_place_of_reg()));
             }
+            if(ie.getContact().getA_stay_address().length()>0) {
+                uiModel.addAttribute("stayaddress",catalogDao.getParentLocationByTreemark(ie.getContact().getA_stay_address()));
+            }
+
+
             uiModel.addAttribute("kveds",kvedDao.getEntrepreneursKvedsByEntrepreneurLink(Long.parseLong(id)));
             uiModel.addAttribute("ie",ie);
-            uiModel.addAttribute("co","commercialObject: "+Long.parseLong(id)*2);
+            uiModel.addAttribute("co",co);
             uiModel.addAttribute("ci","contactInformation about:");
         }catch(IndexOutOfBoundsException ex){
             uiModel.addAttribute("ex", "Такого підприємця не знайдено");

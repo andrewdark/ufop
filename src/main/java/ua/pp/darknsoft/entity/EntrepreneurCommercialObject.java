@@ -1,6 +1,7 @@
 package ua.pp.darknsoft.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by Andrew on 30.01.2017.
@@ -9,9 +10,11 @@ public class EntrepreneurCommercialObject {
     private long id;
     private long ufop_link;
     private int obj_type;
+    private String s_obj_type;
     private String obj_name;
     private String a_obj_location;
     private String n_obj_location;
+    private List<LocationCatalog> obj_loc;
     private Timestamp datereg;
     private String owner;
     private String description;
@@ -38,6 +41,14 @@ public class EntrepreneurCommercialObject {
 
     public void setObj_type(int obj_type) {
         this.obj_type = obj_type;
+    }
+
+    public String getS_obj_type() {
+        return s_obj_type;
+    }
+
+    public void setS_obj_type(String s_obj_type) {
+        this.s_obj_type = s_obj_type;
     }
 
     public String getObj_name() {
@@ -86,5 +97,13 @@ public class EntrepreneurCommercialObject {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<LocationCatalog> getObj_loc() {
+        return obj_loc;
+    }
+
+    public void setObj_loc(List<LocationCatalog> obj_loc) {
+        this.obj_loc = obj_loc;
     }
 }

@@ -12,4 +12,6 @@ public interface CommercialObjectDao {
     void createCommObj(EntrepreneurCommercialObject entrepreneurCommercialObject);
 
     List<CommercialObjectType> getCommObjType();
+
+    List<EntrepreneurCommercialObject> getCommObjEntrepreneurByUfop_link(long ufop_link);
 }

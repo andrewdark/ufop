@@ -48,13 +48,13 @@ a {
 .header_resize {
     margin:0 auto;
     padding:0;
-    width:960px;
+    width:1080px;
     height:240px;
 }
 .logo {
     position:relative;
     top:100px;
-    left:35%;
+    left:42%;
     padding:0;
     float:none;
     float:left;
@@ -158,13 +158,13 @@ h1 small {
 .content_resize {
     margin:0 auto;
     padding:24px 0 40px;
-    width:960px;
+    width:1080px;
 }
 .content .mainbar {
     margin:0;
     padding:0;
     float:right;
-    width:680px;
+    width:800px;
 }
 .content .mainbar h2 {
     margin:0 -20px;

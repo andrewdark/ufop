@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.commercialobj.GetCommercialObjType;
 import ua.pp.darknsoft.dao.crud.commercialobj.InsertCommercialObject;
+import ua.pp.darknsoft.dao.crud.commercialobj.SelectCommObjEntrepreneurByUfop_link;
 import ua.pp.darknsoft.entity.CommercialObjectType;
 import ua.pp.darknsoft.entity.EntrepreneurCommercialObject;
 
@@ -23,7 +24,7 @@ import java.util.Map;
 public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializable {
     DataSource dataSource;
     InsertCommercialObject insertCommercialObject;
-
+    SelectCommObjEntrepreneurByUfop_link selectCommObjEntrepreneurByUfop_link;
     GetCommercialObjType getCommercialObjType;
 
 
@@ -31,7 +32,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.insertCommercialObject = new InsertCommercialObject(dataSource);
-
+        this.selectCommObjEntrepreneurByUfop_link = new SelectCommObjEntrepreneurByUfop_link(dataSource);
         this.getCommercialObjType = new GetCommercialObjType(dataSource);
     }
 
@@ -51,6 +52,13 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     @Override
     public List<CommercialObjectType> getCommObjType() {
         return getCommercialObjType.execute();
+    }
+
+    @Override
+    public List<EntrepreneurCommercialObject> getCommObjEntrepreneurByUfop_link(long ufop_link){
+        Map<String,Long> bind = new HashMap<>();
+        bind.put("ufop_link",ufop_link);
+        return selectCommObjEntrepreneurByUfop_link.executeByNamedParam(bind);
     }
 
 }
