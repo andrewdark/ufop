@@ -1,13 +1,13 @@
 package ua.pp.darknsoft.entity;
 
 /**
- * Created by Andrew on 16.02.2017.
+ * Created by Andrew on 27.02.2017.
  */
-public class CompanyStructure {
+public class StructureCatalog {
     private int id;
     private String treemark;
-    private String title;
     private String name;
+    private String description;
 
     public int getId() {
         return id;
@@ -25,19 +25,19 @@ public class CompanyStructure {
         this.treemark = treemark;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

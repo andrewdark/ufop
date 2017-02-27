@@ -78,4 +78,16 @@
     <definition extends="default" name="viewslist_entity">
         <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_entity.jsp" />
     </definition>
+    <definition extends="default" name="adduser_to_strorgtlb">
+        <put-attribute name="body" value="/WEB-INF/pages/body/admin/adduser_to_strorgtlb.jsp" />
+    </definition>
+    <definition extends="default" name="acceptworktime">
+        <put-attribute name="body" value="/WEB-INF/pages/body/chief/acceptworktime.jsp" />
+    </definition>
+    <definition extends="default" name="showmysubordinates">
+        <put-attribute name="body" value="/WEB-INF/pages/body/chief/showmysubordinates.jsp" />
+    </definition>
+    <definition extends="default" name="myworktime">
+        <put-attribute name="body" value="/WEB-INF/pages/body/myworktime.jsp" />
+    </definition>
 </tiles-definitions>
