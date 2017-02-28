@@ -22,7 +22,7 @@ public class IndividualEnterpreneurValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return false;
+        return IndividualEntrepreneur.class.isAssignableFrom(aClass);
     }
 
     @Override

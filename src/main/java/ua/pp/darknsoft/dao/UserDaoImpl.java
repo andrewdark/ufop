@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao,Serializable{
 
 
     @Resource(name = "dataSource")
-    public void setDataSource(DataSource dataSource) {  //      return selectUser.executeByNamedParam(paramMap);
+    public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.insertUser = new InsertUser(dataSource);
         this.selectUser = new SelectUser(dataSource);
