@@ -16,7 +16,7 @@ public class SelectWorkTimeByUser_linkASC extends MappingSqlQuery<WorkTime> {
     private static final String SQL_SELECT_WorkTimeByUser_link = "SELECT wtt.*,cct.name s_cause_link FROM work_time_table wtt " +
             "INNER JOIN cause_catalog_table cct ON(cct.id=wtt.cause_link) " +
             "WHERE wtt.user_link = (SELECT ut.id FROM user_table ut WHERE LOWER(ut.username) = LOWER(:user_link))" +
-            "ORDER BY datereg DESC LIMIT :limit" ;
+            "ORDER BY datereg ASC LIMIT :limit" ;
 
     public SelectWorkTimeByUser_linkASC(DataSource ds) {
         super(ds, SQL_SELECT_WorkTimeByUser_link);
