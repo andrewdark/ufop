@@ -25,10 +25,11 @@ import java.util.Map;
 @Service
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class IndividualEntrepreneurDaoImpl implements IndividualEntrepreneurDao, Serializable {
-    DataSource dataSource;
-    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    SelectIE selectIE;
-    SelectIEById selectIEById;
+    private DataSource dataSource;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private SelectIE selectIE;
+    private SelectIEById selectIEById;
+
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {

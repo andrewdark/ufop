@@ -1,5 +1,6 @@
 package ua.pp.darknsoft.dao;
 
+import ua.pp.darknsoft.entity.CauseCatalog;
 import ua.pp.darknsoft.entity.LocationCatalog;
 import ua.pp.darknsoft.entity.LocationType;
 
@@ -16,4 +17,6 @@ public interface CatalogDao {
     List<LocationCatalog> getLocationByTreemark(String treemark, int level);
 
     List<LocationCatalog> getParentLocationByTreemark(String treemark);
+
+    List<CauseCatalog> getCauseCatalogByType(short type);
 }

@@ -88,6 +88,6 @@
         <put-attribute name="body" value="/WEB-INF/pages/body/chief/showmysubordinates.jsp" />
     </definition>
     <definition extends="default" name="myworktime">
-        <put-attribute name="body" value="/WEB-INF/pages/body/myworktime.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/WorkTime/myworktime.jsp" />
     </definition>
 </tiles-definitions>

@@ -189,21 +189,5 @@ public class MainController {
         }
         return "redirect:/?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
-    //------------------------------------------------------------------------------------------------------------------
-    //-----------------------------------------WORK TIME MODULE---------------------------------------------------------
-    //------------------------------------------------------------------------------------------------------------------
-    @RequestMapping(value = "/myworktime", method = RequestMethod.GET)
-    public String myWorkTime(){
 
-        return "myworktime";
-    }
-    @RequestMapping(value = "/myworktimepost", method = RequestMethod.POST)
-    public String myWorkTimepost(HttpServletRequest httpServletRequest){
-        String scheme = httpServletRequest.getScheme() + "://";
-        String serverName = httpServletRequest.getServerName();
-        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
-        String contextPath = httpServletRequest.getContextPath();
-        String rdrct = "redirect:" + scheme + serverName + serverPort;
-        return rdrct + "/myworktime";
-    }
 }

@@ -7,12 +7,14 @@ import java.sql.Timestamp;
  */
 public class WorkTime {
     private long id;
-    private int str_org_link;
+    private int user_link;
     private short type_of_action;
     private int cause_link;
+    private String s_cause_link;
     private Timestamp datereg;
     private boolean accepted;
-    private int str_org_parent_accepted_link;
+    private int user_accepted_link;
+    private String s_user_accepted_link;
     private Timestamp dateaccept;
 
     public long getId() {
@@ -23,12 +25,12 @@ public class WorkTime {
         this.id = id;
     }
 
-    public int getStr_org_link() {
-        return str_org_link;
+    public int getUser_link() {
+        return user_link;
     }
 
-    public void setStr_org_link(int str_org_link) {
-        this.str_org_link = str_org_link;
+    public void setUser_link(int user_link) {
+        this.user_link = user_link;
     }
 
     public short getType_of_action() {
@@ -63,12 +65,12 @@ public class WorkTime {
         this.accepted = accepted;
     }
 
-    public int getStr_org_parent_accepted_link() {
-        return str_org_parent_accepted_link;
+    public int getUser_accepted_link() {
+        return user_accepted_link;
     }
 
-    public void setStr_org_parent_accepted_link(int str_org_parent_accepted_link) {
-        this.str_org_parent_accepted_link = str_org_parent_accepted_link;
+    public void setUser_accepted_link(int user_accepted_link) {
+        this.user_accepted_link = user_accepted_link;
     }
 
     public Timestamp getDateaccept() {
@@ -77,5 +79,21 @@ public class WorkTime {
 
     public void setDateaccept(Timestamp dateaccept) {
         this.dateaccept = dateaccept;
+    }
+
+    public String getS_cause_link() {
+        return s_cause_link;
+    }
+
+    public void setS_cause_link(String s_cause_link) {
+        this.s_cause_link = s_cause_link;
+    }
+
+    public String getS_user_accepted_link() {
+        return s_user_accepted_link;
+    }
+
+    public void setS_user_accepted_link(String s_user_accepted_link) {
+        this.s_user_accepted_link = s_user_accepted_link;
     }
 }

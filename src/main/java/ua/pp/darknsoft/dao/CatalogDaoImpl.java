@@ -3,10 +3,8 @@ package ua.pp.darknsoft.dao;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
-import ua.pp.darknsoft.dao.crud.catalog.SelectLocationByTreemark;
-import ua.pp.darknsoft.dao.crud.catalog.SelectLocationTop;
-import ua.pp.darknsoft.dao.crud.catalog.SelectLocationType;
-import ua.pp.darknsoft.dao.crud.catalog.SelectParentLocationByTreemark;
+import ua.pp.darknsoft.dao.crud.catalog.*;
+import ua.pp.darknsoft.entity.CauseCatalog;
 import ua.pp.darknsoft.entity.LocationCatalog;
 import ua.pp.darknsoft.entity.LocationType;
 
@@ -30,6 +28,7 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
     private SelectLocationTop selectLocationTop;
     private SelectLocationByTreemark selectLocationByTreemark;
     private SelectParentLocationByTreemark selectParentLocationByTreemark;
+    private SelectCauseCatalog selectCauseCatalog;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource){
@@ -38,6 +37,7 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         this.selectLocationTop = new SelectLocationTop(dataSource);
         this.selectLocationByTreemark = new SelectLocationByTreemark(dataSource);
         this.selectParentLocationByTreemark = new SelectParentLocationByTreemark(dataSource);
+        this.selectCauseCatalog = new SelectCauseCatalog(dataSource);
     }
     @Override
     public List<LocationType> getLocationType(){
@@ -66,5 +66,12 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         Map<String, Object> bind = new HashMap<String, Object>();
         bind.put("treemark", treemark);
         return selectParentLocationByTreemark.executeByNamedParam(bind);
+    }
+
+    @Override
+    public List<CauseCatalog> getCauseCatalogByType(short type){
+        Map<String, Object> bind = new HashMap<String, Object>();
+        bind.put("type", type);
+        return selectCauseCatalog.executeByNamedParam(bind);
     }
 }
