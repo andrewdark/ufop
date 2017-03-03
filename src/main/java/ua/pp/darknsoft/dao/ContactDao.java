@@ -10,6 +10,8 @@ import java.util.List;
 public interface ContactDao {
     List<Contact> getContact(int total, int pageid);
 
+    Contact getContactByName(String username);
+
     long insert(Contact contact);
 
     String getContactByRntc(String rntc);

@@ -59,6 +59,11 @@
                 <div id="menu_gadget" class="gadget">
                     <tiles:insertAttribute name="menu_gadget" ignore="true"/>
                 </div>
+                <sec:authorize access="hasAnyRole('ROLE_ADMINISTRATOR,ROLE_CHIEF')">
+                    <div id="chief_gadget" class="gadget">
+                        <tiles:insertAttribute name="chief_gadget" ignore="true"/>
+                    </div>
+                </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
                     <div id="admin_gadget" class="gadget">
                         <tiles:insertAttribute name="admin_gadget" ignore="true"/>

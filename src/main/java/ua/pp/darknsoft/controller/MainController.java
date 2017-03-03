@@ -165,6 +165,27 @@ public class MainController {
         }
         return "show_entrepreneur";
     }
+
+    @RequestMapping(value = "/userinfo")
+    public String showUserInfo(@RequestParam(defaultValue = "NO") String name, Model uiModel){
+        if(name.equals("NO")){
+
+        }else {
+            try {
+                uiModel.addAttribute("contact",contactDao.getContactByName(name));
+            }catch (IndexOutOfBoundsException ex){
+                uiModel.addAttribute("ex", "Нажаль, користувача з таким іменем не знайдено");
+                return "message";
+            }
+
+            catch (Exception ex){
+                uiModel.addAttribute("ex", ex);
+                return "message";
+            }
+        }
+
+        return "userinfo";
+    }
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------LEFT MENU---------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------

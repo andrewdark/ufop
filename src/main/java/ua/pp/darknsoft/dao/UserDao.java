@@ -17,4 +17,6 @@ public interface UserDao {
 
     @PreAuthorize(value = "authenticated")
     void deleteUser(String username);
+
+    String getUserNameById(int id);
 }

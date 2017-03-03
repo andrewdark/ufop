@@ -62,13 +62,12 @@ public class SecurityController {
             myUser.setDatereg(LocalDate.now());
             try {
                 udi.createUser(myUser);
-            } catch (Exception e) {
-               // RedirectAttributes redirectAttributes1=null;
-               redirectAttributes.addFlashAttribute("error",e);
-                return rdrct + "/message?error=3";
+            } catch (Exception ex) {
+                model.addAttribute("ex", ex);
+                return "message";
             }
-            String congrad = "<h1>Поздравляем! Осталось ввойти под своим логином/паролем</h1>";
-            redirectAttributes.addFlashAttribute("error",congrad);
+            String congrad = "<h1>Вітаємо! Залишилось лише увійти в систему під своїм логіном та паролем</h1>";
+            redirectAttributes.addFlashAttribute("ex",congrad);
             return rdrct + "/message";
         }
 

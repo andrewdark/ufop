@@ -4,10 +4,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
-import ua.pp.darknsoft.dao.crud.worktime.InsertToWorkTimeTable;
-import ua.pp.darknsoft.dao.crud.worktime.SelectWorkTimeByUser_linkASC;
-import ua.pp.darknsoft.dao.crud.worktime.SelectWorkTimeByUser_linkDESC;
-import ua.pp.darknsoft.dao.crud.worktime.UpdateWorkTimeTableAccept;
+import ua.pp.darknsoft.dao.crud.worktime.*;
 import ua.pp.darknsoft.entity.WorkTime;
 
 import javax.annotation.Resource;
@@ -27,6 +24,7 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
     private UpdateWorkTimeTableAccept updateWorkTimeTableAccept;
     private SelectWorkTimeByUser_linkDESC selectWorkTimeByUser_linkDESC;
     private SelectWorkTimeByUser_linkASC selectWorkTimeByUser_linkASC;
+    private SelectWorkTimeMySlaveDESC selectWorkTimeMySlaveDESC;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -35,6 +33,7 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
         this.updateWorkTimeTableAccept = new UpdateWorkTimeTableAccept(dataSource);
         this.selectWorkTimeByUser_linkASC = new SelectWorkTimeByUser_linkASC(dataSource);
         this.selectWorkTimeByUser_linkDESC = new SelectWorkTimeByUser_linkDESC(dataSource);
+        this.selectWorkTimeMySlaveDESC = new SelectWorkTimeMySlaveDESC(dataSource);
     }
     @Override
     public void setMyWorkWorkTime(String user_link, int cause_link){
@@ -68,6 +67,14 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
 
         return selectWorkTimeByUser_linkDESC.executeByNamedParam(bind);
     }
+    @Override
+    public List<WorkTime> getMySlavesWorkTimeDesc(String user_link, String datereg, Integer limit){
+        Map<String,Object> bind = new HashedMap();
+        bind.put("user_link",user_link);
+        bind.put("datereg",datereg);
+        bind.put("limit",limit);
 
+        return selectWorkTimeMySlaveDESC.executeByNamedParam(bind);
+    }
 
 }

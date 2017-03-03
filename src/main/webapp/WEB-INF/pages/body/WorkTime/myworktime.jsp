@@ -53,7 +53,7 @@
                 <th>Причина</th>
                 <th>Погоджено</th>
                 <th>Ким погоджено</th>
-                <th>Дата погодження</th>
+                    <%--<th>Дата погодження</th>--%>
                 <c:forEach var="myWorkTime" items="${myWorkTime}">
                     <tr>
                         <td>
@@ -73,16 +73,16 @@
                             </c:if>
                             <c:if test="${myWorkTime.user_accepted_link!=0}">
                                 <c:if test="${myWorkTime.accepted}">
-                                    <font color="green" size="2">ПОГОДЖЕНО</font>
+                                    <div class="stamp_green"><font color="green" size="2"><p>ПОГОДЖЕНО</p></font></div>
                                 </c:if>
                                 <c:if test="${not myWorkTime.accepted}">
-                                    <font color="red" size="2">ВІДХИЛЕНО</font>
+                                    <div class="stamp_red"><font color="red" size="2"><p>ВІДХИЛЕНО</p></font></div>
                                 </c:if>
 
                             </c:if>
                         </td>
-                        <td>${myWorkTime.user_accepted_link}</td>
-                        <td>${myWorkTime.dateaccept}</td>
+                        <td> <a href="/userinfo?name=${myWorkTime.s_user_accepted_link}">${myWorkTime.s_user_accepted_link}</a></td>
+                            <%-- <td>${myWorkTime.dateaccept}</td> --%>
 
                     </tr>
                 </c:forEach>

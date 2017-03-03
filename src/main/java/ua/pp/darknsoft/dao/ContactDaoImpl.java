@@ -10,6 +10,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.contact.InsertContact;
 import ua.pp.darknsoft.dao.crud.contact.SelectContact;
+import ua.pp.darknsoft.dao.crud.contact.SelectContactByUserName;
 import ua.pp.darknsoft.entity.Contact;
 
 import javax.annotation.Resource;
@@ -29,6 +30,7 @@ public class ContactDaoImpl implements ContactDao, Serializable {
     DataSource dataSource;
     //InsertContact insertContact;
     SelectContact selectContact;
+    SelectContactByUserName selectContactByUserName;
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Resource(name = "dataSource")
@@ -37,6 +39,7 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         this.selectContact = new SelectContact(dataSource);
         //this.insertContact = new InsertContact(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.selectContactByUserName = new SelectContactByUserName(dataSource);
     }
 
     @Override
@@ -46,6 +49,13 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         bind.put("pageid",pageid);
 
         return selectContact.executeByNamedParam(bind);
+    }
+    @Override
+    public Contact getContactByName(String username) {
+        Map<String,Object> bind = new HashMap<>();
+        bind.put("username",username);
+        Contact contact = selectContactByUserName.executeByNamedParam(bind).get(0);
+        return contact;
     }
 
     @Override

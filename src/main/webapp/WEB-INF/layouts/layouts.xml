@@ -9,6 +9,7 @@
         <put-attribute name="login_gadget" value="/WEB-INF/pages/login.jsp"/>
         <put-attribute name="menu_gadget" value="/WEB-INF/pages/menu.jsp"/>
         <put-attribute name="admin_gadget" value="/WEB-INF/pages/adminmenu.jsp"/>
+        <put-attribute name="chief_gadget" value="/WEB-INF/pages/chiefmenu.jsp"/>
         <put-attribute name="header" value="/WEB-INF/pages/header.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/pages/footer.jsp"/>
     </definition>
@@ -89,5 +90,8 @@
     </definition>
     <definition extends="default" name="myworktime">
         <put-attribute name="body" value="/WEB-INF/pages/body/WorkTime/myworktime.jsp" />
+    </definition>
+    <definition extends="default" name="userinfo">
+        <put-attribute name="body" value="/WEB-INF/pages/body/userinfo.jsp" />
     </definition>
 </tiles-definitions>

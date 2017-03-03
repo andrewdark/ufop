@@ -553,3 +553,6 @@ a.disabled {
     cursor: default;  /* устанавливаем курсор в виде стрелки */
     color: #999; /* цвет текста для нективной ссылки */
 }
+
+.stamp_red p { border: 1px solid red;  padding: 5px; }
+.stamp_green p { border: 1px solid green;  padding: 5px; }

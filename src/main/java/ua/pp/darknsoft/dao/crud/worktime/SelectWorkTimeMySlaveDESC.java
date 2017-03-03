@@ -1,8 +1,6 @@
 package ua.pp.darknsoft.dao.crud.worktime;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.SqlParameter;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import ua.pp.darknsoft.entity.WorkTime;
 
@@ -10,23 +8,20 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Andrew on 02.03.2017.
  */
-public class SelectWorkTimeByUser_linkASC extends MappingSqlQuery<WorkTime> {
-    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+public class SelectWorkTimeMySlaveDESC extends MappingSqlQuery<WorkTime> {
     private static final String SQL_SELECT_WorkTimeByUser_link = "SELECT wtt.*,cct.name s_cause_link FROM work_time_table wtt " +
             "INNER JOIN cause_catalog_table cct ON(cct.id=wtt.cause_link) " +
-            "WHERE wtt.user_link = (SELECT ut.id FROM user_table ut WHERE LOWER(ut.username) = LOWER(:user_link))" +
-            "ORDER BY datereg ASC LIMIT :limit" ;
+            "WHERE wtt.treemark <@ (SELECT ut.structure_link FROM user_table ut WHERE LOWER(ut.username) = LOWER(:user_link)) AND datereg > (:datereg)::TIMESTAMP " +
+            "ORDER BY datereg DESC LIMIT :limit";
 
-    public SelectWorkTimeByUser_linkASC(DataSource ds) {
+    public SelectWorkTimeMySlaveDESC(DataSource ds) {
         super(ds, SQL_SELECT_WorkTimeByUser_link);
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(ds);
         super.declareParameter(new SqlParameter("user_link", Types.VARCHAR));
+        super.declareParameter(new SqlParameter("datereg", Types.VARCHAR));
         super.declareParameter(new SqlParameter("limit", Types.INTEGER));
     }
 
@@ -41,21 +36,7 @@ public class SelectWorkTimeByUser_linkASC extends MappingSqlQuery<WorkTime> {
         workTime.setDatereg(resultSet.getTimestamp("datereg"));
         workTime.setAccepted(resultSet.getBoolean("accepted"));
         workTime.setUser_accepted_link(resultSet.getInt("user_accepted_link"));
-        workTime.setS_user_accepted_link(getUserNameById(resultSet.getInt("user_accepted_link")));
         workTime.setDateaccept(resultSet.getTimestamp("dateaccept"));
         return workTime;
-    }
-
-    private String getUserNameById(int id) {
-        String sql = "SELECT username FROM user_table WHERE id=:id";
-        String result=null;
-        Map<String, Integer> bind = new HashMap<>();
-        bind.put("id", id);
-try{
-    result = (String) namedParameterJdbcTemplate.queryForObject(sql, bind, String.class);
-}catch(Exception ex){
-    result = null;
-}
-        return result;
     }
 }

@@ -2,6 +2,7 @@ package ua.pp.darknsoft.dao;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class UserDaoImpl implements UserDao,Serializable{
     private SelectUser selectUser;
     private UpdateUser updateUser;
     private DeleteUser deleteUser;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 
     @Resource(name = "dataSource")
@@ -39,6 +41,7 @@ public class UserDaoImpl implements UserDao,Serializable{
         this.selectUser = new SelectUser(dataSource);
         this.updateUser = new UpdateUser(dataSource);
         this.deleteUser = new DeleteUser(dataSource);
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     public void createUser(User user) {
@@ -71,5 +74,13 @@ public class UserDaoImpl implements UserDao,Serializable{
         paramMap.put("username",username.toLowerCase());
         deleteUser.updateByNamedParam(paramMap);
 
+    }
+    @Override
+    public String getUserNameById(int id) {
+        String sql = "SELECT username FROM user_table WHERE id=:id";
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("id", id);
+
+        return (String) namedParameterJdbcTemplate.queryForObject(sql, bind, String.class);
     }
 }

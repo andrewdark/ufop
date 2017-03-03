@@ -1,5 +1,6 @@
 $(function () {
     $("#menu").menu();
+    $("#chiefmenu").menu();
     $("#adminmenu").menu();
 });
 
