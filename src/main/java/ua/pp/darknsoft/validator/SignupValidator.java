@@ -36,8 +36,13 @@ public class SignupValidator implements Validator {
         try {
             str = udi.findUserByName(myUser.getUsername().toLowerCase()).get(0).getUsername();
 
-        } catch (Exception e) {
+        } catch (IndexOutOfBoundsException ex){
             str = "";
+        }
+        catch (Exception e) {
+            str = "";
+
+            errors.rejectValue("username", "username.wrong", e+"");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "username.empty", "Username must not be empty.");
