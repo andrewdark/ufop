@@ -13,9 +13,9 @@ import java.sql.Types;
  * Created by Andrew on 02.03.2017.
  */
 public class SelectWorkTimeMySlaveDESC extends MappingSqlQuery<WorkTime> {
-    private static final String SQL_SELECT_WorkTimeByUser_link = "SELECT wtt.*,cct.name s_cause_link FROM work_time_table wtt " +
-            "INNER JOIN cause_catalog_table cct ON(cct.id=wtt.cause_link) " +
-            "WHERE wtt.treemark <@ (SELECT ut.structure_link FROM user_table ut WHERE LOWER(ut.username) = LOWER(:user_link)) AND datereg > (:datereg)::TIMESTAMP " +
+    private static final String SQL_SELECT_WorkTimeByUser_link = "SELECT wtt.*,cct.name s_cause_link,ct.last_name ln,ct.first_name fn FROM work_time_table wtt " +
+            "INNER JOIN cause_catalog_table cct ON(cct.id=wtt.cause_link) INNER JOIN contact_table ct ON (ct.id=(SELECT contact_link FROM user_table WHERE id = wtt.user_link ))" +
+            "WHERE wtt.treemark <@ (SELECT ut.structure_link FROM user_table ut WHERE LOWER(ut.username) = LOWER(:user_link)) AND wtt.datereg > (:datereg)::TIMESTAMP " +
             "ORDER BY datereg DESC LIMIT :limit";
 
     public SelectWorkTimeMySlaveDESC(DataSource ds) {
@@ -30,6 +30,7 @@ public class SelectWorkTimeMySlaveDESC extends MappingSqlQuery<WorkTime> {
         WorkTime workTime = new WorkTime();
         workTime.setId(resultSet.getLong("id"));
         workTime.setUser_link(resultSet.getInt("user_link"));
+        workTime.setUser_name(resultSet.getString("ln")+" "+resultSet.getString("fn"));
         workTime.setType_of_action(resultSet.getShort("type_of_action"));
         workTime.setCause_link(resultSet.getInt("cause_link"));
         workTime.setS_cause_link(resultSet.getString("s_cause_link"));

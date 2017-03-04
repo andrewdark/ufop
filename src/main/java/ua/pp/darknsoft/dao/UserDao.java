@@ -19,4 +19,8 @@ public interface UserDao {
     void deleteUser(String username);
 
     String getUserNameById(int id);
+
+    int getUserIdByUserName(String username);
+
+    String getUserStructureNameByUserName(String username);
 }

@@ -24,8 +24,8 @@ import java.util.Map;
  */
 
 @Service
-@Scope(value="session",proxyMode= ScopedProxyMode.TARGET_CLASS)
-public class UserDaoImpl implements UserDao,Serializable{
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class UserDaoImpl implements UserDao, Serializable {
     private DataSource dataSource;
     private InsertUser insertUser;
     private SelectUser selectUser;
@@ -60,6 +60,7 @@ public class UserDaoImpl implements UserDao,Serializable{
         paramMap.put("username", username);
         return selectUser.executeByNamedParam(paramMap);
     }
+
     @PreAuthorize(value = "authenticated")
     public void updateUser(User user) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -68,13 +69,15 @@ public class UserDaoImpl implements UserDao,Serializable{
         paramMap.put("pwd", user.getPwd());
         updateUser.updateByNamedParam(paramMap);
     }
+
     @PreAuthorize(value = "authenticated")
     public void deleteUser(String username) {
-        Map<String,Object> paramMap = new HashMap<String,Object>();
-        paramMap.put("username",username.toLowerCase());
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("username", username.toLowerCase());
         deleteUser.updateByNamedParam(paramMap);
 
     }
+
     @Override
     public String getUserNameById(int id) {
         String sql = "SELECT username FROM user_table WHERE id=:id";
@@ -82,5 +85,26 @@ public class UserDaoImpl implements UserDao,Serializable{
         bind.put("id", id);
 
         return (String) namedParameterJdbcTemplate.queryForObject(sql, bind, String.class);
+    }
+    @Override
+    public int getUserIdByUserName(String username) {
+        String sql = "SELECT id FROM user_table WHERE username=:username";
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("username", username);
+
+        return (int) namedParameterJdbcTemplate.queryForObject(sql, bind, Integer.class);
+    }
+
+    @Override
+    public String getUserStructureNameByUserName(String username) {
+        String sql = "SELECT name FROM structure_catalog_table WHERE treemark=(SELECT structure_link FROM user_table WHERE LOWER (username) = LOWER (:username) )";
+        Map<String, String> bind = new HashMap<>();
+        bind.put("username", username);
+        try {
+            return (String) namedParameterJdbcTemplate.queryForObject(sql, bind, String.class);
+        } catch (Exception ex) {
+            return ex + "";
+        }
+
     }
 }

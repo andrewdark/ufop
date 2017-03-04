@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.pp.darknsoft.dao.CatalogDao;
 import ua.pp.darknsoft.dao.UserDao;
@@ -16,6 +17,9 @@ import ua.pp.darknsoft.entity.CauseCatalog;
 import ua.pp.darknsoft.entity.WorkTime;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +34,8 @@ public class WorkTimeController {
     CatalogDao catalogDao;
     @Autowired
     WorkTimeDao workTimeDao;
+    @Autowired
+    UserDao userDao;
 
 
 
@@ -108,14 +114,19 @@ public class WorkTimeController {
     public String acceptingWorkTime(@ModelAttribute WorkTime myWorkTime, Model uiModel, HttpServletRequest httpServletRequest,
                                     RedirectAttributes redirectAttributes){
         String user = SecurityContextHolder.getContext().getAuthentication().getName().toString();
+       DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.now();
+
+        String searchdate=dtf.format(localDate);
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
         try {
-            uiModel.addAttribute("size",workTimeDao.getMySlavesWorkTimeDesc(user,"2017-01-01",null).size());
-            uiModel.addAttribute("worktime",workTimeDao.getMySlavesWorkTimeDesc(user,"2017-01-01",null));
+            uiModel.addAttribute("mySubdivision",userDao.getUserStructureNameByUserName(user));
+            uiModel.addAttribute("worktime",workTimeDao.getMySlavesWorkTimeDesc(user,searchdate + " 00:00:00.000001",null));
+            uiModel.addAttribute("searchdate", searchdate);
         }catch (Exception ex){
             redirectAttributes.addFlashAttribute("ex", ex);
             return rdrct +"/message";
@@ -124,20 +135,25 @@ public class WorkTimeController {
     }
     @PreAuthorize(value = "hasAnyRole('ROLE_ADMINISTRATOR,ROLE_CHIEF')")
     @RequestMapping(value = "/acceptingWorkTimepost", method = RequestMethod.POST)
-    public String acceptingWorkTimepost(@ModelAttribute WorkTime myWorkTime,HttpServletRequest httpServletRequest,
-                                 RedirectAttributes redirectAttributes, Model uiModel){
+    public String acceptingWorkTimepost(@RequestParam long id, @RequestParam Boolean accept, HttpServletRequest httpServletRequest,
+                                        RedirectAttributes redirectAttributes, Model uiModel){
+        WorkTime myWorkTime = new WorkTime();
         String user = SecurityContextHolder.getContext().getAuthentication().getName().toString();
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
+        myWorkTime.setUser_accepted_link(userDao.getUserIdByUserName(user.toLowerCase()));
         try {
-
+            myWorkTime.setId(id);
+            myWorkTime.setAccepted(accept);
+            myWorkTime.setUser_accepted_link(userDao.getUserIdByUserName(user.toLowerCase()));
+            workTimeDao.acceptWorkTime(myWorkTime);
         }catch (Exception ex){
             redirectAttributes.addFlashAttribute("ex", ex);
             return rdrct +"/message";
         }
-        return rdrct + "/acceptWorkTime";
+        return rdrct + "/acceptworktime";
     }
 }

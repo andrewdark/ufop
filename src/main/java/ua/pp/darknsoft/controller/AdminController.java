@@ -7,9 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.pp.darknsoft.dao.CatalogDao;
-import ua.pp.darknsoft.entity.StructureOrganization;
-import ua.pp.darknsoft.entity.User;
-import ua.pp.darknsoft.validator.StructureOrganizationValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -21,32 +18,31 @@ import java.util.*;
 public class AdminController {
     @Autowired
     CatalogDao catalogDao;
-    @Autowired
-    StructureOrganizationValidator structureOrganizationValidator;
+
 
     @RequestMapping(value = "/adduser_to_strorgtlb", method = RequestMethod.GET)
-    public String addUserToStrOrg(@ModelAttribute StructureOrganization structureOrganization, Model uiModel) {
+    public String addUserToStrOrg( Model uiModel) {
 
         BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
         uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
-        uiModel.addAttribute("command",structureOrganization);
+        uiModel.addAttribute("command",null);
 
         return "adduser_to_strorgtlb";
     }
 
     @RequestMapping(value = "/adduser_to_strorgtlbpost", method = RequestMethod.POST)
-    public String addUserToStrOrgpost(@ModelAttribute StructureOrganization structureOrganization, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
+    public String addUserToStrOrgpost(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
                                       Model uiModel, BindingResult bindingResult) {
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
-        structureOrganizationValidator.validate(structureOrganization, bindingResult);
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("b1", bindingResult);
-            return rdrct + "/adduser_to_strorgtlb";
-        }
+//        structureOrganizationValidator.validate(structureOrganization, bindingResult);
+//        if (bindingResult.hasErrors()) {
+//            redirectAttributes.addFlashAttribute("b1", bindingResult);
+//            return rdrct + "/adduser_to_strorgtlb";
+//        }
 
         return rdrct + "/adduser_to_strorgtlb";
     }

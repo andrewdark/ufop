@@ -36,8 +36,8 @@ public class UpduserValidator implements Validator {
         try {
             str = udi.findUserByName(myUser.getUsername().toLowerCase()).get(0).getUsername();
 
-        } catch (Exception e) {
-            str = "";
+        } catch (Exception ex) {
+            str = ""+ex;
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "username.empty", "Username must not be empty.");
@@ -52,7 +52,7 @@ public class UpduserValidator implements Validator {
             }
 
             if (!username.toLowerCase().equals(str.toLowerCase())) {
-                errors.rejectValue("username", "username.full", "User not found");
+                errors.rejectValue("username", "username.full", "User not found"+str);
             }
         }
 

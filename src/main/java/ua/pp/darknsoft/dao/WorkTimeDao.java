@@ -10,7 +10,7 @@ import java.util.List;
 public interface WorkTimeDao {
     void setMyWorkWorkTime(String user_link, int cause_link);
 
-    void acceptWorkTime(Boolean accepted, String user_accepted_link);
+    void acceptWorkTime(WorkTime workTime);
 
     List<WorkTime> getMyWorkWorkTimeASC(String user_link, Integer limit);
 

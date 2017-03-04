@@ -82,7 +82,7 @@ public class SecurityController {
         model.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
         return "registration";
     }
-
+    @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/editprofile",method = RequestMethod.GET)
     public String editProfile(User myUser, Model model) {
         myUser.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -107,10 +107,12 @@ public class SecurityController {
         try {
             myUser.setPwd(passwordEncoder.encode(myUser.getPwd()));
             udi.updateUser(myUser);
-        }catch (Exception e){
-            redirectAttributes.addFlashAttribute("error", e);
+            redirectAttributes.addFlashAttribute("ex","Пароль у користувача: "+ myUser.getUsername()+" змінено");
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex", ex);
             return "redirect:/message";
         }
+
         return rdrct+"/my_office";
     }
     //------------------------------------------------------------------------------------------------------------------
@@ -142,7 +144,7 @@ public class SecurityController {
             checkUser = udi.findUserByName(myUser.getUsername()).get(0);
 
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("message", myUser.getUsername());
+            redirectAttributes.addFlashAttribute("ex", myUser.getUsername());
             return "redirect:/message";
         }
 
@@ -169,12 +171,12 @@ public class SecurityController {
                 return rdrct+"/";
             }
             else {
-                redirectAttributes.addFlashAttribute("message", "User: "+myUser.getUsername()+" or mail not fount" );
+                redirectAttributes.addFlashAttribute("ex", "User: "+myUser.getUsername()+" or mail not fount" );
                 return "redirect:/message";
             }
 
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("message", e);
+            redirectAttributes.addFlashAttribute("ex", e);
             return "redirect:/message";
         }
 

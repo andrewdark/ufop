@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -7,13 +8,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-Size: ${size}
+Дата: ${searchdate}
 <table>
-    <caption>tablo</caption>
-    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th>
+    <caption>Робочий час <b>${mySubdivision}</b></caption>
+    <th>Користувач</th><th>Вид</th><th>Час</th><th>Причина</th><th>Погоджено</th><th>Ким погоджено</th><th>Дата погодження</th><th>Затвердити</th>
     <c:forEach var="worktime" items="${worktime}">
 
         <tr>
+            <td>${worktime.user_name}</td>
             <td>
                 <c:if test="${worktime.type_of_action==0}">
                     <font color="red" size="4">Покинув р.м.</font>
@@ -28,21 +30,35 @@ Size: ${size}
             <td>
                 <c:if test="${worktime.user_accepted_link==0}">
                     не розглянуто
+                    <c:set var="accept" value="true"/>
+                    <c:set var="acceptedText" value="погодити" />
                 </c:if>
                 <c:if test="${worktime.user_accepted_link!=0}">
                     <c:if test="${worktime.accepted}">
                         <div class="stamp_green"><font color="green" size="2"><p>ПОГОДЖЕНО</p></font></div>
+                        <c:set var="accept" value="false"/>
+                        <c:set var="acceptedText" value="заперечити" />
                     </c:if>
                     <c:if test="${not worktime.accepted}">
                         <div class="stamp_red"><font color="red" size="2"><p>ВІДХИЛЕНО</p></font></div>
+                        <c:set var="accept" value="true"/>
+                        <c:set var="acceptedText" value="погодити" />
                     </c:if>
 
                 </c:if>
             </td>
             <td> <a href="/userinfo?name=${worktime.s_user_accepted_link}">${worktime.s_user_accepted_link}</a></td>
                 <td>${worktime.dateaccept}</td>
-            <td></td>
-            <td></td>
+            <td>
+                <form action="/acceptingWorkTimepost" method="post">
+                    <input name="id" type="hidden" value="${worktime.id}"/>
+                    <input name="accept" type="hidden" value="${accept}"/>
+                    <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}"/>
+                    <input type="submit" value="${acceptedText}"/>
+                </form>
+
+            </td>
+
         </tr>
 
     </c:forEach>

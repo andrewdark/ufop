@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 public class WorkTime {
     private long id;
     private int user_link;
+    private String user_name;
     private short type_of_action;
     private int cause_link;
     private String s_cause_link;
@@ -95,5 +96,13 @@ public class WorkTime {
 
     public void setS_user_accepted_link(String s_user_accepted_link) {
         this.s_user_accepted_link = s_user_accepted_link;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 }

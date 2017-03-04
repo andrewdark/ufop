@@ -44,10 +44,11 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
         insertToWorkTimeTable.updateByNamedParam(bind);
     }
     @Override
-    public void acceptWorkTime(Boolean accepted, String user_accepted_link){
+    public void acceptWorkTime(WorkTime workTime){
         Map<String,Object> bind = new HashedMap();
-        bind.put("accepted",accepted);
-        bind.put("user_accepted_link",user_accepted_link);
+        bind.put("id",workTime.getId());
+        bind.put("accepted",workTime.isAccepted());
+        bind.put("user_accepted_link",workTime.getUser_accepted_link());
 
         updateWorkTimeTableAccept.updateByNamedParam(bind);
     }
