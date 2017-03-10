@@ -5,23 +5,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.pp.darknsoft.dao.CatalogDao;
 import ua.pp.darknsoft.dao.UserDao;
 import ua.pp.darknsoft.dao.WorkTimeDao;
 import ua.pp.darknsoft.entity.CauseCatalog;
+import ua.pp.darknsoft.entity.User;
 import ua.pp.darknsoft.entity.WorkTime;
-
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +31,9 @@ public class WorkTimeController {
     WorkTimeDao workTimeDao;
     @Autowired
     UserDao userDao;
-
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDate localDate = LocalDate.now();
+ String searchdate=dtf.format(localDate);
 
 
 
@@ -111,13 +108,18 @@ public class WorkTimeController {
     //------------------------------------------------------------------------------------------------------------------
     @PreAuthorize(value = "hasAnyRole('ROLE_ADMINISTRATOR,ROLE_CHIEF')")
     @RequestMapping(value = "/acceptworktime", method = RequestMethod.GET)
-    public String acceptingWorkTime(@ModelAttribute WorkTime myWorkTime, Model uiModel, HttpServletRequest httpServletRequest,
+    public String acceptingWorkTime(@RequestParam(defaultValue = "") String date,@ModelAttribute WorkTime myWorkTime, Model uiModel, HttpServletRequest httpServletRequest,
                                     RedirectAttributes redirectAttributes){
+        String ld_f,ld_l;
         String user = SecurityContextHolder.getContext().getAuthentication().getName().toString();
-       DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.now();
+       try{
+           ld_f = dtf.format(LocalDate.parse(date));
+           ld_l = ld_f;
+       }catch (Exception ex){
+           ld_f = dtf.format(localDate);
+           ld_l = dtf.format(localDate);
+       }
 
-        String searchdate=dtf.format(localDate);
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
@@ -125,8 +127,8 @@ public class WorkTimeController {
         String rdrct = "redirect:" + scheme + serverName + serverPort;
         try {
             uiModel.addAttribute("mySubdivision",userDao.getUserStructureNameByUserName(user));
-            uiModel.addAttribute("worktime",workTimeDao.getMySlavesWorkTimeDesc(user,searchdate + " 00:00:00.000001",null));
-            uiModel.addAttribute("searchdate", searchdate);
+            uiModel.addAttribute("worktime",workTimeDao.getMySlavesWorkTimeDesc(user,ld_f+" 00:00:00.00001",ld_l+" 23:59:59.00001",null));
+            uiModel.addAttribute("searchdate", ld_f);
         }catch (Exception ex){
             redirectAttributes.addFlashAttribute("ex", ex);
             return rdrct +"/message";
@@ -155,5 +157,44 @@ public class WorkTimeController {
             return rdrct +"/message";
         }
         return rdrct + "/acceptworktime";
+    }
+    // next
+    @PreAuthorize(value = "hasAnyRole('ROLE_ADMINISTRATOR,ROLE_CHIEF')")
+    @RequestMapping(value = "/showmysubordinates", method = RequestMethod.GET)
+    public String showMySubordinates(Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes){
+        String user = SecurityContextHolder.getContext().getAuthentication().getName().toString();
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+
+        try{
+            uiModel.addAttribute("structure",catalogDao.getMyStructureByMyStatus(user));
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return rdrct +"/message";
+        }
+        return "showmysubordinates";
+    }
+    //------------------------------------------------------------------------------------------------------------------
+    //-----------------------------------------AJAX HELPER--------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    @ResponseBody
+    @RequestMapping(value = "/ajax_getUsersByStructureLink", produces = {"application/json; charset=UTF-8"})
+    public String ajax_getUsersByStructureLink(@RequestParam String param1) {
+        String html="<div class=\"whiteblock\">";
+        try{
+            List<User> userList = userDao.getUsersByStructureLink(param1);
+            for (User items: userList
+                 ) {
+                html=html+items.getUsername();
+            }
+        }catch (Exception ex){
+            html=html+"Помилка: "+ex;
+        }
+
+        html=html+"</div>";
+        return html;
     }
 }

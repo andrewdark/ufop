@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import ua.pp.darknsoft.dao.crud.kved.InsertEntrepreneursKveds;
+import ua.pp.darknsoft.dao.crud.kved.InsertKvedsUfop;
 import ua.pp.darknsoft.dao.crud.kved.SelectEntrepreneursKvedsByEntrepreneurLink;
 import ua.pp.darknsoft.dao.crud.kved.SelectKvedCatalogByTreemark;
 import ua.pp.darknsoft.dao.crud.kved.SelectKvedCatalogTop;
-import ua.pp.darknsoft.entity.EntrepreneursKveds;
 import ua.pp.darknsoft.entity.KvedCatalog;
+import ua.pp.darknsoft.entity.KvedsUfop;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -26,7 +26,7 @@ import java.util.Map;
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class KvedDaoImpl implements KvedDao, Serializable {
     DataSource dataSource;
-    InsertEntrepreneursKveds insertEntrepreneursKveds;
+    InsertKvedsUfop insertKvedsUfop;
     SelectKvedCatalogTop selectKvedCatalogTop;
     SelectKvedCatalogByTreemark selectKvedCatalogByTreemark;
     SelectEntrepreneursKvedsByEntrepreneurLink selectEntrepreneursKvedsByEntrepreneurLink;
@@ -34,21 +34,21 @@ public class KvedDaoImpl implements KvedDao, Serializable {
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
-        this.insertEntrepreneursKveds = new InsertEntrepreneursKveds(dataSource);
+        this.insertKvedsUfop = new InsertKvedsUfop(dataSource);
         this.selectKvedCatalogTop = new SelectKvedCatalogTop(dataSource);
         this.selectKvedCatalogByTreemark = new SelectKvedCatalogByTreemark(dataSource);
         this.selectEntrepreneursKvedsByEntrepreneurLink = new SelectEntrepreneursKvedsByEntrepreneurLink(dataSource);
     }
     @PreAuthorize(value = "isAuthenticated()")
     @Override
-    public void createEntrepreneursKveds(EntrepreneursKveds entrepreneursKveds) {
+    public void createEntrepreneursKveds(KvedsUfop kvedsUfop) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
 
-        paramMap.put("entrepreneur_link", entrepreneursKveds.getEntrepreneur_link());
-        paramMap.put("kved_catalog_link", entrepreneursKveds.getKved_catalog_link());
-        paramMap.put("owner", entrepreneursKveds.getOwner().toLowerCase());
+        paramMap.put("ufop_link", kvedsUfop.getUfop_link());
+        paramMap.put("kved_catalog_link", kvedsUfop.getKved_catalog_link());
+        paramMap.put("creator_link", kvedsUfop.getCreator_link().toLowerCase());
 
-        insertEntrepreneursKveds.updateByNamedParam(paramMap);
+        insertKvedsUfop.updateByNamedParam(paramMap);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class KvedDaoImpl implements KvedDao, Serializable {
         return downloc;
     }
 @Override
-    public List<EntrepreneursKveds> getEntrepreneursKvedsByEntrepreneurLink(long e_link){
+    public List<KvedsUfop> getEntrepreneursKvedsByEntrepreneurLink(long e_link){
         Map<String, Long> bind = new HashMap<>();
         bind.put("entrepreneur_link",e_link);
         return selectEntrepreneursKvedsByEntrepreneurLink.executeByNamedParam(bind);

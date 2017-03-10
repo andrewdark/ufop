@@ -19,11 +19,13 @@ public class Contact {
     private String number_of_passport;
     private String a_stay_address;
     private String n_stay_address;
+    private String f_stay_address;
+    private String b_stay_address;
     private String tel;
     private String fax;
     private String email;
     private Timestamp datereg;
-    private String owner;
+    private String creator_link;
     private String birthday;
     private String organization;
     private String position;
@@ -101,6 +103,22 @@ public class Contact {
         this.n_stay_address = n_stay_address;
     }
 
+    public String getF_stay_address() {
+        return f_stay_address;
+    }
+
+    public void setF_stay_address(String f_stay_address) {
+        this.f_stay_address = f_stay_address;
+    }
+
+    public String getB_stay_address() {
+        return b_stay_address;
+    }
+
+    public void setB_stay_address(String b_stay_address) {
+        this.b_stay_address = b_stay_address;
+    }
+
     public String getTel() {
         return tel;
     }
@@ -133,9 +151,13 @@ public class Contact {
         this.datereg = datereg;
     }
 
-    public String getOwner() { return owner; }
+    public String getCreator_link() {
+        return creator_link;
+    }
 
-    public void setOwner(String owner) { this.owner = owner; }
+    public void setCreator_link(String creator_link) {
+        this.creator_link = creator_link;
+    }
 
     public String getBirthday() {
         return birthday;

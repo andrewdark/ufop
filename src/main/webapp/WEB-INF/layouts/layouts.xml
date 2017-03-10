@@ -14,84 +14,99 @@
         <put-attribute name="footer" value="/WEB-INF/pages/footer.jsp"/>
     </definition>
     <definition extends="default" name="test">
-        <put-attribute name="body" value="/WEB-INF/pages/body/test.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/test.jsp"/>
     </definition>
     <definition extends="default" name="registration">
-        <put-attribute name="body" value="/WEB-INF/pages/body/registration.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/registration.jsp"/>
     </definition>
     <definition extends="default" name="restore">
-    <put-attribute name="body" value="/WEB-INF/pages/body/restore.jsp" />
-</definition>
+        <put-attribute name="body" value="/WEB-INF/pages/body/restore.jsp"/>
+    </definition>
     <definition extends="default" name="editprofile">
-        <put-attribute name="body" value="/WEB-INF/pages/body/editprofile.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/editprofile.jsp"/>
     </definition>
     <definition extends="default" name="my_office">
-        <put-attribute name="body" value="/WEB-INF/pages/body/my_office.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/my_office.jsp"/>
     </definition>
     <definition extends="default" name="show_entrepreneur">
-        <put-attribute name="body" value="/WEB-INF/pages/body/show_entrepreneur.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/show_entrepreneur.jsp"/>
     </definition>
     <definition extends="default" name="legal_entity">
-        <put-attribute name="body" value="/WEB-INF/pages/body/legal_entity.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/legal_entity.jsp"/>
     </definition>
     <definition extends="default" name="message">
-        <put-attribute name="body" value="/WEB-INF/pages/body/message.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/message.jsp"/>
     </definition>
     <definition extends="default" name="catalog">
-        <put-attribute name="body" value="/WEB-INF/pages/body/catalog.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/catalog.jsp"/>
     </definition>
     <definition extends="default" name="search">
-        <put-attribute name="body" value="/WEB-INF/pages/body/search.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/search.jsp"/>
     </definition>
     <definition extends="default" name="chat">
-        <put-attribute name="body" value="/WEB-INF/pages/body/chat.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/chat.jsp"/>
     </definition>
     <definition extends="default" name="viewlocation">
-        <put-attribute name="body" value="/WEB-INF/pages/body/catalog/viewlocation.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/catalog/viewlocation.jsp"/>
     </definition>
     <definition extends="default" name="addlocation">
-        <put-attribute name="body" value="/WEB-INF/pages/body/catalog/addlocation.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/catalog/addlocation.jsp"/>
     </definition>
     <definition extends="default" name="commercialobject">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/commercialobject.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/commercialobject.jsp"/>
     </definition>
     <definition extends="default" name="contact">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/contact.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/contact.jsp"/>
     </definition>
     <definition extends="default" name="individualentrepreneur">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/individualentrepreneur.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/individualentrepreneur.jsp"/>
     </definition>
     <definition extends="default" name="kved">
-    <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/kved.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/kved.jsp"/>
     </definition>
-    <definition extends="default" name="entitycommercialobject">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterofentity/entitycommercialobject.jsp" />
+    <!-- MASTER OF REGISTRATION UFOP -->
+    <definition extends="default" name="addcommobj">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addcommobj.jsp"/>
     </definition>
-    <definition extends="default" name="entitycontact">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterofentity/entitycontact.jsp" />
+    <definition extends="default" name="addlegalentity">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addlegalentity.jsp"/>
     </definition>
+    <definition extends="default" name="addcontact">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addcontact.jsp"/>
+    </definition>
+    <definition extends="default" name="addentrepreneur">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addentrepreneur.jsp"/>
+    </definition>
+    <definition extends="default" name="addkved">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addkved.jsp"/>
+    </definition>
+    <definition extends="default" name="commobj_worksheet">
+        <put-attribute name="body" value="/WEB-INF/pages/body/commobj_worksheet.jsp"/>
+    </definition>
+    <!-- END OF BLOCK -->
+
     <definition extends="default" name="legalentity">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterofentity/legalentity.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addlegalentity.jsp"/>
     </definition>
     <definition extends="default" name="viewslist_individual">
-        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_individual.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_individual.jsp"/>
     </definition>
     <definition extends="default" name="viewslist_entity">
-        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_entity.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_entity.jsp"/>
     </definition>
     <definition extends="default" name="adduser_to_strorgtlb">
-        <put-attribute name="body" value="/WEB-INF/pages/body/admin/adduser_to_strorgtlb.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/admin/adduser_to_strorgtlb.jsp"/>
     </definition>
     <definition extends="default" name="acceptworktime">
-        <put-attribute name="body" value="/WEB-INF/pages/body/chief/acceptworktime.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/chief/acceptworktime.jsp"/>
     </definition>
     <definition extends="default" name="showmysubordinates">
-        <put-attribute name="body" value="/WEB-INF/pages/body/chief/showmysubordinates.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/chief/showmysubordinates.jsp"/>
     </definition>
     <definition extends="default" name="myworktime">
-        <put-attribute name="body" value="/WEB-INF/pages/body/WorkTime/myworktime.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/WorkTime/myworktime.jsp"/>
     </definition>
     <definition extends="default" name="userinfo">
-        <put-attribute name="body" value="/WEB-INF/pages/body/userinfo.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/body/userinfo.jsp"/>
     </definition>
 </tiles-definitions>

@@ -15,13 +15,14 @@ import java.sql.Types;
 public class SelectWorkTimeMySlaveDESC extends MappingSqlQuery<WorkTime> {
     private static final String SQL_SELECT_WorkTimeByUser_link = "SELECT wtt.*,cct.name s_cause_link,ct.last_name ln,ct.first_name fn FROM work_time_table wtt " +
             "INNER JOIN cause_catalog_table cct ON(cct.id=wtt.cause_link) INNER JOIN contact_table ct ON (ct.id=(SELECT contact_link FROM user_table WHERE id = wtt.user_link ))" +
-            "WHERE wtt.treemark <@ (SELECT ut.structure_link FROM user_table ut WHERE LOWER(ut.username) = LOWER(:user_link)) AND wtt.datereg > (:datereg)::TIMESTAMP " +
+            "WHERE wtt.treemark <@ (SELECT ut.structure_link FROM user_table ut WHERE LOWER(ut.username) = LOWER(:user_link)) AND (wtt.datereg BETWEEN (:datereg_f)::TIMESTAMP AND (:datereg_l)::TIMESTAMP)" +
             "ORDER BY datereg DESC LIMIT :limit";
 
     public SelectWorkTimeMySlaveDESC(DataSource ds) {
         super(ds, SQL_SELECT_WorkTimeByUser_link);
         super.declareParameter(new SqlParameter("user_link", Types.VARCHAR));
-        super.declareParameter(new SqlParameter("datereg", Types.VARCHAR));
+        super.declareParameter(new SqlParameter("datereg_f", Types.VARCHAR));
+        super.declareParameter(new SqlParameter("datereg_l", Types.VARCHAR));
         super.declareParameter(new SqlParameter("limit", Types.INTEGER));
     }
 

@@ -7,6 +7,7 @@ import ua.pp.darknsoft.dao.crud.catalog.*;
 import ua.pp.darknsoft.entity.CauseCatalog;
 import ua.pp.darknsoft.entity.LocationCatalog;
 import ua.pp.darknsoft.entity.LocationType;
+import ua.pp.darknsoft.entity.StructureCatalog;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -29,6 +30,7 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
     private SelectLocationByTreemark selectLocationByTreemark;
     private SelectParentLocationByTreemark selectParentLocationByTreemark;
     private SelectCauseCatalog selectCauseCatalog;
+    private SelectStructureCatalogByMyStatus selectStructureCatalogByMyStatus;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource){
@@ -38,6 +40,7 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         this.selectLocationByTreemark = new SelectLocationByTreemark(dataSource);
         this.selectParentLocationByTreemark = new SelectParentLocationByTreemark(dataSource);
         this.selectCauseCatalog = new SelectCauseCatalog(dataSource);
+        this.selectStructureCatalogByMyStatus = new SelectStructureCatalogByMyStatus(dataSource);
     }
     @Override
     public List<LocationType> getLocationType(){
@@ -73,5 +76,11 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         Map<String, Object> bind = new HashMap<String, Object>();
         bind.put("type", type);
         return selectCauseCatalog.executeByNamedParam(bind);
+    }
+    @Override
+    public List<StructureCatalog> getMyStructureByMyStatus(String username){
+        Map<String,String> bind = new HashMap<>(3);
+        bind.put("user_link",username);
+        return  selectStructureCatalogByMyStatus.executeByNamedParam(bind);
     }
 }

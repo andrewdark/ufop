@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.commercialobj.GetCommercialObjType;
 import ua.pp.darknsoft.dao.crud.commercialobj.InsertCommercialObject;
 import ua.pp.darknsoft.dao.crud.commercialobj.SelectCommObjEntrepreneurByUfop_link;
+import ua.pp.darknsoft.entity.CommercialObject;
 import ua.pp.darknsoft.entity.CommercialObjectType;
-import ua.pp.darknsoft.entity.EntrepreneurCommercialObject;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -37,14 +37,14 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     }
 
     @Override
-    public void createCommObj(EntrepreneurCommercialObject entrepreneurCommercialObject) {
+    public void createCommObj(CommercialObject entrepreneurCommercialObject) {
         Map<String, Object> bind = new HashMap<String, Object>();
         bind.put("ufop_link", entrepreneurCommercialObject.getUfop_link());
         bind.put("obj_type", entrepreneurCommercialObject.getObj_type());
         bind.put("obj_name", entrepreneurCommercialObject.getObj_name());
-        bind.put("a_obj_location", entrepreneurCommercialObject.getA_obj_location());
-        bind.put("n_obj_location", entrepreneurCommercialObject.getN_obj_location());
-        bind.put("owner", entrepreneurCommercialObject.getOwner().toLowerCase());
+        bind.put("a_obj_location", entrepreneurCommercialObject.getA_place_of_reg());
+        bind.put("n_obj_location", entrepreneurCommercialObject.getN_place_of_reg());
+        bind.put("owner", entrepreneurCommercialObject.getCreator_link().toLowerCase());
 
         insertCommercialObject.updateByNamedParam(bind);
     }
@@ -55,7 +55,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     }
 
     @Override
-    public List<EntrepreneurCommercialObject> getCommObjEntrepreneurByUfop_link(long ufop_link){
+    public List<CommercialObject> getCommObjEntrepreneurByUfop_link(long ufop_link){
         Map<String,Long> bind = new HashMap<>();
         bind.put("ufop_link",ufop_link);
         return selectCommObjEntrepreneurByUfop_link.executeByNamedParam(bind);

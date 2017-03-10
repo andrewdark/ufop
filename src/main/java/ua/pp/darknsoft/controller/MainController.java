@@ -1,7 +1,5 @@
 package ua.pp.darknsoft.controller;
 
-import com.sun.org.apache.xml.internal.resolver.Catalog;
-import freemarker.ext.beans.StringModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.pp.darknsoft.dao.*;
 import ua.pp.darknsoft.entity.Contact;
-import ua.pp.darknsoft.entity.EntrepreneurCommercialObject;
-import ua.pp.darknsoft.entity.IndividualEntrepreneur;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,8 +31,7 @@ public class MainController {
     @Autowired
     CatalogDao catalogDao;
     @Autowired
-    IndividualEntrepreneurDao individualEntrepreneurDao;
-    @Autowired
+
     KvedDao kvedDao;
     @Autowired
     CommercialObjectDao commercialObjectDao;
@@ -75,15 +70,15 @@ public class MainController {
         else{
             pageid1=(pageid1-1)*total+1;
         }
-        List<IndividualEntrepreneur> ufop = new LinkedList<IndividualEntrepreneur>();
-        ufop = individualEntrepreneurDao.getEntrepreneur(total,pageid1);
-
-        uiModel.addAttribute("u_size",ufop.size());
-
-        uiModel.addAttribute("ufop",ufop);
-        uiModel.addAttribute("page_id",pageid);
-        uiModel.addAttribute("total_page","t");
-        if(ufop.isEmpty()){ uiModel.addAttribute("ex","Нажаль, немає жодного запису"); }
+//        List<IndividualEntrepreneur> ufop = new LinkedList<IndividualEntrepreneur>();
+//        ufop = individualEntrepreneurDao.getEntrepreneur(total,pageid1);
+//
+//        uiModel.addAttribute("u_size",ufop.size());
+//
+//        uiModel.addAttribute("ufop",ufop);
+//        uiModel.addAttribute("page_id",pageid);
+//        uiModel.addAttribute("total_page","t");
+//        if(ufop.isEmpty()){ uiModel.addAttribute("ex","Нажаль, немає жодного запису"); }
         return "viewslist_individual";
     }
 
@@ -131,21 +126,21 @@ public class MainController {
 
 
         try{
-            IndividualEntrepreneur ie = individualEntrepreneurDao.getEntrepreneurById(Long.parseLong(id)).get(0);
-            List<EntrepreneurCommercialObject> co = commercialObjectDao.getCommObjEntrepreneurByUfop_link(ie.getId());
-
-            if(ie.getA_place_of_reg().length()>0) {
-                uiModel.addAttribute("fulladdress",catalogDao.getParentLocationByTreemark(ie.getA_place_of_reg()));
-            }
-            if(ie.getContact().getA_stay_address().length()>0) {
-                uiModel.addAttribute("stayaddress",catalogDao.getParentLocationByTreemark(ie.getContact().getA_stay_address()));
-            }
-
-
-            uiModel.addAttribute("kveds",kvedDao.getEntrepreneursKvedsByEntrepreneurLink(Long.parseLong(id)));
-            uiModel.addAttribute("ie",ie);
-            uiModel.addAttribute("co",co);
-            uiModel.addAttribute("ci","contactInformation about:");
+//            IndividualEntrepreneur ie = individualEntrepreneurDao.getEntrepreneurById(Long.parseLong(id)).get(0);
+//            List<EntrepreneurCommercialObject> co = commercialObjectDao.getCommObjEntrepreneurByUfop_link(ie.getId());
+//
+//            if(ie.getA_place_of_reg().length()>0) {
+//                uiModel.addAttribute("fulladdress",catalogDao.getParentLocationByTreemark(ie.getA_place_of_reg()));
+//            }
+//            if(ie.getContact().getA_stay_address().length()>0) {
+//                uiModel.addAttribute("stayaddress",catalogDao.getParentLocationByTreemark(ie.getContact().getA_stay_address()));
+//            }
+//
+//
+//            uiModel.addAttribute("kveds",kvedDao.getEntrepreneursKvedsByEntrepreneurLink(Long.parseLong(id)));
+//            uiModel.addAttribute("ie",ie);
+//            uiModel.addAttribute("co",co);
+//            uiModel.addAttribute("ci","contactInformation about:");
         }catch(IndexOutOfBoundsException ex){
             uiModel.addAttribute("ex", "Такого підприємця не знайдено");
             return "message";

@@ -33,13 +33,15 @@ public class SelectContact extends MappingSqlQuery<Contact> {
         contact.setRntc(resultSet.getString("rntc"));
         contact.setSeries_of_passport(resultSet.getString("series_of_passport"));
         contact.setNumber_of_passport(resultSet.getString("number_of_passport"));
-        contact.setA_stay_address(resultSet.getString("a_stay_address"));
-        contact.setN_stay_address(resultSet.getString("n_stay_address"));
+        contact.setA_stay_address(resultSet.getString("a_place_of_reg"));
+        contact.setN_stay_address(resultSet.getString("n_place_of_reg"));
+        contact.setF_stay_address(resultSet.getString("f_place_of_reg"));
+        contact.setB_stay_address(resultSet.getString("b_place_of_reg"));
         contact.setTel(resultSet.getString("tel"));
         contact.setFax(resultSet.getString("fax"));
         contact.setEmail(resultSet.getString("email"));
         contact.setDatereg(resultSet.getTimestamp("datereg"));
-        contact.setOwner(resultSet.getString("username"));
+        contact.setCreator_link(resultSet.getString("username"));
         contact.setBirthday(resultSet.getString("birthday"));
         contact.setOrganization(resultSet.getString("organization"));
         contact.setPosition(resultSet.getString("position"));

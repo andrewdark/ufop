@@ -15,6 +15,7 @@
     <sec:authorize access="hasAnyRole('ROLE_ADMINISTRATOR,ROLE_CHIEF')">
         <li><div>Мій підрозділ</div>
             <ul>
+                <li><div><a href="/showmysubordinates">Стан підрозділу</a></div></li>
                 <li><div><a href="/acceptworktime">Перегляд працівників</a></div></li>
                 <li><div>План роботи</div></li>
                 <li><div>Графік чергувань</div></li>

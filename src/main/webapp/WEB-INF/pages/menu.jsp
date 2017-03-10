@@ -21,7 +21,7 @@
     <li><div>Реєстрація</div>
         <ul>
             <li><div><a href="/contact">Фізична особа підприємець</a></div></li>
-            <li><div><a href="/entitycontact">Юридична особа</a></div></li>
+            <li><div><a href="/legalentity">Юридична особа</a></div></li>
             <li><div>Комерційні об'єкти</div></li>
         </ul>
     </li>

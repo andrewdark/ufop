@@ -69,13 +69,15 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
         return selectWorkTimeByUser_linkDESC.executeByNamedParam(bind);
     }
     @Override
-    public List<WorkTime> getMySlavesWorkTimeDesc(String user_link, String datereg, Integer limit){
+    public List<WorkTime> getMySlavesWorkTimeDesc(String user_link, String datereg_f,String datereg_l, Integer limit){
         Map<String,Object> bind = new HashedMap();
         bind.put("user_link",user_link);
-        bind.put("datereg",datereg);
+        bind.put("datereg_f",datereg_f);
+        bind.put("datereg_l",datereg_l);
         bind.put("limit",limit);
 
         return selectWorkTimeMySlaveDESC.executeByNamedParam(bind);
     }
+
 
 }

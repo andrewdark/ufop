@@ -80,7 +80,7 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         bind.put("birthday", contact.getBirthday());
         bind.put("organization", contact.getOrganization());
         bind.put("position", contact.getPosition());
-        bind.put("owner", contact.getOwner());
+        bind.put("owner", contact.getCreator_link());
         bind.put("description",contact.getDescription());
         if(contact.getRntc().length()==10){
             bind.put("rntc", contact.getRntc());

@@ -6,10 +6,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import ua.pp.darknsoft.dao.crud.user.DeleteUser;
-import ua.pp.darknsoft.dao.crud.user.InsertUser;
-import ua.pp.darknsoft.dao.crud.user.SelectUser;
-import ua.pp.darknsoft.dao.crud.user.UpdateUser;
+import ua.pp.darknsoft.dao.crud.user.*;
 import ua.pp.darknsoft.entity.User;
 
 import javax.annotation.Resource;
@@ -31,6 +28,7 @@ public class UserDaoImpl implements UserDao, Serializable {
     private SelectUser selectUser;
     private UpdateUser updateUser;
     private DeleteUser deleteUser;
+    private SelectUserByStructure_link selectUserByStructure_link;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 
@@ -41,6 +39,7 @@ public class UserDaoImpl implements UserDao, Serializable {
         this.selectUser = new SelectUser(dataSource);
         this.updateUser = new UpdateUser(dataSource);
         this.deleteUser = new DeleteUser(dataSource);
+        this.selectUserByStructure_link = new SelectUserByStructure_link(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
@@ -86,6 +85,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 
         return (String) namedParameterJdbcTemplate.queryForObject(sql, bind, String.class);
     }
+
     @Override
     public int getUserIdByUserName(String username) {
         String sql = "SELECT id FROM user_table WHERE username=:username";
@@ -106,5 +106,12 @@ public class UserDaoImpl implements UserDao, Serializable {
             return ex + "";
         }
 
+    }
+
+    @Override
+    public List<User> getUsersByStructureLink(String treemark) {
+        Map<String, String> bind = new HashMap<>(3);
+        bind.put("structure_link", treemark);
+        return selectUserByStructure_link.executeByNamedParam(bind);
     }
 }

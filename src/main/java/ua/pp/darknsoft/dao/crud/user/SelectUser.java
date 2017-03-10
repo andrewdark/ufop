@@ -32,7 +32,7 @@ public class SelectUser extends MappingSqlQuery{
         user.setPwd(rs.getString("pwd"));
         user.setEmail(rs.getString("email"));
         user.setContact_link(rs.getLong("contact_link"));
-        user.setStructure_link(rs.getInt("structure_link"));
+        user.setStructure_link(rs.getString("structure_link"));
         return user;
     }
 }

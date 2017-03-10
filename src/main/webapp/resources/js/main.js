@@ -36,11 +36,25 @@ $(function () {
 
 function look(type) {
     param = document.getElementById(type);
-    if (param.style.display == "none") param.style.display = "block";
+    if (param.style.display == "none") {
+
+        param.style.display = "block";
+    }
+    else param.style.display = "none";
+};
+function lookstructure(type,treemark) {
+    var param = document.getElementById(type);
+    var aj = "param1="+treemark;
+    if (param.style.display == "none") {
+
+        $("#"+type+"").load("/ajax_getUsersByStructureLink", aj);
+        param.style.display = "block";
+    }
     else param.style.display = "none";
 };
 //popup location
 $(document).ready(function () {
+    load_commobj();
     //Скрыть PopUp при загрузке страницы
     // PopUpHide();
     $("#popup1").hide();
@@ -48,6 +62,7 @@ $(document).ready(function () {
     $("#popup3").hide();
     $("#setContact_link_popup").hide();
     document.getElementById("contact_link").onkeypress = function (e) {
+
         e = e || event;
 
         if (e.ctrlKey || e.altKey || e.metaKey) return;
@@ -62,6 +77,7 @@ $(document).ready(function () {
         if (chr < '0' || chr > '9') {
             return false;
         }
+
     }
     function getChar(event) {
         if (event.which == null) {
@@ -248,3 +264,9 @@ function inject_co() {
     var param = "p1=" + p1 + "&p2=" + p2 + "&p3=" + p3 + "&p4=" + p4 + "&p5=" + p5;
     $("#co_message").load("/ajax_add_co", param);
 }
+
+//-----------comm_obj_sheet--------------
+function load_commobj() {
+    $("#add_comm_obj").load("/addcommobj #area1");
+}
+

@@ -3,6 +3,7 @@ package ua.pp.darknsoft.dao;
 import ua.pp.darknsoft.entity.CauseCatalog;
 import ua.pp.darknsoft.entity.LocationCatalog;
 import ua.pp.darknsoft.entity.LocationType;
+import ua.pp.darknsoft.entity.StructureCatalog;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface CatalogDao {
     List<LocationCatalog> getParentLocationByTreemark(String treemark);
 
     List<CauseCatalog> getCauseCatalogByType(short type);
+
+    List<StructureCatalog> getMyStructureByMyStatus(String username);
 }

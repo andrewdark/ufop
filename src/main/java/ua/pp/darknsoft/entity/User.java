@@ -15,7 +15,7 @@ public class User implements Serializable{
     private LocalDate datereg;
     private boolean isEnabled;
     private long contact_link;
-    private int structure_link;
+    private String structure_link;
 
     public int getId() {
         return id;
@@ -81,11 +81,11 @@ public class User implements Serializable{
         this.contact_link = contact_link;
     }
 
-    public int getStructure_link() {
+    public String getStructure_link() {
         return structure_link;
     }
 
-    public void setStructure_link(int structure_link) {
+    public void setStructure_link(String structure_link) {
         this.structure_link = structure_link;
     }
 }
