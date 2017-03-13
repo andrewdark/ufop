@@ -1,6 +1,7 @@
 package ua.pp.darknsoft.dao;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import ua.pp.darknsoft.entity.OverUser;
 import ua.pp.darknsoft.entity.User;
 
 import java.util.List;
@@ -24,5 +25,5 @@ public interface UserDao {
 
     String getUserStructureNameByUserName(String username);
 
-    List<User> getUsersByStructureLink(String treemark);
+    List<OverUser> getUsersByStructureLink(String treemark);
 }

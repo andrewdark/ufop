@@ -22,8 +22,8 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
     private DataSource dataSource;
     private InsertToWorkTimeTable insertToWorkTimeTable;
     private UpdateWorkTimeTableAccept updateWorkTimeTableAccept;
-    private SelectWorkTimeByUser_linkDESC selectWorkTimeByUser_linkDESC;
-    private SelectWorkTimeByUser_linkASC selectWorkTimeByUser_linkASC;
+    private SelectWorkTimeByUser_NameDESC selectWorkTimeByUser_nameDESC;
+    private SelectWorkTimeByUser_NameASC selectWorkTimeByUser_nameASC;
     private SelectWorkTimeMySlaveDESC selectWorkTimeMySlaveDESC;
 
     @Resource(name = "dataSource")
@@ -31,8 +31,8 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
         this.dataSource = dataSource;
         this.insertToWorkTimeTable = new InsertToWorkTimeTable(dataSource);
         this.updateWorkTimeTableAccept = new UpdateWorkTimeTableAccept(dataSource);
-        this.selectWorkTimeByUser_linkASC = new SelectWorkTimeByUser_linkASC(dataSource);
-        this.selectWorkTimeByUser_linkDESC = new SelectWorkTimeByUser_linkDESC(dataSource);
+        this.selectWorkTimeByUser_nameASC = new SelectWorkTimeByUser_NameASC(dataSource);
+        this.selectWorkTimeByUser_nameDESC = new SelectWorkTimeByUser_NameDESC(dataSource);
         this.selectWorkTimeMySlaveDESC = new SelectWorkTimeMySlaveDESC(dataSource);
     }
     @Override
@@ -58,7 +58,7 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
         bind.put("user_link",user_link);
         bind.put("limit",limit);
 
-        return selectWorkTimeByUser_linkASC.executeByNamedParam(bind);
+        return selectWorkTimeByUser_nameASC.executeByNamedParam(bind);
     }
     @Override
     public List<WorkTime> getMyWorkWorkTimeDESC(String user_link, Integer limit){
@@ -66,7 +66,7 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
         bind.put("user_link",user_link);
         bind.put("limit",limit);
 
-        return selectWorkTimeByUser_linkDESC.executeByNamedParam(bind);
+        return selectWorkTimeByUser_nameDESC.executeByNamedParam(bind);
     }
     @Override
     public List<WorkTime> getMySlavesWorkTimeDesc(String user_link, String datereg_f,String datereg_l, Integer limit){

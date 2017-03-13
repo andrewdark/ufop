@@ -11,6 +11,7 @@ import ua.pp.darknsoft.dao.CatalogDao;
 import ua.pp.darknsoft.dao.UserDao;
 import ua.pp.darknsoft.dao.WorkTimeDao;
 import ua.pp.darknsoft.entity.CauseCatalog;
+import ua.pp.darknsoft.entity.OverUser;
 import ua.pp.darknsoft.entity.User;
 import ua.pp.darknsoft.entity.WorkTime;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ public class WorkTimeController {
     WorkTimeDao workTimeDao;
     @Autowired
     UserDao userDao;
+
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDate localDate = LocalDate.now();
  String searchdate=dtf.format(localDate);
@@ -180,15 +182,25 @@ public class WorkTimeController {
     //------------------------------------------------------------------------------------------------------------------
     //-----------------------------------------AJAX HELPER--------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
+    @PreAuthorize(value = "hasAnyRole('ROLE_ADMINISTRATOR,ROLE_CHIEF')")
     @ResponseBody
     @RequestMapping(value = "/ajax_getUsersByStructureLink", produces = {"application/json; charset=UTF-8"})
     public String ajax_getUsersByStructureLink(@RequestParam String param1) {
         String html="<div class=\"whiteblock\">";
         try{
-            List<User> userList = userDao.getUsersByStructureLink(param1);
-            for (User items: userList
-                 ) {
-                html=html+items.getUsername();
+            String status = "";
+            List<OverUser> userList = userDao.getUsersByStructureLink(param1);
+            for (int i = 0; i<= userList.size() -1 ; i++) {
+                if(userList.get(i).getWorkTime().getType_of_action() == 0){
+                    html=html+"<font color=\"red\"> Користувач: "+userList.get(i).getCt_ln()+" "+userList.get(i).getCt_fn()+" - відсутній з "+ userList.get(i).getWorkTime().getDatereg().toString().split("\\.")[0]+" по причині: "+userList.get(i).getWorkTime().getS_cause_link()+"</font><br />";
+                }
+                if(userList.get(i).getWorkTime().getType_of_action() == 1){
+                    html=html+"<font color=\"green\"> Користувач: "+userList.get(i).getCt_ln()+" "+userList.get(i).getCt_fn()+" - присутній з "+ userList.get(i).getWorkTime().getDatereg().toString().split("\\.")[0]+" по причині: "+userList.get(i).getWorkTime().getS_cause_link()+"</font><br />";
+                }
+                if(userList.get(i).getWorkTime().getType_of_action() == 2){
+                    html=html+"<font color=\"gray\"> Користувач: "+userList.get(i).getCt_ln()+" "+userList.get(i).getCt_fn()+" - місце знаходження не встановлено по причині: "+userList.get(i).getWorkTime().getS_cause_link()+"</font><br />";
+                }
+
             }
         }catch (Exception ex){
             html=html+"Помилка: "+ex;

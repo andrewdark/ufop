@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -64,7 +65,7 @@
                                 <font color="green" size="4">Заступив на&nbsp;р.м.</font>
                             </c:if>
                         </td>
-                        <td>${myWorkTime.datereg}</td>
+                        <td>${fn:substring (myWorkTime.datereg,0,19)}</td>
                         <td>${myWorkTime.s_cause_link}</td>
 
                         <td>

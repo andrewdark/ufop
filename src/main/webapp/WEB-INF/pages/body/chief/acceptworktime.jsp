@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -25,7 +26,7 @@
     <table>
 
         <th>Користувач</th>
-        <th>Вид</th>
+        <th>Стан</th>
         <th>Час</th>
         <th>Причина</th>
         <th>Погоджено</th>
@@ -44,7 +45,7 @@
                         <font color="green" size="4">Заступив на&nbsp;р.м.</font>
                     </c:if>
                 </td>
-                <td>${worktime.datereg}</td>
+                <td>${fn:substring (worktime.datereg,0,19)}</td>
                 <td>${worktime.s_cause_link}</td>
 
                 <td>

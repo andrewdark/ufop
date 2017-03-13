@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.user.*;
+import ua.pp.darknsoft.entity.OverUser;
 import ua.pp.darknsoft.entity.User;
 
 import javax.annotation.Resource;
@@ -109,7 +110,7 @@ public class UserDaoImpl implements UserDao, Serializable {
     }
 
     @Override
-    public List<User> getUsersByStructureLink(String treemark) {
+    public List<OverUser> getUsersByStructureLink(String treemark) {
         Map<String, String> bind = new HashMap<>(3);
         bind.put("structure_link", treemark);
         return selectUserByStructure_link.executeByNamedParam(bind);
