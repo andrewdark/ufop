@@ -69,7 +69,7 @@
                     </c:if>
                 </td>
                 <td><a href="/userinfo?name=${worktime.s_user_accepted_link}">${worktime.s_user_accepted_link}</a></td>
-                <td>${worktime.dateaccept}</td>
+                <td>${fn:substring (worktime.dateaccept,0,19)}</td>
                 <td>
                     <form action="/acceptingWorkTimepost" method="post">
                         <input name="id" type="hidden" value="${worktime.id}"/>

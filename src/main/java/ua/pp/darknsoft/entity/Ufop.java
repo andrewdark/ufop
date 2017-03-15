@@ -19,6 +19,7 @@ public class Ufop {
     private Timestamp datereg;
     private int creator_link;
     private String description;
+    private boolean kvedadd;
 
     public long getId() {
         return id;
@@ -122,5 +123,13 @@ public class Ufop {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isKvedadd() {
+        return kvedadd;
+    }
+
+    public void setKvedadd(boolean kvedadd) {
+        this.kvedadd = kvedadd;
     }
 }

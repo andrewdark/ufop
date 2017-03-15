@@ -49,7 +49,7 @@
         <div id="tabsmwt-2">
             <table>
                 <caption>Перегляд робочого часу</caption>
-                <th>Вид</th>
+                <th>Стан</th>
                 <th>Час</th>
                 <th>Причина</th>
                 <th>Погоджено</th>

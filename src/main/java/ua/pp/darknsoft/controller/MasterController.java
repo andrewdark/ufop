@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.pp.darknsoft.dao.CatalogDao;
 import ua.pp.darknsoft.dao.CommercialObjectDao;
 import ua.pp.darknsoft.dao.KvedDao;
+import ua.pp.darknsoft.dao.UfopDao;
 import ua.pp.darknsoft.entity.*;
 import ua.pp.darknsoft.validator.UfopValidator;
 
@@ -30,45 +31,122 @@ public class MasterController {
     CommercialObjectDao commercialObjectDao;
     @Autowired
     UfopValidator ufopValidator;
+    @Autowired
+    UfopDao ufopDao;
 
 
     //------------------------------------------------------------------------------------------------------------------
-    //--------------------------------------- MASTER OF ENTITY ---------------------------------------------------------
+    //--------------------------------------- MASTER OF UFOP -----------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "/addcommobj", method = RequestMethod.GET)
-    public String addLegalentity(Model uiModel) {
-        uiModel.addAttribute("title", "Додайте дані про комерційний об'єкт");
+    @RequestMapping(value = "/searchufop", method = RequestMethod.GET)
+    public String searchUfop(@ModelAttribute Ufop ufop,Model uiModel) {
+        uiModel.addAttribute("title", "Перевірка наявності суб'єкта господарювання");
+
+        uiModel.addAttribute("command",ufop);
         uiModel.addAttribute("nextButtonLink", "/addcommobj");
-        return "addcommobj";
+        return "searchufop";
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "/legalentitypost", method = RequestMethod.POST)
-    public String addLegalentitypost(@ModelAttribute Ufop ufop, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
-                                     Model uiModel, BindingResult bindingResult) {
+    @RequestMapping(value = "/searchufoppost", method = RequestMethod.POST)
+    public String searchUfoppost(@ModelAttribute Ufop ufop, Model uiModel, HttpServletRequest httpServletRequest,
+                                 RedirectAttributes redirectAttributes) {
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
-        Contact sendContact = new Contact();
 
-        ufopValidator.validate(ufop, bindingResult);
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("b1", bindingResult);
-            return rdrct + "/addLegalentity";
-        }
         try {
-
-        } catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("ex", ex);
+            ufop = ufopDao.searchUfopByCode(ufop.getUfop_code()).get(0);
+            redirectAttributes.addFlashAttribute("ufop",ufop);
+            return rdrct + "/addcommobj";
+        }catch (IndexOutOfBoundsException ex){
+            redirectAttributes.addFlashAttribute("ufop",ufop);
+            return rdrct + "/addufop";
+        }
+        catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex",ex);
             return rdrct + "/message";
         }
 
 
-        redirectAttributes.addFlashAttribute("sendContact", sendContact);
-        return rdrct + "/addkved";
+    }
+
+    //next form COMM OBJ
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/addcommobj", method = RequestMethod.GET)
+    public String addLegalentity(@ModelAttribute CommercialObject co, Model uiModel) {
+        uiModel.addAttribute("title", "Додайте дані про комерційний об'єкт");
+        try{
+            Ufop ufop = (Ufop) uiModel.asMap().get("ufop");
+            co.setUfop_link(ufop.getId());
+        }catch (Exception ex){
+            co.setUfop_link(0);
+        }
+        uiModel.addAttribute("test",uiModel.asMap().get("ufop"));
+        uiModel.addAttribute("command",co);
+        uiModel.addAttribute("nextButtonLink", "/addcommobj");
+        return "addcommobj";
+    }
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/addcommobjpost", method = RequestMethod.POST)
+    public String addCommobjpost(@ModelAttribute CommercialObject co, HttpServletRequest httpServletRequest,
+                                 RedirectAttributes redirectAttributes, Model model){
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+        redirectAttributes.addFlashAttribute("co",co);
+        return rdrct + "/addgoods";
+    }
+    //next form add group ofgoods
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/addgoods", method = RequestMethod.GET)
+    public String addGoods(@ModelAttribute BasicGroupOfGoods basicGroupOfGoods, Model uiModel) {
+        uiModel.addAttribute("title", "Додайте Основні групи товарів");
+
+
+        uiModel.addAttribute("command",basicGroupOfGoods);
+        uiModel.addAttribute("nextButtonLink", "/addcommobj");
+        return "addgoods";
+    }
+    //next form UFOP
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/addufop", method = RequestMethod.GET)
+    public String addLegalentitypost(@ModelAttribute Ufop ufop, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
+                                     Model uiModel) {
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+
+
+        uiModel.addAttribute("title", "Інформація про суб'єкт господарювання");
+        uiModel.addAttribute("command", ufop);
+        return "addufop";
+    }
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/addufoppost", method = RequestMethod.POST)
+    public String addufoppost(@ModelAttribute Ufop ufop, HttpServletRequest httpServletRequest,
+                              RedirectAttributes redirectAttributes, Model uiModel){
+
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+        try{
+            redirectAttributes.addFlashAttribute("ufop",ufopDao.createUfop(ufop));
+        }catch(Exception ex){
+            redirectAttributes.addFlashAttribute("ex",ex);
+            return rdrct + "/message";
+        }
+        if(ufop.isKvedadd()) return rdrct + "/addkved";
+        else   return rdrct + "/addcommobj";
     }
 
     //--next step-------------------------------------------------------------------------------------------------------
@@ -247,6 +325,8 @@ public class MasterController {
 
         return "/addcommobj";
     }
+    //---вставка формы создания UFOP в коммерческий объект---
+
 
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------PROGRAMMING TEST----------------------------------------------------------

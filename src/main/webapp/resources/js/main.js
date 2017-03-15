@@ -270,3 +270,7 @@ function load_commobj() {
     $("#add_comm_obj").load("/addcommobj #area1");
 }
 
+function load_ufop() {
+    $("#load_ufop_point").load("/addufop #this_ufop_from_ajax");
+
+}

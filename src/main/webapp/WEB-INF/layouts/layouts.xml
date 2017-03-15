@@ -65,29 +65,26 @@
         <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/kved.jsp"/>
     </definition>
     <!-- MASTER OF REGISTRATION UFOP -->
+    <definition extends="default" name="searchufop">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/searchufop.jsp"/>
+    </definition>
     <definition extends="default" name="addcommobj">
         <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addcommobj.jsp"/>
     </definition>
-    <definition extends="default" name="addlegalentity">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addlegalentity.jsp"/>
+    <definition extends="default" name="addufop">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addufop.jsp"/>
     </definition>
     <definition extends="default" name="addcontact">
         <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addcontact.jsp"/>
     </definition>
-    <definition extends="default" name="addentrepreneur">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addentrepreneur.jsp"/>
-    </definition>
     <definition extends="default" name="addkved">
         <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addkved.jsp"/>
     </definition>
-    <definition extends="default" name="commobj_worksheet">
-        <put-attribute name="body" value="/WEB-INF/pages/body/commobj_worksheet.jsp"/>
+    <definition extends="default" name="addgoods">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addgoods.jsp"/>
     </definition>
     <!-- END OF BLOCK -->
 
-    <definition extends="default" name="legalentity">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addlegalentity.jsp"/>
-    </definition>
     <definition extends="default" name="viewslist_individual">
         <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_individual.jsp"/>
     </definition>

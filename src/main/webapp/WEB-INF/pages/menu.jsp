@@ -20,9 +20,10 @@
     </li>
     <li><div>Реєстрація</div>
         <ul>
-            <li><div><a href="/contact">Фізична особа підприємець</a></div></li>
-            <li><div><a href="/legalentity">Юридична особа</a></div></li>
-            <li><div>Комерційні об'єкти</div></li>
+            <li><div><a href="/searchufop">Комерційні об'єкти</a></div></li>
+            <li><div><a href="/addufop">Фіз\Юр особа підприємець</a></div></li>
+            <li><div><a href="/addkved">Кведи</a></div></li>
+            <li><div><a href="/addcommobj">Контакт</a></div></li>
         </ul>
     </li>
     <li class="ui-state-disabled"><div>Звернення громадян</div>

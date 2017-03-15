@@ -12,50 +12,39 @@
     <div class="article">
         <h2><span>${title}</span></h2>
         <div class="clr"></div>
+        <div class="img">
+            <input id="search_ufopcode_input" type="text" /><br />
+            <input id="search_ufopcode_button" type="button" value="search" />
+            <input id="create_ufop_button" type="button" value="Create ufop" onclick="javascript:load_ufop()"/>
+
+        </div>
         <div class="post_content">
             <div id="co_message"></div>
+            <div id="load_ufop_point"></div>
 
-            <table>
-                <tr>
-                    <td>ID ФОП:</td>
-                    <td><input type="text" disabled="disabled" value="${ufop_id}" id="co_input01"/></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Адреса:</td>
-                    <td><input type="text" id="loc1" onclick="javascript:LocPopUpShow()"/></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>№ будівлі:</td>
-                    <td><input type="text" id="co_input03"/></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Тип об'єкта:</td>
-                    <td><select id="co_select01">
-                        <option disabled>Вкажіть тип КО</option>
-                        <c:forEach var="co" items="${co}">
-                            <option value="${co.id}">${co.name}</option>
-                        </c:forEach>
-
-                    </select></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Назва</td>
-                    <td><input type="text" id="co_input04"/></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <button type="submit" onclick="inject_co()"><img src="resources/images/add.jpg"/></button>
-                    </td>
-                    <td></td>
-                </tr>
-            </table>
-
+            <form:form method="post" action="/addcommobjpost">
+                <form:hidden path="ufop_link"/>
+                <table>
+                    <tr>
+                        <td>Назва об'єкта</td>
+                        <td><form:input path="obj_name"/></td>
+                        <td><form:errors path="obj_name"/> </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Записати"/></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form:form>
+            <hr />
+            Інформація про суб'єкт господарювання<br />
+            ${ufop.id}<br />
+            ${ufop.ufop_name}<br />
+            ${ufop.ufop_code}
+            <hr/>
+            Інформація  про уповноважену особу суб'єкта господарювання <br />
+            Test: ${test.id}
         </div>
         <div class="clr"></div>
     </div>
