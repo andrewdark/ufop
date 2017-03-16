@@ -28,16 +28,17 @@
                             <form:radiobutton path="ufop_is" value="0"/>Фіз. особа
                             <form:radiobutton path="ufop_is" value="1"/>Юр. особа
                         </td>
-                        <td><form:errors path="ufop_is" /></td>
+                        <td><span class="error"></span> <form:errors path="ufop_is" /></span></td>
                     </tr>
                     <tr>
                         <td>ПІБ Фіз.Особи/<br />Найменування Юр. особи</td>
                         <td><form:input path="ufop_name"/></td>
-                        <td><form:errors path="ufop_name"/> </td>
+                        <td><span class="error"><form:errors path="ufop_name"/></span> </td>
                     </tr>
                     <tr>
                         <td>Ідентифікаційний номер</td>
                         <td><form:input path="ufop_code" maxlength="10"/></td>
+                        <td><span class="error"><form:errors path="ufop_code"/></span> </td>
                     </tr>
                     <tr>
                         <td>Серія та № паспорта</td>
@@ -45,14 +46,16 @@
                             <form:input path="number_of_passport" maxlength="10" size="6"/>
                         </td>
                         <td>
+                            <span class="error">
                             <form:errors path="series_of_passport"/>
                             <form:errors path="number_of_passport"/>
+                            </span>
                         </td>
                     </tr>
                     <tr>
                         <td>Місце реєстрації</td>
-                        <td><form:input path="a_place_of_reg"/></td>
-                        <td><form:errors path="a_place_of_reg" /></td>
+                        <td><form:input path="a_place_of_reg" id="a_place_of_reg" onclick="javascript:LocPopUpShow();"/></td>
+                        <td><span class="error"><form:errors path="a_place_of_reg" /></span></td>
                     </tr>
                     <tr>
                         <td>Буд./Кв./Корпус</td>
@@ -61,22 +64,21 @@
                             <form:input path="b_place_of_reg" size="2"/>
                         </td>
                         <td>
-                            <form:errors path="n_place_of_reg" />
+                            <span class="error"><form:errors path="n_place_of_reg" /></span>
                         </td>
                     </tr>
                     <tr>
                         <td>Примітки</td>
                         <td><form:textarea path="description"/></td>
-                        <td><form:errors path="description"/> </td>
+                        <td><span class="error"><form:errors path="description"/></span> </td>
                     </tr>
                     <tr>
                         <td>Додати КВЕД <form:checkbox path="kvedadd"/></td>
-                        <td><input type="submit" value="перевірити"/></td>
+                        <td><input type="submit" value="Записати"/></td>
                         <td></td>
                     </tr>
                 </table>
             </form:form>
-
         </div>
         <a onclick="look('hide1'); return false;" href="#">Довідка</a>
         <div id="hide1" style="display: none;">

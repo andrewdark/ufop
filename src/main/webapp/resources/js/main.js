@@ -128,33 +128,33 @@ function LocPopUpShow() {
 function LocPopUpHide() {
     if (count_loc == 1) {
         if ($("#my_selecttop1 option:selected").val().length > 1) {
-            $("#loc1").val($("#my_selecttop1 option:selected").val());
+            $("#a_place_of_reg").val($("#my_selecttop1 option:selected").val());
         } else {
-            $("#loc1").val("1");
+            $("#a_place_of_reg").val("1");
         }
     }
     ;
     if (count_loc == 2) {
         if ($("#my_selecttop2 option:selected").val().length > 1) {
-            $("#loc1").val($("#my_selecttop2 option:selected").val());
+            $("#a_place_of_reg").val($("#my_selecttop2 option:selected").val());
         } else {
-            $("#loc1").val($("#my_selecttop1 option:selected").val());
+            $("#a_place_of_reg").val($("#my_selecttop1 option:selected").val());
         }
     }
     ;
     if (count_loc == 3) {
         if ($("#my_selecttop3 option:selected").val().length > 1) {
-            $("#loc1").val($("#my_selecttop3 option:selected").val());
+            $("#a_place_of_reg").val($("#my_selecttop3 option:selected").val());
         } else {
-            $("#loc1").val($("#my_selecttop2 option:selected").val());
+            $("#a_place_of_reg").val($("#my_selecttop2 option:selected").val());
         }
     }
     ;
     if (count_loc == 4) {
         if ($("#my_selecttop4 option:selected").val().length > 1) {
-            $("#loc1").val($("#my_selecttop4 option:selected").val());
+            $("#a_place_of_reg").val($("#my_selecttop4 option:selected").val());
         } else {
-            $("#loc1").val($("#my_selecttop3 option:selected").val());
+            $("#a_place_of_reg").val($("#my_selecttop3 option:selected").val());
         }
     }
     ;

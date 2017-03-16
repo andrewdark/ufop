@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * Created by Andrew on 03.02.2017.
  */
 public class SelectLocationTop extends MappingSqlQuery<LocationCatalog> {
-    private static final String SQL_SELECT_LOCATION_CATALOG="SELECT * FROM location_table WHERE nlevel(treemark) <=1 ORDER BY id";
+    private static final String SQL_SELECT_LOCATION_CATALOG="SELECT * FROM location_catalog_table WHERE nlevel(treemark) <=1 ORDER BY id";
 
     public SelectLocationTop(DataSource ds){
         super(ds, SQL_SELECT_LOCATION_CATALOG);

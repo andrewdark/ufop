@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by Andrew on 03.02.2017.
  */
 public class SelectLocationByTreemark extends MappingSqlQuery<LocationCatalog> {
-    private static final String SQL_SELECT_LOCATION_CATALOG="SELECT l.*,t.type stype,nlevel(l.treemark) FROM location_table l INNER JOIN location_type_table t ON(t.id=l.type) WHERE l.treemark<@:treemark::ltree AND nlevel(l.treemark) = :nlevel ORDER BY l.id";
+    private static final String SQL_SELECT_LOCATION_CATALOG="SELECT l.*,t.type stype,nlevel(l.treemark) FROM location_catalog_table l INNER JOIN location_type_table t ON(t.id=l.type) WHERE l.treemark<@:treemark::ltree AND nlevel(l.treemark) = :nlevel ORDER BY l.id";
 
     public SelectLocationByTreemark(DataSource ds){
         super(ds, SQL_SELECT_LOCATION_CATALOG);

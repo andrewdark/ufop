@@ -95,7 +95,6 @@
                     </td>
                     <td></td>
                 </tr>
-
             </table>
         </form:form>
         <a onclick="look('hide1'); return false;" href="#">Довідка</a>
