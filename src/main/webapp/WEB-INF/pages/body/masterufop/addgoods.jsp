@@ -10,12 +10,21 @@
 <div class="article">
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
-    <div class="post_content">
+    <div class="post_content_wide">
         ${co.ufop_link}
         ${co.obj_name}
         <form:form action="#" method="post">
-
+            <table>
+                <tr>
+                    <td><input type="button" value="Додати" /></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
         </form:form>
+        <form action="/searchufop" method="get">
+            <input type="submit" value="Завершити" />
+        </form>
     </div>
     <div class="clr"></div>
 </div>

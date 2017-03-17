@@ -15,7 +15,7 @@
             <table>
                 <tr>
                     <td><form:label path="ufop_code">Ідентифікаційний номер</form:label></td>
-                    <td><form:input path="ufop_code"/></td>
+                    <td><form:input path="ufop_code" minlenght="8" maxlength="10"/></td>
                     <td><form:errors path="ufop_code"/></td>
                 </tr>
                 <tr>

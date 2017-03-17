@@ -19,6 +19,7 @@ public class CommercialObject {
     private String description;
     private String s_obj_type;
     private LocationCatalog locationCatalog;
+    private boolean additionalinformation;
 
     public long getId() {
         return id;
@@ -122,5 +123,14 @@ public class CommercialObject {
 
     public void setLocationCatalog(LocationCatalog locationCatalog) {
         this.locationCatalog = locationCatalog;
+    }
+
+
+    public boolean isAdditionalinformation() {
+        return additionalinformation;
+    }
+
+    public void setAdditionalinformation(boolean additionalinformation) {
+        this.additionalinformation = additionalinformation;
     }
 }

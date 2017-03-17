@@ -34,12 +34,15 @@ public class UfopValidator implements Validator {
         } catch (IndexOutOfBoundsException ex) {
             ufop_code = "";
         } catch (Exception ex) {
-            ufop_code = "";
+            errors.rejectValue("ufop_code", "ufop_code.lenght", "Помилка" + ex);
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ufop_is", "ufop_is.empty", "Зробіть свій вибір");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ufop_name", "ufop_name.empty", "* Обов'язкове поле");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ufop_code", "ufop_code.empty", "* Обов'язкове поле");
+        if(ufop.getUfop_code().equals(ufop_code)){
+            errors.rejectValue("ufop_code", "ufop_code.lenght", "Суб'єкт з таким кодом вже існує");
+        }
         if (ufop.getUfop_is() == 0) {
             if (ufop.getUfop_code().length() != 10 && ufop.getUfop_code().length() > 0)
                 errors.rejectValue("ufop_code", "ufop_code.lenght", "Не вірний формат");

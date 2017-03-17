@@ -12,7 +12,7 @@
 <div class="article">
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
-    <div class="post_content">
+    <div class="post_content_wide">
         <div id="kved_message"></div>
 
         <table>

@@ -11,7 +11,7 @@
 <div class="article">
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
-    <div class="post_content">
+    <div class="post_content_wide">
         <c:set var="bool" value="false"/>
         <c:if test="${empty sendContact.rntc}">
             <c:set var="bool" value="false"/>
@@ -28,7 +28,7 @@
                             <form:radiobutton path="ufop_is" value="0"/>Фіз. особа
                             <form:radiobutton path="ufop_is" value="1"/>Юр. особа
                         </td>
-                        <td><span class="error"></span> <form:errors path="ufop_is" /></span></td>
+                        <td><span class="error"><form:errors path="ufop_is"/> </span></td>
                     </tr>
                     <tr>
                         <td>ПІБ Фіз.Особи/<br />Найменування Юр. особи</td>
@@ -73,7 +73,7 @@
                         <td><span class="error"><form:errors path="description"/></span> </td>
                     </tr>
                     <tr>
-                        <td>Додати КВЕД <form:checkbox path="kvedadd"/></td>
+                        <td>Додати додаткові данні <form:checkbox path="additionalinformation"/></td>
                         <td><input type="submit" value="Записати"/></td>
                         <td></td>
                     </tr>

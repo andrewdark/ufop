@@ -13,6 +13,7 @@ import ua.pp.darknsoft.dao.CommercialObjectDao;
 import ua.pp.darknsoft.dao.KvedDao;
 import ua.pp.darknsoft.dao.UfopDao;
 import ua.pp.darknsoft.entity.*;
+import ua.pp.darknsoft.validator.CommobjValidator;
 import ua.pp.darknsoft.validator.UfopValidator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,8 @@ public class MasterController {
     UfopValidator ufopValidator;
     @Autowired
     UfopDao ufopDao;
+    @Autowired
+    CommobjValidator commobjValidator;
 
 
 
@@ -83,25 +86,40 @@ public class MasterController {
         try{
             Ufop ufop = (Ufop) uiModel.asMap().get("ufop");
             co.setUfop_link(ufop.getId());
+            uiModel.addAttribute("locationTop",catalogDao.getLocationTop());
+
+            Map<Integer,String> itemsType = new HashMap<>();
+            for(CommercialObjectType items : commercialObjectDao.getCommObjType()){
+                itemsType.put(items.getId(),items.getName());
+            }
+            uiModel.addAttribute("it",itemsType);
         }catch (Exception ex){
             co.setUfop_link(0);
         }
-        uiModel.addAttribute("test",uiModel.asMap().get("ufop"));
+
+        BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b");
         uiModel.addAttribute("command",co);
+        uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
         uiModel.addAttribute("nextButtonLink", "/addcommobj");
         return "addcommobj";
     }
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addcommobjpost", method = RequestMethod.POST)
     public String addCommobjpost(@ModelAttribute CommercialObject co, HttpServletRequest httpServletRequest,
-                                 RedirectAttributes redirectAttributes, Model model){
+                                 RedirectAttributes redirectAttributes, Model model,BindingResult bindingResult){
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
         redirectAttributes.addFlashAttribute("co",co);
-        return rdrct + "/addgoods";
+        commobjValidator.validate(co, bindingResult);
+       if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("b1", bindingResult);
+            return rdrct + "/addcommobj";
+       }
+        if(co.isAdditionalinformation()) return rdrct + "/addgoods";
+        else return rdrct + "/searchufop";
     }
     //next form add group ofgoods
     @PreAuthorize("isAuthenticated()")
@@ -154,7 +172,7 @@ try{
             redirectAttributes.addFlashAttribute("ex",ex);
             return rdrct + "/message";
         }
-        if(ufop.isKvedadd()) return rdrct + "/addkved";
+        if(ufop.isAdditionalinformation()) return rdrct + "/addkved";
         else   return rdrct + "/addcommobj";
     }
 
@@ -166,7 +184,7 @@ try{
             uiModel.addAttribute("kvedTop1",kvedDao.getKvedCatalogTop());
         }catch (Exception ex){}
 
-        uiModel.addAttribute("title", "Додайте дані про комерційний об'єкт");
+        uiModel.addAttribute("title", "Додайте КВЕДи ");
         uiModel.addAttribute("nextButtonLink", "/");
         uiModel.addAttribute("addButtonLink", "/");
         return "addkved";
@@ -241,6 +259,8 @@ try{
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
+
+
         return "/";
     }
 
