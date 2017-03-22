@@ -20,6 +20,7 @@
             <div id="co_message"></div>
             <div id="load_ufop_point"></div>
             <span class="error"><form:errors path="ufop_link"/> </span>
+            !!!${test1}
             <form:form method="post" action="/addcommobjpost">
                 <form:hidden path="ufop_link"/>
                 <table>
@@ -35,8 +36,9 @@
                     </tr>
                     <tr>
                         <td><form:label path="a_place_of_reg">Адреса</form:label></td>
-                        <td><form:input path="a_place_of_reg" id="a_place_of_reg" onclick="javascript:LocPopUpShow();"/></td>
-                        <td><span class="error"><form:errors path="a_place_of_reg" /></span></td>
+                        <td><form:input path="a_place_of_reg" id="a_place_of_reg"
+                                        onclick="javascript:LocPopUpShow();"/></td>
+                        <td><span class="error"><form:errors path="a_place_of_reg"/></span></td>
                     </tr>
                     <tr>
                         <td>Буд./Кв./Корпус</td>
@@ -45,13 +47,13 @@
                             <form:input path="b_place_of_reg" size="2"/>
                         </td>
                         <td>
-                            <span class="error"><form:errors path="n_place_of_reg" /></span>
+                            <span class="error"><form:errors path="n_place_of_reg"/></span>
                         </td>
                     </tr>
                     <tr>
                         <td>Примітки</td>
                         <td><form:textarea path="description"/></td>
-                        <td><span class="error"><form:errors path="description"/></span> </td>
+                        <td><span class="error"><form:errors path="description"/></span></td>
                     </tr>
 
                     <tr>
@@ -65,10 +67,10 @@
             <hr/>
             <h3>Інформація про суб'єкт господарювання</h3><br/>
             <c:if test="${ufop.ufop_is==0}">
-                <c:set var="u_name" value="ПІБ фізичної особи" />
+                <c:set var="u_name" value="ПІБ фізичної особи"/>
             </c:if>
             <c:if test="${ufop.ufop_is==1}">
-                <c:set var="u_name" value="Найменування юридичної особи" />
+                <c:set var="u_name" value="Найменування юридичної особи"/>
             </c:if>
             <table>
                 <tr>
@@ -90,11 +92,15 @@
                 <th>Інформація про уповноважену особу суб'єкта господарювання</th>
                 <tr>
                     <td>ІД номер</td>
-                    <td>${test.id}</td>
+                    <td>${contact.id}</td>
                 </tr>
                 <tr>
-                    <td>ПІБ</td>
-                    <td>${test.ufop_name}</td>
+                    <td>ufop_link</td>
+                    <td>${contact.ufop_link}</td>
+                </tr>
+                <tr>
+                    <td>obj_name</td>
+                    <td>${contact.obj_name}</td>
                 </tr>
             </table>
         </div>

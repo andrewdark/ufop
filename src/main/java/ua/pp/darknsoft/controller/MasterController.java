@@ -38,16 +38,15 @@ public class MasterController {
     CommobjValidator commobjValidator;
 
 
-
     //------------------------------------------------------------------------------------------------------------------
     //--------------------------------------- MASTER OF UFOP -----------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/searchufop", method = RequestMethod.GET)
-    public String searchUfop(@ModelAttribute Ufop ufop,Model uiModel) {
+    public String searchUfop(@ModelAttribute Ufop ufop, Model uiModel) {
         uiModel.addAttribute("title", "Перевірка наявності суб'єкта господарювання");
 
-        uiModel.addAttribute("command",ufop);
+        uiModel.addAttribute("command", ufop);
         uiModel.addAttribute("nextButtonLink", "/addcommobj");
         return "searchufop";
     }
@@ -64,14 +63,13 @@ public class MasterController {
 
         try {
             ufop = ufopDao.searchUfopByCode(ufop.getUfop_code()).get(0);
-            redirectAttributes.addFlashAttribute("ufop",ufop);
+            redirectAttributes.addFlashAttribute("ufop", ufop);
             return rdrct + "/addcommobj";
-        }catch (IndexOutOfBoundsException ex){
-            redirectAttributes.addFlashAttribute("ufop",ufop);
+        } catch (IndexOutOfBoundsException ex) {
+            redirectAttributes.addFlashAttribute("ufop", ufop);
             return rdrct + "/addufop";
-        }
-        catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("ex",ex);
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
             return rdrct + "/message";
         }
 
@@ -81,46 +79,74 @@ public class MasterController {
     //next form COMM OBJ
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addcommobj", method = RequestMethod.GET)
-    public String addLegalentity(@ModelAttribute CommercialObject co, Model uiModel) {
+    public String addLegalentity(@ModelAttribute CommercialObject co, Model uiModel, RedirectAttributes redirectAttributes,
+                                 HttpServletRequest httpServletRequest) {
         uiModel.addAttribute("title", "Додайте дані про комерційний об'єкт");
-        try{
-            Ufop ufop = (Ufop) uiModel.asMap().get("ufop");
-            co.setUfop_link(ufop.getId());
-            uiModel.addAttribute("locationTop",catalogDao.getLocationTop());
-
-            Map<Integer,String> itemsType = new HashMap<>();
-            for(CommercialObjectType items : commercialObjectDao.getCommObjType()){
-                itemsType.put(items.getId(),items.getName());
-            }
-            uiModel.addAttribute("it",itemsType);
-        }catch (Exception ex){
-            co.setUfop_link(0);
-        }
-
-        BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b");
-        uiModel.addAttribute("command",co);
-        uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
-        uiModel.addAttribute("nextButtonLink", "/addcommobj");
-        return "addcommobj";
-    }
-    @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "/addcommobjpost", method = RequestMethod.POST)
-    public String addCommobjpost(@ModelAttribute CommercialObject co, HttpServletRequest httpServletRequest,
-                                 RedirectAttributes redirectAttributes, Model model,BindingResult bindingResult){
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
-        redirectAttributes.addFlashAttribute("co",co);
+
+        Ufop ufop;
+
+        try {
+            uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
+            Map<Integer, String> itemsType = new HashMap<>();
+            for (CommercialObjectType items : commercialObjectDao.getCommObjType()) {
+                itemsType.put(items.getId(), items.getName());
+            }
+            uiModel.addAttribute("it", itemsType);
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex + " locationTop");
+            return rdrct + "/message";
+        }
+        ufop = (Ufop) uiModel.asMap().get("ufop");
+        try {
+
+            if (ufop == null) {
+
+                co = (CommercialObject) uiModel.asMap().get("co");
+                ufop = ufopDao.searchUfopById(co.getUfop_link()).get(0);
+                uiModel.addAttribute("ufop", ufop);
+            } else {
+                co.setUfop_link(ufop.getId());
+            }
+
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return rdrct + "/message";
+        }
+        BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
+        uiModel.addAttribute("contact", co);
+        uiModel.addAttribute("test1", "ufop link: " + co.getUfop_link());
+
+        uiModel.addAttribute("command", co);
+        uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
+
+        return "addcommobj";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/addcommobjpost", method = RequestMethod.POST)
+    public String addCommobjpost(@ModelAttribute CommercialObject co, HttpServletRequest httpServletRequest,
+                                 RedirectAttributes redirectAttributes, Model model, BindingResult bindingResult) {
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+        redirectAttributes.addFlashAttribute("co", co);
         commobjValidator.validate(co, bindingResult);
-       if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("b1", bindingResult);
+            redirectAttributes.addFlashAttribute("co", co);
             return rdrct + "/addcommobj";
-       }
-        if(co.isAdditionalinformation()) return rdrct + "/addgoods";
+        }
+        if (co.isAdditionalinformation()) return rdrct + "/addgoods";
         else return rdrct + "/searchufop";
     }
+
     //next form add group ofgoods
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addgoods", method = RequestMethod.GET)
@@ -128,31 +154,38 @@ public class MasterController {
         uiModel.addAttribute("title", "Додайте Основні групи товарів");
 
 
-        uiModel.addAttribute("command",basicGroupOfGoods);
+        uiModel.addAttribute("command", basicGroupOfGoods);
         uiModel.addAttribute("nextButtonLink", "/addcommobj");
         return "addgoods";
     }
+
     //next form UFOP
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addufop", method = RequestMethod.GET)
-    public String addLegalentitypost(@ModelAttribute Ufop ufop,RedirectAttributes redirectAttributes,
-                                     Model uiModel) {
-
-try{
-    uiModel.addAttribute("locationTop",catalogDao.getLocationTop());
-}catch (Exception ex){
-
-}
+    public String addLegalentitypost(@ModelAttribute Ufop ufop, RedirectAttributes redirectAttributes,
+                                     HttpServletRequest httpServletRequest, Model uiModel) {
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+        try {
+            uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return rdrct + "/message";
+        }
         uiModel.addAttribute("title", "Інформація про суб'єкт господарювання");
         BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b");
         uiModel.addAttribute("command", ufop);
         uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
         return "addufop";
     }
+
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addufoppost", method = RequestMethod.POST)
-    public String addufoppost(@ModelAttribute Ufop ufop, HttpServletRequest httpServletRequest,RedirectAttributes redirectAttributes,
-                              Model uiModel,BindingResult bindingResult){
+    public String addufoppost(@ModelAttribute Ufop ufop, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
+                              Model uiModel, BindingResult bindingResult) {
 
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
@@ -166,23 +199,24 @@ try{
             redirectAttributes.addFlashAttribute("b", bindingResult);
             return rdrct + "/addufop";
         }
-        try{
-            redirectAttributes.addFlashAttribute("ufop",ufopDao.createUfop(ufop));
-        }catch(Exception ex){
-            redirectAttributes.addFlashAttribute("ex",ex);
+        try {
+            redirectAttributes.addFlashAttribute("ufop", ufopDao.createUfop(ufop));
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
             return rdrct + "/message";
         }
-        if(ufop.isAdditionalinformation()) return rdrct + "/addkved";
-        else   return rdrct + "/addcommobj";
+        if (ufop.isAdditionalinformation()) return rdrct + "/addkved";
+        else return rdrct + "/addcommobj";
     }
 
     //--next step-------------------------------------------------------------------------------------------------------
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addkved", method = RequestMethod.GET)
     public String addKvedUfop(Model uiModel) {
-        try{
-            uiModel.addAttribute("kvedTop1",kvedDao.getKvedCatalogTop());
-        }catch (Exception ex){}
+        try {
+            uiModel.addAttribute("kvedTop1", kvedDao.getKvedCatalogTop());
+        } catch (Exception ex) {
+        }
 
         uiModel.addAttribute("title", "Додайте КВЕДи ");
         uiModel.addAttribute("nextButtonLink", "/");
@@ -243,17 +277,19 @@ try{
 
         return rdrct + "/addcontact";
     }
+
     //--next step add CONTACT-------------------------------------------------------------------------------------------
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addcontact", method = RequestMethod.GET)
-    public String addContact(@ModelAttribute Contact contact,Model uiModel){
+    public String addContact(@ModelAttribute Contact contact, Model uiModel) {
         uiModel.addAttribute("title", "Створення нового контакту");
         uiModel.addAttribute("command", contact);
         return "addcontact";
     }
+
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addcontactpost", method = RequestMethod.POST)
-    public String addContactpost(@ModelAttribute Contact contact,Model uiModel,HttpServletRequest httpServletRequest){
+    public String addContactpost(@ModelAttribute Contact contact, Model uiModel, HttpServletRequest httpServletRequest) {
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();

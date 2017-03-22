@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.ufop.InsertUfopReturnId;
 import ua.pp.darknsoft.dao.crud.ufop.SelectUfopByCodeEquals;
+import ua.pp.darknsoft.dao.crud.ufop.SelectUfopByIdEquals;
 import ua.pp.darknsoft.entity.Ufop;
 
 import javax.annotation.Resource;
@@ -27,12 +28,14 @@ public class UfopDaoImpl implements UfopDao, Serializable {
     private DataSource dataSource;
     private SelectUfopByCodeEquals selectUfopByCodeEquals;
     private InsertUfopReturnId insertUfopReturnId;
+    private SelectUfopByIdEquals selectUfopByIdEquals;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.selectUfopByCodeEquals = new SelectUfopByCodeEquals(dataSource);
         this.insertUfopReturnId = new InsertUfopReturnId(dataSource);
+        this.selectUfopByIdEquals = new SelectUfopByIdEquals(dataSource);
     }
 
     @Override
@@ -40,6 +43,12 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         Map<String, String> bind = new HashMap<>();
         bind.put("ufop_code", ufop_code);
         return selectUfopByCodeEquals.executeByNamedParam(bind);
+    }
+    @Override
+    public List<Ufop> searchUfopById(long ufop_link) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("ufop_link", ufop_link);
+        return selectUfopByIdEquals.executeByNamedParam(bind);
     }
 
     @PreAuthorize(value = "isAuthenticated()")

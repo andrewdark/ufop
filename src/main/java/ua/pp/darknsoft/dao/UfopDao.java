@@ -11,6 +11,8 @@ import java.util.List;
 public interface UfopDao {
     List<Ufop> searchUfopByCode(String ufop_code);
 
+    List<Ufop> searchUfopById(long ufop_link);
+
     @PreAuthorize(value = "isAuthenticated()")
     Ufop createUfop(Ufop ufop);
 }
