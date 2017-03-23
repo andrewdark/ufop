@@ -125,7 +125,6 @@ public class CommercialObject {
         this.locationCatalog = locationCatalog;
     }
 
-
     public boolean isAdditionalinformation() {
         return additionalinformation;
     }

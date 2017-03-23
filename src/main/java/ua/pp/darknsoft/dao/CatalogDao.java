@@ -1,9 +1,6 @@
 package ua.pp.darknsoft.dao;
 
-import ua.pp.darknsoft.entity.CauseCatalog;
-import ua.pp.darknsoft.entity.LocationCatalog;
-import ua.pp.darknsoft.entity.LocationType;
-import ua.pp.darknsoft.entity.StructureCatalog;
+import ua.pp.darknsoft.entity.*;
 
 import java.util.List;
 
@@ -15,7 +12,11 @@ public interface CatalogDao {
 
     List<LocationCatalog> getLocationTop();
 
+    List<BasicGroupOfGoodsCatalog> getGoodsTop();
+
     List<LocationCatalog> getLocationByTreemark(String treemark, int level);
+
+    List<BasicGroupOfGoodsCatalog> getGoodsByTreemark(String treemark, int level);
 
     List<LocationCatalog> getParentLocationByTreemark(String treemark);
 

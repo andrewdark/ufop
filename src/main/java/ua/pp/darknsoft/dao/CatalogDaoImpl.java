@@ -4,10 +4,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.catalog.*;
-import ua.pp.darknsoft.entity.CauseCatalog;
-import ua.pp.darknsoft.entity.LocationCatalog;
-import ua.pp.darknsoft.entity.LocationType;
-import ua.pp.darknsoft.entity.StructureCatalog;
+import ua.pp.darknsoft.entity.*;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -31,6 +28,8 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
     private SelectParentLocationByTreemark selectParentLocationByTreemark;
     private SelectCauseCatalog selectCauseCatalog;
     private SelectStructureCatalogByMyStatus selectStructureCatalogByMyStatus;
+    private SelectGoodsTop selectGoodsTop;
+    private SelectGoodsByTreemark selectGoodsByTreemark;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource){
@@ -41,6 +40,8 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         this.selectParentLocationByTreemark = new SelectParentLocationByTreemark(dataSource);
         this.selectCauseCatalog = new SelectCauseCatalog(dataSource);
         this.selectStructureCatalogByMyStatus = new SelectStructureCatalogByMyStatus(dataSource);
+        this.selectGoodsTop = new SelectGoodsTop(dataSource);
+        this.selectGoodsByTreemark = new SelectGoodsByTreemark(dataSource);
     }
     @Override
     public List<LocationType> getLocationType(){
@@ -51,7 +52,10 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
     public List<LocationCatalog> getLocationTop(){
         return selectLocationTop.execute();
     }
-
+    @Override
+    public List<BasicGroupOfGoodsCatalog> getGoodsTop(){
+        return selectGoodsTop.execute();
+    }
     @Override
     public List<LocationCatalog> getLocationByTreemark(String treemark, int level){
         Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -61,6 +65,20 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         if(downloc.isEmpty()){
             LocationCatalog lc = new LocationCatalog();
             lc.setId(0); lc.setLtree("0.0"); lc.setName("No data");
+            //downloc.add(lc);
+        }
+        return downloc;
+    }
+    @Override
+    public List<BasicGroupOfGoodsCatalog> getGoodsByTreemark(String treemark, int level){
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("treemark", treemark.toLowerCase());
+        paramMap.put("nlevel",level);
+        List<BasicGroupOfGoodsCatalog> downloc = selectGoodsByTreemark.executeByNamedParam(paramMap);
+        if(downloc.isEmpty()){
+            BasicGroupOfGoodsCatalog lc = new BasicGroupOfGoodsCatalog();
+            lc.setId(0); lc.setTreemark("0.0"); lc.setName("No data");
+            //downloc.add(lc);
         }
         return downloc;
     }

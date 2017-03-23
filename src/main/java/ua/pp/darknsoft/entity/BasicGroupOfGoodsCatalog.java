@@ -3,7 +3,7 @@ package ua.pp.darknsoft.entity;
 /**
  * Created by Andrew on 09.03.2017.
  */
-public class BasicGroupOfGoods {
+public class BasicGroupOfGoodsCatalog {
     private int id;
     private String treemark;
     private String name;

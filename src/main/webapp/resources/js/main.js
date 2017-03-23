@@ -42,6 +42,7 @@ function look(type) {
     }
     else param.style.display = "none";
 };
+
 function lookstructure(type,treemark) {
     var param = document.getElementById(type);
     var aj = "param1="+treemark;
@@ -60,6 +61,7 @@ $(document).ready(function () {
     $("#popup1").hide();
     $("#popup2").hide();
     $("#popup3").hide();
+    $("#popup4").hide();
     $("#setContact_link_popup").hide();
     document.getElementById("contact_link").onkeypress = function (e) {
 
@@ -253,6 +255,76 @@ function inject_kved() {
     $("#kved_message").load("/ajax_add_kved", param);
 
 }
+//----------------BASIC GROUP OF GOODS ADD-----------------------//
+function GoodsPopUpShow() {
+    $("#popup4").show();
+}
+//Функция скрытия PopUp
+var count_goods = 1;
+function GoodsPopUpHide() {
+
+    if (count_goods == 1) $("#goodsname").val($("#my_selecttop1 option:selected").val());
+    if (count_goods == 2) {
+        if ($("#my_selecttop2 option:selected").val().length > 1) {
+            $("#goodsname").val($("#my_selecttop2 option:selected").val());
+        } else {
+            $("#goodsname").val($("#my_selecttop1 option:selected").val());
+        }
+    }
+    ;
+    if (count_goods == 3) {
+        if ($("#my_selecttop3 option:selected").val().length > 1) {
+            $("#goodsname").val($("#my_selecttop3 option:selected").val());
+        } else {
+            $("#goodsname").val($("#my_selecttop2 option:selected").val());
+        }
+    }
+    ;
+    if (count_goods == 4) {
+        if ($("#my_selecttop4 option:selected").val().length > 1) {
+            $("#goodsname").val($("#my_selecttop4 option:selected").val());
+        }
+        else {
+            $("#goodsname").val($("#my_selecttop3 option:selected").val());
+        }
+
+    }
+    ;
+    if (count_goods == 5) {
+        if ($("#my_selecttop5 option:selected").val().length > 1) {
+            $("#goodsname").val($("#my_selecttop5 option:selected").val());
+        }
+        else {
+            $("#goodsname").val($("#my_selecttop4 option:selected").val());
+        }
+
+    }
+    ;
+    $("#popup4").hide();
+}
+function loopgoodsdown(level) {
+    count_goods = level;
+    if (level == 2) {
+        var aj = "treemark=" + $("#my_selecttop1 option:selected").val() + "&nlevel=2";
+        $("#GoodsType2").load("/ajax_select_goods", aj);
+
+        $("#GoodsType3").html("");
+        $("#GoodsType4").html("");
+    }
+    if (level == 3) {
+        var aj = "treemark=" + $("#my_selecttop2 option:selected").val() + "&nlevel=3";
+        $("#GoodsType3").load("/ajax_select_goods", aj);
+        $("#GoodsType4").html("");
+    }
+    if (level == 4) {
+        var aj = "treemark=" + $("#my_selecttop3 option:selected").val() + "&nlevel=4";
+        $("#GoodsType4").load("/ajax_select_goods", aj);
+    }
+    if (level == 5) {
+        var aj = "treemark=" + $("#my_selecttop4 option:selected").val() + "&nlevel=5";
+        $("#GoodsType5").load("/ajax_select_goods", aj);
+    }
+};
 // ------------------COMMERCIAL Obj Add------------------------- //
 function inject_co() {
     var p1 = $("#co_input01").val();
@@ -273,4 +345,17 @@ function load_commobj() {
 function load_ufop() {
     $("#load_ufop_point").load("/addufop #this_ufop_from_ajax");
 
+}
+//-----------DATA of UFOP (Registration)-------------------//
+function pPass() {
+    $("#ufop_name_1").show();
+    $("#ufop_name_2").hide();
+    $("#ufop_pass_1").show();
+    $("#passinfo").show();
+}
+function uPass() {
+    $("#ufop_name_2").show();
+    $("#ufop_name_1").hide();
+    $("#ufop_pass_1").hide();
+    $("#passinfo").hide();
 }

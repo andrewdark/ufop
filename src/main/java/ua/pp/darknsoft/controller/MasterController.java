@@ -130,7 +130,7 @@ public class MasterController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addcommobjpost", method = RequestMethod.POST)
     public String addCommobjpost(@ModelAttribute CommercialObject co, HttpServletRequest httpServletRequest,
-                                 RedirectAttributes redirectAttributes, Model model, BindingResult bindingResult) {
+                                 RedirectAttributes redirectAttributes, Model uiModel, BindingResult bindingResult) {
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
@@ -143,20 +143,57 @@ public class MasterController {
             redirectAttributes.addFlashAttribute("co", co);
             return rdrct + "/addcommobj";
         }
-        if (co.isAdditionalinformation()) return rdrct + "/addgoods";
-        else return rdrct + "/searchufop";
+        if (co.isAdditionalinformation()) {
+            co.setId(777); //TEST TEST TEST
+            redirectAttributes.addFlashAttribute("co_id", co);
+            return rdrct + "/addgoods";
+        } else return rdrct + "/searchufop";
     }
 
-    //next form add group ofgoods
+    //ADD GROUP OF GOODS
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addgoods", method = RequestMethod.GET)
-    public String addGoods(@ModelAttribute BasicGroupOfGoods basicGroupOfGoods, Model uiModel) {
+    public String addGoods(@ModelAttribute GoodsOfCommObj goodsOfCommObj, Model uiModel, RedirectAttributes redirectAttributes,
+                           HttpServletRequest httpServletRequest) {
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+        CommercialObject co = (CommercialObject) uiModel.asMap().get("co");
+        if (co != null) goodsOfCommObj.setComm_obj_link(co.getId());
         uiModel.addAttribute("title", "Додайте Основні групи товарів");
+        try{
+            uiModel.addAttribute("goodsTop", catalogDao.getGoodsTop());
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex",ex);
+            return rdrct + "/message";
+        }
 
-
-        uiModel.addAttribute("command", basicGroupOfGoods);
+        uiModel.addAttribute("command", goodsOfCommObj);
         uiModel.addAttribute("nextButtonLink", "/addcommobj");
         return "addgoods";
+    }
+
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "/addgoodspost", method = RequestMethod.POST)
+    public String addGoodspost(@ModelAttribute GoodsOfCommObj goodsOfCommObj, HttpServletRequest httpServletRequest,
+                               RedirectAttributes redirectAttributes) {
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+
+        try {
+
+            goodsOfCommObj.setId(goodsOfCommObj.getGoods_catalog_link()); //TEST TEST TEST
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return rdrct + "/message";
+        }
+        redirectAttributes.addFlashAttribute("goodsOfCommObj",goodsOfCommObj);
+        return rdrct + "/addgoods";
     }
 
     //next form UFOP
@@ -209,7 +246,7 @@ public class MasterController {
         else return rdrct + "/addcommobj";
     }
 
-    //--next step-------------------------------------------------------------------------------------------------------
+    //--ADD KVED-------------------------------------------------------------------------------------------------------
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addkved", method = RequestMethod.GET)
     public String addKvedUfop(Model uiModel) {
@@ -352,6 +389,31 @@ public class MasterController {
         }
 
         html = "<select id=\"my_selecttop" + (level) + "\" onchange=\"loopkveddown(" + (level + 1) + ")\">" + option + "</select>";
+
+        return html;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/ajax_select_goods", produces = {"application/json; charset=UTF-8"})
+    public String ajax_select_goods(@RequestParam(defaultValue = "1") String treemark, @RequestParam(defaultValue = "2") String nlevel, Model uiModel) {
+        String html = "hello world";
+        String option = "<option disabled>Виберіть групу товарів</option><option value=\"\"></option>";
+        int level = 0;
+        List<BasicGroupOfGoodsCatalog> downkved = catalogDao.getGoodsByTreemark(treemark, Integer.parseInt(nlevel));
+        try {
+            level = Integer.parseInt(nlevel);
+
+            for (int i = 0; i <= downkved.size() - 1; i++) {
+
+                option = option + "<option value=\"" + downkved.get(i).getTreemark() + "\">" + downkved.get(i).getDegree_of_a_risk_link() + "-" + downkved.get(i).getName() + "</option>";
+            }
+
+        } catch (Exception ex) {
+            uiModel.addAttribute("ex", ex);
+
+            return "Error: " + ex;
+        }
+
+        html = "<select id=\"my_selecttop" + (level) + "\" onchange=\"loopgoodsdown(" + (level + 1) + ")\">" + option + "</select>";
 
         return html;
     }
