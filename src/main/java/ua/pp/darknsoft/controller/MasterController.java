@@ -63,8 +63,8 @@ public class MasterController {
 
         try {
             ufop = ufopDao.searchUfopByCode(ufop.getUfop_code()).get(0);
-            redirectAttributes.addFlashAttribute("ufop", ufop);
-            return rdrct + "/addcommobj";
+            //redirectAttributes.addFlashAttribute("ufop", ufop);
+            return rdrct + "/show_ufop?id="+ufop.getId();
         } catch (IndexOutOfBoundsException ex) {
             redirectAttributes.addFlashAttribute("ufop", ufop);
             return rdrct + "/addufop";

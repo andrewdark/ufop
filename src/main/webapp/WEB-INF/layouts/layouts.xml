@@ -28,8 +28,8 @@
     <definition extends="default" name="my_office">
         <put-attribute name="body" value="/WEB-INF/pages/body/my_office.jsp"/>
     </definition>
-    <definition extends="default" name="show_entrepreneur">
-        <put-attribute name="body" value="/WEB-INF/pages/body/show_entrepreneur.jsp"/>
+    <definition extends="default" name="show_ufop">
+        <put-attribute name="body" value="/WEB-INF/pages/body/show_ufop.jsp"/>
     </definition>
     <definition extends="default" name="legal_entity">
         <put-attribute name="body" value="/WEB-INF/pages/body/legal_entity.jsp"/>
