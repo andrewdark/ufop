@@ -36,20 +36,32 @@
                 <th>НАЗВА</th>
                 <th>ТИП</th>
                 <th>АДРЕСА</th>
-                <th>ПРИМІТКА</th>
+
 
             </tr>
+            <c:forEach items="${co}" var="co">
+                <tr>
+                    <td>${co.obj_name}</td>
+                    <td>${co.obj_type}</td>
+                    <td>
+                        <c:forEach items="${co.locationCatalog}" var="locationCatalog">
+                            ${locationCatalog.name}
+                        </c:forEach>
+                    </td>
+
+                </tr>
+            </c:forEach>
             <tr>
                 <td></td>
                 <td></td>
-                <td></td>
+
                 <td>
                     <form:form action="/show_ufop_create_commobj" method="post" commandName="command_ufop">
                         <form:hidden path="id"/>
                         <form:hidden path="ufop_is"/>
                         <form:hidden path="ufop_name"/>
                         <form:hidden path="ufop_code"/>
-                        <input type="submit" value="add" />
+                        <input type="submit" value="Додати комерційний об'єкт" />
                     </form:form>
                 </td>
             </tr>

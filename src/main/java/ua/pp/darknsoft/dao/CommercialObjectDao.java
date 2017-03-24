@@ -13,5 +13,5 @@ public interface CommercialObjectDao {
 
     List<CommercialObjectType> getCommObjType();
 
-    List<CommercialObject> getCommObjEntrepreneurByUfop_link(long ufop_link);
+    List<CommercialObject> getCommObjByUfop_link(long ufop_link);
 }

@@ -37,14 +37,17 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     }
 
     @Override
-    public void createCommObj(CommercialObject entrepreneurCommercialObject) {
+    public void createCommObj(CommercialObject commercialObject) {
         Map<String, Object> bind = new HashMap<String, Object>();
-        bind.put("ufop_link", entrepreneurCommercialObject.getUfop_link());
-        bind.put("obj_type", entrepreneurCommercialObject.getObj_type());
-        bind.put("obj_name", entrepreneurCommercialObject.getObj_name());
-        bind.put("a_obj_location", entrepreneurCommercialObject.getA_place_of_reg());
-        bind.put("n_obj_location", entrepreneurCommercialObject.getN_place_of_reg());
-        bind.put("owner", entrepreneurCommercialObject.getCreator_link().toLowerCase());
+        bind.put("ufop_link", commercialObject.getUfop_link());
+        bind.put("obj_type", commercialObject.getObj_type());
+        bind.put("obj_name", commercialObject.getObj_name());
+        bind.put("a_place_of_reg", commercialObject.getA_place_of_reg());
+        bind.put("n_place_of_reg", commercialObject.getN_place_of_reg());
+        bind.put("f_place_of_reg", commercialObject.getF_place_of_reg());
+        bind.put("b_place_of_reg", commercialObject.getB_place_of_reg());
+        bind.put("description", commercialObject.getDescription());
+        bind.put("creator_link", commercialObject.getCreator_link().toLowerCase());
 
         insertCommercialObject.updateByNamedParam(bind);
     }
@@ -55,7 +58,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     }
 
     @Override
-    public List<CommercialObject> getCommObjEntrepreneurByUfop_link(long ufop_link){
+    public List<CommercialObject> getCommObjByUfop_link(long ufop_link){
         Map<String,Long> bind = new HashMap<>();
         bind.put("ufop_link",ufop_link);
         return selectCommObjByUfop_link.executeByNamedParam(bind);

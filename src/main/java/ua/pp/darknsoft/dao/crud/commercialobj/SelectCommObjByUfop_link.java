@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class SelectCommObjByUfop_link extends MappingSqlQuery<CommercialObject>{
     private SelectParentLocationByTreemark selectParentLocationByTreemark;
-    private static final String SELECT_ENTREPRENEUR_COMM_OBJ = "SELECT coet.*, cott.name s_obj_type FROM comm_obj_entrepreneur_table coet INNER JOIN commercial_object_type_table cott ON(cott.id = coet.obj_type) WHERE coet.ufop_link = :ufop_link";
+    private static final String SELECT_ENTREPRENEUR_COMM_OBJ = "SELECT coet.*, cott.name s_obj_type FROM comm_object_table coet INNER JOIN commercial_object_type_table cott ON(cott.id = coet.obj_type) WHERE coet.ufop_link = :ufop_link";
 
     public SelectCommObjByUfop_link(DataSource ds) {
         super(ds, SELECT_ENTREPRENEUR_COMM_OBJ);
@@ -34,9 +34,11 @@ public class SelectCommObjByUfop_link extends MappingSqlQuery<CommercialObject>{
         commObj.setObj_name(resultSet.getString("obj_name"));
         commObj.setObj_type(resultSet.getInt("obj_type"));
         commObj.setS_obj_type(resultSet.getString("s_obj_type"));
-        commObj.setA_place_of_reg(resultSet.getString("a_obj_location"));
-        commObj.setN_place_of_reg(resultSet.getString("n_obj_location"));
-        commObj.setLocationCatalog((LocationCatalog) getLoc(resultSet.getString("a_obj_location")));
+        commObj.setA_place_of_reg(resultSet.getString("a_place_of_reg"));
+        commObj.setN_place_of_reg(resultSet.getString("n_place_of_reg"));
+        commObj.setF_place_of_reg(resultSet.getString("f_place_of_reg"));
+        commObj.setB_place_of_reg(resultSet.getString("b_place_of_reg"));
+        commObj.setLocationCatalog((List<LocationCatalog>) getLoc(resultSet.getString("a_place_of_reg")));
         commObj.setDescription(resultSet.getString("description"));
         return commObj;
     }

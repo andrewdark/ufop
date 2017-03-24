@@ -142,8 +142,8 @@ public class MainController {
             uiModel.addAttribute("ufop",ufop);
             uiModel.addAttribute("command_ufop", ufop);
 
-            List<CommercialObject> co = commercialObjectDao.getCommObjEntrepreneurByUfop_link(ufop.getId());
-// List<EntrepreneurCommercialObject> co = commercialObjectDao.getCommObjEntrepreneurByUfop_link(ie.getId());
+            List<CommercialObject> co = commercialObjectDao.getCommObjByUfop_link(ufop.getId());
+
 //
 //            if(ie.getA_place_of_reg().length()>0) {
 //                uiModel.addAttribute("fulladdress",catalogDao.getParentLocationByTreemark(ie.getA_place_of_reg()));
@@ -155,7 +155,7 @@ public class MainController {
 //
 //            uiModel.addAttribute("kveds",kvedDao.getEntrepreneursKvedsByEntrepreneurLink(Long.parseLong(id)));
 //            uiModel.addAttribute("ie",ie);
-//            uiModel.addAttribute("co",co);
+           uiModel.addAttribute("co",co);
 //            uiModel.addAttribute("ci","contactInformation about:");
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такого підприємця не знайдено");
@@ -167,11 +167,7 @@ public class MainController {
             uiModel.addAttribute("ex", ex);
             return "message";
         }
-        try {
 
-        } catch (IndexOutOfBoundsException ex) {
-
-        }
 
         return "show_ufop";
     }

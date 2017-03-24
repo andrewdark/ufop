@@ -1,6 +1,7 @@
 package ua.pp.darknsoft.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by Andrew on 09.03.2017.
@@ -18,7 +19,7 @@ public class CommercialObject {
     private String creator_link;
     private String description;
     private String s_obj_type;
-    private LocationCatalog locationCatalog;
+    private List<LocationCatalog> locationCatalog;
     private boolean additionalinformation;
 
     public long getId() {
@@ -117,11 +118,11 @@ public class CommercialObject {
         this.s_obj_type = s_obj_type;
     }
 
-    public LocationCatalog getLocationCatalog() {
+    public List<LocationCatalog> getLocationCatalog() {
         return locationCatalog;
     }
 
-    public void setLocationCatalog(LocationCatalog locationCatalog) {
+    public void setLocationCatalog(List<LocationCatalog> locationCatalog) {
         this.locationCatalog = locationCatalog;
     }
 
