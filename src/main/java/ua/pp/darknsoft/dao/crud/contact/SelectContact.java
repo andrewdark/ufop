@@ -14,7 +14,8 @@ import java.sql.Types;
  */
 public class SelectContact extends MappingSqlQuery<Contact> {
 
-    private final static String SELECT_CONTACT_SQL="SELECT c.*,u.username FROM contact_table c INNER JOIN user_table u ON(c.owner=u.id)ORDER BY c.id LIMIT :total OFFSET :pageid";
+    private final static String SELECT_CONTACT_SQL="SELECT c.*,u.username,ut.name sorganization FROM contact_table c INNER JOIN user_table u ON(c.owner=u.id) INNER JOIN ufop_table ut ON (ut.id = c.organization) " +
+            "ORDER BY c.id LIMIT :total OFFSET :pageid";
 
     public SelectContact(DataSource ds) {
         super(ds, SELECT_CONTACT_SQL);
@@ -43,7 +44,8 @@ public class SelectContact extends MappingSqlQuery<Contact> {
         contact.setDatereg(resultSet.getTimestamp("datereg"));
         contact.setCreator_link(resultSet.getString("username"));
         contact.setBirthday(resultSet.getString("birthday"));
-        contact.setOrganization(resultSet.getString("organization"));
+        contact.setOrganization(resultSet.getLong("organization"));
+        contact.setSorganization(resultSet.getString("sorganization"));
         contact.setPosition(resultSet.getString("position"));
         contact.setDescription(resultSet.getString("description"));
         return contact;

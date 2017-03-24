@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -43,12 +44,13 @@
                 <td></td>
                 <td></td>
                 <td>
-                    <form method="post" action="/show_ufop_create_commobj">
-                        <input type="hidden" name="ufop" value="${ufop}" />
-                        <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}"/>
-                        <input type="submit" value="add obj"/>
-                    </form>
-
+                    <form:form action="/show_ufop_create_commobj" method="post" commandName="command_ufop">
+                        <form:hidden path="id"/>
+                        <form:hidden path="ufop_is"/>
+                        <form:hidden path="ufop_name"/>
+                        <form:hidden path="ufop_code"/>
+                        <input type="submit" value="add" />
+                    </form:form>
                 </td>
             </tr>
         </table>

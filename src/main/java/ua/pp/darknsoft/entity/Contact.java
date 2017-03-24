@@ -27,7 +27,8 @@ public class Contact {
     private Timestamp datereg;
     private String creator_link;
     private String birthday;
-    private String organization;
+    private long organization;
+    private String sorganization;
     private String position;
     private String description;
 
@@ -167,11 +168,11 @@ public class Contact {
         this.birthday = birthday;
     }
 
-    public String getOrganization() {
+    public long getOrganization() {
         return organization;
     }
 
-    public void setOrganization(String organization) {
+    public void setOrganization(long organization) {
         this.organization = organization;
     }
 
@@ -189,5 +190,13 @@ public class Contact {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSorganization() {
+        return sorganization;
+    }
+
+    public void setSorganization(String sorganization) {
+        this.sorganization = sorganization;
     }
 }

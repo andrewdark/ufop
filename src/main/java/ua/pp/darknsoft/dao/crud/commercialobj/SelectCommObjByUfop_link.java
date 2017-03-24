@@ -17,11 +17,11 @@ import java.util.Map;
 /**
  * Created by Dark on 27.02.2017.
  */
-public class SelectCommObjEntrepreneurByUfop_link extends MappingSqlQuery<CommercialObject>{
+public class SelectCommObjByUfop_link extends MappingSqlQuery<CommercialObject>{
     private SelectParentLocationByTreemark selectParentLocationByTreemark;
     private static final String SELECT_ENTREPRENEUR_COMM_OBJ = "SELECT coet.*, cott.name s_obj_type FROM comm_obj_entrepreneur_table coet INNER JOIN commercial_object_type_table cott ON(cott.id = coet.obj_type) WHERE coet.ufop_link = :ufop_link";
 
-    public SelectCommObjEntrepreneurByUfop_link(DataSource ds) {
+    public SelectCommObjByUfop_link(DataSource ds) {
         super(ds, SELECT_ENTREPRENEUR_COMM_OBJ);
         super.declareParameter(new SqlParameter("ufop_link", Types.BIGINT));
         this.selectParentLocationByTreemark = new SelectParentLocationByTreemark(ds);

@@ -12,7 +12,8 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content">
-        <form:form action="${pageContext.servletContext.contextPath}/addContactpost" method="post">
+        <form:form action="${pageContext.servletContext.contextPath}/addcontactpost" method="post">
+
             <table width="100%">
                 <tr>
                     <td><form:label path="last_name">Прізвище:</form:label></td>
@@ -49,12 +50,22 @@
                 </tr>
                 <tr>
                     <td><form:label path="a_stay_address" >Адреса реєстрації:</form:label></td>
-                    <td><form:input id="loc1" htmlEscape="true" path="a_stay_address" class="form-control" maxlength="24" onclick="javascript:LocPopUpShow()"/></td>
+                    <td><form:input id="a_place_of_reg" htmlEscape="true" path="a_stay_address" class="form-control" maxlength="24" onclick="javascript:LocPopUpShow()"/></td>
                     <td><span class="error"><form:errors path="a_stay_address"/></span></td>
                 </tr>
                 <tr>
                     <td><form:label path="n_stay_address">Номер будівлі:</form:label></td>
                     <td><form:input htmlEscape="true" path="n_stay_address" class="form-control" maxlength="35"/></td>
+                    <td><span class="error"><form:errors path="n_stay_address"/></span></td>
+                </tr>
+                <tr>
+                    <td><form:label path="n_stay_address">Номер корпусу:</form:label></td>
+                    <td><form:input htmlEscape="true" path="b_stay_address" class="form-control" maxlength="35"/></td>
+                    <td><span class="error"><form:errors path="n_stay_address"/></span></td>
+                </tr>
+                <tr>
+                    <td><form:label path="n_stay_address">Номер квартири:</form:label></td>
+                    <td><form:input htmlEscape="true" path="f_stay_address" class="form-control" maxlength="35"/></td>
                     <td><span class="error"><form:errors path="n_stay_address"/></span></td>
                 </tr>
                 <tr>
@@ -77,17 +88,17 @@
                     <td><form:input path="birthday" id="datepicker"/></td>
                     <td><span class="error"><form:errors path="birthday"/></span></td>
                 </tr>
-                <tr>
-                    <td><form:label path="organization">Місце роботи:</form:label></td>
-                    <td><form:input htmlEscape="true" path="organization" class="form-control"/></td>
-                    <td><span class="error"><form:errors path="organization"/></span></td>
-                </tr>
+
                 <tr>
                     <td><form:label path="position">Посада:</form:label></td>
                     <td><form:input htmlEscape="true" path="position" class="form-control"/></td>
                     <td><span class="error"><form:errors path="position"/></span></td>
                 </tr>
-
+                <tr>
+                    <td></td>
+                    <td><form:hidden path="organization" /></td>
+                    <td><span class="error"><form:errors path="organization"/></span></td>
+                </tr>
                 <tr>
                     <td></td>
                     <td>
@@ -96,6 +107,35 @@
                     <td></td>
                 </tr>
             </table>
+        </form:form>
+        <hr/>
+        <h3>Інформація про суб'єкт господарювання</h3><br/>
+        <c:if test="${ufop.ufop_is==0}">
+            <c:set var="u_name" value="ПІБ фізичної особи"/>
+        </c:if>
+        <c:if test="${ufop.ufop_is==1}">
+            <c:set var="u_name" value="Найменування юридичної особи"/>
+        </c:if>
+        <table>
+            <tr>
+                <td>ІД номер</td>
+                <td>${ufop.id}</td>
+            </tr>
+            <tr>
+                <td>${u_name}</td>
+                <td>${ufop.ufop_name}</td>
+            </tr>
+            <tr>
+                <td>${u_name}</td>
+                <td>${ufop.ufop_code}</td>
+            </tr>
+        </table>
+        <form:form action="/addcontactpost_add_kved" method="post" commandName="command_ufop">
+            <form:hidden path="id"/>
+            <form:hidden path="ufop_is"/>
+            <form:hidden path="ufop_name"/>
+            <form:hidden path="ufop_code"/>
+            <input type="submit" value="перейти до КВЕДів" />
         </form:form>
         <a onclick="look('hide1'); return false;" href="#">Довідка</a>
         <div id="hide1" style="display: none;">

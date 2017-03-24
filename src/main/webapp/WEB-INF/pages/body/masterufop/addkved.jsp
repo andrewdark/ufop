@@ -13,38 +13,57 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content_wide">
-        <div id="kved_message"></div>
+        ${previoskved}
 
-        <table>
-            <tr>
-                <td>ID ФОП:</td>
-                <td><input type="text" disabled="disabled" value="${sendIE.id}" id="fopid"/></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>КВЕД:</td>
-                <td><input type="text" id="kvedname" onclick="javascript:KvedPopUpShow()"/></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <button type="button" onclick="inject_kved()"><img src="resources/images/add.jpg"/></button>
-                </td>
-                <td></td>
-            </tr>
-        </table>
+            <form:form action="/addkvedpost" method="post">
+                <form:hidden path="ufop_link"/>
+                <table>
+                    <tr>
+                        <td><form:label path="kved_catalog_link">Вкажіть КВЕД</form:label></td>
+                        <td><form:input id="kvedname" path="kved_catalog_link" onclick="javascript:KvedPopUpShow()"/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><input type="submit" value="Додати КВЕД" /></td>
+                    </tr>
+                </table>
+            </form:form>
+            <form:form action="/addcontactpost_add_commobj" method="post" commandName="command_ufop">
+                <form:hidden path="id"/>
+                <form:hidden path="ufop_is"/>
+                <form:hidden path="ufop_name"/>
+                <form:hidden path="ufop_code"/>
+                <input type="submit" value="перейти до ком. об'єктів" />
+            </form:form>
+            <hr/>
+            <h3>Інформація про суб'єкт господарювання</h3><br/>
+            <c:if test="${ufop.ufop_is==0}">
+                <c:set var="u_name" value="ПІБ фізичної особи"/>
+            </c:if>
+            <c:if test="${ufop.ufop_is==1}">
+                <c:set var="u_name" value="Найменування юридичної особи"/>
+            </c:if>
+            <table>
+                <tr>
+                    <td>ІД номер</td>
+                    <td>${ufop.id}</td>
+                </tr>
+                <tr>
+                    <td>${u_name}</td>
+                    <td>${ufop.ufop_name}</td>
+                </tr>
+                <tr>
+                    <td>${u_name}</td>
+                    <td>${ufop.ufop_code}</td>
+                </tr>
+            </table>
 
     </div>
 
     <div class="clr"></div>
 </div>
-
-<form method="post" action="/kvedpost">
-<input type="hidden" id="ufop_id" name="ufop_id" value="${sendIE.id}" />
-    <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}"/>
-    <div class="d_right"><button type="submit"><img src="/resources/images/next_step.jpg"/></button></div>
-</form>
 
 
 <div class="b-popup" id="popup3">
@@ -55,8 +74,8 @@
 
         <select id="my_selecttop1" name="my_selecttop" onchange="loopkveddown(2)" onmousedown="$(':first-child', this).remove(); this.onmousedown = null;">
             <option value=""></option>
-            <c:forEach items="${kvedTop1}" var="kvedTop1">
-                <option value="${kvedTop1.treemark}">${kvedTop1.label} - ${kvedTop1.name}</option>
+            <c:forEach items="${kvedTop}" var="kvedTop">
+                <option value="${kvedTop.treemark}">${kvedTop.label} - ${kvedTop.name}</option>
             </c:forEach>
         </select><br />
         <div id="KvedType2"></div>

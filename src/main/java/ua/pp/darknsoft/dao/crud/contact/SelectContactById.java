@@ -13,7 +13,7 @@ import java.sql.Types;
  * Created by Andrew on 22.02.2017.
  */
 public class SelectContactById extends MappingSqlQuery<Contact> {
-    private final static String SELECT_CONTACT_SQL = "SELECT c.* FROM contact_table c WHERE id=:id";
+    private final static String SELECT_CONTACT_SQL = "SELECT c.*,ut.name sorganization FROM contact_table c INNER JOIN ufop_table ut ON (ut.id = c.organization) WHERE id=:id";
 
     public SelectContactById(DataSource ds) {
         super(ds, SELECT_CONTACT_SQL);
@@ -41,7 +41,8 @@ public class SelectContactById extends MappingSqlQuery<Contact> {
         contact.setDatereg(resultSet.getTimestamp("datereg"));
         //contact.setOwner(resultSet.getString("username"));
         contact.setBirthday(resultSet.getString("birthday"));
-        contact.setOrganization(resultSet.getString("organization"));
+        contact.setOrganization(resultSet.getLong("organization"));
+        contact.setSorganization(resultSet.getString("sorganization"));
         contact.setPosition(resultSet.getString("position"));
         contact.setDescription(resultSet.getString("description"));
         return contact;

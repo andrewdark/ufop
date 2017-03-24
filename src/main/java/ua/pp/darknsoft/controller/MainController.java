@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.pp.darknsoft.dao.*;
+import ua.pp.darknsoft.entity.CommercialObject;
 import ua.pp.darknsoft.entity.Contact;
 import ua.pp.darknsoft.entity.Ufop;
 
@@ -139,7 +140,10 @@ public class MainController {
         try {
             Ufop ufop = ufopDao.searchUfopById(Long.parseLong(id)).get(0);
             uiModel.addAttribute("ufop",ufop);
-//            List<EntrepreneurCommercialObject> co = commercialObjectDao.getCommObjEntrepreneurByUfop_link(ie.getId());
+            uiModel.addAttribute("command_ufop", ufop);
+
+            List<CommercialObject> co = commercialObjectDao.getCommObjEntrepreneurByUfop_link(ufop.getId());
+// List<EntrepreneurCommercialObject> co = commercialObjectDao.getCommObjEntrepreneurByUfop_link(ie.getId());
 //
 //            if(ie.getA_place_of_reg().length()>0) {
 //                uiModel.addAttribute("fulladdress",catalogDao.getParentLocationByTreemark(ie.getA_place_of_reg()));
@@ -172,7 +176,7 @@ public class MainController {
         return "show_ufop";
     }
     @RequestMapping(value = "/show_ufop_create_commobj")
-    public String show_ufop_create_commobj(@RequestParam Ufop ufop, Model uiModel, HttpServletRequest httpServletRequest,
+    public String show_ufop_create_commobj(@ModelAttribute Ufop ufop, Model uiModel, HttpServletRequest httpServletRequest,
                                            RedirectAttributes redirectAttributes){
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();

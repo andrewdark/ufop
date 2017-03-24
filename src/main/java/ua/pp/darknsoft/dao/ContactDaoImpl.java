@@ -61,9 +61,9 @@ public class ContactDaoImpl implements ContactDao, Serializable {
     @Override
     public long insert(Contact contact) {
         if(contact.getBirthday().isEmpty())contact.setBirthday("0001-01-01");
-        String sql = "INSERT INTO contact_table (first_name,last_name,owner,patronymic_name,a_stay_address,n_stay_address," +
+        String sql = "INSERT INTO contact_table (first_name,last_name,creator_link,patronymic_name,a_stay_address,n_stay_address,f_stay_address,b_stay_address," +
                 "series_of_passport,number_of_passport,tel,fax,email,birthday,organization,\"position\",description) " +
-                "VALUES (:first_name,:last_name,(SELECT id FROM user_table WHERE LOWER (username) = LOWER (:owner)),:patronymic_name,:a_stay_address,:n_stay_address," +
+                "VALUES (:first_name,:last_name,(SELECT id FROM user_table WHERE LOWER (username) = LOWER (:creator_link)),:patronymic_name,:a_stay_address,:n_stay_address,:f_stay_address,:b_stay_address," +
                 ":series_of_passport,:number_of_passport,:tel,:fax,:email,:birthday::DATE,:organization,:position,:description)";
 
         Map<String, Object> bind = new HashMap<>();
@@ -72,6 +72,8 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         bind.put("patronymic_name", contact.getPatronymic_name());
         bind.put("a_stay_address", contact.getA_stay_address());
         bind.put("n_stay_address", contact.getN_stay_address());
+        bind.put("f_stay_address", contact.getF_stay_address());
+        bind.put("b_stay_address", contact.getB_stay_address());
         bind.put("series_of_passport", contact.getSeries_of_passport());
         bind.put("number_of_passport", contact.getNumber_of_passport());
         bind.put("tel", contact.getTel());
@@ -80,13 +82,13 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         bind.put("birthday", contact.getBirthday());
         bind.put("organization", contact.getOrganization());
         bind.put("position", contact.getPosition());
-        bind.put("owner", contact.getCreator_link());
+        bind.put("creator_link", contact.getCreator_link());
         bind.put("description",contact.getDescription());
         if(contact.getRntc().length()==10){
             bind.put("rntc", contact.getRntc());
-            sql = "INSERT INTO contact_table (rntc,first_name,last_name,owner,patronymic_name,a_stay_address,n_stay_address," +
+            sql = "INSERT INTO contact_table (rntc,first_name,last_name,creator_link,patronymic_name,a_stay_address,n_stay_address,f_stay_address,b_stay_address," +
                     "series_of_passport,number_of_passport,tel,fax,email,birthday,organization,\"position\",description) " +
-                    "VALUES (:rntc,:first_name,:last_name,(SELECT id FROM user_table WHERE LOWER (username) = LOWER (:owner)),:patronymic_name,:a_stay_address,:n_stay_address," +
+                    "VALUES (:rntc,:first_name,:last_name,(SELECT id FROM user_table WHERE LOWER (username) = LOWER (:creator_link)),:patronymic_name,:a_stay_address,:n_stay_address,:f_stay_address,:b_stay_address," +
                     ":series_of_passport,:number_of_passport,:tel,:fax,:email,:birthday::DATE,:organization,:position,:description)";
         }
 
