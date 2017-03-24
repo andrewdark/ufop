@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -56,13 +57,15 @@
                 <td></td>
 
                 <td>
-                    <form:form action="/show_ufop_create_commobj" method="post" commandName="command_ufop">
-                        <form:hidden path="id"/>
-                        <form:hidden path="ufop_is"/>
-                        <form:hidden path="ufop_name"/>
-                        <form:hidden path="ufop_code"/>
-                        <input type="submit" value="Додати комерційний об'єкт" />
-                    </form:form>
+                    <sec:authorize access="isAuthenticated()">
+                        <form:form action="/show_ufop_create_commobj" method="post" commandName="command_ufop">
+                            <form:hidden path="id"/>
+                            <form:hidden path="ufop_is"/>
+                            <form:hidden path="ufop_name"/>
+                            <form:hidden path="ufop_code"/>
+                            <input type="submit" value="Додати комерційний об'єкт"/>
+                        </form:form>
+                    </sec:authorize>
                 </td>
             </tr>
         </table>
