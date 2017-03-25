@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.ufop.InsertUfopReturnId;
 import ua.pp.darknsoft.dao.crud.ufop.SelectUfopByCodeEquals;
 import ua.pp.darknsoft.dao.crud.ufop.SelectUfopByIdEquals;
+import ua.pp.darknsoft.dao.crud.ufop.SelectUfopsByPaginator;
 import ua.pp.darknsoft.entity.Ufop;
 
 import javax.annotation.Resource;
@@ -29,6 +30,7 @@ public class UfopDaoImpl implements UfopDao, Serializable {
     private SelectUfopByCodeEquals selectUfopByCodeEquals;
     private InsertUfopReturnId insertUfopReturnId;
     private SelectUfopByIdEquals selectUfopByIdEquals;
+    private SelectUfopsByPaginator selectUfopsByPaginator;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -36,6 +38,7 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         this.selectUfopByCodeEquals = new SelectUfopByCodeEquals(dataSource);
         this.insertUfopReturnId = new InsertUfopReturnId(dataSource);
         this.selectUfopByIdEquals = new SelectUfopByIdEquals(dataSource);
+        this.selectUfopsByPaginator = new SelectUfopsByPaginator(dataSource);
     }
 
     @Override
@@ -44,6 +47,7 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         bind.put("ufop_code", ufop_code);
         return selectUfopByCodeEquals.executeByNamedParam(bind);
     }
+
     @Override
     public List<Ufop> searchUfopById(long ufop_link) {
         Map<String, Long> bind = new HashMap<>();
@@ -68,5 +72,14 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         insertUfopReturnId.updateByNamedParam(bind, keyHolder);
         ufop.setId(keyHolder.getKey().longValue());
         return ufop;
+    }
+
+    @Override
+    public List<Ufop> getEntrepreneurByPaginator(int total, int pageid, short ufop_is) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("total", total);
+        bind.put("pageid", pageid);
+        bind.put("ufop_is", ufop_is);
+        return selectUfopsByPaginator.executeByNamedParam(bind);
     }
 }

@@ -14,7 +14,7 @@
     <li><div>Перегляд</div>
         <ul>
             <li><div><a href="/viewslisti/1">Фізична особа підприємець</a></div></li>
-            <li><div><a href="/viewslistu">Юридична особа</a></div></li>
+            <li><div><a href="/viewsliste/1">Юридична особа</a></div></li>
             <li><div>Комерційні об'єкти</div></li>
         </ul>
     </li>

@@ -18,6 +18,7 @@ public class Ufop {
     private String b_place_of_reg;
     private Timestamp datereg;
     private int creator_link;
+    private String screator_link;
     private String description;
     private boolean additionalinformation;
 
@@ -131,5 +132,13 @@ public class Ufop {
 
     public void setAdditionalinformation(boolean additionalinformation) {
         this.additionalinformation = additionalinformation;
+    }
+
+    public String getScreator_link() {
+        return screator_link;
+    }
+
+    public void setScreator_link(String screator_link) {
+        this.screator_link = screator_link;
     }
 }

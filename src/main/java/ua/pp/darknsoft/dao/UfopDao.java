@@ -15,4 +15,6 @@ public interface UfopDao {
 
     @PreAuthorize(value = "isAuthenticated()")
     Ufop createUfop(Ufop ufop);
+
+    List<Ufop> getEntrepreneurByPaginator(int total, int pageid, short ufop_is);
 }

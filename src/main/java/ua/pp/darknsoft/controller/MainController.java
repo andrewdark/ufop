@@ -78,29 +78,45 @@ public class MainController {
         } else {
             pageid1 = (pageid1 - 1) * total + 1;
         }
-//        List<IndividualEntrepreneur> ufop = new LinkedList<IndividualEntrepreneur>();
-//        ufop = individualEntrepreneurDao.getEntrepreneur(total,pageid1);
-//
-//        uiModel.addAttribute("u_size",ufop.size());
-//
-//        uiModel.addAttribute("ufop",ufop);
-//        uiModel.addAttribute("page_id",pageid);
-//        uiModel.addAttribute("total_page","t");
-//        if(ufop.isEmpty()){ uiModel.addAttribute("ex","Нажаль, немає жодного запису"); }
-        return "viewslist_individual";
+        List<Ufop> ufop = new LinkedList<Ufop>();
+        ufop = ufopDao.getEntrepreneurByPaginator(total,pageid1, (short) 0);
+
+        uiModel.addAttribute("u_size",ufop.size());
+
+        uiModel.addAttribute("ufop",ufop);
+        uiModel.addAttribute("page_id",pageid);
+        uiModel.addAttribute("total_page","t");
+        uiModel.addAttribute("title_name","Власник");
+        if(ufop.isEmpty()){ uiModel.addAttribute("ex","Нажаль, немає жодного запису"); }
+        return "viewslist_ufop";
+    }
+    @RequestMapping(value = "/viewsliste/{pageid}", method = RequestMethod.GET)
+    public String viewsListe(@PathVariable int pageid, Model uiModel) {
+
+        if (pageid <= 0) {
+            uiModel.addAttribute("ex", "Не вірна сторінка");
+            return "message";
+        }
+        int total = 5;
+        int pageid1 = pageid;
+        if (pageid == 1) {
+            pageid1 = 0;
+        } else {
+            pageid1 = (pageid1 - 1) * total + 1;
+        }
+        List<Ufop> ufop = new LinkedList<Ufop>();
+        ufop = ufopDao.getEntrepreneurByPaginator(total,pageid1, (short) 1);
+
+        uiModel.addAttribute("u_size",ufop.size());
+
+        uiModel.addAttribute("ufop",ufop);
+        uiModel.addAttribute("page_id",pageid);
+        uiModel.addAttribute("total_page","t");
+        uiModel.addAttribute("title_name","Назва підприємства");
+        if(ufop.isEmpty()){ uiModel.addAttribute("ex","Нажаль, немає жодного запису"); }
+        return "viewslist_ufop";
     }
 
-    @RequestMapping(value = "/viewslistu", method = RequestMethod.GET)
-    public String viewsListu(Model uiModel) {
-        List<String> uop = new ArrayList<String>();
-        String link = "/legal_entity";
-        uop.add("one");
-        uop.add("two");
-        uop.add("three");
-        uiModel.addAttribute("uop", uop);
-        uiModel.addAttribute("viewmore", link);
-        return "viewslist_entity";
-    }
 
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------HEADER NAV MENU ----------------------------------------------------------

@@ -13,9 +13,9 @@
 <div id="tabs">
     <ul>
         <li><a href="#tabs-1">Суб'єкт господарювання</a></li>
-        <li><a href="#tabs-2">КВЕД</a></li>
-        <li><a href="#tabs-3">Комерційні об'єкти</a></li>
+        <li><a href="#tabs-2">Комерційні об'єкти</a></li>
         <li><a href="#tabs-4">Перевірки</a></li>
+        <li><a href="#tabs-4">КВЕД</a></li>
         <li><a href="#tabs-5">Контактна інформація</a></li>
     </ul>
 
@@ -26,10 +26,6 @@
         ${ufop.ufop_name}
     </div>
     <div id="tabs-2">
-        <p>Перелік КВЕД</p>
-
-    </div>
-    <div id="tabs-3">
 
         <table>
             <caption>Перелік комерційних об'єктів</caption>
@@ -70,8 +66,12 @@
             </tr>
         </table>
     </div>
-    <div id="tabs-4">
+    <div id="tabs-3">
         <p>Перелік планових та позапланових перевірок</p>
+
+    </div>
+    <div id="tabs-4">
+        <p>Перелік КВЕД</p>
 
     </div>
     <div id="tabs-5">

@@ -52,18 +52,7 @@
     <definition extends="default" name="addlocation">
         <put-attribute name="body" value="/WEB-INF/pages/body/catalog/addlocation.jsp"/>
     </definition>
-    <definition extends="default" name="commercialobject">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/commercialobject.jsp"/>
-    </definition>
-    <definition extends="default" name="contact">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/contact.jsp"/>
-    </definition>
-    <definition extends="default" name="individualentrepreneur">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/individualentrepreneur.jsp"/>
-    </definition>
-    <definition extends="default" name="kved">
-        <put-attribute name="body" value="/WEB-INF/pages/body/masterofie/kved.jsp"/>
-    </definition>
+
     <!-- MASTER OF REGISTRATION UFOP -->
     <definition extends="default" name="searchufop">
         <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/searchufop.jsp"/>
@@ -85,12 +74,10 @@
     </definition>
     <!-- END OF BLOCK -->
 
-    <definition extends="default" name="viewslist_individual">
-        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_individual.jsp"/>
+    <definition extends="default" name="viewslist_ufop">
+        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_ufop.jsp"/>
     </definition>
-    <definition extends="default" name="viewslist_entity">
-        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_entity.jsp"/>
-    </definition>
+
     <definition extends="default" name="adduser_to_strorgtlb">
         <put-attribute name="body" value="/WEB-INF/pages/body/admin/adduser_to_strorgtlb.jsp"/>
     </definition>

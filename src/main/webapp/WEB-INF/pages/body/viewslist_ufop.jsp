@@ -10,8 +10,9 @@
 
 <c:forEach var="ufop" items="${ufop}">
     <div class="article">
-        <h2><span>ІПН ${ufop.rntc}</span></h2>
-        <p class="infopost">Id: ${ufop.id} Date reg: <span class="date">${ufop.datereg}</span> by <a href="#">${ufop.owner}</a>
+        <h2><span>ІПН ${ufop.ufop_code}</span></h2>
+        <p class="infopost">Id: ${ufop.id} Date reg: <span class="date">${ufop.datereg}</span> by <a
+                href="#">${ufop.screator_link}</a>
             &nbsp;&nbsp;&bull;&nbsp;&nbsp;
             Filed under <a href="#">templates</a>, <a href="#">internet</a> &nbsp;&nbsp;&bull;&nbsp;&nbsp;
 
@@ -19,10 +20,11 @@
         <div class="img"><img src="/resources/images/ufop.png" width="148" height="154" alt="" class="fl"/>
         </div>
         <div class="post_content">
+
             <p>
-                Власник:   <b>${ufop.contact.first_name} ${ufop.contact.last_name}</b>
+                    ${title_name}: <b>${ufop.ufop_name} </b>
             </p>
-            <p class="spec"><a href="/show_entrepreneur/?id=${ufop.id}" class="rm">Див. деталі</a></p>
+            <p class="spec"><a href="/show_ufop/?id=${ufop.id}" class="rm">Див. деталі</a></p>
         </div>
         <div class="clr"></div>
     </div>
@@ -39,7 +41,8 @@
     ${ex}
     <p class="pages">
         <small>Page ${page_id} of NAN</small>
-        <a href="/viewslisti/${page_id-1}">&laquo;</a><a href="/viewslisti/${page_id-1}">${page_id-1}</a><span>${page_id}</span>
+        <a href="/viewslisti/${page_id-1}">&laquo;</a><a
+            href="/viewslisti/${page_id-1}">${page_id-1}</a><span>${page_id}</span>
     </p>
 </c:if>
 
