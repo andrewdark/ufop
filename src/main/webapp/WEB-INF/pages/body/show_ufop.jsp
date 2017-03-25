@@ -14,7 +14,7 @@
     <ul>
         <li><a href="#tabs-1">Суб'єкт господарювання</a></li>
         <li><a href="#tabs-2">Комерційні об'єкти</a></li>
-        <li><a href="#tabs-4">Перевірки</a></li>
+        <li><a href="#tabs-3">Перевірки</a></li>
         <li><a href="#tabs-4">КВЕД</a></li>
         <li><a href="#tabs-5">Контактна інформація</a></li>
     </ul>
@@ -25,6 +25,7 @@
         ${ufop.ufop_is}
         ${ufop.ufop_name}
     </div>
+
     <div id="tabs-2">
 
         <table>
@@ -33,10 +34,11 @@
                 <th>НАЗВА</th>
                 <th>ТИП</th>
                 <th>АДРЕСА</th>
-
+                <th>Основна група товарів</th>
+                <th></th>
 
             </tr>
-            <c:forEach items="${co}" var="co">
+            <c:forEach items="${co_list}" var="co">
                 <tr>
                     <td>${co.obj_name}</td>
                     <td>${co.obj_type}</td>
@@ -45,16 +47,26 @@
                             ${locationCatalog.name}
                         </c:forEach>
                     </td>
+                    <td>
+                        <c:forEach items="${co.goodsList}" var="goodsList">
+                            ${goodsList.name}
+                        </c:forEach>
+                    </td>
 
+                    <td> <sec:authorize access="isAuthenticated()">
+                        <a href="/">редагувати</a>
+                    </sec:authorize>
+                    </td>
                 </tr>
             </c:forEach>
             <tr>
                 <td></td>
                 <td></td>
-
+                <td></td>
                 <td>
+                    <br /><br />
                     <sec:authorize access="isAuthenticated()">
-                        <form:form action="/show_ufop_create_commobj" method="post" commandName="command_ufop">
+                        <form:form id="form1" action="/show_ufop_create_commobj" method="post" commandName="command_ufop">
                             <form:hidden path="id"/>
                             <form:hidden path="ufop_is"/>
                             <form:hidden path="ufop_name"/>
@@ -66,16 +78,50 @@
             </tr>
         </table>
     </div>
+
     <div id="tabs-3">
         <p>Перелік планових та позапланових перевірок</p>
+        <table>
+            <caption></caption>
+            <th>Дата</th>
+            <th>Тип</th>
+            <th>Результати</th>
+            <th>Стан</th>
+            <th></th>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><sec:authorize access="isAuthenticated()">
+                    <form:form id="form2" action="/" method="post">
 
+                        <input type="submit" value="Створити перевірку"/>
+                    </form:form>
+                </sec:authorize>
+                </td>
+                <td></td>
+            </tr>
+        </table>
     </div>
+
     <div id="tabs-4">
         <p>Перелік КВЕД</p>
-
+        <c:forEach items="${kveds}" var="kveds">
+            ${kveds.kved_catalog_label} -  ${kveds.kved_catalog_name}<br />
+        </c:forEach>
     </div>
+
     <div id="tabs-5">
         <p>Перелік контактних осіб</p>
-
+        <c:forEach items="${ci_list}" var="ci">
+            ${ci.last_name} ${ci.first_name} ${ci.patronymic_name} <br />
+        </c:forEach>
     </div>
 </div>

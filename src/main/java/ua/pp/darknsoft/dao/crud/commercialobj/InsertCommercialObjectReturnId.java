@@ -9,11 +9,11 @@ import java.sql.Types;
 /**
  * Created by Dark on 24.03.2017.
  */
-public class InsertCommercialObject extends SqlUpdate {
+public class InsertCommercialObjectReturnId extends SqlUpdate {
     private final static String SQL_INSERT_USER="INSERT INTO comm_object_table(ufop_link,obj_type,obj_name,a_place_of_reg,n_place_of_reg,f_place_of_reg,b_place_of_reg,creator_link,description) " +
             "VALUES (:ufop_link,:obj_type,:obj_name,:a_place_of_reg,:n_place_of_reg,:f_place_of_reg,:b_place_of_reg,(SELECT id FROM user_table WHERE LOWER (username) = LOWER (:creator_link)),:description)";
 
-    public InsertCommercialObject(DataSource dataSource){
+    public InsertCommercialObjectReturnId(DataSource dataSource){
         super(dataSource,SQL_INSERT_USER);
         super.declareParameter(new SqlParameter("ufop_link", Types.BIGINT));
         super.declareParameter(new SqlParameter("obj_type", Types.INTEGER));
@@ -24,7 +24,9 @@ public class InsertCommercialObject extends SqlUpdate {
         super.declareParameter(new SqlParameter("b_place_of_reg", Types.VARCHAR));
         super.declareParameter(new SqlParameter("creator_link", Types.VARCHAR));
         super.declareParameter(new SqlParameter("description", Types.VARCHAR));
-        compile();
+        super.setGeneratedKeysColumnNames(new String[] {"id"});
+        super.setReturnGeneratedKeys(true);
+
 
     }
 }

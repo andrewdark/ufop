@@ -7,6 +7,7 @@ public class GoodsOfCommObj {
     private long id;
     private long comm_obj_link;
     private int goods_catalog_link;
+    private String name;
 
     public long getId() {
         return id;
@@ -30,5 +31,13 @@ public class GoodsOfCommObj {
 
     public void setGoods_catalog_link(int goods_catalog_link) {
         this.goods_catalog_link = goods_catalog_link;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

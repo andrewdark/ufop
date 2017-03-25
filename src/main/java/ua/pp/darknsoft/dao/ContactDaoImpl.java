@@ -10,6 +10,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.contact.InsertContact;
 import ua.pp.darknsoft.dao.crud.contact.SelectContact;
+import ua.pp.darknsoft.dao.crud.contact.SelectContactByOrganizationLink;
 import ua.pp.darknsoft.dao.crud.contact.SelectContactByUserName;
 import ua.pp.darknsoft.entity.Contact;
 
@@ -32,6 +33,7 @@ public class ContactDaoImpl implements ContactDao, Serializable {
     SelectContact selectContact;
     SelectContactByUserName selectContactByUserName;
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    SelectContactByOrganizationLink contactByOrganizationLink;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -40,27 +42,36 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         //this.insertContact = new InsertContact(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         this.selectContactByUserName = new SelectContactByUserName(dataSource);
+        this.contactByOrganizationLink = new SelectContactByOrganizationLink(dataSource);
+    }
+
+    @Override
+    public List<Contact> getContactByOrganizationLink(long organization) {
+        Map<String, Long> bind = new HashMap<>(3);
+        bind.put("organization", organization);
+        return contactByOrganizationLink.executeByNamedParam(bind);
     }
 
     @Override
     public List<Contact> getContact(int total, int pageid) {
-        Map<String,Object> bind = new HashMap<>();
-        bind.put("total",total);
-        bind.put("pageid",pageid);
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("total", total);
+        bind.put("pageid", pageid);
 
         return selectContact.executeByNamedParam(bind);
     }
+
     @Override
     public Contact getContactByName(String username) {
-        Map<String,Object> bind = new HashMap<>();
-        bind.put("username",username);
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("username", username);
         Contact contact = selectContactByUserName.executeByNamedParam(bind).get(0);
         return contact;
     }
 
     @Override
     public long insert(Contact contact) {
-        if(contact.getBirthday().isEmpty())contact.setBirthday("0001-01-01");
+        if (contact.getBirthday().isEmpty()) contact.setBirthday("0001-01-01");
         String sql = "INSERT INTO contact_table (first_name,last_name,creator_link,patronymic_name,a_stay_address,n_stay_address,f_stay_address,b_stay_address," +
                 "series_of_passport,number_of_passport,tel,fax,email,birthday,organization,\"position\",description) " +
                 "VALUES (:first_name,:last_name,(SELECT id FROM user_table WHERE LOWER (username) = LOWER (:creator_link)),:patronymic_name,:a_stay_address,:n_stay_address,:f_stay_address,:b_stay_address," +
@@ -83,17 +94,14 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         bind.put("organization", contact.getOrganization());
         bind.put("position", contact.getPosition());
         bind.put("creator_link", contact.getCreator_link());
-        bind.put("description",contact.getDescription());
-        if(contact.getRntc().length()==10){
+        bind.put("description", contact.getDescription());
+        if (contact.getRntc().length() == 10) {
             bind.put("rntc", contact.getRntc());
             sql = "INSERT INTO contact_table (rntc,first_name,last_name,creator_link,patronymic_name,a_stay_address,n_stay_address,f_stay_address,b_stay_address," +
                     "series_of_passport,number_of_passport,tel,fax,email,birthday,organization,\"position\",description) " +
                     "VALUES (:rntc,:first_name,:last_name,(SELECT id FROM user_table WHERE LOWER (username) = LOWER (:creator_link)),:patronymic_name,:a_stay_address,:n_stay_address,:f_stay_address,:b_stay_address," +
                     ":series_of_passport,:number_of_passport,:tel,:fax,:email,:birthday::DATE,:organization,:position,:description)";
         }
-
-
-
 
 
         SqlParameterSource paramSource = new MapSqlParameterSource(bind);
@@ -104,12 +112,13 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         Map<String, Object> keys = keyHolder.getKeys();
         return (Long) keys.get("id");
     }
+
     @Override
-    public String getContactByRntc(String rntc){
+    public String getContactByRntc(String rntc) {
         String sql = "SELECT rntc FROM contact_table WHERE rntc=:rntc";
         Map<String, Object> bind = new HashMap<>();
-        bind.put("rntc",rntc);
+        bind.put("rntc", rntc);
 
-        return (String) namedParameterJdbcTemplate.queryForObject(sql,bind,String.class);
+        return (String) namedParameterJdbcTemplate.queryForObject(sql, bind, String.class);
     }
 }

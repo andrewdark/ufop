@@ -7,7 +7,9 @@
   Time: 10:16
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <div class="article">
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
@@ -32,10 +34,11 @@
                     </tr>
                     <tr>
                         <td>
+
                             <span id="ufop_name_1">ПІБ Фіз.Особи</span>
                             <span id="ufop_name_2" style="display: none;">Найменування Юр. особи</span>
                         </td>
-                        <td><form:input path="ufop_name" /></td>
+                        <td><form:input path="ufop_name"/></td>
                         <td><span class="error"><form:errors path="ufop_name"/></span></td>
                     </tr>
                     <tr>
@@ -46,20 +49,20 @@
 
                     <tr>
 
-                            <td><span id="ufop_pass_1">Серія та № паспорта</span>         </td>
-                            <td>
-                                <div id="passinfo">
+                        <td><span id="ufop_pass_1">Серія та № паспорта</span></td>
+                        <td>
+                            <div id="passinfo">
                                 <form:input path="series_of_passport" maxlength="2" size="2"/>
                                 <form:input path="number_of_passport" maxlength="10" size="6"/>
-                                </div>
+                            </div>
 
-                            </td>
-                            <td>
+                        </td>
+                        <td>
                                 <span class="error">
                                     <form:errors path="series_of_passport"/>
                                     <form:errors path="number_of_passport"/>
                                 </span>
-                            </td>
+                        </td>
 
                     </tr>
 
@@ -125,3 +128,13 @@
         <a href="javascript:LocPopUpHide()">Додати адресу</a>
     </div>
 </div>
+<c:if test="${ufop.ufop_is == 0}">
+    <script type="text/javascript">
+        pPass();
+    </script>
+</c:if>
+<c:if test="${ufop.ufop_is == 1}">
+    <script type="text/javascript">
+        uPass();
+    </script>
+</c:if>

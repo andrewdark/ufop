@@ -71,9 +71,9 @@ public class KvedDaoImpl implements KvedDao, Serializable {
         return downloc;
     }
 @Override
-    public List<KvedsUfop> getEntrepreneursKvedsByEntrepreneurLink(long e_link){
+    public List<KvedsUfop> getKvedsByUfopLink(long ufop_link){
         Map<String, Long> bind = new HashMap<>();
-        bind.put("entrepreneur_link",e_link);
+        bind.put("ufop_link",ufop_link);
         return selectEntrepreneursKvedsByEntrepreneurLink.executeByNamedParam(bind);
 
     }

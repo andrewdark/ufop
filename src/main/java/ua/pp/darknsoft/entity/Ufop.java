@@ -43,7 +43,7 @@ public class Ufop {
     }
 
     public void setUfop_name(String ufop_name) {
-        this.ufop_name = ufop_name;
+        this.ufop_name = rejectHtml(ufop_name);
     }
 
     public String getUfop_code() {
@@ -51,7 +51,7 @@ public class Ufop {
     }
 
     public void setUfop_code(String ufop_code) {
-        this.ufop_code = ufop_code;
+        this.ufop_code = rejectHtml(ufop_code);
     }
 
     public String getSeries_of_passport() {
@@ -67,7 +67,7 @@ public class Ufop {
     }
 
     public void setNumber_of_passport(String number_of_passport) {
-        this.number_of_passport = number_of_passport;
+        this.number_of_passport = rejectHtml(number_of_passport).toString();
     }
 
     public String getA_place_of_reg() {
@@ -75,7 +75,7 @@ public class Ufop {
     }
 
     public void setA_place_of_reg(String a_place_of_reg) {
-        this.a_place_of_reg = a_place_of_reg;
+        this.a_place_of_reg = rejectHtml(a_place_of_reg);
     }
 
     public String getN_place_of_reg() {
@@ -83,7 +83,7 @@ public class Ufop {
     }
 
     public void setN_place_of_reg(String n_place_of_reg) {
-        this.n_place_of_reg = n_place_of_reg;
+        this.n_place_of_reg = rejectHtml(n_place_of_reg);
     }
 
     public String getF_place_of_reg() {
@@ -91,7 +91,7 @@ public class Ufop {
     }
 
     public void setF_place_of_reg(String f_place_of_reg) {
-        this.f_place_of_reg = f_place_of_reg;
+        this.f_place_of_reg = rejectHtml(f_place_of_reg);
     }
 
     public String getB_place_of_reg() {
@@ -99,7 +99,7 @@ public class Ufop {
     }
 
     public void setB_place_of_reg(String b_place_of_reg) {
-        this.b_place_of_reg = b_place_of_reg;
+        this.b_place_of_reg = rejectHtml(b_place_of_reg);
     }
 
     public Timestamp getDatereg() {
@@ -123,7 +123,7 @@ public class Ufop {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = rejectHtml(description);
     }
 
     public boolean isAdditionalinformation() {
@@ -140,5 +140,18 @@ public class Ufop {
 
     public void setScreator_link(String screator_link) {
         this.screator_link = screator_link;
+    }
+
+    private String rejectHtml(String input) {
+        String output = "";
+        if (input == null) return "";
+        else {
+            input = input.replaceAll("<", "&lt;");
+            input = input.replaceAll(">", "&gt;");
+            input = input.replaceAll("\'", "&rsquo;");
+            output = input.replaceAll("\"", "&quot;");
+            return output;
+        }
+
     }
 }

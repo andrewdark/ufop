@@ -6,12 +6,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.pp.darknsoft.dao.*;
 import ua.pp.darknsoft.entity.CommercialObject;
 import ua.pp.darknsoft.entity.Contact;
+import ua.pp.darknsoft.entity.GoodsOfCommObj;
 import ua.pp.darknsoft.entity.Ufop;
+import ua.pp.darknsoft.validator.ContactValidator;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Andrew on 10.01.2017.
@@ -37,6 +41,8 @@ public class MainController {
     KvedDao kvedDao;
     @Autowired
     CommercialObjectDao commercialObjectDao;
+    @Autowired
+    ContactValidator contactValidator;
 
     @RequestMapping(value = "/")
     public String main() {
@@ -157,9 +163,7 @@ public class MainController {
             Ufop ufop = ufopDao.searchUfopById(Long.parseLong(id)).get(0);
             uiModel.addAttribute("ufop",ufop);
             uiModel.addAttribute("command_ufop", ufop);
-
-            List<CommercialObject> co = commercialObjectDao.getCommObjByUfop_link(ufop.getId());
-
+            List<CommercialObject> co_list = commercialObjectDao.getCommObjByUfop_link(ufop.getId());
 //
 //            if(ie.getA_place_of_reg().length()>0) {
 //                uiModel.addAttribute("fulladdress",catalogDao.getParentLocationByTreemark(ie.getA_place_of_reg()));
@@ -169,10 +173,10 @@ public class MainController {
 //            }
 //
 //
-//            uiModel.addAttribute("kveds",kvedDao.getEntrepreneursKvedsByEntrepreneurLink(Long.parseLong(id)));
-//            uiModel.addAttribute("ie",ie);
-           uiModel.addAttribute("co",co);
-//            uiModel.addAttribute("ci","contactInformation about:");
+            uiModel.addAttribute("kveds",kvedDao.getKvedsByUfopLink(Long.parseLong(id)));
+//           uiModel.addAttribute("ie",ie);
+           uiModel.addAttribute("co_list",co_list);
+           uiModel.addAttribute("ci_list",contactDao.getContactByOrganizationLink(Long.parseLong(id)));
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такого підприємця не знайдено");
             return "message";
@@ -221,9 +225,30 @@ public class MainController {
     //------------------------------------------LEFT MENU---------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
 
-    @RequestMapping(value = "/legal_entity")
-    public String legal_entity() {
-        return "legal_entity";
+    @RequestMapping(value = "/addcontact_1")
+    public String legal_entity(@ModelAttribute Contact contact, Model uiModel) {
+       uiModel.addAttribute("form_action_url","/addcontact_1post");
+        uiModel.addAttribute("nextstep",1);
+        BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
+        uiModel.addAttribute("command",contact);
+        uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
+        return "addcontact";
+    }
+    @RequestMapping(value = "/addcontact_1post",method = RequestMethod.POST)
+    public String addcontact_1post(@ModelAttribute Contact contact, Model uiModel, RedirectAttributes redirectAttributes,
+                                   HttpServletRequest httpServletRequest, BindingResult bindingResult) {
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+
+        contactValidator.validate(contact, bindingResult);
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("b1", bindingResult);
+            return rdrct + "/addcontact_1";
+        }
+        return "addcontact_1";
     }
 
     //------------------------------------------------------------------------------------------------------------------

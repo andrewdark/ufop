@@ -12,7 +12,7 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content">
-        <form:form action="${pageContext.servletContext.contextPath}/addcontactpost" method="post">
+        <form:form action="${pageContext.servletContext.contextPath}${form_action_url}" method="post">
 
             <table width="100%">
                 <tr>
@@ -49,8 +49,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><form:label path="a_stay_address" >Адреса реєстрації:</form:label></td>
-                    <td><form:input id="a_place_of_reg" htmlEscape="true" path="a_stay_address" class="form-control" maxlength="24" onclick="javascript:LocPopUpShow()"/></td>
+                    <td><form:label path="a_stay_address">Адреса реєстрації:</form:label></td>
+                    <td><form:input id="a_place_of_reg" htmlEscape="true" path="a_stay_address" class="form-control"
+                                    maxlength="24" onclick="javascript:LocPopUpShow()"/></td>
                     <td><span class="error"><form:errors path="a_stay_address"/></span></td>
                 </tr>
                 <tr>
@@ -75,7 +76,7 @@
                 </tr>
                 <tr>
                     <td><form:label path="fax">Факс:</form:label></td>
-                    <td><form:input htmlEscape="true" path="fax" class="form-control" /></td>
+                    <td><form:input htmlEscape="true" path="fax" class="form-control"/></td>
                     <td><span class="error"><form:errors path="fax"/></span></td>
                 </tr>
                 <tr>
@@ -96,7 +97,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><form:hidden path="organization" /></td>
+                    <td><form:hidden path="organization"/></td>
                     <td><span class="error"><form:errors path="organization"/></span></td>
                 </tr>
                 <tr>
@@ -130,30 +131,35 @@
                 <td>${ufop.ufop_code}</td>
             </tr>
         </table>
-        <form:form action="/addcontactpost_add_kved" method="post" commandName="command_ufop">
-            <form:hidden path="id"/>
-            <form:hidden path="ufop_is"/>
-            <form:hidden path="ufop_name"/>
-            <form:hidden path="ufop_code"/>
-            <input type="submit" value="перейти до КВЕДів" />
-        </form:form>
+        <c:if test="${nextstep==0}">
+            <form:form action="/addcontactpost_add_kved" method="post" commandName="command_ufop">
+                <form:hidden path="id"/>
+                <form:hidden path="ufop_is"/>
+                <form:hidden path="ufop_name"/>
+                <form:hidden path="ufop_code"/>
+                <input type="submit" value="перейти до КВЕДів"/>
+            </form:form>
+        </c:if>
         <a onclick="look('hide1'); return false;" href="#">Довідка</a>
         <div id="hide1" style="display: none;">
-            <li />Заповніть обов'язково поля Прізвище та Ім'я.<br />
-            <li />Серію паспорта заповнюємо латинськими буквами<br />
-            <li />Формат дати: РРРР-ММ-ДД
+            <li/>
+            Заповніть обов'язково поля Прізвище та Ім'я.<br/>
+            <li/>
+            Серію паспорта заповнюємо латинськими буквами<br/>
+            <li/>
+            Формат дати: РРРР-ММ-ДД
         </div>
     </div>
     <div class="clr"></div>
 </div>
 <div class="b-popup" id="popup1">
-    ${ex}<br />
+    ${ex}<br/>
     <div class="b-popup-content" id="setloc_popup">
         <select id="my_selecttop1" name="my_selecttop" onchange="looplocationdown(2)">
             <c:forEach items="${locationTop}" var="locationTop">
                 <option value="${locationTop.id}">${locationTop.name}</option>
             </c:forEach>
-        </select><br />
+        </select><br/>
         <div id="LocationType2"></div>
         <div id="LocationType3"></div>
         <div id="LocationType4"></div>

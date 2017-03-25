@@ -22,7 +22,7 @@
         <ul>
             <li><div><a href="/searchufop">Комерційні об'єкти</a></div></li>
             <li><div><a href="/addufop">Фіз\Юр особа підприємець</a></div></li>
-            <li><div><a href="/addcontact">Контакт</a></div></li>
+            <li><div><a href="/addcontact_1">Контакт</a></div></li>
         </ul>
     </li>
     <li class="ui-state-disabled"><div>Звернення громадян</div>

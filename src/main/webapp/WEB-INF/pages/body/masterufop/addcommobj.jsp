@@ -20,7 +20,6 @@
             <div id="co_message"></div>
             <div id="load_ufop_point"></div>
             <span class="error"><form:errors path="ufop_link"/> </span>
-            !!!${test1}
             <form:form method="post" action="/addcommobjpost">
                 <form:hidden path="ufop_link"/>
                 <table>
@@ -68,11 +67,14 @@
             <h3>Інформація про суб'єкт господарювання</h3><br/>
             <c:if test="${ufop.ufop_is==0}">
                 <c:set var="u_name" value="ПІБ фізичної особи"/>
+                <c:set var="u_ipn" value="ІПН фізичної особи"/>
             </c:if>
             <c:if test="${ufop.ufop_is==1}">
-                <c:set var="u_name" value="Найменування юридичної особи"/>
+                <c:set var="u_name" value="Назва юридичної особи"/>
+                <c:set var="u_ipn" value="ІПН юридичної особи"/>
             </c:if>
             <table>
+                <th></th>
                 <tr>
                     <td>ІД номер</td>
                     <td>${ufop.id}</td>
@@ -82,27 +84,11 @@
                     <td>${ufop.ufop_name}</td>
                 </tr>
                 <tr>
-                    <td>${u_name}</td>
+                    <td>${u_ipn}</td>
                     <td>${ufop.ufop_code}</td>
                 </tr>
             </table>
 
-            <hr/>
-            <table>
-                <th>Інформація про уповноважену особу суб'єкта господарювання</th>
-                <tr>
-                    <td>ІД номер</td>
-                    <td>${contact.id}</td>
-                </tr>
-                <tr>
-                    <td>ufop_link</td>
-                    <td>${contact.ufop_link}</td>
-                </tr>
-                <tr>
-                    <td>obj_name</td>
-                    <td>${contact.obj_name}</td>
-                </tr>
-            </table>
         </div>
         <div class="clr"></div>
     </div>

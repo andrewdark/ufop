@@ -14,16 +14,27 @@
     <div class="post_content_wide">
 
         <div id="goods_list">
-            ${goodsOfCommObj.id} -
-                ${goodsOfCommObj.comm_obj_link}
+            <c:if test="${not empty goods_list}">
+                <c:forEach items="${goods_list}" var="goods_list">
+                    <li/>
+                    ${goods_list.name} - ${goods_list.degree_of_a_risk_link}<br/>
+                </c:forEach>
+            </c:if>
         </div>
         <form:form action="/addgoodspost" method="post">
             <form:hidden path="comm_obj_link"/>
+
             <table>
                 <tr>
                     <td><form:label path="goods_catalog_link">Віберіть групу товарів</form:label></td>
-                    <td><form:input id="goodsname" path="goods_catalog_link" onclick="javascript:GoodsPopUpShow();"/></td>
-                    <td><form:errors path="goods_catalog_link"/></td>
+                    <td><form:input id="goodsname" path="goods_catalog_link"
+                                    onclick="javascript:GoodsPopUpShow();"/></td>
+                    <td>
+                        <span class="error">
+                            <form:errors path="goods_catalog_link"/>
+                            <form:errors path="comm_obj_link"/>
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td><input type="submit" value="Додати"/></td>
@@ -35,6 +46,22 @@
         <form action="/searchufop" method="get">
             <input type="submit" value="Завершити"/>
         </form>
+        <hr/>
+        <table>
+            <th>Інформація про комерційний об'єкт</th>
+            <tr>
+                <td>ІД номер</td>
+                <td>${co.id}</td>
+            </tr>
+            <tr>
+                <td>Назва</td>
+                <td>${co.obj_name}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
     </div>
     <div class="clr"></div>
 </div>

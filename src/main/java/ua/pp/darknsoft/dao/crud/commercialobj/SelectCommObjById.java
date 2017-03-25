@@ -4,7 +4,6 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
 import ua.pp.darknsoft.dao.crud.catalog.SelectParentLocationByTreemark;
 import ua.pp.darknsoft.entity.CommercialObject;
-import ua.pp.darknsoft.entity.GoodsOfCommObj;
 import ua.pp.darknsoft.entity.LocationCatalog;
 
 import javax.sql.DataSource;
@@ -18,16 +17,14 @@ import java.util.Map;
 /**
  * Created by Dark on 27.02.2017.
  */
-public class SelectCommObjByUfop_link extends MappingSqlQuery<CommercialObject>{
+public class SelectCommObjById extends MappingSqlQuery<CommercialObject>{
     private SelectParentLocationByTreemark selectParentLocationByTreemark;
-    private SelectCommObjGoodsByCommObj_link selectCommObjGoodsByCommObj_link;
-    private static final String SELECT_ENTREPRENEUR_COMM_OBJ = "SELECT coet.*, cott.name s_obj_type FROM comm_object_table coet INNER JOIN commercial_object_type_table cott ON(cott.id = coet.obj_type) WHERE coet.ufop_link = :ufop_link";
+    private static final String SELECT_UFOP_COMM_OBJ = "SELECT coet.*, cott.name s_obj_type FROM comm_object_table coet INNER JOIN commercial_object_type_table cott ON(cott.id = coet.obj_type) WHERE coet.id = :id";
 
-    public SelectCommObjByUfop_link(DataSource ds) {
-        super(ds, SELECT_ENTREPRENEUR_COMM_OBJ);
-        super.declareParameter(new SqlParameter("ufop_link", Types.BIGINT));
+    public SelectCommObjById(DataSource ds) {
+        super(ds, SELECT_UFOP_COMM_OBJ);
+        super.declareParameter(new SqlParameter("id", Types.BIGINT));
         this.selectParentLocationByTreemark = new SelectParentLocationByTreemark(ds);
-        this.selectCommObjGoodsByCommObj_link = new SelectCommObjGoodsByCommObj_link(ds);
     }
 
     @Override
@@ -42,7 +39,6 @@ public class SelectCommObjByUfop_link extends MappingSqlQuery<CommercialObject>{
         commObj.setF_place_of_reg(resultSet.getString("f_place_of_reg"));
         commObj.setB_place_of_reg(resultSet.getString("b_place_of_reg"));
         commObj.setLocationCatalog((List<LocationCatalog>) getLoc(resultSet.getString("a_place_of_reg")));
-        commObj.setGoodsList((List<GoodsOfCommObj>) getGoods(resultSet.getLong("id")));
         commObj.setDescription(resultSet.getString("description"));
         return commObj;
     }
@@ -51,10 +47,5 @@ public class SelectCommObjByUfop_link extends MappingSqlQuery<CommercialObject>{
         Map<String,String> bind = new HashMap<>(3);
         bind.put("treemark",treemark);
         return selectParentLocationByTreemark.executeByNamedParam(bind);
-    }
-    private List<GoodsOfCommObj> getGoods(Long id){
-        Map<String,Long> bind = new HashMap<>(3);
-        bind.put("comm_obj_link",id);
-        return selectCommObjGoodsByCommObj_link.executeByNamedParam(bind);
     }
 }

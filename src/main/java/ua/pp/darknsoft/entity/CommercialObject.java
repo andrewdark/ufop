@@ -21,6 +21,7 @@ public class CommercialObject {
     private String s_obj_type;
     private List<LocationCatalog> locationCatalog;
     private boolean additionalinformation;
+    private List<GoodsOfCommObj> goodsList;
 
     public long getId() {
         return id;
@@ -132,5 +133,13 @@ public class CommercialObject {
 
     public void setAdditionalinformation(boolean additionalinformation) {
         this.additionalinformation = additionalinformation;
+    }
+
+    public List<GoodsOfCommObj> getGoodsList() {
+        return goodsList;
+    }
+
+    public void setGoodsList(List<GoodsOfCommObj> goodsList) {
+        this.goodsList = goodsList;
     }
 }

@@ -15,5 +15,5 @@ public interface KvedDao {
 
     List<KvedCatalog> getKvedCatalogByTreemark(String treemark, int level);
 
-    List<KvedsUfop> getEntrepreneursKvedsByEntrepreneurLink(long e_link);
+    List<KvedsUfop> getKvedsByUfopLink(long ufop_link);
 }

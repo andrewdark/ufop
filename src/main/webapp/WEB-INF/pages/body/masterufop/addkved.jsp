@@ -30,13 +30,16 @@
                     </tr>
                 </table>
             </form:form>
-            <form:form action="/addcontactpost_add_commobj" method="post" commandName="command_ufop">
-                <form:hidden path="id"/>
-                <form:hidden path="ufop_is"/>
-                <form:hidden path="ufop_name"/>
-                <form:hidden path="ufop_code"/>
-                <input type="submit" value="перейти до ком. об'єктів" />
-            </form:form>
+
+            <c:if test="${nextstep==0}">
+                <form:form action="/addkved_add_commobj" method="post" commandName="command_ufop">
+                    <form:hidden path="id"/>
+                    <form:hidden path="ufop_is"/>
+                    <form:hidden path="ufop_name"/>
+                    <form:hidden path="ufop_code"/>
+                    <input type="submit" value="перейти до ком.об'єктів"/>
+                </form:form>
+            </c:if>
             <hr/>
             <h3>Інформація про суб'єкт господарювання</h3><br/>
             <c:if test="${ufop.ufop_is==0}">
