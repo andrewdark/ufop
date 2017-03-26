@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="frt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -9,7 +11,30 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<div id="navigation">
+    <sec:authorize access="isAuthenticated()">
+        <table width="100%">
+            <tr>
+                <form:form id="form1" action="/show_ufop_create_new" method="post" commandName="command_ufop">
+                    <td>
 
+                        <form:hidden path="id"/>
+                        <form:hidden path="ufop_is"/>
+                        <form:hidden path="ufop_name"/>
+                        <form:hidden path="ufop_code"/>
+                        <form:radiobutton path="nav" value="1"/> комерційний об'єкт
+                        <form:radiobutton path="nav" value="2"/> перевірку
+                        <form:radiobutton path="nav" value="3"/> КВЕДи
+                        <form:radiobutton path="nav" value="4"/> контакти
+                    </td>
+
+                    <td><input type="submit" value="Створити"/></td>
+                </form:form>
+            </tr>
+        </table>
+
+    </sec:authorize>
+</div>
 <div id="tabs">
     <ul>
         <li><a href="#tabs-1">Суб'єкт господарювання</a></li>
@@ -53,7 +78,7 @@
                         </c:forEach>
                     </td>
 
-                    <td> <sec:authorize access="isAuthenticated()">
+                    <td><sec:authorize access="isAuthenticated()">
                         <a href="/">редагувати</a>
                     </sec:authorize>
                     </td>
@@ -64,16 +89,8 @@
                 <td></td>
                 <td></td>
                 <td>
-                    <br /><br />
-                    <sec:authorize access="isAuthenticated()">
-                        <form:form id="form1" action="/show_ufop_create_commobj" method="post" commandName="command_ufop">
-                            <form:hidden path="id"/>
-                            <form:hidden path="ufop_is"/>
-                            <form:hidden path="ufop_name"/>
-                            <form:hidden path="ufop_code"/>
-                            <input type="submit" value="Додати комерційний об'єкт"/>
-                        </form:form>
-                    </sec:authorize>
+                    <br/><br/>
+
                 </td>
             </tr>
         </table>
@@ -81,47 +98,46 @@
 
     <div id="tabs-3">
         <p>Перелік планових та позапланових перевірок</p>
-        <table>
+        <table width="100%">
             <caption></caption>
+
             <th>Дата</th>
             <th>Тип</th>
             <th>Результати</th>
             <th>Стан</th>
             <th></th>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><sec:authorize access="isAuthenticated()">
-                    <form:form id="form2" action="/" method="post">
-
-                        <input type="submit" value="Створити перевірку"/>
-                    </form:form>
-                </sec:authorize>
-                </td>
-                <td></td>
-            </tr>
+            <c:forEach items="${checkEventList}" var="checkEventList">
+                <tr>
+                    <td>${checkEventList.event_date_begin}</td>
+                    <td>
+                        <c:if test="${checkEventList.check_type == 0}"><span
+                                style="color: green; ">Порушень не виявлено</span></c:if>
+                        <c:if test="${checkEventList.check_type == 1}"><span
+                                style="color: red; ">Порушення виявлені</span></c:if>
+                    </td>
+                    <td>
+                            ${checkEventList.event_result}
+                    </td>
+                    <td>
+                            ${checkEventList.current_state}
+                    </td>
+                    <td></td>
+                </tr>
+            </c:forEach>
         </table>
     </div>
 
     <div id="tabs-4">
         <p>Перелік КВЕД</p>
         <c:forEach items="${kveds}" var="kveds">
-            ${kveds.kved_catalog_label} -  ${kveds.kved_catalog_name}<br />
+            ${kveds.kved_catalog_label} -  ${kveds.kved_catalog_name}<br/>
         </c:forEach>
     </div>
 
     <div id="tabs-5">
         <p>Перелік контактних осіб</p>
         <c:forEach items="${ci_list}" var="ci">
-            ${ci.last_name} ${ci.first_name} ${ci.patronymic_name} <br />
+            ${ci.last_name} ${ci.first_name} ${ci.patronymic_name} <br/>
         </c:forEach>
     </div>
 </div>

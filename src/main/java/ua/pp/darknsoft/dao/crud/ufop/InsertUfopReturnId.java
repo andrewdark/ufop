@@ -2,9 +2,9 @@ package ua.pp.darknsoft.dao.crud.ufop;
 
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.SqlUpdate;
-
 import javax.sql.DataSource;
 import java.sql.Types;
+
 
 /**
  * Created by Andrew on 15.03.2017.
@@ -28,4 +28,5 @@ public class InsertUfopReturnId extends SqlUpdate {
         super.setGeneratedKeysColumnNames(new String[] {"id"});
         super.setReturnGeneratedKeys(true);
     }
+
 }

@@ -113,9 +113,11 @@
         <h3>Інформація про суб'єкт господарювання</h3><br/>
         <c:if test="${ufop.ufop_is==0}">
             <c:set var="u_name" value="ПІБ фізичної особи"/>
+            <c:set var="u_code" value="ІПН фізичної особи"/>
         </c:if>
         <c:if test="${ufop.ufop_is==1}">
-            <c:set var="u_name" value="Найменування юридичної особи"/>
+            <c:set var="u_name" value="Назва юридичної особи"/>
+            <c:set var="u_code" value="ІПН юридичної особи"/>
         </c:if>
         <table>
             <tr>
@@ -127,11 +129,11 @@
                 <td>${ufop.ufop_name}</td>
             </tr>
             <tr>
-                <td>${u_name}</td>
+                <td>${u_code}</td>
                 <td>${ufop.ufop_code}</td>
             </tr>
         </table>
-        <c:if test="${nextstep==0}">
+        <c:if test="${ufop.additionalinformation}">
             <form:form action="/addcontactpost_add_kved" method="post" commandName="command_ufop">
                 <form:hidden path="id"/>
                 <form:hidden path="ufop_is"/>
@@ -140,6 +142,13 @@
                 <input type="submit" value="перейти до КВЕДів"/>
             </form:form>
         </c:if>
+        <c:if test="${not ufop.additionalinformation}">
+            <form action="/show_ufop" method="get">
+                <input type="hidden" value="${ufop.id}"/>
+                <input type="submit" value="Завершити"/>
+            </form>
+        </c:if>
+
         <a onclick="look('hide1'); return false;" href="#">Довідка</a>
         <div id="hide1" style="display: none;">
             <li/>

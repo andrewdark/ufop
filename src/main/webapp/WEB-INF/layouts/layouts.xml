@@ -73,7 +73,11 @@
         <put-attribute name="body" value="/WEB-INF/pages/body/masterufop/addgoods.jsp"/>
     </definition>
     <!-- END OF BLOCK -->
-
+    <!-- MASTER OF REGISTRATION NEW EVENT -->
+    <definition extends="default" name="addevent">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterchecking/addevent.jsp"/>
+    </definition>
+    <!-- END OF BLOCK -->
     <definition extends="default" name="viewslist_ufop">
         <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_ufop.jsp"/>
     </definition>
@@ -92,5 +96,8 @@
     </definition>
     <definition extends="default" name="userinfo">
         <put-attribute name="body" value="/WEB-INF/pages/body/userinfo.jsp"/>
+    </definition>
+    <definition extends="default" name="show_event">
+        <put-attribute name="body" value="/WEB-INF/pages/body/show_event.jsp"/>
     </definition>
 </tiles-definitions>

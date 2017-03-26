@@ -1,6 +1,7 @@
 package ua.pp.darknsoft.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -10,10 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.pp.darknsoft.dao.*;
-import ua.pp.darknsoft.entity.CommercialObject;
-import ua.pp.darknsoft.entity.Contact;
-import ua.pp.darknsoft.entity.GoodsOfCommObj;
-import ua.pp.darknsoft.entity.Ufop;
+import ua.pp.darknsoft.entity.*;
 import ua.pp.darknsoft.validator.ContactValidator;
 
 
@@ -34,7 +32,8 @@ public class MainController {
     ContactDao contactDao;
     @Autowired
     CatalogDao catalogDao;
-
+    @Autowired
+    CheckEventDao checkEventDao;
     @Autowired
     UfopDao ufopDao;
     @Autowired
@@ -85,17 +84,20 @@ public class MainController {
             pageid1 = (pageid1 - 1) * total + 1;
         }
         List<Ufop> ufop = new LinkedList<Ufop>();
-        ufop = ufopDao.getEntrepreneurByPaginator(total,pageid1, (short) 0);
+        ufop = ufopDao.getEntrepreneurByPaginator(total, pageid1, (short) 0);
 
-        uiModel.addAttribute("u_size",ufop.size());
+        uiModel.addAttribute("u_size", ufop.size());
 
-        uiModel.addAttribute("ufop",ufop);
-        uiModel.addAttribute("page_id",pageid);
-        uiModel.addAttribute("total_page","t");
-        uiModel.addAttribute("title_name","Власник");
-        if(ufop.isEmpty()){ uiModel.addAttribute("ex","Нажаль, немає жодного запису"); }
+        uiModel.addAttribute("ufop", ufop);
+        uiModel.addAttribute("page_id", pageid);
+        uiModel.addAttribute("total_page", "t");
+        uiModel.addAttribute("title_name", "Власник");
+        if (ufop.isEmpty()) {
+            uiModel.addAttribute("ex", "Нажаль, немає жодного запису");
+        }
         return "viewslist_ufop";
     }
+
     @RequestMapping(value = "/viewsliste/{pageid}", method = RequestMethod.GET)
     public String viewsListe(@PathVariable int pageid, Model uiModel) {
 
@@ -111,15 +113,17 @@ public class MainController {
             pageid1 = (pageid1 - 1) * total + 1;
         }
         List<Ufop> ufop = new LinkedList<Ufop>();
-        ufop = ufopDao.getEntrepreneurByPaginator(total,pageid1, (short) 1);
+        ufop = ufopDao.getEntrepreneurByPaginator(total, pageid1, (short) 1);
 
-        uiModel.addAttribute("u_size",ufop.size());
+        uiModel.addAttribute("u_size", ufop.size());
 
-        uiModel.addAttribute("ufop",ufop);
-        uiModel.addAttribute("page_id",pageid);
-        uiModel.addAttribute("total_page","t");
-        uiModel.addAttribute("title_name","Назва підприємства");
-        if(ufop.isEmpty()){ uiModel.addAttribute("ex","Нажаль, немає жодного запису"); }
+        uiModel.addAttribute("ufop", ufop);
+        uiModel.addAttribute("page_id", pageid);
+        uiModel.addAttribute("total_page", "t");
+        uiModel.addAttribute("title_name", "Назва підприємства");
+        if (ufop.isEmpty()) {
+            uiModel.addAttribute("ex", "Нажаль, немає жодного запису");
+        }
         return "viewslist_ufop";
     }
 
@@ -161,11 +165,10 @@ public class MainController {
 
         try {
             Ufop ufop = ufopDao.searchUfopById(Long.parseLong(id)).get(0);
-            uiModel.addAttribute("ufop",ufop);
+
+            uiModel.addAttribute("ufop", ufop);
             uiModel.addAttribute("command_ufop", ufop);
-            List<CommercialObject> co_list = commercialObjectDao.getCommObjByUfop_link(ufop.getId());
-//
-//            if(ie.getA_place_of_reg().length()>0) {
+            //            if(ie.getA_place_of_reg().length()>0) {
 //                uiModel.addAttribute("fulladdress",catalogDao.getParentLocationByTreemark(ie.getA_place_of_reg()));
 //            }
 //            if(ie.getContact().getA_stay_address().length()>0) {
@@ -173,10 +176,13 @@ public class MainController {
 //            }
 //
 //
-            uiModel.addAttribute("kveds",kvedDao.getKvedsByUfopLink(Long.parseLong(id)));
+
 //           uiModel.addAttribute("ie",ie);
-           uiModel.addAttribute("co_list",co_list);
-           uiModel.addAttribute("ci_list",contactDao.getContactByOrganizationLink(Long.parseLong(id)));
+
+            uiModel.addAttribute("co_list", commercialObjectDao.getCommObjByUfop_link(ufop.getId()));
+            uiModel.addAttribute("kveds", kvedDao.getKvedsByUfopLink(Long.parseLong(id)));
+            uiModel.addAttribute("ci_list", contactDao.getContactByOrganizationLink(Long.parseLong(id)));
+            uiModel.addAttribute("checkEventList", checkEventDao.getCheckEventByUfopLink(ufop.getId()));
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такого підприємця не знайдено");
             return "message";
@@ -191,16 +197,31 @@ public class MainController {
 
         return "show_ufop";
     }
-    @RequestMapping(value = "/show_ufop_create_commobj")
+
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "/show_ufop_create_new")
     public String show_ufop_create_commobj(@ModelAttribute Ufop ufop, Model uiModel, HttpServletRequest httpServletRequest,
-                                           RedirectAttributes redirectAttributes){
+                                           RedirectAttributes redirectAttributes) {
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
         redirectAttributes.addFlashAttribute("ufop", ufop);
-        return rdrct + "/addcommobj";
+        ufop.setAdditionalinformation(false);
+        switch (ufop.getNav()) {
+            case 1:
+                return rdrct + "/addcommobj";
+            case 2:
+                return rdrct + "/addevent";
+            case 3:
+                return rdrct + "/addkved";
+            case 4:
+                return rdrct + "/addcontact";
+            default:
+                return rdrct + "/";
+        }
+
     }
 
     @RequestMapping(value = "/userinfo")
@@ -221,20 +242,23 @@ public class MainController {
 
         return "userinfo";
     }
+
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------LEFT MENU---------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
-
+    @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addcontact_1")
     public String legal_entity(@ModelAttribute Contact contact, Model uiModel) {
-       uiModel.addAttribute("form_action_url","/addcontact_1post");
-        uiModel.addAttribute("nextstep",1);
+        uiModel.addAttribute("form_action_url", "/addcontact_1post");
+        uiModel.addAttribute("nextstep", 1);
         BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
-        uiModel.addAttribute("command",contact);
+        uiModel.addAttribute("command", contact);
         uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
         return "addcontact";
     }
-    @RequestMapping(value = "/addcontact_1post",method = RequestMethod.POST)
+
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "/addcontact_1post", method = RequestMethod.POST)
     public String addcontact_1post(@ModelAttribute Contact contact, Model uiModel, RedirectAttributes redirectAttributes,
                                    HttpServletRequest httpServletRequest, BindingResult bindingResult) {
         String scheme = httpServletRequest.getScheme() + "://";

@@ -21,6 +21,7 @@ public class Ufop {
     private String screator_link;
     private String description;
     private boolean additionalinformation;
+    private int nav;
 
     public long getId() {
         return id;
@@ -141,6 +142,10 @@ public class Ufop {
     public void setScreator_link(String screator_link) {
         this.screator_link = screator_link;
     }
+
+    public int getNav() { return nav; }
+
+    public void setNav(int nav) { this.nav = nav; }
 
     private String rejectHtml(String input) {
         String output = "";

@@ -26,12 +26,16 @@ function looplocationtop() {
 
 $(function () {
     $("#datepicker").datepicker();
+    $("#event_datepicker_begin").datepicker();
+    $("#event_datepicker_end").datepicker();
     $.datepicker.setDefaults(
         $.extend(
             {'dateFormat': 'yy-mm-dd'},
             $.datepicker.regional['nl']
         )
     );
+
+
 });
 
 function look(type) {
