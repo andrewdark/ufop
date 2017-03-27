@@ -52,7 +52,6 @@ public class MasterController {
         uiModel.addAttribute("title", "Перевірка наявності суб'єкта господарювання");
 
         uiModel.addAttribute("command", ufop);
-        uiModel.addAttribute("nextButtonLink", "/addcommobj");
         return "searchufop";
     }
 
@@ -69,7 +68,7 @@ public class MasterController {
         try {
             ufop = ufopDao.searchUfopByCode(ufop.getUfop_code()).get(0);
             //redirectAttributes.addFlashAttribute("ufop", ufop);
-            return rdrct + "/show_ufop?id=" + ufop.getId();
+            return rdrct + "/show_ufop?id=" + ufop.getId()+"#tabs-2";
         } catch (IndexOutOfBoundsException ex) {
             redirectAttributes.addFlashAttribute("ufop", ufop);
             return rdrct + "/addufop";
@@ -592,8 +591,6 @@ public class MasterController {
     //------------------------------------------------------------------------------------------------------------------
     @RequestMapping(value = "/test")
     public String test(Model uiModel) {
-
-
         try {
 
         } catch (Exception ex) {

@@ -7,7 +7,23 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-size: ${test1}
-<c:forEach var="test" items="${test}">
-    id:${test.id} -- -- Name:${test.name}<br />
-</c:forEach>
+NOT SUPPORT YET
+<hr />
+<table>
+    <caption>Інформація про перевірку</caption>
+    <tr>
+        <td>ІД</td>
+        <td>${event.id}</td>
+    </tr>
+    <tr>
+        <td>Тип</td>
+        <td>
+            <c:if test="${event.check_type==0}">Планова</c:if>
+            <c:if test="${event.check_type==0}">Позапланова</c:if>
+        </td>
+    </tr>
+    <tr>
+        <td>Опис</td>
+        <td>${event.event_result}</td>
+    </tr>
+</table>

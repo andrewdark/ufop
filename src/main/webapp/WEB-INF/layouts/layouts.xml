@@ -77,6 +77,12 @@
     <definition extends="default" name="addevent">
         <put-attribute name="body" value="/WEB-INF/pages/body/masterchecking/addevent.jsp"/>
     </definition>
+    <definition extends="default" name="addarticles">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterchecking/addarticles.jsp"/>
+    </definition>
+    <definition extends="default" name="addcheckgoods">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterchecking/addcheckgoods.jsp"/>
+    </definition>
     <!-- END OF BLOCK -->
     <definition extends="default" name="viewslist_ufop">
         <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_ufop.jsp"/>

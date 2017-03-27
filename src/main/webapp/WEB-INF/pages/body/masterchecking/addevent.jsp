@@ -40,7 +40,7 @@
         <tr>
             <td><form:label path="event_result">Результати</form:label></td>
             <td><form:input path="event_result"/></td>
-            <td></td>
+            <td><span class="error"><form:errors path="event_result"/></span> </td>
         </tr>
         <tr>
             <td><form:label path="check_sampling">Забор матеріалу</form:label></td>
@@ -80,7 +80,7 @@
                     <form:hidden path="commobj_list[${status.index}].comm_obj_link"/><br/>
                 </c:forEach>
             </td>
-            <td></td>
+            <td><span class="error"><form:errors path="commobj_list" /></span></td>
         </tr>
         <tr>
             <td></td>

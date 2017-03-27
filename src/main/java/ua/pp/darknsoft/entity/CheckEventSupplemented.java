@@ -2,13 +2,41 @@ package ua.pp.darknsoft.entity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 /**
  * Created by Dark on 26.03.2017.
  */
 public class CheckEventSupplemented extends CheckEvent{
+    private List<CheckingCommObj> commobj_list;
+    private List<CheckingGroupOfGoods> groupofgoods_list;
+    private List<OffenseArticles> offensearticles_list;
     private String current_state;
+
+    public List<CheckingCommObj> getCommobj_list() {
+        return commobj_list;
+    }
+
+    public void setCommobj_list(List<CheckingCommObj> commobj_list) {
+        this.commobj_list = commobj_list;
+    }
+
+    public List<CheckingGroupOfGoods> getGroupofgoods_list() {
+        return groupofgoods_list;
+    }
+
+    public void setGroupofgoods_list(List<CheckingGroupOfGoods> groupofgoods_list) {
+        this.groupofgoods_list = groupofgoods_list;
+    }
+
+    public List<OffenseArticles> getOffensearticles_list() {
+        return offensearticles_list;
+    }
+
+    public void setOffensearticles_list(List<OffenseArticles> offensearticles_list) {
+        this.offensearticles_list = offensearticles_list;
+    }
 
     public String getCurrent_state() {
         try{

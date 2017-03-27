@@ -79,9 +79,10 @@
                     </td>
 
                     <td><sec:authorize access="isAuthenticated()">
-                        <a href="/">редагувати</a>
-                    </sec:authorize>
+                             <a href="/">редагувати</a>
+                         </sec:authorize>
                     </td>
+
                 </tr>
             </c:forEach>
             <tr>
@@ -121,7 +122,9 @@
                     <td>
                             ${checkEventList.current_state}
                     </td>
-                    <td></td>
+                    <td>
+                        <a href="/show_event?id=${checkEventList.id}">деталі</a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

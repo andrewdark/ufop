@@ -40,10 +40,10 @@
                         <td><span class="error"><form:errors path="a_place_of_reg"/></span></td>
                     </tr>
                     <tr>
-                        <td>Буд./Кв./Корпус</td>
+                        <td>Буд./Корпус/Кв.</td>
                         <td><form:input path="n_place_of_reg" size="2"/>
-                            <form:input path="f_place_of_reg" size="2"/>
                             <form:input path="b_place_of_reg" size="2"/>
+                            <form:input path="f_place_of_reg" size="2"/>
                         </td>
                         <td>
                             <span class="error"><form:errors path="n_place_of_reg"/></span>

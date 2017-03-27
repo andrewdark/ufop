@@ -213,7 +213,20 @@ public class MainController {
             case 1:
                 return rdrct + "/addcommobj";
             case 2:
-                return rdrct + "/addevent";
+                try {
+                    List<CommercialObject> commercialObjectList = commercialObjectDao.getCommObjByUfop_link(ufop.getId());
+                    if(commercialObjectList.isEmpty()) {
+                        String msg = "Неможливо створити перевірку, тому що у вибраного суб'єкта господарювання немає жодного об'єкта здійснення торгівлі" +
+                                "<br /> <a href = \"/show_ufop/?id="+ufop.getId()+"#tabs-2\">Повернутись до суб'єкта</a>";
+                        redirectAttributes.addFlashAttribute("ex",msg);
+                        return rdrct + "/message";
+                    } else
+                        return rdrct + "/addevent";
+                }catch (Exception ex){
+                    redirectAttributes.addFlashAttribute("ex", ex);
+                    return rdrct + "/message";
+                }
+
             case 3:
                 return rdrct + "/addkved";
             case 4:

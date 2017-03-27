@@ -8,6 +8,8 @@ public class CheckingGroupOfGoods {
     private long check_event_link;
     private long goods_catalog_link;
     private boolean checking;
+    private boolean additionalinformation;
+    private int nav;
 
     public long getId() {
         return id;
@@ -39,5 +41,17 @@ public class CheckingGroupOfGoods {
 
     public void setChecking(boolean checking) {
         this.checking = checking;
+    }
+
+    public int getNav() { return nav; }
+
+    public void setNav(int nav) { this.nav = nav; }
+
+    public boolean isAdditionalinformation() {
+        return additionalinformation;
+    }
+
+    public void setAdditionalinformation(boolean additionalinformation) {
+        this.additionalinformation = additionalinformation;
     }
 }

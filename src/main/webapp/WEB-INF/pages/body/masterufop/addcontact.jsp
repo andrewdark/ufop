@@ -144,7 +144,7 @@
         </c:if>
         <c:if test="${not ufop.additionalinformation}">
             <form action="/show_ufop" method="get">
-                <input type="hidden" value="${ufop.id}"/>
+                <input type="hidden" name="id" value="${ufop.id}"/>
                 <input type="submit" value="Завершити"/>
             </form>
         </c:if>

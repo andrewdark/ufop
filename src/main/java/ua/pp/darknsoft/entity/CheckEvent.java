@@ -20,9 +20,11 @@ public class CheckEvent {
     private String creator_link;
     private int structure_catalog_link;
     private Timestamp datereg;
-    private List<CheckingCommObj> commobj_list;
-    private List<CheckingGroupOfGoods> groupofgoods_list;
-    private List<OffenseArticles> offensearticles_list;
+    private int nav;
+
+    public int getNav() { return nav; }
+
+    public void setNav(int nav) { this.nav = nav; }
 
     public long getId() {
         return id;
@@ -45,7 +47,7 @@ public class CheckEvent {
     }
 
     public void setEvent_date_begin(String event_date_begin) {
-        if(event_date_begin.isEmpty()) this.event_date_begin = "0001-01-01";
+        if (event_date_begin.isEmpty()) this.event_date_begin = "0001-01-01";
         else this.event_date_begin = event_date_begin;
     }
 
@@ -54,7 +56,7 @@ public class CheckEvent {
     }
 
     public void setEvent_date_end(String event_date_end) {
-        if(event_date_end.isEmpty()) this.event_date_end = "0001-01-01";
+        if (event_date_end.isEmpty()) this.event_date_end = "0001-01-01";
         else this.event_date_end = event_date_end;
     }
 
@@ -121,27 +123,5 @@ public class CheckEvent {
     public void setDatereg(Timestamp datereg) {
         this.datereg = datereg;
     }
-    public List<CheckingCommObj> getCommobj_list() {
-        return commobj_list;
-    }
 
-    public void setCommobj_list(List<CheckingCommObj> commobj_list) {
-        this.commobj_list = commobj_list;
-    }
-
-    public List<CheckingGroupOfGoods> getGroupofgoods_list() {
-        return groupofgoods_list;
-    }
-
-    public void setGroupofgoods_list(List<CheckingGroupOfGoods> groupofgoods_list) {
-        this.groupofgoods_list = groupofgoods_list;
-    }
-
-    public List<OffenseArticles> getOffensearticles_list() {
-        return offensearticles_list;
-    }
-
-    public void setOffensearticles_list(List<OffenseArticles> offensearticles_list) {
-        this.offensearticles_list = offensearticles_list;
-    }
 }
