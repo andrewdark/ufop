@@ -10,6 +10,7 @@ import java.util.List;
 public class CheckEvent {
     private long id;
     private long ufop_link;
+    private String event_number;
     private String event_date_begin;
     private String event_date_end;
     private int check_type;
@@ -124,4 +125,11 @@ public class CheckEvent {
         this.datereg = datereg;
     }
 
+    public String getEvent_number() {
+        return event_number;
+    }
+
+    public void setEvent_number(String event_number) {
+        this.event_number = event_number;
+    }
 }

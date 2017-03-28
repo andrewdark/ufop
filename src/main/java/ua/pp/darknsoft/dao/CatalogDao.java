@@ -10,11 +10,15 @@ import java.util.List;
 public interface CatalogDao {
     List<LocationType> getLocationType();
 
+    List<ArticlesLawCatalog> getArticleTop();
+
     List<LocationCatalog> getLocationTop();
 
     List<BasicGroupOfGoodsCatalog> getGoodsTop();
 
     List<LocationCatalog> getLocationByTreemark(String treemark, int level);
+
+    List<ArticlesLawCatalog> getArticlesByTreemark(String treemark, int level);
 
     List<BasicGroupOfGoodsCatalog> getGoodsByTreemark(String treemark, int level);
 

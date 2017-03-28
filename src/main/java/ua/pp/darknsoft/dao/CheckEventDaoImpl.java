@@ -77,6 +77,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         Map<String, Object> bindGoods = new HashMap<>();
 
         bindEvent.put("ufop_link", checkEventSupplemented.getUfop_link());
+        bindEvent.put("event_number",checkEventSupplemented.getEvent_number());
         bindEvent.put("event_date_begin", checkEventSupplemented.getEvent_date_begin());
         bindEvent.put("event_date_end", checkEventSupplemented.getEvent_date_end());
         bindEvent.put("check_type", checkEventSupplemented.getCheck_type());

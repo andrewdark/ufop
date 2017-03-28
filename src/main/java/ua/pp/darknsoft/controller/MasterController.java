@@ -517,7 +517,7 @@ public class MasterController {
 
             for (int i = 0; i <= downkved.size() - 1; i++) {
 
-                option = option + "<option value=\"" + downkved.get(i).getTreemark() + "\">" + downkved.get(i).getDegree_of_a_risk_link() + "-" + downkved.get(i).getName() + "</option>";
+                option = option + "<option value=\"" + downkved.get(i).getId() + "\">" + downkved.get(i).getDegree_of_a_risk_link() + "-" + downkved.get(i).getName() + "</option>";
             }
 
         } catch (Exception ex) {
@@ -530,7 +530,31 @@ public class MasterController {
 
         return html;
     }
+    @ResponseBody
+    @RequestMapping(value = "/ajax_select_articles", produces = {"application/json; charset=UTF-8"})
+    public String ajax_select_articles(@RequestParam(defaultValue = "1") String treemark, @RequestParam(defaultValue = "2") String nlevel, Model uiModel) {
+        String html = "hello world";
+        String option = "<option disabled>Виберіть статтю закону</option><option value=\"\"></option>";
+        int level = 0;
+        List<ArticlesLawCatalog> downarticles = catalogDao.getArticlesByTreemark(treemark, Integer.parseInt(nlevel));
+        try {
+            level = Integer.parseInt(nlevel);
 
+            for (int i = 0; i <= downarticles.size() - 1; i++) {
+
+                option = option + "<option value=\"" + downarticles.get(i).getId() + "\">" + downarticles.get(i).getCaption()  + "</option>";
+            }
+
+        } catch (Exception ex) {
+            uiModel.addAttribute("ex", ex);
+
+            return "Error: " + ex;
+        }
+
+        html = "<select id=\"my_selecttop" + (level) + "\" onchange=\"looparticlesdown(" + (level + 1) + ")\">" + option + "</select>";
+
+        return html;
+    }
     @ResponseBody
     @RequestMapping(value = "/ajax_add_kved", produces = {"application/json; charset=UTF-8"})
     public String ajax_add_kved(@RequestParam String param1, @RequestParam String param2) {

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.catalog.*;
+import ua.pp.darknsoft.dao.crud.catalog.SelectArticlesLawCatalogTop;
 import ua.pp.darknsoft.entity.*;
 
 import javax.annotation.Resource;
@@ -12,8 +13,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static java.awt.SystemColor.text;
 
 /**
  * Created by Andrew on 16.01.2017.
@@ -30,6 +29,8 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
     private SelectStructureCatalogByMyStatus selectStructureCatalogByMyStatus;
     private SelectGoodsTop selectGoodsTop;
     private SelectGoodsByTreemark selectGoodsByTreemark;
+    private SelectArticlesLawCatalogTop selectArticlesLawCatalogTop;
+    private SelectArticlesByTreemark selectArticlesByTreemark;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource){
@@ -42,12 +43,18 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         this.selectStructureCatalogByMyStatus = new SelectStructureCatalogByMyStatus(dataSource);
         this.selectGoodsTop = new SelectGoodsTop(dataSource);
         this.selectGoodsByTreemark = new SelectGoodsByTreemark(dataSource);
+        this.selectArticlesLawCatalogTop = new SelectArticlesLawCatalogTop(dataSource);
+        this.selectArticlesByTreemark = new SelectArticlesByTreemark(dataSource);
     }
     @Override
     public List<LocationType> getLocationType(){
         return selectLocationType.execute();
     }
 
+    @Override
+    public List<ArticlesLawCatalog> getArticleTop(){
+        return selectArticlesLawCatalogTop.execute();
+    }
     @Override
     public List<LocationCatalog> getLocationTop(){
         return selectLocationTop.execute();
@@ -67,6 +74,15 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
             lc.setId(0); lc.setLtree("0.0"); lc.setName("No data");
             //downloc.add(lc);
         }
+        return downloc;
+    }
+    @Override
+    public List<ArticlesLawCatalog> getArticlesByTreemark(String treemark, int level){
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("treemark", treemark.toLowerCase());
+        paramMap.put("nlevel",level);
+        List<ArticlesLawCatalog> downloc = selectArticlesByTreemark.executeByNamedParam(paramMap);
+
         return downloc;
     }
     @Override

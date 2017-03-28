@@ -66,6 +66,7 @@ $(document).ready(function () {
     $("#popup2").hide();
     $("#popup3").hide();
     $("#popup4").hide();
+    $("#popup5").hide();
     $("#setContact_link_popup").hide();
     document.getElementById("contact_link").onkeypress = function (e) {
 
@@ -327,6 +328,79 @@ function loopgoodsdown(level) {
     if (level == 5) {
         var aj = "treemark=" + $("#my_selecttop4 option:selected").val() + "&nlevel=5";
         $("#GoodsType5").load("/ajax_select_goods", aj);
+    }
+};
+//----------------ARTICLES LAW ADD-----------------------//
+function ArticlesPopUpShow() {
+    $("#popup5").show();
+}
+//Функция скрытия PopUp
+var count_articles = 1;
+function ArticlesPopUpHide() {
+
+    if (count_articles == 1) $("#articles_law_link").val($("#my_selecttop1 option:selected").val());
+
+    if (count_articles == 2) {
+        if ($("#my_selecttop2 option:selected").val().length > 1) {
+            $("#articles").val($("#my_selecttop2 option:selected").val());
+        } else {
+            $("#articles").val($("#my_selecttop1 option:selected").val());
+        }
+    }
+    ;
+
+    if (count_articles == 3) {
+        if ($("#my_selecttop3 option:selected").val().length > 1) {
+            $("#articles").val($("#my_selecttop3 option:selected").val());
+        } else {
+            $("#articles").val($("#my_selecttop2 option:selected").val());
+        }
+    }
+    ;
+    if (count_articles == 4) {
+        if ($("#my_selecttop4 option:selected").val().length > 1) {
+            $("#articles").val($("#my_selecttop4 option:selected").val());
+        }
+        else {
+            $("#articles").val($("#my_selecttop3 option:selected").val());
+        }
+
+    }
+    ;
+    if (count_articles == 5) {
+        if ($("#my_selecttop5 option:selected").val().length > 1) {
+            $("#articles").val($("#my_selecttop5 option:selected").val());
+        }
+        else {
+            $("#articles").val($("#my_selecttop4 option:selected").val());
+        }
+
+    }
+    ;
+
+    $("#popup5").hide();
+}
+function looparticlesdown(level) {
+    count_articles = level;
+    if (level == 2) {
+        var aj = "treemark=" + $("#my_selecttop1 option:selected").val() + "&nlevel=2";
+        $("#ArticlesType2").load("/ajax_select_articles", aj);
+
+        $("#ArticlesType3").html("");
+        $("#ArticlesType4").html("");
+    }
+    if (level == 3) {
+        var aj = "treemark=" + $("#my_selecttop2 option:selected").val() + "&nlevel=3";
+        $("#ArticlesType3").load("/ajax_select_articles", aj);
+        $("#ArticlesType4").html("");
+    }
+    if (level == 4) {
+        var aj = "treemark=" + $("#my_selecttop3 option:selected").val() + "&nlevel=4";
+        $("#ArticlesType4").load("/ajax_select_articles", aj);
+    }
+    if (level == 5) {
+        var aj = "treemark=" + $("#my_selecttop4 option:selected").val() + "&nlevel=5";
+        $("#ArticlesType5").load("/ajax_select_articles", aj);
     }
 };
 // ------------------COMMERCIAL Obj Add------------------------- //

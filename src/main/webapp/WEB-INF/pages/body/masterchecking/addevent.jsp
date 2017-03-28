@@ -22,6 +22,11 @@
 <form:hidden path="ufop_link"/>
     <table>
         <tr>
+            <td><form:label path="event_number">Номер акту</form:label></td>
+            <td><form:input path="event_number"/></td>
+            <td><span class="error"><form:errors path="event_number"/></span> </td>
+        </tr>
+        <tr>
             <td><form:label path="check_type">Тип перевірки</form:label></td>
             <td>
                 <form:radiobutton path="check_type" value="0"/>Планова<br />
@@ -43,7 +48,7 @@
             <td><span class="error"><form:errors path="event_result"/></span> </td>
         </tr>
         <tr>
-            <td><form:label path="check_sampling">Забор матеріалу</form:label></td>
+            <td><form:label path="check_sampling">Відбір матеріалу</form:label></td>
             <td>
                 <form:radiobutton path="check_sampling" value="0"/>Не брали<br />
                 <form:radiobutton path="check_sampling" value="1"/>Брали

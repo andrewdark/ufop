@@ -18,7 +18,8 @@
             <table>
                 <tr>
                     <td><form:label path="articles_law_link">Виберіть статтю</form:label></td>
-                    <td><form:input path="articles_law_link" /></td>
+                    <td><form:input path="articles_law_link" id="articles"
+                                    onclick="javascript:ArticlesPopUpShow();"/></td>
                     <td><span class="error"><form:errors path="articles_law_link" /></span> </td>
                 </tr>
                 <tr>
@@ -49,4 +50,19 @@
         </table>
     </div>
     <div class="clr"></div>
+</div>
+<div class="b-popup" id="popup5">
+    ${ex}<br/>
+    <div class="b-popup-content" id="setarticles_popup">
+        <select id="my_selecttop1" name="my_selecttop" onchange="looparticlesdown(2)">
+            <c:forEach items="${articlesTop}" var="articlesTop">
+                <option value="${articlesTop.id}">${articlesTop.caption}</option>
+            </c:forEach>
+        </select><br/>
+        <div id="ArticlesType2"></div>
+        <div id="ArticlesType3"></div>
+        <div id="ArticlesType4"></div>
+        <div id="ArticlesType5"></div>
+        <a href="javascript:ArticlesPopUpHide()">Додати закон</a>
+    </div>
 </div>

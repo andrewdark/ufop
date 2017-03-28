@@ -26,6 +26,7 @@ public class SelectCheckEventById extends MappingSqlQuery<CheckEventSupplemented
         CheckEventSupplemented checkEvent = new CheckEventSupplemented();
         checkEvent.setId(resultSet.getLong("id"));
         checkEvent.setUfop_link(resultSet.getLong("ufop_link"));
+        checkEvent.setEvent_number(resultSet.getString("event_number"));
         checkEvent.setEvent_date_begin(resultSet.getString("event_date_begin"));
         checkEvent.setEvent_date_end(resultSet.getString("event_date_end"));
         checkEvent.setCheck_type(resultSet.getInt("check_type"));

@@ -172,7 +172,12 @@ public class EventController {
                                      HttpServletRequest httpServletRequest) {
         OffenseArticles offenseArticles = new OffenseArticles();
         CheckEventSupplemented checkEvent = (CheckEventSupplemented) uiModel.asMap().get("event");
-
+        try {
+            uiModel.addAttribute("articlesTop", catalogDao.getArticleTop());
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
         if (checkEvent == null) {
             redirectAttributes.addFlashAttribute("ex", "Виберіть перевірку");
             return myRdrct(httpServletRequest) + "/message";
