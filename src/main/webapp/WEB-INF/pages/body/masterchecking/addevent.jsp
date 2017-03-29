@@ -17,7 +17,6 @@
     </div>
     <div class="post_content_wide">
         <div id="co_message"></div>
-        <div id="load_ufop_point"></div>
 <form:form action="/addeventsupplementedpost" method="post">
 <form:hidden path="ufop_link"/>
     <table>

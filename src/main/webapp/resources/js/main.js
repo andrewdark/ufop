@@ -5,7 +5,8 @@ $(function () {
 });
 
 $(function () {
-    $("#tabs").tabs();
+    $("#ufoptabs").tabs();
+    $("#eventtabs").tabs();
 });
 //ajax is used here
 function looplocation() {
@@ -28,6 +29,9 @@ $(function () {
     $("#datepicker").datepicker();
     $("#event_datepicker_begin").datepicker();
     $("#event_datepicker_end").datepicker();
+    $("#service_date").datepicker();
+    $("#plan_date").datepicker();
+    $("#fact_date").datepicker();
     $.datepicker.setDefaults(
         $.extend(
             {'dateFormat': 'yy-mm-dd'},

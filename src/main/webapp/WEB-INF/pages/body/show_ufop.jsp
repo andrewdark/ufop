@@ -35,7 +35,7 @@
 
     </sec:authorize>
 </div>
-<div id="tabs">
+<div id="ufoptabs">
     <ul>
         <li><a href="#tabs-1">Суб'єкт господарювання</a></li>
         <li><a href="#tabs-2">Комерційні об'єкти</a></li>
@@ -79,8 +79,8 @@
                     </td>
 
                     <td><sec:authorize access="isAuthenticated()">
-                             <a href="/">редагувати</a>
-                         </sec:authorize>
+                        <a href="/">редагувати</a>
+                    </sec:authorize>
                     </td>
 
                 </tr>
@@ -112,15 +112,26 @@
                     <td>${checkEventList.event_date_begin}</td>
                     <td>
                         <c:if test="${checkEventList.check_type == 0}"><span
-                                style="color: green; ">Порушень не виявлено</span></c:if>
+                                style="color: black; ">Планова</span></c:if>
                         <c:if test="${checkEventList.check_type == 1}"><span
-                                style="color: red; ">Порушення виявлені</span></c:if>
+                                style="color: black; ">Позапланова</span></c:if>
                     </td>
                     <td>
-                            ${checkEventList.event_result}
+                        <c:if test="${checkEventList.check_violation == 0}">
+                            <span style="color: green; ">Порушень не виявлено</span>
+                        </c:if>
+                        <c:if test="${checkEventList.check_violation == 1}">
+                            <span style="color: red; ">Порушення виявлені</span>
+                        </c:if>
                     </td>
                     <td>
-                            ${checkEventList.current_state}
+                        <c:if test="${checkEventList.check_violation == 0}">
+                            <span style="color: black; "> N/A </span>
+                        </c:if>
+                        <c:if test="${checkEventList.check_violation == 1}">
+                            <span style="color: black; ">${checkEventList.current_state}</span>
+                        </c:if>
+
                     </td>
                     <td>
                         <a href="/show_event?id=${checkEventList.id}">деталі</a>
