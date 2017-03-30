@@ -11,51 +11,71 @@
 <div class="article">
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
-    <div class="img">
+    <div class="img"></div>
+
+
+    <div class="post_content_wide">
+        <c:if test="${empty checkEvent}"><span class="error"><p>Відсутнє посилання на перевірку</p></span><br/>
+            <p><span class="error"><form:errors path="check_event_link"/></span><br/><a
+                    href="/show_event?id=${event.id}">Повернутись
+                до перевірки</a></p>
+        </c:if>
         <c:if test="${checkEvent.check_violation==0}"><p>Порушеннь не виявлено</p>
-            <p>В ході даної перевірки порушень не знайдено<br /><a href="/show_event?id=${event.id}">Повернутись до перевірки</a></p>
+            <p>В ході даної перевірки порушень не знайдено<br/><a href="/show_event?id=${event.id}">Повернутись до
+                перевірки</a></p>
         </c:if>
         <c:if test="${checkEvent.check_violation==1}">
-            <form:form method="post" action="/addsanctionspost">
-                <table>
-                    <tr>
-                        <td></td>
-                        <td><form:hidden path="check_event_link"/></td>
-                        <td><span class="error"><form:errors path="check_event_link"/></span></td>
-                    </tr>
-                    <tr>
-                        <td><form:label path="charged_amount">Сума</form:label></td>
-                        <td><form:input path="charged_amount"/>грн.</td>
-                        <td><span class="error"><form:errors path="charged_amount"/></span> </td>
-                    </tr>
-                    <tr>
-                        <td><form:label path="service_date">Дата вручення постанови</form:label></td>
-                        <td><form:input path="service_date" id="service_date"/></td>
-                        <td><span class="error"><form:errors path="service_date"/></span> </td>
-                    </tr>
-                    <tr>
-                        <td><form:label path="plan_date">Планова дата</form:label></td>
-                        <td><form:input path="plan_date" id="plan_date"/></td>
-                        <td><span class="error"><form:errors path="plan_date"/></span> </td>
-                    </tr>
-                    <tr>
-                        <td><form:label path="fact_date">Фактична дата</form:label></td>
-                        <td><form:input path="fact_date" id="fact_date"/></td>
-                        <td><span class="error"><form:errors path="fact_date"/></span> </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><input type="submit" value="записати"></td>
-                        <td></td>
-                    </tr>
-                </table>
-
-            </form:form>
+            <c:if test="${empty command.punishmentArticlesList}">
+                <span class="error">немає жодної статті для накладання санкцій</span>
+            </c:if>
+            <c:if test="${not empty command.punishmentArticlesList}">
+                <c:forEach items="${command.punishmentArticlesList}" var="pa">
+                    <li/>
+                    ${pa.name}<br/>
+                </c:forEach>
+            </c:if>
+            <c:if test="${not empty testSanction}"></c:if>
+            <c:if test="${empty testSanction}">
+                <form:form method="post" action="/addsanctionspost">
+                    <table>
+                        <tr>
+                            <td></td>
+                            <td><form:hidden path="check_event_link"/></td>
+                            <td><span class="error"><form:errors path="check_event_link"/></span></td>
+                        </tr>
+                        <tr>
+                            <td><form:label path="charged_amount">Сума</form:label></td>
+                            <td><form:input path="charged_amount"/> грн.</td>
+                            <td><span class="error"><form:errors path="charged_amount"/></span></td>
+                        </tr>
+                        <tr>
+                            <td><form:label path="service_date">Дата вручення постанови</form:label></td>
+                            <td><form:input path="service_date" id="service_date"/></td>
+                            <td><span class="error"><form:errors path="service_date"/></span></td>
+                        </tr>
+                        <tr>
+                            <td><form:label path="plan_date">Планова дата</form:label></td>
+                            <td><form:input path="plan_date" id="plan_date"/></td>
+                            <td><span class="error"><form:errors path="plan_date"/></span></td>
+                        </tr>
+                        <tr>
+                            <td><form:label path="fact_date">Фактична дата</form:label></td>
+                            <td><form:input path="fact_date" id="fact_date"/></td>
+                            <td><span class="error"><form:errors path="fact_date"/></span></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" value="записати"></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </form:form>
+            </c:if>
         </c:if>
-
-
-    </div>
-    <div class="post_content_wide">
+        <form method="get" action="/show_event/">
+            <input type="hidden" name="id" value="${checkEvent.id}"/>
+            <input type="submit" value="Завершити"/>
+        </form>
         <div id="co_message"></div>
 
         <hr/>

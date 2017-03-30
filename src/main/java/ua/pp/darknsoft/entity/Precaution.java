@@ -40,7 +40,8 @@ public class Precaution {
     }
 
     public void setService_date(String service_date) {
-        this.service_date = service_date;
+        if(service_date.isEmpty())this.service_date = "0001-01-01";
+        else this.service_date = service_date;
     }
 
     public String getPlan_date() {
@@ -48,7 +49,8 @@ public class Precaution {
     }
 
     public void setPlan_date(String plan_date) {
-        this.plan_date = plan_date;
+        if(plan_date.isEmpty()) this.plan_date = "0001-01-01";
+        else this.plan_date = plan_date;
     }
 
     public String getFact_date() {
@@ -56,6 +58,7 @@ public class Precaution {
     }
 
     public void setFact_date(String fact_date) {
-        this.fact_date = fact_date;
+        if(fact_date.isEmpty()) this.fact_date = "0001-01-01";
+        else this.fact_date = fact_date;
     }
 }

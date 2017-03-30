@@ -7,6 +7,9 @@ public class PunishmentArticles {
     private long id;
     private long check_event_link;
     private int articles_law_link;
+    private boolean additionalinformation;
+    private String name;
+    private int nav;
 
     public long getId() {
         return id;
@@ -30,5 +33,29 @@ public class PunishmentArticles {
 
     public void setArticles_law_link(int articles_law_link) {
         this.articles_law_link = articles_law_link;
+    }
+
+    public boolean isAdditionalinformation() {
+        return additionalinformation;
+    }
+
+    public void setAdditionalinformation(boolean additionalinformation) {
+        this.additionalinformation = additionalinformation;
+    }
+
+    public int getNav() {
+        return nav;
+    }
+
+    public void setNav(int nav) {
+        this.nav = nav;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

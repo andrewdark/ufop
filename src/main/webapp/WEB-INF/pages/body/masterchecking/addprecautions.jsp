@@ -12,11 +12,20 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="img">
+
+
+
+    </div>
+    <div class="post_content_wide">
         <c:if test="${checkEvent.check_violation==0}"><p>Порушеннь не виявлено</p>
             <p>В ході даної перевірки порушень не знайдено<br /><a href="/show_event?id=${event.id}">Повернутись до перевірки</a></p>
         </c:if>
+        <c:if test="${empty checkEvent}"><p>Відсутнє посилання на перевірку</p><br />
+            <p><span class="error"><form:errors path="check_event_link"/></span><br /><a href="/show_event?id=${event.id}">Повернутись до перевірки</a></p>
+        </c:if>
+
         <c:if test="${checkEvent.check_violation==1}">
-            <form:form method="post" action="/addsanctionspost">
+            <form:form method="post" action="/addprecautionspost">
                 <table>
                     <tr>
                         <td></td>
@@ -24,22 +33,22 @@
                         <td><span class="error"><form:errors path="check_event_link"/></span></td>
                     </tr>
                     <tr>
-                        <td><form:label path="precaution_catalog_link">Стаття</form:label></td>
-                        <td><form:input path="precaution_catalog_link" /></td>
+                        <td><form:label path="precaution_catalog_link">Вкажіть захід</form:label></td>
+                        <td><form:select path="precaution_catalog_link" items="${precautioncatalog}" /></td>
                         <td><span class="error"><form:errors path="precaution_catalog_link"/></span> </td>
                     </tr>
                     <tr>
-                        <td><form:label path="service_date">Початкова дата</form:label></td>
+                        <td><form:label path="service_date">Дата прийняття заходу</form:label></td>
                         <td><form:input path="service_date" id="service_date"/></td>
                         <td><span class="error"><form:errors path="service_date"/></span> </td>
                     </tr>
                     <tr>
-                        <td><form:label path="plan_date">Планова дата</form:label></td>
+                        <td><form:label path="plan_date">Планова дата виконання</form:label></td>
                         <td><form:input path="plan_date" id="plan_date"/></td>
                         <td><span class="error"><form:errors path="plan_date"/></span> </td>
                     </tr>
                     <tr>
-                        <td><form:label path="fact_date">Фактична дата</form:label></td>
+                        <td><form:label path="fact_date">Фактична дата виконання</form:label></td>
                         <td><form:input path="fact_date" id="fact_date"/></td>
                         <td><span class="error"><form:errors path="fact_date"/></span> </td>
                     </tr>
@@ -51,11 +60,12 @@
                 </table>
 
             </form:form>
+
         </c:if>
-
-
-    </div>
-    <div class="post_content_wide">
+        <form method="get" action="/show_event/">
+            <input type="hidden" name="id" value="${checkEvent.id}" />
+            <input type="submit" value="Завершити" />
+        </form>
         <div id="co_message"></div>
 
         <hr/>

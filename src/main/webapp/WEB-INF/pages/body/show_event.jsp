@@ -58,7 +58,7 @@
         <li><a href="#tabs-1">Перевірка</a></li>
         <li><a href="#tabs-2">Санкції</a></li>
         <li><a href="#tabs-3">Контролі</a></li>
-        <li><a href="#tabs-4">TAB_4</a></li>
+        <li><a href="#tabs-4">Судові рішення</a></li>
         <li><a href="#tabs-5">TAB_5</a></li>
     </ul>
     <div id="tabs-1">

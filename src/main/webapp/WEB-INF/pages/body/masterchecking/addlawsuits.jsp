@@ -12,7 +12,13 @@
 <div class="article">
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
-    <div class="img">
+    <div class="img"></div>
+
+
+    <div class="post_content_wide">
+        <c:if test="${empty checkEvent}"><span class="error"><p>Відсутнє посилання на перевірку</p></span><br />
+            <p><span class="error"><form:errors path="check_event_link"/></span><br /><a href="/show_event?id=${event.id}">Повернутись до перевірки</a></p>
+        </c:if>
         <c:if test="${checkEvent.check_violation==0}"><p>Порушеннь не виявлено</p>
             <p>В ході даної перевірки порушень не знайдено<br /><a href="/show_event?id=${event.id}">Повернутись до перевірки</a></p>
         </c:if>
@@ -44,10 +50,6 @@
                 <input type="submit" value="Завершити" />
             </form>
         </c:if>
-
-
-    </div>
-    <div class="post_content_wide">
         <div id="co_message"></div>
 
         <hr/>

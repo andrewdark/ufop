@@ -8,6 +8,8 @@ import java.util.List;
  * Created by Andrew on 16.01.2017.
  */
 public interface CatalogDao {
+    List<PrecautionCatalog> getPrecautionCatalog();
+
     List<LocationType> getLocationType();
 
     List<ArticlesLawCatalog> getArticleTop();

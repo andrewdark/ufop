@@ -92,6 +92,9 @@
     <definition extends="default" name="addlawsuits">
         <put-attribute name="body" value="/WEB-INF/pages/body/masterchecking/addlawsuits.jsp"/>
     </definition>
+    <definition extends="default" name="addpunishmentarticles">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterchecking/addpunismentarticles.jsp"/>
+    </definition>
 
     <!-- END OF BLOCK -->
     <definition extends="default" name="viewslist_ufop">
