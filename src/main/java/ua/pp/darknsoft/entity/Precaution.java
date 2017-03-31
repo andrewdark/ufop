@@ -7,6 +7,7 @@ public class Precaution {
     private long id;
     private long check_event_link;
     private int precaution_catalog_link;
+    private String precaution_name;
     private String service_date;
     private String plan_date;
     private String fact_date;
@@ -60,5 +61,13 @@ public class Precaution {
     public void setFact_date(String fact_date) {
         if(fact_date.isEmpty()) this.fact_date = "0001-01-01";
         else this.fact_date = fact_date;
+    }
+
+    public String getPrecaution_name() {
+        return precaution_name;
+    }
+
+    public void setPrecaution_name(String precaution_name) {
+        this.precaution_name = precaution_name;
     }
 }

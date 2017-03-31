@@ -30,6 +30,7 @@ public class PrecautionValidator implements Validator {
         }catch (Exception ex){
 
         }
+        if(precaution.getCheck_event_link()==0)errors.rejectValue("check_event_link", "check_event_link.lenght", "Відсутня вказівка на перевірку");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "check_event_link", "check_event_link.empty", "Відсутня вказівка на перевірку");
     }
 }

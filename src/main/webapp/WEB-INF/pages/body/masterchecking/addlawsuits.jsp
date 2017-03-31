@@ -16,14 +16,16 @@
 
 
     <div class="post_content_wide">
-        <c:if test="${empty checkEvent}"><span class="error"><p>Відсутнє посилання на перевірку</p></span><br />
-            <p><span class="error"><form:errors path="check_event_link"/></span><br /><a href="/show_event?id=${event.id}">Повернутись до перевірки</a></p>
+        <c:if test="${empty checkEvent}"><span class="error"><p>Відсутнє посилання на перевірку</p></span><br/>
+            <p><span class="error"><form:errors path="check_event_link"/></span><br/><a
+                    href="/show_event?id=${event.id}">Повернутись до перевірки</a></p>
         </c:if>
         <c:if test="${checkEvent.check_violation==0}"><p>Порушеннь не виявлено</p>
-            <p>В ході даної перевірки порушень не знайдено<br /><a href="/show_event?id=${event.id}">Повернутись до перевірки</a></p>
+            <p>В ході даної перевірки порушень не знайдено<br/><a href="/show_event?id=${event.id}">Повернутись до
+                перевірки</a></p>
         </c:if>
         <c:if test="${checkEvent.check_violation==1}">
-            <form:form method="post" action="/addsanctionspost">
+            <form:form method="post" action="/addlawsuitspost">
                 <table>
                     <tr>
                         <td></td>
@@ -31,12 +33,27 @@
                         <td><span class="error"><form:errors path="check_event_link"/></span></td>
                     </tr>
                     <tr>
-                        <td><form:label path="">Вкажіть</form:label></td>
+                        <td><form:label path="filed_on_action">Позов до суду </form:label></td>
                         <td>
-                            <form:radiobutton path="filed_on_action" value="0" />Не подано позову до суду
-                            <form:radiobutton path="filed_on_action" value="1" />Подано позов до суду
+                            <form:radiobutton path="filed_on_action" value="0"/>Не подано позову<br/>
+                            <form:radiobutton path="filed_on_action" value="1"/>Подано позов
                         </td>
-                        <td><span class="error"></span> </td>
+                        <td><span class="error"></span></td>
+                    </tr>
+                    <tr>
+                        <td><form:label path="filed_date">Дата позову</form:label></td>
+                        <td><form:input path="filed_date"/></td>
+                        <td><span class="error"><form:errors path="filed_date"/></span></td>
+                    </tr>
+                    <tr>
+                        <td><form:label path="result_link">Результат позову</form:label></td>
+                        <td><form:select path="result_link" items="${select}"/></td>
+                        <td><span class="error"><form:errors path="result_link"/></span></td>
+                    </tr>
+                    <tr>
+                        <td><form:label path="description">Додаткова інформація</form:label></td>
+                        <td><form:textarea path="description" rows="10"/></td>
+                        <td><span class="error"><form:errors path="description"/></span></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -46,8 +63,8 @@
                 </table>
             </form:form>
             <form method="get" action="/show_event/">
-                <input type="hidden" name="id" value="${checkEvent.id}" />
-                <input type="submit" value="Завершити" />
+                <input type="hidden" name="id" value="${checkEvent.id}"/>
+                <input type="submit" value="Завершити"/>
             </form>
         </c:if>
         <div id="co_message"></div>

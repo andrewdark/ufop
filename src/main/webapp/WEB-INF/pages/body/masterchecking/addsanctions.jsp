@@ -34,7 +34,42 @@
                     ${pa.name}<br/>
                 </c:forEach>
             </c:if>
-            <c:if test="${not empty testSanction}"></c:if>
+            <c:if test="${not empty testSanction}">
+                <c:forEach items="${testSanction}" var="testSanction">
+                    <table width="100%">
+                        <caption>Накладена санкція</caption>
+                        <tr>
+                            <td>Сума</td>
+                            <td>${testSanction.charged_amount} грн.</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Дата вручення постанови</td>
+                            <td>
+                                <c:if test="${testSanction.service_date eq '0001-01-01'}">N/A</c:if>
+                                <c:if test="${testSanction.service_date ne '0001-01-01'}">${testSanction.service_date}</c:if>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Планова дата</td>
+                            <td>
+                                <c:if test="${testSanction.plan_date eq '0001-01-01'}">N/A</c:if>
+                                <c:if test="${testSanction.plan_date ne '0001-01-01'}">${testSanction.plan_date}</c:if>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Фактична дата</td>
+                            <td>
+                                <c:if test="${testSanction.fact_date eq '0001-01-01'}">N/A</c:if>
+                                <c:if test="${testSanction.fact_date ne '0001-01-01'}">${testSanction.fact_date}</c:if>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </c:forEach>
+            </c:if>
             <c:if test="${empty testSanction}">
                 <form:form method="post" action="/addsanctionspost">
                     <table>

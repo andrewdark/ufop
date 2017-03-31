@@ -19,6 +19,7 @@ public class LawSuitsValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Lawsuits lawsuits = (Lawsuits) o;
+        if(lawsuits.getCheck_event_link()==0)errors.rejectValue("check_event_link", "check_event_link.lenght", "Відсутня вказівка на перевірку");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "check_event_link", "check_event_link.empty", "Відсутня вказівка на перевірку");
     }
 }

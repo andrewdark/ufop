@@ -11,7 +11,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div id="navigation">
+<div id="navigation" class="navblock">
     <sec:authorize access="isAuthenticated()">
         <table width="100%">
             <tr>

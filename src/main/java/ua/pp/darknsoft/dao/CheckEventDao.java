@@ -10,6 +10,8 @@ import java.util.List;
 public interface CheckEventDao {
     List<Sanction> getSanctionEventByCheckEventLink(long check_event_link);
 
+    List<Lawsuits> getLawsuitsByCheckEventLink(long check_event_link);
+
     List<CheckEventSupplemented> getCheckEventByUfopLink(long ufop_link);
 
     List<CheckEventSupplemented> getCheckEventById(long checkEvent_link);
@@ -17,6 +19,8 @@ public interface CheckEventDao {
     List<Precaution> getPrecautionByCheckEventLink(long check_event_link);
 
     List<PunishmentArticles> getPunishmentArticlesByCheckEventLink(long check_event_link);
+
+    List<OffenseArticles> getOffenseArticlesByCheckEventLink(long check_event_link);
 
     void createCheckingGroupOfGoods(CheckingGroupOfGoods checkingGroupOfGoods);
 
@@ -27,6 +31,8 @@ public interface CheckEventDao {
     void createSanction(Sanction sanction);
 
     void createOffenseArticles(OffenseArticles offenseArticles);
+
+    void createLawsuits(Lawsuits lawsuits);
 
     CheckEventSupplemented createEventSupplemented(CheckEventSupplemented checkEventSupplemented);
 }

@@ -561,3 +561,4 @@ a.disabled {
 .stamp_red p { border: 1px solid red;  padding: 5px; }
 .stamp_green p { border: 1px solid green;  padding: 5px; }
 .whiteblock {padding: 5px; padding-left: 35px; background:white;}
+.navblock {padding: 5px; padding-left: 35px; background:white; border: outset;}

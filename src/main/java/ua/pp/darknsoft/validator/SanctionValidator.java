@@ -27,7 +27,7 @@ public class SanctionValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Sanction sanction = (Sanction) o;
         try{
-            List<Sanction> list = checkEventDao.getSanctionEventByUfopLink(sanction.getCheck_event_link());
+            List<Sanction> list = checkEventDao.getSanctionEventByCheckEventLink(sanction.getCheck_event_link());
             if(!list.isEmpty()){errors.rejectValue("check_event_link", "check_event_link.empty", "Санкція вже накладена");
 
 
@@ -35,6 +35,7 @@ public class SanctionValidator implements Validator {
         }catch (org.springframework.jdbc.BadSqlGrammarException ex){
             errors.rejectValue("check_event_link", "check_event_link.empty", "SQL error:" + ex);
         }
+        if(sanction.getCheck_event_link()==0)errors.rejectValue("check_event_link", "check_event_link.lenght", "Відсутня вказівка на перевірку");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "check_event_link", "check_event_link.empty", "Відсутня вказівка на перевірку");
     }
 }

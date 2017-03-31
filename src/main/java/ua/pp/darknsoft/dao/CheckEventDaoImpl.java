@@ -35,6 +35,9 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private SelectPunishmentArticlesByCheckEventLink selectPunishmentArticlesByCheckEventLink;
     private SelectSanctionByCheckEventLink selectSanctionByCheckEventLink;
     private InsertSanction insertSanction;
+    private InsertLawsuits insertLawsuits;
+    private SelectLawsuitsByCheck_event_link selectLawsuitsByCheck_event_link;
+    private SelectOffenseArticlesByCheck_event_link selectOffenseArticlesByCheck_event_link;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -52,7 +55,11 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.selectPunishmentArticlesByCheckEventLink = new SelectPunishmentArticlesByCheckEventLink(dataSource);
         this.selectSanctionByCheckEventLink = new SelectSanctionByCheckEventLink(dataSource);
         this.insertSanction = new InsertSanction(dataSource);
+        this.insertLawsuits = new InsertLawsuits(dataSource);
+        this.selectLawsuitsByCheck_event_link = new SelectLawsuitsByCheck_event_link(dataSource);
+        this.selectOffenseArticlesByCheck_event_link = new SelectOffenseArticlesByCheck_event_link(dataSource);
     }
+
     @Override
     public List<Sanction> getSanctionEventByCheckEventLink(long check_event_link) {
         Map<String, Long> bind = new HashMap<>();
@@ -60,23 +67,33 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         return selectSanctionByCheckEventLink.executeByNamedParam(bind);
     }
     @Override
+    public List<Lawsuits> getLawsuitsByCheckEventLink(long check_event_link) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("check_event_link", check_event_link);
+        return selectLawsuitsByCheck_event_link.executeByNamedParam(bind);
+    }
+
+    @Override
     public List<CheckEventSupplemented> getCheckEventByUfopLink(long ufop_link) {
         Map<String, Long> bind = new HashMap<>();
         bind.put("ufop_link", ufop_link);
         return selectCheckEventByUfop_link.executeByNamedParam(bind);
     }
+
     @Override
     public List<CheckEventSupplemented> getCheckEventById(long checkEvent_link) {
         Map<String, Long> bind = new HashMap<>();
         bind.put("id", checkEvent_link);
         return selectCheckEventById.executeByNamedParam(bind);
     }
+
     @Override
     public List<Precaution> getPrecautionByCheckEventLink(long check_event_link) {
         Map<String, Long> bind = new HashMap<>();
         bind.put("check_event_link", check_event_link);
         return selectPrecautionByCheck_event_link.executeByNamedParam(bind);
     }
+
     @Override
     public List<PunishmentArticles> getPunishmentArticlesByCheckEventLink(long check_event_link) {
         Map<String, Long> bind = new HashMap<>();
@@ -84,47 +101,68 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         return selectPunishmentArticlesByCheckEventLink.executeByNamedParam(bind);
     }
     @Override
-    public void createCheckingGroupOfGoods(CheckingGroupOfGoods checkingGroupOfGoods){
+    public List<OffenseArticles> getOffenseArticlesByCheckEventLink(long check_event_link) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("check_event_link", check_event_link);
+        return selectOffenseArticlesByCheck_event_link.executeByNamedParam(bind);
+    }
+
+    @Override
+    public void createCheckingGroupOfGoods(CheckingGroupOfGoods checkingGroupOfGoods) {
         Map<String, Object> bind = new HashMap<>();
-        bind.put("check_event_link",checkingGroupOfGoods.getCheck_event_link());
-        bind.put("goods_catalog_link",checkingGroupOfGoods.getGoods_catalog_link());
-        bind.put("checking",checkingGroupOfGoods.isChecking());
+        bind.put("check_event_link", checkingGroupOfGoods.getCheck_event_link());
+        bind.put("goods_catalog_link", checkingGroupOfGoods.getGoods_catalog_link());
+        bind.put("checking", checkingGroupOfGoods.isChecking());
         insertCheckingGoods.updateByNamedParam(bind);
     }
+
     @Override
-    public void createPunishmentArticlesByCheckEventLink(PunishmentArticles punishmentArticles){
+    public void createPunishmentArticlesByCheckEventLink(PunishmentArticles punishmentArticles) {
         Map<String, Object> bind = new HashMap<>();
-        bind.put("check_event_link",punishmentArticles.getCheck_event_link());
-        bind.put("articles_law_link",punishmentArticles.getArticles_law_link());
+        bind.put("check_event_link", punishmentArticles.getCheck_event_link());
+        bind.put("articles_law_link", punishmentArticles.getArticles_law_link());
 
         insertPunishmentArticles.updateByNamedParam(bind);
     }
+
     @Override
-    public void createPrecaution(Precaution precaution){
+    public void createPrecaution(Precaution precaution) {
         Map<String, Object> bind = new HashMap<>();
-        bind.put("check_event_link",precaution.getCheck_event_link());
-        bind.put("precaution_catalog_link",precaution.getPrecaution_catalog_link());
-        bind.put("service_date",precaution.getService_date());
-        bind.put("plan_date",precaution.getPlan_date());
-        bind.put("fact_date",precaution.getFact_date());
+        bind.put("check_event_link", precaution.getCheck_event_link());
+        bind.put("precaution_catalog_link", precaution.getPrecaution_catalog_link());
+        bind.put("service_date", precaution.getService_date());
+        bind.put("plan_date", precaution.getPlan_date());
+        bind.put("fact_date", precaution.getFact_date());
         insertPrecaution.updateByNamedParam(bind);
     }
+
     @Override
-    public void createSanction(Sanction sanction){
+    public void createSanction(Sanction sanction) {
         Map<String, Object> bind = new HashMap<>();
-        bind.put("check_event_link",sanction.getCheck_event_link());
-        bind.put("charged_amount",sanction.getCharged_amount());
-        bind.put("service_date",sanction.getService_date());
-        bind.put("plan_date",sanction.getPlan_date());
-        bind.put("fact_date",sanction.getFact_date());
+        bind.put("check_event_link", sanction.getCheck_event_link());
+        bind.put("charged_amount", sanction.getCharged_amount());
+        bind.put("service_date", sanction.getService_date());
+        bind.put("plan_date", sanction.getPlan_date());
+        bind.put("fact_date", sanction.getFact_date());
         insertSanction.updateByNamedParam(bind);
     }
+
     @Override
-    public void createOffenseArticles(OffenseArticles offenseArticles){
+    public void createOffenseArticles(OffenseArticles offenseArticles) {
         Map<String, Object> bind = new HashMap<>();
-        bind.put("check_event_link",offenseArticles.getCheck_event_link());
-        bind.put("articles_law_link",offenseArticles.getArticles_law_link());
+        bind.put("check_event_link", offenseArticles.getCheck_event_link());
+        bind.put("articles_law_link", offenseArticles.getArticles_law_link());
         insertOffenseArticles.updateByNamedParam(bind);
+    }
+    @Override
+    public void createLawsuits(Lawsuits lawsuits) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("check_event_link", lawsuits.getCheck_event_link());
+        bind.put("filed_on_action", lawsuits.getFiled_on_action());
+        bind.put("filed_date",lawsuits.getFiled_date());
+        bind.put("result_link",lawsuits.getResult_link());
+        bind.put("description",lawsuits.getDescription());
+        insertLawsuits.updateByNamedParam(bind);
     }
 
     @Override
@@ -135,7 +173,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         Map<String, Object> bindGoods = new HashMap<>();
 
         bindEvent.put("ufop_link", checkEventSupplemented.getUfop_link());
-        bindEvent.put("event_number",checkEventSupplemented.getEvent_number());
+        bindEvent.put("event_number", checkEventSupplemented.getEvent_number());
         bindEvent.put("event_date_begin", checkEventSupplemented.getEvent_date_begin());
         bindEvent.put("event_date_end", checkEventSupplemented.getEvent_date_end());
         bindEvent.put("check_type", checkEventSupplemented.getCheck_type());

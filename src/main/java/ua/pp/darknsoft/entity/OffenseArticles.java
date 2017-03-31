@@ -7,6 +7,7 @@ public class OffenseArticles {
     private long id;
     private long check_event_link;
     private int articles_law_link;
+    private String caption;
 
     public long getId() {
         return id;
@@ -30,5 +31,13 @@ public class OffenseArticles {
 
     public void setArticles_law_link(int articles_law_link) {
         this.articles_law_link = articles_law_link;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
     }
 }
