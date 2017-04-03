@@ -20,8 +20,10 @@
             <div id="co_message"></div>
             <div id="load_ufop_point"></div>
             <span class="error"><form:errors path="ufop_link"/> </span>
-            <form:form method="post" action="/addcommobjpost">
+            <form:form method="post" action="${actionlink}">
+                <form:hidden path="id"/>
                 <form:hidden path="ufop_link"/>
+                <form:hidden path="creator_link"/>
                 <table>
                     <tr>
                         <td><form:label path="obj_name">Назва об'єкта</form:label></td>
@@ -56,8 +58,12 @@
                     </tr>
 
                     <tr>
-                        <td>Додати основні групи товарів <form:checkbox path="additionalinformation"/></td>
-                        <td><input type="submit" value="Записати"/></td>
+                        <td>
+
+                                Додати основні групи товарів <form:checkbox path="additionalinformation"/>
+
+                        </td>
+                        <td><input type="submit" value="${buttonvalue}"/></td>
                         <td></td>
                     </tr>
 

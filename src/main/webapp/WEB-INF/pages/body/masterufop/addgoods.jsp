@@ -17,7 +17,7 @@
             <c:if test="${not empty goods_list}">
                 <c:forEach items="${goods_list}" var="goods_list">
                     <li/>
-                    ${goods_list.name} - ${goods_list.degree_of_a_risk_link}<br/>
+                    ${goods_list.name}  <a href="/deletegoods?id=${co.id}">Удалить</a> <br/>
                 </c:forEach>
             </c:if>
         </div>
@@ -43,7 +43,8 @@
                 </tr>
             </table>
         </form:form>
-        <form action="/searchufop" method="get">
+        <form action="/show_ufop" method="get">
+            <input type="hidden" name="id" value="${co.ufop_link}">
             <input type="submit" value="Завершити"/>
         </form>
         <hr/>

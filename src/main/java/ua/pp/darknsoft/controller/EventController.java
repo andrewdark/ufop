@@ -469,7 +469,7 @@ public class EventController {
             if (checkEventSupplemented == null) {
                 checkEventSupplemented = checkEventDao.getCheckEventById(Long.parseLong(id)).get(0);
             }
-            uiModel.addAttribute("",checkEventDao);
+            //uiModel.addAttribute("",checkEventDao);
             uiModel.addAttribute("offensearticles",checkEventDao.getOffenseArticlesByCheckEventLink(checkEventSupplemented.getId()));
             uiModel.addAttribute("precaution",checkEventDao.getPrecautionByCheckEventLink(checkEventSupplemented.getId()));
             uiModel.addAttribute("testSanction",checkEventDao.getSanctionEventByCheckEventLink(checkEventSupplemented.getId()));

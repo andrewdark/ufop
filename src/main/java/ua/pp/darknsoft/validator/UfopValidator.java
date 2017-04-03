@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class UfopValidator implements Validator {
     private final static Pattern RNTC_PATTERN = Pattern.compile("^[0-9]+$");
     private final static Pattern SR_PASSPORT_PATTERN = Pattern.compile("^[a-zA-Z]+$");
-    private String ufop_code = "";
+    private Ufop sqlUfop = new Ufop();
     @Autowired
     UfopDao ufopDao;
 
@@ -30,9 +30,9 @@ public class UfopValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Ufop ufop = (Ufop) o;
         try {
-            ufop_code = ufopDao.searchUfopByCode(ufop.getUfop_code()).get(0).getUfop_code();
+            sqlUfop = ufopDao.searchUfopByCode(ufop.getUfop_code()).get(0);
         } catch (IndexOutOfBoundsException ex) {
-            ufop_code = "";
+            sqlUfop.setId(0);
         } catch (Exception ex) {
             errors.rejectValue("ufop_code", "ufop_code.lenght", "Помилка" + ex);
         }
@@ -40,9 +40,17 @@ public class UfopValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ufop_is", "ufop_is.empty", "Зробіть свій вибір");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ufop_name", "ufop_name.empty", "* Обов'язкове поле");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ufop_code", "ufop_code.empty", "* Обов'язкове поле");
-        if(ufop.getUfop_code().equals(ufop_code)){
-            errors.rejectValue("ufop_code", "ufop_code.lenght", "Суб'єкт з таким кодом вже існує");
+        if(ufop.getNav()!=0){
+            if(ufop.getUfop_code().equals(sqlUfop.getUfop_code())){
+                errors.rejectValue("ufop_code", "ufop_code.lenght", "Суб'єкт з таким кодом вже існує");
+            }
         }
+        if(ufop.getNav()==0){
+            if(ufop.getUfop_code().equals(sqlUfop.getUfop_code()) && ufop.getId()!=sqlUfop.getId()){
+                errors.rejectValue("ufop_code", "ufop_code.lenght", "Суб'єкт з таким кодом вже існує");
+            }
+        }
+
         if (ufop.getUfop_is() == 0) {
             if (ufop.getUfop_code().length() != 10 && ufop.getUfop_code().length() > 0)
                 errors.rejectValue("ufop_code", "ufop_code.lenght", "Не вірний формат");

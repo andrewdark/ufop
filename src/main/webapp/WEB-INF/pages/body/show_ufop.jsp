@@ -49,6 +49,7 @@
         ${ufop.ufop_code}
         ${ufop.ufop_is}
         ${ufop.ufop_name}
+        <a href="/edit_ufop?id=${ufop.id}">Редагувати</a>
     </div>
 
     <div id="tabs-2">
@@ -79,7 +80,7 @@
                     </td>
 
                     <td><sec:authorize access="isAuthenticated()">
-                        <a href="/">редагувати</a>
+                        <a href="/edit_commobj?id=${co.id}">редагувати</a>
                     </sec:authorize>
                     </td>
 

@@ -30,6 +30,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     GetCommercialObjType getCommercialObjType;
     InsertGoodsToCommObj insertGoodsToCommObj;
     SelectCommObjGoodsByCommObj_link selectCommObjGoodsByCommObjlink;
+    UpdateCommercialObjectReturnId updateCommercialObjectReturnId;
 
 
     @Resource(name = "dataSource")
@@ -41,6 +42,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
         this.getCommercialObjType = new GetCommercialObjType(dataSource);
         this.insertGoodsToCommObj = new InsertGoodsToCommObj(dataSource);
         this.selectCommObjGoodsByCommObjlink = new SelectCommObjGoodsByCommObj_link(dataSource);
+        this.updateCommercialObjectReturnId = new UpdateCommercialObjectReturnId(dataSource);
     }
 
     @Override
@@ -59,6 +61,24 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         insertCommercialObjectReturnId.updateByNamedParam(bind, keyHolder);
+        commercialObject.setId(keyHolder.getKey().longValue());
+        return commercialObject;
+    }
+    @Override
+    public CommercialObject updateCommObj(CommercialObject commercialObject) {
+        Map<String, Object> bind = new HashMap<String, Object>();
+        bind.put("id", commercialObject.getId());
+        bind.put("ufop_link", commercialObject.getUfop_link());
+        bind.put("obj_type", commercialObject.getObj_type());
+        bind.put("obj_name", commercialObject.getObj_name());
+        bind.put("a_place_of_reg", commercialObject.getA_place_of_reg());
+        bind.put("n_place_of_reg", commercialObject.getN_place_of_reg());
+        bind.put("f_place_of_reg", commercialObject.getF_place_of_reg());
+        bind.put("b_place_of_reg", commercialObject.getB_place_of_reg());
+        bind.put("description", commercialObject.getDescription());
+        bind.put("creator_link", commercialObject.getCreator_link().toLowerCase());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        updateCommercialObjectReturnId.updateByNamedParam(bind, keyHolder);
         commercialObject.setId(keyHolder.getKey().longValue());
         return commercialObject;
     }

@@ -13,6 +13,8 @@ import java.util.List;
 public interface CommercialObjectDao {
     CommercialObject createCommObj(CommercialObject commercialObject);
 
+    CommercialObject updateCommObj(CommercialObject commercialObject);
+
     List<CommercialObjectType> getCommObjType();
 
     List<CommercialObject> getCommObjByUfop_link(long ufop_link);

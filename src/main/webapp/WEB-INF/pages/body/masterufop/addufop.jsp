@@ -14,87 +14,87 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content_wide">
-        <c:set var="bool" value="false"/>
-        <c:if test="${empty sendContact.rntc}">
-            <c:set var="bool" value="false"/>
-        </c:if>
 
+        <form:form action="${actionlink}" method="post">
+            <%-- <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}"/> --%>
+            <form:hidden path="id"/>
+            <form:hidden path="nav"/>
+            <table>
+                <tr>
+                    <td>ТИП</td>
+                    <td>
+                        <form:radiobutton path="ufop_is" value="0" onchange="javascript:pPass();"/>Фіз. особа
+                        <form:radiobutton path="ufop_is" value="1" onchange="javascript:uPass();"/>Юр. особа
+                    </td>
+                    <td><span class="error"><form:errors path="ufop_is"/> </span></td>
+                </tr>
+                <tr>
+                    <td>
 
-        <div id="this_ufop_from_ajax">
-            <form:form action="/addufoppost" method="post">
-                <%-- <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}"/> --%>
-                <table>
-                    <tr>
-                        <td>ТИП</td>
-                        <td>
-                            <form:radiobutton path="ufop_is" value="0" onchange="javascript:pPass();"/>Фіз. особа
-                            <form:radiobutton path="ufop_is" value="1" onchange="javascript:uPass();"/>Юр. особа
-                        </td>
-                        <td><span class="error"><form:errors path="ufop_is"/> </span></td>
-                    </tr>
-                    <tr>
-                        <td>
+                        <span id="ufop_name_1">ПІБ Фіз.Особи</span>
+                        <span id="ufop_name_2" style="display: none;">Найменування Юр. особи</span>
+                    </td>
+                    <td><form:input path="ufop_name"/></td>
+                    <td><span class="error"><form:errors path="ufop_name"/></span></td>
+                </tr>
+                <tr>
+                    <td>Ідентифікаційний номер</td>
+                    <td><form:input path="ufop_code" maxlength="10"/></td>
+                    <td><span class="error"><form:errors path="ufop_code"/></span></td>
+                </tr>
 
-                            <span id="ufop_name_1">ПІБ Фіз.Особи</span>
-                            <span id="ufop_name_2" style="display: none;">Найменування Юр. особи</span>
-                        </td>
-                        <td><form:input path="ufop_name"/></td>
-                        <td><span class="error"><form:errors path="ufop_name"/></span></td>
-                    </tr>
-                    <tr>
-                        <td>Ідентифікаційний номер</td>
-                        <td><form:input path="ufop_code" maxlength="10"/></td>
-                        <td><span class="error"><form:errors path="ufop_code"/></span></td>
-                    </tr>
+                <tr>
 
-                    <tr>
+                    <td><span id="ufop_pass_1">Серія та № паспорта</span></td>
+                    <td>
+                        <div id="passinfo">
+                            <form:input path="series_of_passport" maxlength="2" size="2"/>
+                            <form:input path="number_of_passport" maxlength="10" size="6"/>
+                        </div>
 
-                        <td><span id="ufop_pass_1">Серія та № паспорта</span></td>
-                        <td>
-                            <div id="passinfo">
-                                <form:input path="series_of_passport" maxlength="2" size="2"/>
-                                <form:input path="number_of_passport" maxlength="10" size="6"/>
-                            </div>
-
-                        </td>
-                        <td>
+                    </td>
+                    <td>
                                 <span class="error">
                                     <form:errors path="series_of_passport"/>
                                     <form:errors path="number_of_passport"/>
                                 </span>
-                        </td>
+                    </td>
 
-                    </tr>
+                </tr>
 
-                    <tr>
-                        <td>Місце реєстрації</td>
-                        <td><form:input path="a_place_of_reg" id="a_place_of_reg"
-                                        onclick="javascript:LocPopUpShow();"/></td>
-                        <td><span class="error"><form:errors path="a_place_of_reg"/></span></td>
-                    </tr>
-                    <tr>
-                        <td>Буд./Корпус/Кв.</td>
-                        <td><form:input path="n_place_of_reg" size="2"/>
-                            <form:input path="b_place_of_reg" size="2"/>
-                            <form:input path="f_place_of_reg" size="2"/>
-                        </td>
-                        <td>
-                            <span class="error"><form:errors path="n_place_of_reg"/></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Примітки</td>
-                        <td><form:textarea path="description"/></td>
-                        <td><span class="error"><form:errors path="description"/></span></td>
-                    </tr>
-                    <tr>
-                        <td>Додати додаткові данні <form:checkbox path="additionalinformation"/></td>
-                        <td><input type="submit" value="Записати"/></td>
-                        <td></td>
-                    </tr>
-                </table>
-            </form:form>
-        </div>
+                <tr>
+                    <td>Місце реєстрації</td>
+                    <td><form:input path="a_place_of_reg" id="a_place_of_reg"
+                                    onclick="javascript:LocPopUpShow();"/></td>
+                    <td><span class="error"><form:errors path="a_place_of_reg"/></span></td>
+                </tr>
+                <tr>
+                    <td>Буд./Корпус/Кв.</td>
+                    <td><form:input path="n_place_of_reg" size="2"/>
+                        <form:input path="b_place_of_reg" size="2"/>
+                        <form:input path="f_place_of_reg" size="2"/>
+                    </td>
+                    <td>
+                        <span class="error"><form:errors path="n_place_of_reg"/></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Примітки</td>
+                    <td><form:textarea path="description"/></td>
+                    <td><span class="error"><form:errors path="description"/></span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <c:if test="${ufop.nav>0}">
+                            Додати додаткові данні <form:checkbox path="additionalinformation"/>
+                        </c:if>
+                    </td>
+                    <td><input type="submit" value="${buttonvalue}"/></td>
+                    <td></td>
+                </tr>
+            </table>
+        </form:form>
+
         <a onclick="look('hide1'); return false;" href="#">Довідка</a>
         <div id="hide1" style="display: none;">
             <li/>

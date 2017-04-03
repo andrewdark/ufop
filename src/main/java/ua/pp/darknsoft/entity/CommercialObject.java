@@ -21,6 +21,7 @@ public class CommercialObject {
     private String s_obj_type;
     private List<LocationCatalog> locationCatalog;
     private boolean additionalinformation;
+    private int nav;
     private List<GoodsOfCommObj> goodsList;
 
     public long getId() {
@@ -141,5 +142,13 @@ public class CommercialObject {
 
     public void setGoodsList(List<GoodsOfCommObj> goodsList) {
         this.goodsList = goodsList;
+    }
+
+    public int getNav() {
+        return nav;
+    }
+
+    public void setNav(int nav) {
+        this.nav = nav;
     }
 }

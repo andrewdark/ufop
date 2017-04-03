@@ -31,6 +31,7 @@ public class SelectCommObjById extends MappingSqlQuery<CommercialObject>{
     protected CommercialObject mapRow(ResultSet resultSet, int i) throws SQLException {
         CommercialObject commObj = new CommercialObject();
         commObj.setId(resultSet.getLong("id"));
+        commObj.setUfop_link(resultSet.getLong("ufop_link"));
         commObj.setObj_name(resultSet.getString("obj_name"));
         commObj.setObj_type(resultSet.getInt("obj_type"));
         commObj.setS_obj_type(resultSet.getString("s_obj_type"));

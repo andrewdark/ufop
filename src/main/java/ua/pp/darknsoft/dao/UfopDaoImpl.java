@@ -7,10 +7,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import ua.pp.darknsoft.dao.crud.ufop.InsertUfopReturnId;
-import ua.pp.darknsoft.dao.crud.ufop.SelectUfopByCodeEquals;
-import ua.pp.darknsoft.dao.crud.ufop.SelectUfopByIdEquals;
-import ua.pp.darknsoft.dao.crud.ufop.SelectUfopsByPaginator;
+import ua.pp.darknsoft.dao.crud.ufop.*;
 import ua.pp.darknsoft.entity.Ufop;
 
 import javax.annotation.Resource;
@@ -31,6 +28,7 @@ public class UfopDaoImpl implements UfopDao, Serializable {
     private InsertUfopReturnId insertUfopReturnId;
     private SelectUfopByIdEquals selectUfopByIdEquals;
     private SelectUfopsByPaginator selectUfopsByPaginator;
+    private UpdateUfopReturnId updateUfopReturnId;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -39,6 +37,7 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         this.insertUfopReturnId = new InsertUfopReturnId(dataSource);
         this.selectUfopByIdEquals = new SelectUfopByIdEquals(dataSource);
         this.selectUfopsByPaginator = new SelectUfopsByPaginator(dataSource);
+        this.updateUfopReturnId = new UpdateUfopReturnId(dataSource);
     }
 
     @Override
@@ -81,5 +80,24 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         bind.put("pageid", pageid);
         bind.put("ufop_is", ufop_is);
         return selectUfopsByPaginator.executeByNamedParam(bind);
+    }
+    @PreAuthorize(value = "isAuthenticated()")
+    @Override
+    public Ufop editUfop(Ufop ufop) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("id",ufop.getId());
+        bind.put("ufop_is", ufop.getUfop_is());
+        bind.put("ufop_name", ufop.getUfop_name());
+        bind.put("ufop_code", ufop.getUfop_code());
+        bind.put("a_place_of_reg", ufop.getA_place_of_reg());
+        bind.put("n_place_of_reg", ufop.getN_place_of_reg());
+        bind.put("f_place_of_reg", ufop.getF_place_of_reg());
+        bind.put("b_place_of_reg", ufop.getB_place_of_reg());
+        bind.put("creator_link", SecurityContextHolder.getContext().getAuthentication().getName().toString());
+        bind.put("description", ufop.getDescription());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        updateUfopReturnId.updateByNamedParam(bind, keyHolder);
+        ufop.setId(keyHolder.getKey().longValue());
+        return ufop;
     }
 }
