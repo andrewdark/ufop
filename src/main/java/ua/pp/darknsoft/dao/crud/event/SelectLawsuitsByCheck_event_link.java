@@ -13,7 +13,8 @@ import java.sql.Types;
  * Created by Andrew on 31.03.2017.
  */
 public class SelectLawsuitsByCheck_event_link extends MappingSqlQuery<Lawsuits>{
-    private static final String SQL_SELECT_LAWSUIT="SELECT * FROM lawsuits_table WHERE check_event_link = :check_event_link";
+    private static final String SQL_SELECT_LAWSUIT="SELECT lt.*,lrct.name FROM lawsuits_table lt " +
+            "INNER JOIN lawsuits_result_catalog_table lrct ON(lrct.id = lt.result_link) WHERE lt.check_event_link = :check_event_link";
 
     public SelectLawsuitsByCheck_event_link(DataSource ds) {
         super(ds, SQL_SELECT_LAWSUIT);
@@ -26,6 +27,7 @@ public class SelectLawsuitsByCheck_event_link extends MappingSqlQuery<Lawsuits>{
         lawsuits.setId(resultSet.getLong("id"));
         lawsuits.setCheck_event_link(resultSet.getLong("check_event_link"));
         lawsuits.setFiled_on_action(resultSet.getInt("filed_on_action"));
+        lawsuits.setSresult_link(resultSet.getString("name"));
         lawsuits.setFiled_date(resultSet.getString("filed_date"));
         lawsuits.setResult_link(resultSet.getInt("result_link"));
         lawsuits.setDescription(resultSet.getString("description"));

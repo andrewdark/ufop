@@ -24,4 +24,6 @@ public interface CommercialObjectDao {
     void addGoodsToCommObj(GoodsOfCommObj goods);
 
     List<GoodsOfCommObj> getCommObjGoodsByCommObjlink(long comm_obj_link);
+
+    void deleteGoodsByCommObjLink(long comm_obj_link);
 }

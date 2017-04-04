@@ -5,6 +5,7 @@ $(function () {
 });
 
 $(function () {
+    $("#tabs").tabs();
     $("#ufoptabs").tabs();
     $("#eventtabs").tabs();
 });
@@ -32,6 +33,7 @@ $(function () {
     $("#service_date").datepicker();
     $("#plan_date").datepicker();
     $("#fact_date").datepicker();
+    $("#filed_date").datepicker();
     $.datepicker.setDefaults(
         $.extend(
             {'dateFormat': 'yy-mm-dd'},
@@ -316,7 +318,6 @@ function loopgoodsdown(level) {
     if (level == 2) {
         var aj = "treemark=" + $("#my_selecttop1 option:selected").val() + "&nlevel=2";
         $("#GoodsType2").load("/ajax_select_goods", aj);
-
         $("#GoodsType3").html("");
         $("#GoodsType4").html("");
     }

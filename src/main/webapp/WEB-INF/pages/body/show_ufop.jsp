@@ -45,11 +45,69 @@
     </ul>
 
     <div id="tabs-1">
-        ${ufop.id}
-        ${ufop.ufop_code}
-        ${ufop.ufop_is}
-        ${ufop.ufop_name}
-        <a href="/edit_ufop?id=${ufop.id}">Редагувати</a>
+        <table width="100%">
+            <caption>ВІДОМОСТІ ПРО СУБ'ЄКТА ГОСПОДАРЮВАННЯ</caption>
+            <tr>
+                <td>Id в базі</td>
+                <td>${ufop.id}</td>
+                <td>
+                    <sec:authorize access="isAuthenticated()">
+                        <a href="/edit_ufop?id=${ufop.id}">Редагувати</a>
+                    </sec:authorize>
+                </td>
+            </tr>
+            <tr>
+                <td>ІПН</td>
+                <td>${ufop.ufop_code}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Статус</td>
+                <td>
+                    <c:if test="${ufop.ufop_is == 0}">
+                        Фізична особа - підприємець
+                    </c:if>
+                    <c:if test="${ufop.ufop_is == 1}">
+                        Юридична особа
+                    </c:if>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <c:if test="${ufop.ufop_is == 0}">
+                        ПІБ суб'єкта господарювання
+                    </c:if>
+                    <c:if test="${ufop.ufop_is == 1}">
+                        Назва юридичної особи
+                    </c:if>
+                </td>
+                <td>${ufop.ufop_name}</td>
+                <td></td>
+            </tr>
+            <c:if test="${not empty fulladdress}">
+                <tr>
+                    <td>Адреса реєстрації</td>
+                    <td>
+                        <c:forEach items="${fulladdress}" var="fulladdress">
+                            ${fulladdress.stype}: ${fulladdress.name}<br/>
+                        </c:forEach>
+                        <c:if test="${ufop.n_place_of_reg ne ''}">
+                            Дім: ${ufop.n_place_of_reg}<br/>
+                        </c:if>
+                        <c:if test="${ufop.b_place_of_reg ne ''}">
+                            Корпус: ${ufop.b_place_of_reg}<br/>
+                        </c:if>
+                        <c:if test="${ufop.f_place_of_reg ne ''}">
+                            Квартира: ${ufop.f_place_of_reg}<br/>
+                        </c:if>
+
+                    </td>
+                    <td></td>
+                </tr>
+            </c:if>
+        </table>
+
     </div>
 
     <div id="tabs-2">

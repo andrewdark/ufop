@@ -87,11 +87,11 @@ public class MainController {
         ufop = ufopDao.getEntrepreneurByPaginator(total, pageid1, (short) 0);
 
         uiModel.addAttribute("u_size", ufop.size());
-
+        uiModel.addAttribute("viewslistu","viewslisti");
         uiModel.addAttribute("ufop", ufop);
         uiModel.addAttribute("page_id", pageid);
-        uiModel.addAttribute("total_page", "t");
-        uiModel.addAttribute("title_name", "Власник");
+        uiModel.addAttribute("total_page", "NAN");
+
         if (ufop.isEmpty()) {
             uiModel.addAttribute("ex", "Нажаль, немає жодного запису");
         }
@@ -116,11 +116,11 @@ public class MainController {
         ufop = ufopDao.getEntrepreneurByPaginator(total, pageid1, (short) 1);
 
         uiModel.addAttribute("u_size", ufop.size());
-
+        uiModel.addAttribute("viewslistu","viewsliste");
         uiModel.addAttribute("ufop", ufop);
         uiModel.addAttribute("page_id", pageid);
-        uiModel.addAttribute("total_page", "t");
-        uiModel.addAttribute("title_name", "Назва підприємства");
+        uiModel.addAttribute("total_page", "NAN");
+
         if (ufop.isEmpty()) {
             uiModel.addAttribute("ex", "Нажаль, немає жодного запису");
         }
@@ -168,12 +168,10 @@ public class MainController {
 
             uiModel.addAttribute("ufop", ufop);
             uiModel.addAttribute("command_ufop", ufop);
-            //            if(ie.getA_place_of_reg().length()>0) {
-//                uiModel.addAttribute("fulladdress",catalogDao.getParentLocationByTreemark(ie.getA_place_of_reg()));
-//            }
-//            if(ie.getContact().getA_stay_address().length()>0) {
-//                uiModel.addAttribute("stayaddress",catalogDao.getParentLocationByTreemark(ie.getContact().getA_stay_address()));
-//            }
+            if (ufop.getA_place_of_reg().length() > 0) {
+                uiModel.addAttribute("fulladdress", catalogDao.getParentLocationByTreemark(ufop.getA_place_of_reg()));
+            }
+
 //
 //
 
@@ -215,14 +213,14 @@ public class MainController {
             case 2:
                 try {
                     List<CommercialObject> commercialObjectList = commercialObjectDao.getCommObjByUfop_link(ufop.getId());
-                    if(commercialObjectList.isEmpty()) {
+                    if (commercialObjectList.isEmpty()) {
                         String msg = "Неможливо створити перевірку, тому що у вибраного суб'єкта господарювання немає жодного об'єкта здійснення торгівлі" +
-                                "<br /> <a href = \"/show_ufop/?id="+ufop.getId()+"#tabs-2\">Повернутись до суб'єкта</a>";
-                        redirectAttributes.addFlashAttribute("ex",msg);
+                                "<br /> <a href = \"/show_ufop/?id=" + ufop.getId() + "#tabs-2\">Повернутись до суб'єкта</a>";
+                        redirectAttributes.addFlashAttribute("ex", msg);
                         return rdrct + "/message";
                     } else
                         return rdrct + "/addevent";
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     redirectAttributes.addFlashAttribute("ex", ex);
                     return rdrct + "/message";
                 }
@@ -259,6 +257,37 @@ public class MainController {
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------LEFT MENU---------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
+
+    @RequestMapping(value = "/viewslistsearch/{pageid}", method = RequestMethod.GET)
+    public String viewsListSearch(@PathVariable int pageid, @RequestParam(defaultValue = "1") String stext, Model uiModel) {
+
+        if (pageid <= 0) {
+            uiModel.addAttribute("ex", "Не вірна сторінка");
+            return "message";
+        }
+        int total = 5;
+        int pageid1 = pageid;
+        if (pageid == 1) {
+            pageid1 = 0;
+        } else {
+            pageid1 = (pageid1 - 1) * total + 1;
+        }
+        List<Ufop> ufop = new LinkedList<Ufop>();
+        if(stext.length()>2)ufop = ufopDao.getUfopByPaginatorMultiple(total, pageid1, stext);
+
+        uiModel.addAttribute("u_size", ufop.size());
+        uiModel.addAttribute("viewslistu","viewslistsearch");
+        uiModel.addAttribute("ufop", ufop);
+        uiModel.addAttribute("page_id", pageid);
+        uiModel.addAttribute("getparam","?stext="+stext);
+        uiModel.addAttribute("total_page", "NAN");
+
+        uiModel.addAttribute("title_name", "Власник");
+        if (ufop.isEmpty()) {
+            uiModel.addAttribute("ex", "Нажаль, немає жодного запису");
+        }
+        return "viewslist_ufop";
+    }
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addcontact_1")
     public String legal_entity(@ModelAttribute Contact contact, Model uiModel) {
@@ -303,6 +332,14 @@ public class MainController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+    }
+    private static String myRdrct(HttpServletRequest httpServletRequest) {
+        String scheme = httpServletRequest.getScheme() + "://";
+        String serverName = httpServletRequest.getServerName();
+        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
+        String contextPath = httpServletRequest.getContextPath();
+        String rdrct = "redirect:" + scheme + serverName + serverPort;
+        return rdrct;
     }
 
 }

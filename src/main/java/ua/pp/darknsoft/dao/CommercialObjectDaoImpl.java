@@ -31,6 +31,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     InsertGoodsToCommObj insertGoodsToCommObj;
     SelectCommObjGoodsByCommObj_link selectCommObjGoodsByCommObjlink;
     UpdateCommercialObjectReturnId updateCommercialObjectReturnId;
+    DeleteGoodsByCommObjLink deleteGoodsByCommObjLink;
 
 
     @Resource(name = "dataSource")
@@ -43,6 +44,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
         this.insertGoodsToCommObj = new InsertGoodsToCommObj(dataSource);
         this.selectCommObjGoodsByCommObjlink = new SelectCommObjGoodsByCommObj_link(dataSource);
         this.updateCommercialObjectReturnId = new UpdateCommercialObjectReturnId(dataSource);
+        this.deleteGoodsByCommObjLink = new DeleteGoodsByCommObjLink(dataSource);
     }
 
     @Override
@@ -64,6 +66,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
         commercialObject.setId(keyHolder.getKey().longValue());
         return commercialObject;
     }
+
     @Override
     public CommercialObject updateCommObj(CommercialObject commercialObject) {
         Map<String, Object> bind = new HashMap<String, Object>();
@@ -89,29 +92,38 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     }
 
     @Override
-    public List<CommercialObject> getCommObjByUfop_link(long ufop_link){
-        Map<String,Long> bind = new HashMap<>();
-        bind.put("ufop_link",ufop_link);
+    public List<CommercialObject> getCommObjByUfop_link(long ufop_link) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("ufop_link", ufop_link);
         return selectCommObjByUfop_link.executeByNamedParam(bind);
     }
+
     @Override
-    public List<CommercialObject> getCommObjById(long id){
-        Map<String,Long> bind = new HashMap<>();
-        bind.put("id",id);
+    public List<CommercialObject> getCommObjById(long id) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("id", id);
         return selectCommObjById.executeByNamedParam(bind);
     }
+
     @Override
-    public void addGoodsToCommObj(GoodsOfCommObj goods){
-        Map<String,Object> bind = new HashMap<>();
-        bind.put("comm_obj_link",goods.getComm_obj_link());
-        bind.put("goods_catalog_link",goods.getGoods_catalog_link());
+    public void addGoodsToCommObj(GoodsOfCommObj goods) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("comm_obj_link", goods.getComm_obj_link());
+        bind.put("goods_catalog_link", goods.getGoods_catalog_link());
         insertGoodsToCommObj.updateByNamedParam(bind);
     }
+
     @Override
-    public List<GoodsOfCommObj> getCommObjGoodsByCommObjlink(long comm_obj_link){
-        Map<String,Long> bind = new HashMap<>(3);
-        bind.put("comm_obj_link",comm_obj_link);
+    public List<GoodsOfCommObj> getCommObjGoodsByCommObjlink(long comm_obj_link) {
+        Map<String, Long> bind = new HashMap<>(3);
+        bind.put("comm_obj_link", comm_obj_link);
         return selectCommObjGoodsByCommObjlink.executeByNamedParam(bind);
     }
 
+    @Override
+    public void deleteGoodsByCommObjLink(long comm_obj_link) {
+        Map<String, Long> bind = new HashMap<String, Long>(3);
+        bind.put("id", comm_obj_link);
+        deleteGoodsByCommObjLink.updateByNamedParam(bind);
+    }
 }

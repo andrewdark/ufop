@@ -10,6 +10,7 @@ public class Lawsuits {
     private String filed_date;
     private int result_link;
     private String description;
+    private String sresult_link;
 
     public long getId() {
         return id;
@@ -57,5 +58,13 @@ public class Lawsuits {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSresult_link() {
+        return sresult_link;
+    }
+
+    public void setSresult_link(String sresult_link) {
+        this.sresult_link = sresult_link;
     }
 }

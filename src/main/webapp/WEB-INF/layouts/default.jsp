@@ -46,12 +46,12 @@
             </div>
             <div class="sidebar">
                 <div class="searchform">
-                    <form id="formsearch" name="formsearch" method="post" action="#">
+                    <form id="formsearch" name="formsearch" method="get" action="/viewslistsearch/1">
                         <span>
-                        <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80"
-                               value="Search our ste:" type="text"/>
+                        <input name="stext" class="editbox_search" id="editbox_search" maxlength="80"
+                               value="" type="text"/>
                         </span>
-                        <input name="button_search" src="/resources/images/search.gif" class="button_search"
+                        <input src="/resources/images/search.gif" class="button_search"
                                type="image"/>
                     </form>
                 </div>

@@ -65,7 +65,7 @@
     </ul>
     <div id="tabs-1">
         <table width="100%">
-            <caption>ПЕРЕВІРКА СУБ'ЄКТА ГОСПОДАРЮВАННЯ</caption>
+            <caption>ПЕРЕВІРКА <a href="/show_ufop?id=${event.ufop_link}">СУБ'ЄКТА ГОСПОДАРЮВАННЯ</a></caption>
             <tr>
                 <td>Тип перевірки</td>
                 <td>
@@ -261,7 +261,7 @@
                         </c:if>
                         <c:if test="${lawsuits.filed_on_action==1}">
                             <tr>
-                                <td></td>
+                                <td>Дата подання</td>
                                 <td>
                                     <c:if test="${lawsuits.filed_date eq '0001-01-01'}">N/A </c:if>
                                     <c:if test="${lawsuits.filed_date ne '0001-01-01'}"> ${lawsuits.filed_date}</c:if>
@@ -269,8 +269,8 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>${lawsuits.result_link}</td>
+                                <td>Результат</td>
+                                <td>${lawsuits.sresult_link}</td>
                                 <td></td>
                             </tr>
                             <tr>

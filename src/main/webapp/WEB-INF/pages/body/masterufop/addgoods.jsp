@@ -17,7 +17,7 @@
             <c:if test="${not empty goods_list}">
                 <c:forEach items="${goods_list}" var="goods_list">
                     <li/>
-                    ${goods_list.name}  <a href="/deletegoods?id=${co.id}">Удалить</a> <br/>
+                    ${goods_list.name}  <a href="/deletegoods?id=${goods_list.id}&co=${co.id}">Удалить</a> <br/>
                 </c:forEach>
             </c:if>
         </div>
@@ -69,9 +69,10 @@
 <div class="b-popup" id="popup4">
     ${ex}<br/>
     <div class="b-popup-content" id="setgoods_popup">
-        <select id="my_selecttop1" name="my_selecttop" onchange="loopgoodsdown(2)">
+        <select id="my_selecttop1" name="my_selecttop" onchange="loopgoodsdown(2)" >
+            <option value=""></option>
             <c:forEach items="${goodsTop}" var="goodsTop">
-                <option value="${goodsTop.id}">${goodsTop.name}</option>
+                <option value="${goodsTop.treemark}">${goodsTop.name}</option>
             </c:forEach>
         </select><br/>
         <div id="GoodsType2"></div>

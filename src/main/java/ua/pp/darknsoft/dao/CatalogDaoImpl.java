@@ -32,6 +32,7 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
     private SelectArticlesLawCatalogTop selectArticlesLawCatalogTop;
     private SelectArticlesByTreemark selectArticlesByTreemark;
     private SelectPrecautionCatalog selectPrecautionCatalog;
+    private SelectLawsuitsResultCatalog selectLawsuitsResultCatalog;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource){
@@ -47,10 +48,15 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         this.selectArticlesLawCatalogTop = new SelectArticlesLawCatalogTop(dataSource);
         this.selectArticlesByTreemark = new SelectArticlesByTreemark(dataSource);
         this.selectPrecautionCatalog = new SelectPrecautionCatalog(dataSource);
+        this.selectLawsuitsResultCatalog = new SelectLawsuitsResultCatalog(dataSource);
     }
     @Override
     public List<PrecautionCatalog> getPrecautionCatalog(){
         return selectPrecautionCatalog.execute();
+    }
+    @Override
+    public List<LawsuitsResultCatalog> getLawsuitsResultCatalog(){
+        return selectLawsuitsResultCatalog.execute();
     }
     @Override
     public List<LocationType> getLocationType(){

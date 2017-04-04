@@ -18,6 +18,8 @@ public interface UfopDao {
 
     List<Ufop> getEntrepreneurByPaginator(int total, int pageid, short ufop_is);
 
+    List<Ufop> getUfopByPaginatorMultiple(int total, int pageid, String stext);
+
     @PreAuthorize(value = "isAuthenticated()")
     Ufop editUfop(Ufop ufop);
 }

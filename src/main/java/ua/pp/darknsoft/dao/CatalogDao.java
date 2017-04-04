@@ -10,6 +10,8 @@ import java.util.List;
 public interface CatalogDao {
     List<PrecautionCatalog> getPrecautionCatalog();
 
+    List<LawsuitsResultCatalog> getLawsuitsResultCatalog();
+
     List<LocationType> getLocationType();
 
     List<ArticlesLawCatalog> getArticleTop();

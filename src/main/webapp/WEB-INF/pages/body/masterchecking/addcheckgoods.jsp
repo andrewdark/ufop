@@ -64,6 +64,7 @@
     ${ex}<br/>
     <div class="b-popup-content" id="setgoods_popup">
         <select id="my_selecttop1" name="my_selecttop" onchange="loopgoodsdown(2)">
+            <option value=""></option>
             <c:forEach items="${goodsTop}" var="goodsTop">
                 <option value="${goodsTop.treemark}">${goodsTop.name}</option>
             </c:forEach>

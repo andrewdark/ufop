@@ -408,10 +408,14 @@ public class EventController {
                               HttpServletRequest httpServletRequest) {
         Lawsuits lawsuits = new Lawsuits();
         Map<Integer,String> select = new HashMap<>();
-        select.put(1,"Задоволено");select.put(2,"Відмовлено");select.put(3,"Припинено");
-        uiModel.addAttribute("select",select);
+
+
         try{
-            //select select
+            for (LawsuitsResultCatalog items: catalogDao.getLawsuitsResultCatalog()
+                 ) {
+                select.put(items.getId(),items.getName());
+            }
+            uiModel.addAttribute("select",select);
         }catch (Exception ex){
             redirectAttributes.addFlashAttribute("ex", "/addsanctionspost - checkEventDao.getCheckEventById <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";

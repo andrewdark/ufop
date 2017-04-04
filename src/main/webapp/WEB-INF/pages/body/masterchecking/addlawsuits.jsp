@@ -42,7 +42,7 @@
                     </tr>
                     <tr>
                         <td><form:label path="filed_date">Дата позову</form:label></td>
-                        <td><form:input path="filed_date"/></td>
+                        <td><form:input path="filed_date" id="filed_date"/></td>
                         <td><span class="error"><form:errors path="filed_date"/></span></td>
                     </tr>
                     <tr>

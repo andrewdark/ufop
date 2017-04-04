@@ -579,10 +579,11 @@ public class MasterController {
     //------------------------------------------------------------------------------------------------------------------
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "deletegoods",method = RequestMethod.GET)
-    public String deleteGoodsPost(@RequestParam(defaultValue = "0") String id, HttpServletRequest httpServletRequest,
+    public String deleteGoodsPost(@RequestParam(defaultValue = "0") String id,@RequestParam(defaultValue = "0") String co, HttpServletRequest httpServletRequest,
                                   RedirectAttributes redirectAttributes) {
         try{
-            redirectAttributes.addFlashAttribute("co",commercialObjectDao.getCommObjById(Long.parseLong(id)).get(0));
+            commercialObjectDao.deleteGoodsByCommObjLink(Long.parseLong(id));
+            redirectAttributes.addFlashAttribute("co",commercialObjectDao.getCommObjById(Long.parseLong(co)).get(0));
         }catch (Exception ex){
             redirectAttributes.addFlashAttribute("ex", "deleteGoodsPost <br />"+ex);
             return myRdrct(httpServletRequest) + "/message";
@@ -652,7 +653,7 @@ public class MasterController {
 
             for (int i = 0; i <= downkved.size() - 1; i++) {
 
-                option = option + "<option value=\"" + downkved.get(i).getId() + "\">" + downkved.get(i).getDegree_of_a_risk_link() + "-" + downkved.get(i).getName() + "</option>";
+                option = option + "<option value=\"" + downkved.get(i).getTreemark() + "\">" + downkved.get(i).getDegree_of_a_risk_link() + "-" + downkved.get(i).getName() + "</option>";
             }
 
         } catch (Exception ex) {

@@ -20,10 +20,26 @@
         <div class="img"><img src="/resources/images/ufop.png" width="148" height="154" alt="" class="fl"/>
         </div>
         <div class="post_content">
-
             <p>
-                    ${title_name}: <b>${ufop.ufop_name} </b>
+                <c:if test="${ufop.ufop_is == 0}">
+                    ПІБ суб'єкта:
+                </c:if>
+                <c:if test="${ufop.ufop_is == 1}">
+                    Назва підприємства:
+                </c:if>
+                <b>${ufop.ufop_name} </b>
             </p>
+            <p>Тип суб'єкта:
+                <b>
+                    <c:if test="${ufop.ufop_is == 0}">
+                        Фізична особа - підприємець
+                    </c:if>
+                    <c:if test="${ufop.ufop_is == 1}">
+                        Юридична особа
+                    </c:if>
+                </b>
+            </p>
+
             <p class="spec"><a href="/show_ufop/?id=${ufop.id}" class="rm">Див. деталі</a></p>
         </div>
         <div class="clr"></div>
@@ -40,25 +56,26 @@
 <c:if test="${empty ufop and pageid !=1}">
     ${ex}
     <p class="pages">
-        <small>Page ${page_id} of NAN</small>
-        <a href="/viewslisti/${page_id-1}">&laquo;</a><a
-            href="/viewslisti/${page_id-1}">${page_id-1}</a><span>${page_id}</span>
+        <small>Page ${page_id} of ${total_page}</small>
+        <a href="/${viewslistu}/${page_id-1}${getparam}">&laquo;</a><a
+            href="/${viewslistu}/${page_id-1}${getparam}">${page_id-1}</a><span>${page_id}</span>
     </p>
 </c:if>
 
 <c:if test="${not empty ufop and pageid !=1}">
     <p class="pages">
-        <small>Page ${page_id} of NAN</small>
-        <a href="/viewslisti/${page_id-1}">&laquo;</a><a href="/viewslisti/${page_id-1}">${page_id-1}</a>
-        <span>${page_id}</span> <a href="/viewslisti/${page_id+1}">${page_id+1}</a> <a
-            href="/viewslisti/${page_id+1}">&raquo;</a>
+        <small>Page ${page_id} of ${total_page}</small>
+        <a href="/${viewslistu}/${page_id-1}${getparam}">&laquo;</a><a
+            href="/${viewslistu}/${page_id-1}${getparam}">${page_id-1}</a>
+        <span>${page_id}</span> <a href="/${viewslistu}/${page_id+1}${getparam}">${page_id+1}</a> <a
+            href="/${viewslistu}/${page_id+1}${getparam}">&raquo;</a>
     </p>
 </c:if>
 <c:if test="${not empty ufop and pageid ==1}">
     <p class="pages">
-        <small>Page ${page_id} of NAN</small>
+        <small>Page ${page_id} of ${total_page}</small>
 
-        <span>${page_id}</span> <a href="/viewslisti/${page_id+1}">${page_id+1}</a> <a
-            href="/viewslisti/${page_id+1}">&raquo;</a>
+        <span>${page_id}</span> <a href="/${viewslistu}/${page_id+1}${getparam}">${page_id+1}</a> <a
+            href="/${viewslistu}/${page_id+1}${getparam}">&raquo;</a>
     </p>
 </c:if>

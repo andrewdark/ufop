@@ -562,3 +562,6 @@ a.disabled {
 .stamp_green p { border: 1px solid green;  padding: 5px; }
 .whiteblock {padding: 5px; padding-left: 35px; background:white;}
 .navblock {padding: 5px; padding-left: 35px; background:white; border: outset;}
+.b-popup select {
+    width: 330px; /* Ширина списка в пикселах */
+}

@@ -55,6 +55,7 @@
     ${ex}<br/>
     <div class="b-popup-content" id="setarticles_popup">
         <select id="my_selecttop1" name="my_selecttop" onchange="looparticlesdown(2)">
+            <option value=""></option>
             <c:forEach items="${articlesTop}" var="articlesTop">
                 <option value="${articlesTop.id}">${articlesTop.caption}</option>
             </c:forEach>
