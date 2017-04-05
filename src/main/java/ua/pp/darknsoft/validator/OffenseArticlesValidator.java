@@ -40,6 +40,6 @@ public class OffenseArticlesValidator implements Validator {
         }
         if(offenseArticles.getCheck_event_link()==0)errors.rejectValue("check_event_link", "check_event_link.lenght", "Відсутня вказівка на перевірку");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "check_event_link", "check_event_link.empty", "Відсутня вказівка на перевірку");
-        if((Integer)offenseArticles.getArticles_law_link()==null)errors.rejectValue("articles_law_link", "articles_law_link.lenght", "Виберіть статтю");
+        if(offenseArticles.getArticles_law_link().isEmpty())errors.rejectValue("articles_law_link", "articles_law_link.lenght", "Виберіть статтю");
     }
 }

@@ -117,7 +117,7 @@ public class MasterController {
             } else {
                 co.setUfop_link(ufop.getId());
             }
-        co.setNav(1);
+            co.setNav(1);
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return rdrct + "/message";
@@ -160,41 +160,26 @@ public class MasterController {
 
             //co_id
             return rdrct + "/addgoods";
-        } else return rdrct + "/show_ufop?id="+co.getUfop_link()+"#tabs-2";
+        } else return rdrct + "/show_ufop?id=" + co.getUfop_link() + "#tabs-2";
     }
 
     //ADD GROUP OF GOODS
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addgoods", method = RequestMethod.GET)
-    public String addGoods(@ModelAttribute GoodsOfCommObj goodsOfCommObj, Model uiModel, RedirectAttributes redirectAttributes,
+    public String addGoods(Model uiModel, RedirectAttributes redirectAttributes,
                            HttpServletRequest httpServletRequest) {
-        String scheme = httpServletRequest.getScheme() + "://";
-        String serverName = httpServletRequest.getServerName();
-        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
-        String contextPath = httpServletRequest.getContextPath();
-        String rdrct = "redirect:" + scheme + serverName + serverPort;
         CommercialObject co = (CommercialObject) uiModel.asMap().get("co");
-        if (co != null) {
-            goodsOfCommObj.setComm_obj_link(co.getId());
-        } else {
-            try {
-                if (goodsOfCommObj.getComm_obj_link() > 0)
-                    co = commercialObjectDao.getCommObjById(goodsOfCommObj.getComm_obj_link()).get(0);
-                uiModel.addAttribute("co", co);
-            } catch (Exception ex) {
-                redirectAttributes.addFlashAttribute("ex", ex);
-                return rdrct + "/message";
-            }
-        }
+        GoodsOfCommObj goodsOfCommObj = new GoodsOfCommObj();
 
         uiModel.addAttribute("title", "Додайте Основні групи товарів");
+        uiModel.addAttribute("co", co);
         try {
+            goodsOfCommObj.setComm_obj_link(co.getId());
             uiModel.addAttribute("goodsTop", catalogDao.getGoodsTop());
-
-            if (co != null) uiModel.addAttribute("goods_list",commercialObjectDao.getCommObjGoodsByCommObjlink(co.getId())) ;
+            uiModel.addAttribute("goods_list", commercialObjectDao.getCommObjGoodsByCommObjlink(co.getId()));
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
-            return rdrct + "/message";
+            return myRdrct(httpServletRequest) + "/message";
         }
         BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
         uiModel.addAttribute("command", goodsOfCommObj);
@@ -206,47 +191,48 @@ public class MasterController {
     @RequestMapping(value = "/addgoodspost", method = RequestMethod.POST)
     public String addGoodspost(@ModelAttribute GoodsOfCommObj goodsOfCommObj, HttpServletRequest httpServletRequest,
                                RedirectAttributes redirectAttributes, BindingResult bindingResult) {
-        String scheme = httpServletRequest.getScheme() + "://";
-        String serverName = httpServletRequest.getServerName();
-        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
-        String contextPath = httpServletRequest.getContextPath();
-        String rdrct = "redirect:" + scheme + serverName + serverPort;
+        CommercialObject co = new CommercialObject();
+        try {
+            co = commercialObjectDao.getCommObjById(goodsOfCommObj.getComm_obj_link()).get(0);
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
         goodsOfCommObjValidator.validate(goodsOfCommObj, bindingResult);
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("b1", bindingResult);
-            redirectAttributes.addFlashAttribute("goodsOfCommObj", goodsOfCommObj);
-            return rdrct + "/addgoods";
+            redirectAttributes.addFlashAttribute("co", co);
+            return myRdrct(httpServletRequest) + "/addgoods";
         }
         try {
-
             commercialObjectDao.addGoodsToCommObj(goodsOfCommObj);
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
-            return rdrct + "/message";
+            return myRdrct(httpServletRequest) + "/message";
         }
-        redirectAttributes.addFlashAttribute("goodsOfCommObj", goodsOfCommObj);
-        return rdrct + "/addgoods";
+        redirectAttributes.addFlashAttribute("co", co);
+        return myRdrct(httpServletRequest) + "/addgoods";
     }
 
     //next form UFOP
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addufop", method = RequestMethod.GET)
     public String addUfop(RedirectAttributes redirectAttributes,
-                                     HttpServletRequest httpServletRequest, Model uiModel) {
+                          HttpServletRequest httpServletRequest, Model uiModel) {
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
         Ufop ufop = (Ufop) uiModel.asMap().get("ufop");
-        if(ufop == null) ufop = new Ufop();
-        if(ufop.getNav()!=1)ufop.setNav(2);
+        if (ufop == null) ufop = new Ufop();
+        if (ufop.getNav() != 1) ufop.setNav(2);
         try {
             uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
             uiModel.addAttribute("actionlink", "/addufoppost");
             uiModel.addAttribute("buttonvalue", "Записати");
         } catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("ex", "addUfopPost"+ex);
+            redirectAttributes.addFlashAttribute("ex", "addUfopPost" + ex);
             return rdrct + "/message";
         }
         uiModel.addAttribute("title", "Інформація про суб'єкт господарювання");
@@ -275,17 +261,19 @@ public class MasterController {
             return rdrct + "/addufop";
         }
         try {
-            ufop= ufopDao.createUfop(ufop);
-            redirectAttributes.addFlashAttribute("ufop",ufop);
+            ufop = ufopDao.createUfop(ufop);
+            redirectAttributes.addFlashAttribute("ufop", ufop);
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return rdrct + "/message";
         }
         if (ufop.isAdditionalinformation()) return rdrct + "/addcontact";
         else {
-            switch (ufop.getNav()){
-                case 1:return rdrct + "/show_ufop?id="+ufop.getId()+"#tabs-2";
-                default:return rdrct + "/show_ufop?id="+ufop.getId()+"#tabs-1";
+            switch (ufop.getNav()) {
+                case 1:
+                    return rdrct + "/show_ufop?id=" + ufop.getId() + "#tabs-2";
+                default:
+                    return rdrct + "/show_ufop?id=" + ufop.getId() + "#tabs-1";
             }
 
 
@@ -491,7 +479,7 @@ public class MasterController {
             uiModel.addAttribute("ex", "не вірна вказівка на підприємця");
             return "message";
         } catch (Exception ex) {
-            uiModel.addAttribute("ex", "editUfopGet"+ex);
+            uiModel.addAttribute("ex", "editUfopGet" + ex);
             return "message";
         }
 
@@ -512,14 +500,15 @@ public class MasterController {
         try {
             ufopDao.editUfop(ufop);
         } catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("ex", "editufoppost"+ex);
+            redirectAttributes.addFlashAttribute("ex", "editufoppost" + ex);
             return myRdrct(httpServletRequest) + "/message";
         }
         return myRdrct(httpServletRequest) + "/show_ufop?id=" + ufop.getId();
     }
+
     //next form
     @PreAuthorize(value = "isAuthenticated()")
-    @RequestMapping(value = "edit_commobj",method = RequestMethod.GET)
+    @RequestMapping(value = "edit_commobj", method = RequestMethod.GET)
     public String editCommObjGet(@RequestParam(defaultValue = "1") String id, Model uiModel) {
         uiModel.addAttribute("title", "Редагування комерційного об'єкта");
         uiModel.addAttribute("actionlink", "/editcommobjpost");
@@ -546,50 +535,52 @@ public class MasterController {
             uiModel.addAttribute("ex", "не вірна вказівка на комерційний об'єкт");
             return "message";
         } catch (Exception ex) {
-            uiModel.addAttribute("ex", "editCommObjGet"+ex);
+            uiModel.addAttribute("ex", "editCommObjGet" + ex);
             return "message";
         }
 
         return "addcommobj";
     }
+
     @PreAuthorize(value = "isAuthenticated()")
-    @RequestMapping(value = "editcommobjpost",method = RequestMethod.POST)
+    @RequestMapping(value = "editcommobjpost", method = RequestMethod.POST)
     public String editCommObjPost(@ModelAttribute CommercialObject co, HttpServletRequest httpServletRequest,
-                                 RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+                                  RedirectAttributes redirectAttributes, BindingResult bindingResult) {
         commobjValidator.validate(co, bindingResult);
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("b1", bindingResult);
             redirectAttributes.addFlashAttribute("co", co);
-            return myRdrct(httpServletRequest) + "/edit_commobj?id="+co.getId();
+            return myRdrct(httpServletRequest) + "/edit_commobj?id=" + co.getId();
         }
         try {
             commercialObjectDao.updateCommObj(co);
         } catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("ex", "editCommObjPost "+ex);
+            redirectAttributes.addFlashAttribute("ex", "editCommObjPost " + ex);
             return myRdrct(httpServletRequest) + "/message";
         }
-        if (co.isAdditionalinformation()){
+        if (co.isAdditionalinformation()) {
             redirectAttributes.addFlashAttribute("co", co);
             return myRdrct(httpServletRequest) + "/addgoods";
-        }
-        else return myRdrct(httpServletRequest) + "/show_ufop?id=" + co.getUfop_link()+"#tabs-2";
+        } else return myRdrct(httpServletRequest) + "/show_ufop?id=" + co.getUfop_link() + "#tabs-2";
     }
+
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------DELETE UFOP-----------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     @PreAuthorize(value = "isAuthenticated()")
-    @RequestMapping(value = "deletegoods",method = RequestMethod.GET)
-    public String deleteGoodsPost(@RequestParam(defaultValue = "0") String id,@RequestParam(defaultValue = "0") String co, HttpServletRequest httpServletRequest,
+    @RequestMapping(value = "deletegoods", method = RequestMethod.GET)
+    public String deleteGoodsPost(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String co, HttpServletRequest httpServletRequest,
                                   RedirectAttributes redirectAttributes) {
-        try{
+        try {
             commercialObjectDao.deleteGoodsByCommObjLink(Long.parseLong(id));
-            redirectAttributes.addFlashAttribute("co",commercialObjectDao.getCommObjById(Long.parseLong(co)).get(0));
-        }catch (Exception ex){
-            redirectAttributes.addFlashAttribute("ex", "deleteGoodsPost <br />"+ex);
+            redirectAttributes.addFlashAttribute("co", commercialObjectDao.getCommObjById(Long.parseLong(co)).get(0));
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", "deleteGoodsPost <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
         }
         return myRdrct(httpServletRequest) + "/addgoods";
     }
+
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------AJAX HELPER---------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
@@ -679,7 +670,7 @@ public class MasterController {
 
             for (int i = 0; i <= downarticles.size() - 1; i++) {
 
-                option = option + "<option value=\"" + downarticles.get(i).getId() + "\">" + downarticles.get(i).getCaption() + "</option>";
+                option = option + "<option value=\"" + downarticles.get(i).getTreemark() + "\">" + downarticles.get(i).getCaption() + "</option>";
             }
 
         } catch (Exception ex) {
@@ -700,10 +691,7 @@ public class MasterController {
         if (param1.isEmpty()) return "Error: ID ФОП is Empty";
         if (param2.isEmpty()) return "Error: КВЕД is Empty";
         try {
-            kvedsUfop.setUfop_link(Long.parseLong(param1));
-            kvedsUfop.setKved_catalog_link(param2);
-            kvedsUfop.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
-            kvedDao.createEntrepreneursKveds(kvedsUfop);
+
         } catch (Exception ex) {
             return "Error: " + ex;
         }
@@ -725,7 +713,6 @@ public class MasterController {
             commercialObject.setObj_name(p5);
             commercialObject.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
 
-            commercialObjectDao.createCommObj(commercialObject);
         } catch (Exception ex) {
             return "Error: " + ex;
         }

@@ -14,7 +14,7 @@ import java.sql.Types;
  */
 public class SelectOffenseArticlesByCheck_event_link extends MappingSqlQuery<OffenseArticles>{
     private static final String SQL_SELECT_OFFENSE_ARTICLES = "SELECT oat.*,alt.caption FROM offense_articles_table oat " +
-            "INNER JOIN articles_law_catalog_table alt ON(alt.id=oat.articles_law_link) WHERE oat.check_event_link = :check_event_link";
+            "INNER JOIN articles_law_catalog_table alt ON(alt.treemark=oat.articles_law_link::ltree) WHERE oat.check_event_link = :check_event_link";
 
     public SelectOffenseArticlesByCheck_event_link(DataSource ds) {
         super(ds, SQL_SELECT_OFFENSE_ARTICLES);
@@ -26,7 +26,7 @@ public class SelectOffenseArticlesByCheck_event_link extends MappingSqlQuery<Off
         OffenseArticles offenseArticles = new OffenseArticles();
         offenseArticles.setId(resultSet.getLong("id"));
         offenseArticles.setCheck_event_link(resultSet.getLong("check_event_link"));
-        offenseArticles.setArticles_law_link(resultSet.getInt("Articles_law_link"));
+        offenseArticles.setArticles_law_link(resultSet.getString("Articles_law_link"));
         offenseArticles.setCaption(resultSet.getString("caption"));
         return offenseArticles;
     }

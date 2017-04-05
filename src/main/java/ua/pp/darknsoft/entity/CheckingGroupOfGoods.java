@@ -6,7 +6,7 @@ package ua.pp.darknsoft.entity;
 public class CheckingGroupOfGoods {
     private long id;
     private long check_event_link;
-    private long goods_catalog_link;
+    private String goods_catalog_link;
     private boolean checking;
     private boolean additionalinformation;
     private int nav;
@@ -27,11 +27,11 @@ public class CheckingGroupOfGoods {
         this.check_event_link = check_event_link;
     }
 
-    public long getGoods_catalog_link() {
+    public String getGoods_catalog_link() {
         return goods_catalog_link;
     }
 
-    public void setGoods_catalog_link(long goods_catalog_link) {
+    public void setGoods_catalog_link(String goods_catalog_link) {
         this.goods_catalog_link = goods_catalog_link;
     }
 

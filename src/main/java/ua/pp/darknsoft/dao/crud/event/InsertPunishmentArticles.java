@@ -16,7 +16,7 @@ public class InsertPunishmentArticles extends SqlUpdate{
     public InsertPunishmentArticles(DataSource ds) {
         super(ds, SQL_INSERT_PUNISHMENT_ARTICLES);
         super.declareParameter(new SqlOutParameter("check_event_link", Types.BIGINT));
-        super.declareParameter(new SqlOutParameter("articles_law_link", Types.INTEGER));
+        super.declareParameter(new SqlOutParameter("articles_law_link", Types.VARCHAR));
         compile();
     }
 }

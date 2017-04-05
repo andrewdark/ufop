@@ -154,7 +154,7 @@ public class EventController {
     public String addCheckGoodsPost(@ModelAttribute CheckingGroupOfGoods checkingGroupOfGoods, RedirectAttributes redirectAttributes,
                                     HttpServletRequest httpServletRequest, BindingResult bindingResult) {
         try {
-            if (checkingGroupOfGoods.getGoods_catalog_link() != 0)
+            if (!checkingGroupOfGoods.getGoods_catalog_link().equals("0"))
                 checkEventDao.createCheckingGroupOfGoods(checkingGroupOfGoods);
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(checkingGroupOfGoods.getCheck_event_link()).get(0));
             if (checkingGroupOfGoods.isAdditionalinformation()) {
@@ -224,7 +224,7 @@ public class EventController {
             return myRdrct(httpServletRequest) + "/addoffencearticles";
         }
         try {
-            if(offenseArticles.getArticles_law_link()!=0)
+            if(!offenseArticles.getArticles_law_link().isEmpty())
             checkEventDao.createOffenseArticles(offenseArticles);
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(offenseArticles.getCheck_event_link()).get(0));
         } catch (Exception ex) {
@@ -336,7 +336,7 @@ public class EventController {
             return myRdrct(httpServletRequest) + "/addpunishmentarticles";
         }
         try {
-            if(punishmentArticles.getArticles_law_link()!=0)
+            if(!punishmentArticles.getArticles_law_link().isEmpty())
             checkEventDao.createPunishmentArticlesByCheckEventLink(punishmentArticles);
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(punishmentArticles.getCheck_event_link()).get(0));
         } catch (Exception ex) {
@@ -440,7 +440,7 @@ public class EventController {
             redirectAttributes.addFlashAttribute("b1", bindingResult);
             try {
                 List<CheckEventSupplemented> event = checkEventDao.getCheckEventById(lawsuits.getCheck_event_link());
-                if (event.isEmpty()) return myRdrct(httpServletRequest) + "/addlawsuits";
+                //if (event.isEmpty()) return myRdrct(httpServletRequest) + "/addlawsuits";
                 redirectAttributes.addFlashAttribute("event", event.get(0));
             } catch (Exception ex) {
                 redirectAttributes.addFlashAttribute("ex", ex);

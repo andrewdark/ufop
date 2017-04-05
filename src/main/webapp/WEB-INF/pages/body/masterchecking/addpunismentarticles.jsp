@@ -57,7 +57,7 @@
         <select id="my_selecttop1" name="my_selecttop" onchange="looparticlesdown(2)">
             <option value=""></option>
             <c:forEach items="${articlesTop}" var="articlesTop">
-                <option value="${articlesTop.id}">${articlesTop.caption}</option>
+                <option value="${articlesTop.treemark}">${articlesTop.caption}</option>
             </c:forEach>
         </select><br/>
         <div id="ArticlesType2"></div>

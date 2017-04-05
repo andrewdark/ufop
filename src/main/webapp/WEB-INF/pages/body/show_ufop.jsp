@@ -86,26 +86,26 @@
                 <td></td>
             </tr>
             <c:if test="${not empty fulladdress}">
-                <tr>
-                    <td>Адреса реєстрації</td>
-                    <td>
-                        <c:forEach items="${fulladdress}" var="fulladdress">
-                            ${fulladdress.stype}: ${fulladdress.name}<br/>
-                        </c:forEach>
-                        <c:if test="${ufop.n_place_of_reg ne ''}">
-                            Дім: ${ufop.n_place_of_reg}<br/>
-                        </c:if>
-                        <c:if test="${ufop.b_place_of_reg ne ''}">
-                            Корпус: ${ufop.b_place_of_reg}<br/>
-                        </c:if>
-                        <c:if test="${ufop.f_place_of_reg ne ''}">
-                            Квартира: ${ufop.f_place_of_reg}<br/>
-                        </c:if>
+            <tr>
+                <td>Адреса реєстрації</td>
+                <td>
+                    <c:forEach items="${fulladdress}" var="fulladdress">
+                        ${fulladdress.stype}: ${fulladdress.name}<br/>
+                    </c:forEach>
+                    <c:if test="${ufop.n_place_of_reg ne ''}">
+                        Дім: ${ufop.n_place_of_reg}<br/>
+                    </c:if>
+                    <c:if test="${ufop.b_place_of_reg ne ''}">
+                        Корпус: ${ufop.b_place_of_reg}<br/>
+                    </c:if>
+                    <c:if test="${ufop.f_place_of_reg ne ''}">
+                        Квартира: ${ufop.f_place_of_reg}<br/>
+                    </c:if>
 
-                    </td>
-                    <td></td>
-                </tr>
-            </c:if>
+                </td>
+                <td></td>
+            </tr>
+        </c:if>
         </table>
 
     </div>
@@ -123,36 +123,39 @@
 
             </tr>
             <c:forEach items="${co_list}" var="co">
-                <tr>
+                <tr class="border_bottom">
                     <td>${co.obj_name}</td>
-                    <td>${co.obj_type}</td>
+                    <td>${co.s_obj_type}</td>
                     <td>
-                        <c:forEach items="${co.locationCatalog}" var="locationCatalog">
-                            ${locationCatalog.name}
-                        </c:forEach>
+                        <c:if test="${not empty co.locationCatalog}">
+                            <c:forEach items="${co.locationCatalog}" var="fulladdress">
+                                ${fulladdress.stype}: ${fulladdress.name}<br/>
+                            </c:forEach>
+                            <c:if test="${ufop.n_place_of_reg ne ''}">
+                                Дім:&nbsp;${ufop.n_place_of_reg}<br/>
+                            </c:if>
+                            <c:if test="${ufop.b_place_of_reg ne ''}">
+                                Корпус:&nbsp;${ufop.b_place_of_reg}<br/>
+                            </c:if>
+                            <c:if test="${ufop.f_place_of_reg ne ''}">
+                                Квартира:&nbsp;${ufop.f_place_of_reg}<br/>
+                            </c:if>
+                        </c:if>
                     </td>
-                    <td>
+
+                    <td width="50px">
                         <c:forEach items="${co.goodsList}" var="goodsList">
-                            ${goodsList.name}
+                           <span style="font-size: 14px;"> ${goodsList.name}</span><br/>
                         </c:forEach>
                     </td>
 
                     <td><sec:authorize access="isAuthenticated()">
-                        <a href="/edit_commobj?id=${co.id}">редагувати</a>
+                        <a href="/edit_commobj?id=${co.id}">ред.</a>
                     </sec:authorize>
                     </td>
 
                 </tr>
             </c:forEach>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                    <br/><br/>
-
-                </td>
-            </tr>
         </table>
     </div>
 

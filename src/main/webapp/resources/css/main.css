@@ -565,3 +565,6 @@ a.disabled {
 .b-popup select {
     width: 330px; /* Ширина списка в пикселах */
 }
+tr.border_bottom td {
+    border-bottom:1pt solid black;
+}

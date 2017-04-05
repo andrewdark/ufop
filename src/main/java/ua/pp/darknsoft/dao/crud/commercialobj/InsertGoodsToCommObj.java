@@ -16,7 +16,7 @@ public class InsertGoodsToCommObj extends SqlUpdate{
     public InsertGoodsToCommObj(DataSource ds) {
         super(ds, SQL_INSERT_GOODS);
         super.declareParameter(new SqlParameter("comm_obj_link", Types.BIGINT));
-        super.declareParameter(new SqlParameter("goods_catalog_link",Types.INTEGER));
+        super.declareParameter(new SqlParameter("goods_catalog_link",Types.VARCHAR));
         compile();
     }
 }

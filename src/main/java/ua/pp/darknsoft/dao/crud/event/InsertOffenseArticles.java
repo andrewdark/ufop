@@ -16,6 +16,6 @@ public class InsertOffenseArticles extends SqlUpdate{
     public InsertOffenseArticles(DataSource ds) {
         super(ds, SQL_INSERT);
         super.declareParameter(new SqlParameter("check_event_link", Types.BIGINT));
-        super.declareParameter(new SqlParameter("articles_law_link", Types.BIGINT));
+        super.declareParameter(new SqlParameter("articles_law_link", Types.VARCHAR));
     }
 }

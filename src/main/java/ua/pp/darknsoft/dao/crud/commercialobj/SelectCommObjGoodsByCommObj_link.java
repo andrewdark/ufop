@@ -15,7 +15,7 @@ import java.sql.Types;
  */
 public class SelectCommObjGoodsByCommObj_link extends MappingSqlQuery {
     private static final String SQL_SELECT_GOODS_CATALOG="SELECT g.*,gcat.name FROM commercial_object_basic_group_of_goods_table g " +
-            "INNER JOIN basic_group_of_goods_catalog_table gcat ON (gcat.id = g.goods_catalog_link) WHERE g.comm_obj_link = :comm_obj_link";
+            "INNER JOIN basic_group_of_goods_catalog_table gcat ON (gcat.treemark = g.goods_catalog_link::ltree) WHERE g.comm_obj_link = :comm_obj_link";
 
     public SelectCommObjGoodsByCommObj_link(DataSource ds) {
         super(ds, SQL_SELECT_GOODS_CATALOG);
@@ -27,7 +27,7 @@ public class SelectCommObjGoodsByCommObj_link extends MappingSqlQuery {
         GoodsOfCommObj goodsOfCommObj = new GoodsOfCommObj();
         goodsOfCommObj.setId(resultSet.getLong("id"));
         goodsOfCommObj.setComm_obj_link(resultSet.getLong("comm_obj_link"));
-        goodsOfCommObj.setGoods_catalog_link(resultSet.getInt("goods_catalog_link"));
+        goodsOfCommObj.setGoods_catalog_link(resultSet.getString("goods_catalog_link"));
         goodsOfCommObj.setName(resultSet.getString("name"));
         return goodsOfCommObj;
     }
