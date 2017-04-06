@@ -11,8 +11,17 @@ public class KvedsUfop {
     private String kved_catalog_link;
     private Timestamp datereg;
     private String creator_link;
-    private String Kved_catalog_label;
-    private String Kved_catalog_name;
+    private String kved_catalog_label;
+    private String kved_catalog_name;
+    private int nav;
+
+    public int getNav() {
+        return nav;
+    }
+
+    public void setNav(int nav) {
+        this.nav = nav;
+    }
 
     public long getId() {
         return id;
@@ -55,18 +64,18 @@ public class KvedsUfop {
     }
 
     public String getKved_catalog_label() {
-        return Kved_catalog_label;
+        return kved_catalog_label;
     }
 
     public void setKved_catalog_label(String kved_catalog_label) {
-        Kved_catalog_label = kved_catalog_label;
+        this.kved_catalog_label = kved_catalog_label;
     }
 
     public String getKved_catalog_name() {
-        return Kved_catalog_name;
+        return kved_catalog_name;
     }
 
     public void setKved_catalog_name(String kved_catalog_name) {
-        Kved_catalog_name = kved_catalog_name;
+        this.kved_catalog_name = kved_catalog_name;
     }
 }

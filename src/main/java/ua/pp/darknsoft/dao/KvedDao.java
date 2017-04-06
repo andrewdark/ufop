@@ -16,4 +16,6 @@ public interface KvedDao {
     List<KvedCatalog> getKvedCatalogByTreemark(String treemark, int level);
 
     List<KvedsUfop> getKvedsByUfopLink(long ufop_link);
+
+    void deleteKvedsByUfopLink(long id);
 }

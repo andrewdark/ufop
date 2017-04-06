@@ -31,6 +31,15 @@ public class Contact {
     private String sorganization;
     private String position;
     private String description;
+    private int nav;
+
+    public int getNav() {
+        return nav;
+    }
+
+    public void setNav(int nav) {
+        this.nav = nav;
+    }
 
     public long getId() {
         return id;

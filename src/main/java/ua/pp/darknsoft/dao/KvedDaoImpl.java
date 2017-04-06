@@ -8,10 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import ua.pp.darknsoft.dao.crud.kved.InsertKvedsUfop;
-import ua.pp.darknsoft.dao.crud.kved.SelectEntrepreneursKvedsByEntrepreneurLink;
-import ua.pp.darknsoft.dao.crud.kved.SelectKvedCatalogByTreemark;
-import ua.pp.darknsoft.dao.crud.kved.SelectKvedCatalogTop;
+import ua.pp.darknsoft.dao.crud.kved.*;
 import ua.pp.darknsoft.entity.KvedCatalog;
 import ua.pp.darknsoft.entity.KvedsUfop;
 
@@ -30,6 +27,7 @@ public class KvedDaoImpl implements KvedDao, Serializable {
     SelectKvedCatalogTop selectKvedCatalogTop;
     SelectKvedCatalogByTreemark selectKvedCatalogByTreemark;
     SelectEntrepreneursKvedsByEntrepreneurLink selectEntrepreneursKvedsByEntrepreneurLink;
+    DeleteKvedsByUfopLink deleteKvedsByUfopLink;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -38,7 +36,9 @@ public class KvedDaoImpl implements KvedDao, Serializable {
         this.selectKvedCatalogTop = new SelectKvedCatalogTop(dataSource);
         this.selectKvedCatalogByTreemark = new SelectKvedCatalogByTreemark(dataSource);
         this.selectEntrepreneursKvedsByEntrepreneurLink = new SelectEntrepreneursKvedsByEntrepreneurLink(dataSource);
+        this.deleteKvedsByUfopLink = new DeleteKvedsByUfopLink(dataSource);
     }
+
     @PreAuthorize(value = "isAuthenticated()")
     @Override
     public void createEntrepreneursKveds(KvedsUfop kvedsUfop) {
@@ -70,11 +70,20 @@ public class KvedDaoImpl implements KvedDao, Serializable {
         }
         return downloc;
     }
-@Override
-    public List<KvedsUfop> getKvedsByUfopLink(long ufop_link){
+
+    @Override
+    public List<KvedsUfop> getKvedsByUfopLink(long ufop_link) {
         Map<String, Long> bind = new HashMap<>();
-        bind.put("ufop_link",ufop_link);
+        bind.put("ufop_link", ufop_link);
         return selectEntrepreneursKvedsByEntrepreneurLink.executeByNamedParam(bind);
+
+    }
+
+    @Override
+    public void deleteKvedsByUfopLink(long id) {
+        Map<String, Long> bind = new HashMap<>(3);
+        bind.put("id", id);
+        deleteKvedsByUfopLink.updateByNamedParam(bind);
 
     }
 }

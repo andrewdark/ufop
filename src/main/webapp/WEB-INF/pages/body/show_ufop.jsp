@@ -112,7 +112,7 @@
 
     <div id="tabs-2">
 
-        <table>
+        <table width="100%">
             <caption>Перелік комерційних об'єктів</caption>
             <tr>
                 <th>НАЗВА</th>

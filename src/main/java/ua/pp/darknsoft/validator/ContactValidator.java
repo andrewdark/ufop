@@ -52,13 +52,12 @@ public class ContactValidator implements Validator {
             if(!isNumber(contact.getNumber_of_passport())){
                 errors.rejectValue("number_of_passport", "number_of_passport", "Не вірний формат");
             }
-            if(!contact.getEmail().isEmpty()){
-                if (!isEmail(contact.getEmail())) {
-                    errors.rejectValue("email", "email.notDog", "Not @email format");
-                }
+
+        }
+        if(!contact.getEmail().isEmpty()){
+            if (!isEmail(contact.getEmail())) {
+                errors.rejectValue("email", "email.notDog", "Not @email format");
             }
-
-
         }
         if(!contact.getBirthday().isEmpty()){
             if(!isDate(contact.getBirthday())){

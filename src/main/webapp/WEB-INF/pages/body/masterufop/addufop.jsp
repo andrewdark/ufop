@@ -85,7 +85,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <c:if test="${ufop.nav>0}">
+                        <c:if test="${ufop.nav!=0}">
                             Додати додаткові данні <form:checkbox path="additionalinformation"/>
                         </c:if>
                     </td>

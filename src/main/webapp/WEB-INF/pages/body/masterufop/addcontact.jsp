@@ -13,7 +13,7 @@
     <div class="clr"></div>
     <div class="post_content">
         <form:form action="${pageContext.servletContext.contextPath}${form_action_url}" method="post">
-
+            <form:hidden path="nav"/>
             <table width="100%">
                 <tr>
                     <td><form:label path="last_name">Прізвище:</form:label></td>
@@ -102,9 +102,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td>
-                        <button type="submit"><img src="resources/images/next_step.jpg"/></button>
-                    </td>
+                    <td><input type="submit" value="${buttonvalue}"/></td>
                     <td></td>
                 </tr>
             </table>
@@ -133,16 +131,17 @@
                 <td>${ufop.ufop_code}</td>
             </tr>
         </table>
-        <c:if test="${ufop.additionalinformation}">
+        <c:if test="${ufop.nav==1}">
             <form:form action="/addcontactpost_add_kved" method="post" commandName="command_ufop">
                 <form:hidden path="id"/>
                 <form:hidden path="ufop_is"/>
                 <form:hidden path="ufop_name"/>
                 <form:hidden path="ufop_code"/>
+                <form:hidden path="additionalinformation"/>
                 <input type="submit" value="перейти до КВЕДів"/>
             </form:form>
         </c:if>
-        <c:if test="${not ufop.additionalinformation}">
+        <c:if test="${ufop.nav!=1}">
             <form action="/show_ufop" method="get">
                 <input type="hidden" name="id" value="${ufop.id}"/>
                 <input type="submit" value="Завершити"/>

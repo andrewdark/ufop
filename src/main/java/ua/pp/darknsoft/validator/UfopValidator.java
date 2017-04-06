@@ -50,7 +50,9 @@ public class UfopValidator implements Validator {
                 errors.rejectValue("ufop_code", "ufop_code.lenght", "Суб'єкт з таким кодом вже існує");
             }
         }
-
+        if (!isNumber(ufop.getUfop_code())) {
+            errors.rejectValue("ufop_code", "ufop_code.format", "Не вірний формат");
+        }
         if (ufop.getUfop_is() == 0) {
             if (ufop.getUfop_code().length() != 10 && ufop.getUfop_code().length() > 0)
                 errors.rejectValue("ufop_code", "ufop_code.lenght", "Не вірний формат");
@@ -62,6 +64,7 @@ public class UfopValidator implements Validator {
                     errors.rejectValue("number_of_passport", "number_of_passport", "Не вірний формат");
                 }
             }
+
         }
         if (ufop.getUfop_is() == 1) {
             if (ufop.getUfop_code().length() != 8 && ufop.getUfop_code().length() > 0)

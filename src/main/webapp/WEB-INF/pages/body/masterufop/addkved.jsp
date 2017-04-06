@@ -13,25 +13,33 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content_wide">
-        ${previoskved}
+        <div id="kveds_list">
+            <c:if test="${not empty kveds_list}">
+                <c:forEach items="${kveds_list}" var="kveds_list">
+                    <li/>
+                    ${kveds_list.kved_catalog_label} - ${kveds_list.kved_catalog_name}  <a href="/deletekveds?id=${kveds_list.id}&ufop=${ufop.id}">Удалить</a> <br/>
+                </c:forEach>
+            </c:if>
+        </div>
 
             <form:form action="/addkvedpost" method="post">
                 <form:hidden path="ufop_link"/>
-                <table>
+                <form:hidden path="nav"/>
+                <table width="100%">
                     <tr>
                         <td><form:label path="kved_catalog_link">Вкажіть КВЕД</form:label></td>
                         <td><form:input id="kvedname" path="kved_catalog_link" onclick="javascript:KvedPopUpShow()"/></td>
-                        <td></td>
+                        <td><span class="error"><form:errors path="kved_catalog_link"/> </span> </td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td></td>
                         <td><input type="submit" value="Додати КВЕД" /></td>
+                        <td></td>
                     </tr>
                 </table>
             </form:form>
 
-            <c:if test="${nextstep==0}">
+            <c:if test="${ufop.nav==1}">
                 <form:form action="/addkved_add_commobj" method="post" commandName="command_ufop">
                     <form:hidden path="id"/>
                     <form:hidden path="ufop_is"/>
@@ -39,6 +47,12 @@
                     <form:hidden path="ufop_code"/>
                     <input type="submit" value="перейти до ком.об'єктів"/>
                 </form:form>
+            </c:if>
+            <c:if test="${ufop.nav!=1}">
+                <form action="/show_ufop" method="get">
+                    <input type="hidden" name="id" value="${ufop.id}"/>
+                    <input type="submit" value="Завершити"/>
+                </form>
             </c:if>
             <hr/>
             <h3>Інформація про суб'єкт господарювання</h3><br/>

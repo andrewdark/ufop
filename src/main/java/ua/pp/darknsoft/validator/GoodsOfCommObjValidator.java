@@ -51,13 +51,12 @@ boolean chech_goods = false;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "comm_obj_link", "comm_obj_link.empty", "comm_obj_link must not be empty.");
 
         if (chech_goods) {
-
                 errors.rejectValue("goods_catalog_link", "goods_catalog_link.full", "Група товарів вже існує"+str);
-
         }
         if(goodsOfCommObj.getComm_obj_link()<=0){
-            errors.rejectValue("comm_obj_link", "goods_catalog_link.empty", "Вкажіть комерційний об'єкт");
+            errors.rejectValue("comm_obj_link", "comm_obj_link.empty", "Вкажіть комерційний об'єкт");
         }
+        if(goodsOfCommObj.getGoods_catalog_link().equals("")) errors.rejectValue("goods_catalog_link", "goods_catalog_link.empty", "Виберіть групу товарів");
 
     }
 
