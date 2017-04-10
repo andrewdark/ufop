@@ -69,7 +69,7 @@ public class MasterController {
             //redirectAttributes.addFlashAttribute("ufop", ufop);
             return rdrct + "/show_ufop?id=" + ufop.getId() + "#tabs-2";
         } catch (IndexOutOfBoundsException ex) {
-            ufop.setNav(1);
+            ufop.setUfop_nav(1);
             redirectAttributes.addFlashAttribute("ufop", ufop);
             return rdrct + "/addufop";
         } catch (Exception ex) {
@@ -225,7 +225,7 @@ public class MasterController {
         String rdrct = "redirect:" + scheme + serverName + serverPort;
         Ufop ufop = (Ufop) uiModel.asMap().get("ufop");
         if (ufop == null) ufop = new Ufop();
-        if (ufop.getNav() != 1) ufop.setNav(2); //обратить внимание
+        if (ufop.getUfop_nav() != 1) ufop.setUfop_nav(2); //обратить внимание
         try {
             uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
             uiModel.addAttribute("actionlink", "/addufoppost");
@@ -246,33 +246,28 @@ public class MasterController {
     public String addUfopPost(@ModelAttribute Ufop ufop, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
                               Model uiModel, BindingResult bindingResult) {
 
-        String scheme = httpServletRequest.getScheme() + "://";
-        String serverName = httpServletRequest.getServerName();
-        String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
-        String contextPath = httpServletRequest.getContextPath();
-        String rdrct = "redirect:" + scheme + serverName + serverPort;
         ufopValidator.validate(ufop, bindingResult);
         if (bindingResult.hasErrors()) {
 
             uiModel.asMap().clear();
             redirectAttributes.addFlashAttribute("b", bindingResult);
             redirectAttributes.addFlashAttribute("ufop", ufop);
-            return rdrct + "/addufop";
+            return myRdrct(httpServletRequest) + "/addufop";
         }
         try {
             ufop = ufopDao.createUfop(ufop);
             redirectAttributes.addFlashAttribute("ufop", ufop);
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
-            return rdrct + "/message";
+            return myRdrct(httpServletRequest) + "/message";
         }
-        if (ufop.isAdditionalinformation()) return rdrct + "/addcontact";
+        if (ufop.isAdditionalinformation()) return myRdrct(httpServletRequest) + "/addcontact";
         else {
-            switch (ufop.getNav()) {
+            switch (ufop.getUfop_nav()) {
                 case 1:
-                    return rdrct + "/addcommobj";
+                    return myRdrct(httpServletRequest) + "/addcommobj";
                 default:
-                    return rdrct + "/show_ufop?id=" + ufop.getId() + "#tabs-1";
+                    return myRdrct(httpServletRequest) + "/show_ufop?id=" + ufop.getId() + "#tabs-1";
             }
 
 
@@ -294,7 +289,7 @@ public class MasterController {
         }
         else {
             kvedsUfop.setUfop_link(ufop.getId());
-            kvedsUfop.setNav(ufop.getNav());
+            kvedsUfop.setNav(ufop.getUfop_nav());
         }
 
         try {
@@ -316,14 +311,14 @@ public class MasterController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/addkvedpost", method = RequestMethod.POST)
-    public String addKvedUfopPost(@ModelAttribute KvedsUfop kvedsUfop, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
-                                  Model uiModel, BindingResult bindingResult) {
+    public String addKvedUfopPost(@ModelAttribute KvedsUfop kvedsUfop, HttpServletRequest httpServletRequest,
+                                  RedirectAttributes redirectAttributes, BindingResult bindingResult) {
 
 
         Ufop ufop = new Ufop();
         try {
             ufop = ufopDao.searchUfopById(kvedsUfop.getUfop_link()).get(0);
-            ufop.setNav(kvedsUfop.getNav());
+            ufop.setUfop_nav(kvedsUfop.getNav());
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
@@ -356,7 +351,7 @@ public class MasterController {
         String serverPort = (httpServletRequest.getServerPort() == 80) ? "" : ":" + httpServletRequest.getServerPort();
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
-        ufop.setNav(1);
+        ufop.setUfop_nav(1);
         redirectAttributes.addFlashAttribute("ufop", ufop);
         return rdrct + "/addcommobj";
     }
@@ -376,7 +371,7 @@ public class MasterController {
             return myRdrct(httpServletRequest) + "/message";
         } else {
             contact.setOrganization(ufop.getId());
-            contact.setNav(ufop.getNav());
+            contact.setNav(ufop.getUfop_nav());
         }
 
         try {
@@ -400,7 +395,7 @@ public class MasterController {
         Ufop ufop = new Ufop();
         try {
             ufop = ufopDao.searchUfopById(contact.getOrganization()).get(0);
-            ufop.setNav(contact.getNav());
+            ufop.setUfop_nav(contact.getNav());
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
@@ -426,7 +421,7 @@ public class MasterController {
     @RequestMapping(value = "/addcontactpost_add_kved")
     public String addcontactpost_add_kved(@ModelAttribute Ufop ufop, Model uiModel, HttpServletRequest httpServletRequest,
                                           RedirectAttributes redirectAttributes) {
-        ufop.setNav(1);
+        ufop.setUfop_nav(1);
         redirectAttributes.addFlashAttribute("ufop", ufop);
         return myRdrct(httpServletRequest) + "/addkved";
     }
@@ -442,7 +437,7 @@ public class MasterController {
         uiModel.addAttribute("buttonvalue", "редагувати");
         try {
             Ufop ufop = ufopDao.searchUfopById(Long.parseLong(id)).get(0);
-            ufop.setNav(0);
+            ufop.setUfop_nav(0);
             uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
             uiModel.addAttribute("ufop", ufop);
             //uiModel.addAttribute("command_ufop", ufop);
@@ -559,11 +554,14 @@ public class MasterController {
     }
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "deletekveds", method = RequestMethod.GET)
-    public String deleteKvedsPost(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String ufop, HttpServletRequest httpServletRequest,
+    public String deleteKvedsPost(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String ufop_id,@RequestParam(defaultValue = "0") String ufop_nav,
+                                  HttpServletRequest httpServletRequest,
                                   RedirectAttributes redirectAttributes) {
         try {
             kvedDao.deleteKvedsByUfopLink(Long.parseLong(id));
-            redirectAttributes.addFlashAttribute("ufop", ufopDao.searchUfopById(Long.parseLong(ufop)).get(0));
+            Ufop ufop = ufopDao.searchUfopById(Long.parseLong(ufop_id)).get(0);
+            ufop.setUfop_nav(Integer.parseInt(ufop_nav));
+            redirectAttributes.addFlashAttribute("ufop",ufop);
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", "deleteKvedsPost <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";

@@ -40,12 +40,12 @@ public class UfopValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ufop_is", "ufop_is.empty", "Зробіть свій вибір");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ufop_name", "ufop_name.empty", "* Обов'язкове поле");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ufop_code", "ufop_code.empty", "* Обов'язкове поле");
-        if(ufop.getNav()!=0){
+        if(ufop.getUfop_nav()!=0){
             if(ufop.getUfop_code().equals(sqlUfop.getUfop_code())){
                 errors.rejectValue("ufop_code", "ufop_code.lenght", "Суб'єкт з таким кодом вже існує");
             }
         }
-        if(ufop.getNav()==0){
+        if(ufop.getUfop_nav()==0){
             if(ufop.getUfop_code().equals(sqlUfop.getUfop_code()) && ufop.getId()!=sqlUfop.getId()){
                 errors.rejectValue("ufop_code", "ufop_code.lenght", "Суб'єкт з таким кодом вже існує");
             }

@@ -131,17 +131,18 @@
                 <td>${ufop.ufop_code}</td>
             </tr>
         </table>
-        <c:if test="${ufop.nav==1}">
+        <c:if test="${ufop.ufop_nav==1}">
             <form:form action="/addcontactpost_add_kved" method="post" commandName="command_ufop">
                 <form:hidden path="id"/>
                 <form:hidden path="ufop_is"/>
                 <form:hidden path="ufop_name"/>
                 <form:hidden path="ufop_code"/>
+                <form:hidden path="ufop_nav"/>
                 <form:hidden path="additionalinformation"/>
                 <input type="submit" value="перейти до КВЕДів"/>
             </form:form>
         </c:if>
-        <c:if test="${ufop.nav!=1}">
+        <c:if test="${ufop.ufop_nav!=1}">
             <form action="/show_ufop" method="get">
                 <input type="hidden" name="id" value="${ufop.id}"/>
                 <input type="submit" value="Завершити"/>

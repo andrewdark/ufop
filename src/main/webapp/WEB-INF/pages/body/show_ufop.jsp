@@ -22,10 +22,10 @@
                         <form:hidden path="ufop_is"/>
                         <form:hidden path="ufop_name"/>
                         <form:hidden path="ufop_code"/>
-                        <form:radiobutton path="nav" value="1"/> комерційний об'єкт
-                        <form:radiobutton path="nav" value="2"/> перевірку
-                        <form:radiobutton path="nav" value="3"/> КВЕДи
-                        <form:radiobutton path="nav" value="4"/> контакти
+                        <form:radiobutton path="ufop_nav" value="1"/> комерційний об'єкт
+                        <form:radiobutton path="ufop_nav" value="2"/> перевірку
+                        <form:radiobutton path="ufop_nav" value="3"/> КВЕДи
+                        <form:radiobutton path="ufop_nav" value="4"/> контакти
                     </td>
 
                     <td><input type="submit" value="Створити"/></td>

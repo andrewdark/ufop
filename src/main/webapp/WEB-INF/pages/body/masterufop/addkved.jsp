@@ -17,7 +17,7 @@
             <c:if test="${not empty kveds_list}">
                 <c:forEach items="${kveds_list}" var="kveds_list">
                     <li/>
-                    ${kveds_list.kved_catalog_label} - ${kveds_list.kved_catalog_name}  <a href="/deletekveds?id=${kveds_list.id}&ufop=${ufop.id}">Удалить</a> <br/>
+                    ${kveds_list.kved_catalog_label} - ${kveds_list.kved_catalog_name}  <a href="/deletekveds?id=${kveds_list.id}&ufop_id=${ufop.id}&ufop_nav=${ufop.ufop_nav}">Удалить</a> <br/>
                 </c:forEach>
             </c:if>
         </div>
@@ -39,16 +39,17 @@
                 </table>
             </form:form>
 
-            <c:if test="${ufop.nav==1}">
+            <c:if test="${ufop.ufop_nav==1}">
                 <form:form action="/addkved_add_commobj" method="post" commandName="command_ufop">
                     <form:hidden path="id"/>
                     <form:hidden path="ufop_is"/>
                     <form:hidden path="ufop_name"/>
                     <form:hidden path="ufop_code"/>
+                    <form:hidden path="ufop_nav"/>
                     <input type="submit" value="перейти до ком.об'єктів"/>
                 </form:form>
             </c:if>
-            <c:if test="${ufop.nav!=1}">
+            <c:if test="${ufop.ufop_nav!=1}">
                 <form action="/show_ufop" method="get">
                     <input type="hidden" name="id" value="${ufop.id}"/>
                     <input type="submit" value="Завершити"/>
@@ -89,7 +90,7 @@
 
     <div class="b-popup-content" id="setkved_popup">
 
-        <select id="my_selecttop1" name="my_selecttop" onchange="loopkveddown(2)" onmousedown="$(':first-child', this).remove(); this.onmousedown = null;">
+        <select id="my_selecttop1" name="my_selecttop" onchange="loopkveddown(2)" >
             <option value=""></option>
             <c:forEach items="${kvedTop}" var="kvedTop">
                 <option value="${kvedTop.treemark}">${kvedTop.label} - ${kvedTop.name}</option>

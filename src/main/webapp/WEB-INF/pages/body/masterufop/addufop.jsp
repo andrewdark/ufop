@@ -18,7 +18,7 @@
         <form:form action="${actionlink}" method="post">
             <%-- <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}"/> --%>
             <form:hidden path="id"/>
-            <form:hidden path="nav"/>
+            <form:hidden path="ufop_nav"/>
             <table>
                 <tr>
                     <td>ТИП</td>
@@ -85,7 +85,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <c:if test="${ufop.nav!=0}">
+                        <c:if test="${ufop.ufop_nav!=0}">
                             Додати додаткові данні <form:checkbox path="additionalinformation"/>
                         </c:if>
                     </td>

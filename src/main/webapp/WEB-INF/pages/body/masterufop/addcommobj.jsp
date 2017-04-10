@@ -59,9 +59,7 @@
 
                     <tr>
                         <td>
-
-                                Додати основні групи товарів <form:checkbox path="additionalinformation"/>
-
+                            Додати основні групи товарів <form:checkbox path="additionalinformation"/>
                         </td>
                         <td><input type="submit" value="${buttonvalue}"/></td>
                         <td></td>

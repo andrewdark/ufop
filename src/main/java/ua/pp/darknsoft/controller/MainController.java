@@ -17,10 +17,8 @@ import ua.pp.darknsoft.validator.ContactValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by Andrew on 10.01.2017.
@@ -207,7 +205,7 @@ public class MainController {
         String rdrct = "redirect:" + scheme + serverName + serverPort;
         redirectAttributes.addFlashAttribute("ufop", ufop);
         ufop.setAdditionalinformation(false);
-        switch (ufop.getNav()) {
+        switch (ufop.getUfop_nav()) {
             case 1:
                 return rdrct + "/addcommobj";
             case 2:

@@ -15,7 +15,7 @@
 
         <form:form action="/addcheckgoodspost" method="post">
             <form:hidden path="check_event_link"/>
-            <form:hidden path="nav"/>
+            <form:hidden path="ufop_nav"/>
             <table>
                 <tr>
                     <td><form:label path="goods_catalog_link">Віберіть групу товарів</form:label></td>
