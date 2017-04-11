@@ -112,12 +112,13 @@ public class EventController {
             }
 
             checkEventSupplemented.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
-            redirectAttributes.addFlashAttribute("event", checkEventDao.createEventSupplemented(checkEventSupplemented));
+            //redirectAttributes.addFlashAttribute("event", checkEventDao.createEventSupplemented(checkEventSupplemented));
+            checkEventSupplemented = checkEventDao.createEventSupplemented(checkEventSupplemented);
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
         }
-        return myRdrct(httpServletRequest) + "/addcheckgoods";
+        return myRdrct(httpServletRequest) + "/show_event?id="+checkEventSupplemented.getId();
     }
 
     //--------------ADD CHECK GOODS------------------------------------------------
@@ -476,6 +477,7 @@ public class EventController {
             //uiModel.addAttribute("",checkEventDao);
             uiModel.addAttribute("offensearticles",checkEventDao.getOffenseArticlesByCheckEventLink(checkEventSupplemented.getId()));
             uiModel.addAttribute("precaution",checkEventDao.getPrecautionByCheckEventLink(checkEventSupplemented.getId()));
+            uiModel.addAttribute("punishmentarticles",checkEventDao.getPunishmentArticlesByCheckEventLink(checkEventSupplemented.getId()));
             uiModel.addAttribute("testSanction",checkEventDao.getSanctionEventByCheckEventLink(checkEventSupplemented.getId()));
             uiModel.addAttribute("lawsuits",checkEventDao.getLawsuitsByCheckEventLink(checkEventSupplemented.getId()));
         } catch (IndexOutOfBoundsException ex) {

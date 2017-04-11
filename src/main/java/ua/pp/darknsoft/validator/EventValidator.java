@@ -25,6 +25,7 @@ public class EventValidator implements Validator {
         CheckEventSupplemented event = (CheckEventSupplemented) o;
         boolean co = false;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "event_date_begin", "event_date_begin.empty", "* обов'язкове поле");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "event_number", "event_number.empty", "* обов'язкове поле");
         if(event.getEvent_date_begin().equals("0001-01-01")) errors.rejectValue("event_date_begin", "event_date_begin.isEmpty", "* обов'язкове поле");
         if(event.getCheck_violation()==1) ValidationUtils.rejectIfEmptyOrWhitespace(errors, "event_result", "event_result.empty", "* обов'язкове поле");
         for(CheckingCommObj it: event.getCommobj_list()){

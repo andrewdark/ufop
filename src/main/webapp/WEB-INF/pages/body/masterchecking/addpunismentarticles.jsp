@@ -23,12 +23,16 @@
                     <td><span class="error"><form:errors path="articles_law_link" /></span> </td>
                 </tr>
                 <tr>
-                    <td><form:checkbox path="additionalinformation"/>Продовжити</td>
+                    <td><form:checkbox path="additionalinformation"/>Накласти штраф</td>
                     <td><input type="submit" value="додати статтю"></td>
                     <td></td>
                 </tr>
             </table>
         </form:form>
+        <form method="get" action="/show_event/">
+            <input type="hidden" name="id" value="${checkEvent.id}" />
+            <input type="submit" value="Завершити" />
+        </form>
         <hr />
         <table width="100%">
             <caption>Інформація про перевірку</caption>

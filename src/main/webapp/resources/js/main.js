@@ -442,3 +442,10 @@ function uPass() {
     $("#ufop_pass_1").hide();
     $("#passinfo").hide();
 }
+function isViolations0() {
+    $(".is_violation").hide();
+
+}
+function isViolations1() {
+    $(".is_violation").show();
+}

@@ -15,7 +15,7 @@
 
         <form:form action="/addcheckgoodspost" method="post">
             <form:hidden path="check_event_link"/>
-            <form:hidden path="ufop_nav"/>
+            <form:hidden path="nav"/>
             <table>
                 <tr>
                     <td><form:label path="goods_catalog_link">Віберіть групу товарів</form:label></td>
@@ -35,9 +35,12 @@
                 </tr>
             </table>
         </form:form>
-
+        <form method="get" action="/show_event/">
+            <input type="hidden" name="id" value="${checkEvent.id}" />
+            <input type="submit" value="Завершити" />
+        </form>
         <hr />
-        <table>
+        <table width="100%">
             <caption>Інформація про перевірку</caption>
             <tr>
                 <td>ІД</td>
@@ -58,6 +61,7 @@
         </table>
 
     </div>
+
     <div class="clr"></div>
 </div>
 <div class="b-popup" id="popup4">

@@ -44,8 +44,6 @@
                                 </c:if>
                             </tr>
                         </table>
-
-
                     </td>
                     <td><input type="submit" value="Внести"/></td>
 
@@ -87,13 +85,20 @@
                 <td></td>
             </tr>
             <tr>
-                <td>Забор матеріалу</td>
-                <td>${event.check_sampling}</td>
+                <td>Відбір матеріалу</td>
+                <td>
+                    <c:if test="${event.check_sampling==0}">Не проводився</c:if>
+                    <c:if test="${event.check_sampling==1}">Проводився</c:if>
+
+                </td>
                 <td></td>
             </tr>
             <tr>
                 <td>Результати проб</td>
-                <td>${event.result_sampling}</td>
+                <td>
+                    <c:if test="${event.result_sampling==0}">Відповідають вимогам</c:if>
+                    <c:if test="${event.result_sampling==1}">Не відповідають вимогам</c:if>
+                </td>
                 <td></td>
             </tr>
             <tr>
@@ -103,7 +108,11 @@
             </tr>
             <tr>
                 <td>Кінець перевірки</td>
-                <td>${event.event_date_end}</td>
+                <td>
+                    <c:if test="${event.event_date_end eq '0001-01-01'}">N/A</c:if>
+                    <c:if test="${event.event_date_end ne '0001-01-01'}">${event.event_date_end}</c:if>
+
+                </td>
                 <td></td>
             </tr>
             <tr>
@@ -196,6 +205,11 @@
         <c:if test="${event.check_violation==0}">Порушень не виявлено</c:if>
         <c:if test="${event.check_violation==1}">
             <c:if test="${empty testSanction}"><span>Інформація по накладеним санкціям відсутня</span></c:if>
+            <c:if test="${not empty punishmentarticles}">
+                <c:forEach items="${punishmentarticles}" var="punishmentarticles">
+                    <li /> ${punishmentarticles.name}
+                </c:forEach>
+            </c:if>
             <c:if test="${not empty testSanction}">
                 <c:forEach items="${testSanction}" var="testSanction">
                     <table width="100%">

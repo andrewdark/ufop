@@ -131,14 +131,14 @@
                             <c:forEach items="${co.locationCatalog}" var="fulladdress">
                                 ${fulladdress.stype}: ${fulladdress.name}<br/>
                             </c:forEach>
-                            <c:if test="${ufop.n_place_of_reg ne ''}">
-                                Дім:&nbsp;${ufop.n_place_of_reg}<br/>
+                            <c:if test="${co.n_place_of_reg ne ''}">
+                                Дім:&nbsp;${co.n_place_of_reg}<br/>
                             </c:if>
-                            <c:if test="${ufop.b_place_of_reg ne ''}">
-                                Корпус:&nbsp;${ufop.b_place_of_reg}<br/>
+                            <c:if test="${co.b_place_of_reg ne ''}">
+                                Корпус:&nbsp;${co.b_place_of_reg}<br/>
                             </c:if>
-                            <c:if test="${ufop.f_place_of_reg ne ''}">
-                                Квартира:&nbsp;${ufop.f_place_of_reg}<br/>
+                            <c:if test="${co.f_place_of_reg ne ''}">
+                                Квартира:&nbsp;${co.f_place_of_reg}<br/>
                             </c:if>
                         </c:if>
                     </td>
