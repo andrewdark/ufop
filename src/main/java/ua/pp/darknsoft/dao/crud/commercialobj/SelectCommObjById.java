@@ -19,7 +19,11 @@ import java.util.Map;
  */
 public class SelectCommObjById extends MappingSqlQuery<CommercialObject>{
     private SelectParentLocationByTreemark selectParentLocationByTreemark;
-    private static final String SELECT_UFOP_COMM_OBJ = "SELECT coet.*, cott.name s_obj_type FROM comm_object_table coet INNER JOIN commercial_object_type_table cott ON(cott.id = coet.obj_type) WHERE coet.id = :id";
+    private static final String SELECT_UFOP_COMM_OBJ = "SELECT coet.*, cott.name s_obj_type,drkt.title s_degree_risk_link " +
+            "FROM comm_object_table coet " +
+            "LEFT JOIN commercial_object_type_table cott ON(cott.id = coet.obj_type) " +
+            "LEFT JOIN degree_risk_catalog_table drkt ON(drkt.id = coet.degree_risk_link) " +
+            "WHERE coet.id = :id";
 
     public SelectCommObjById(DataSource ds) {
         super(ds, SELECT_UFOP_COMM_OBJ);
@@ -39,6 +43,8 @@ public class SelectCommObjById extends MappingSqlQuery<CommercialObject>{
         commObj.setN_place_of_reg(resultSet.getString("n_place_of_reg"));
         commObj.setF_place_of_reg(resultSet.getString("f_place_of_reg"));
         commObj.setB_place_of_reg(resultSet.getString("b_place_of_reg"));
+        commObj.setDegree_risk_link(resultSet.getInt("degree_risk_link"));
+        commObj.setS_degree_risk_link(resultSet.getString("s_degree_risk_link"));
         commObj.setLocationCatalog((List<LocationCatalog>) getLoc(resultSet.getString("a_place_of_reg")));
         commObj.setDescription(resultSet.getString("description"));
         return commObj;

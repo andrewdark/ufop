@@ -97,10 +97,15 @@ public class MasterController {
         try {
             uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
             Map<Integer, String> itemsType = new HashMap<>();
+            Map<Integer, String> itemsType2 = new HashMap<>();
             for (CommercialObjectType items : commercialObjectDao.getCommObjType()) {
                 itemsType.put(items.getId(), items.getName());
             }
+            for (DegreeRisk items2 : catalogDao.getDegreeRiskCatalog()) {
+                itemsType2.put(items2.getId(), items2.getTitle());
+            }
             uiModel.addAttribute("it", itemsType);
+            uiModel.addAttribute("degree_risk_list",itemsType2);
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex + " locationTop");
             return rdrct + "/message";
@@ -113,6 +118,7 @@ public class MasterController {
                 co = (CommercialObject) uiModel.asMap().get("co");
                 ufop = ufopDao.searchUfopById(co.getUfop_link()).get(0);
                 uiModel.addAttribute("ufop", ufop);
+
             } else {
                 co.setUfop_link(ufop.getId());
             }
@@ -492,10 +498,15 @@ public class MasterController {
             co.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString());
             uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
             Map<Integer, String> itemsType = new HashMap<>();
+            Map<Integer, String> itemsType2 = new HashMap<>();
             for (CommercialObjectType items : commercialObjectDao.getCommObjType()) {
                 itemsType.put(items.getId(), items.getName());
             }
+            for (DegreeRisk items2 : catalogDao.getDegreeRiskCatalog()) {
+                itemsType2.put(items2.getId(), items2.getTitle());
+            }
             uiModel.addAttribute("it", itemsType);
+            uiModel.addAttribute("degree_risk_list",itemsType2);
             uiModel.addAttribute("co", co);
             BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
             uiModel.addAttribute("command", co);

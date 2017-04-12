@@ -57,6 +57,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
         bind.put("n_place_of_reg", commercialObject.getN_place_of_reg());
         bind.put("f_place_of_reg", commercialObject.getF_place_of_reg());
         bind.put("b_place_of_reg", commercialObject.getB_place_of_reg());
+        bind.put("degree_risk_link",commercialObject.getDegree_risk_link());
         bind.put("description", commercialObject.getDescription());
         bind.put("creator_link", commercialObject.getCreator_link().toLowerCase());
 
@@ -78,6 +79,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
         bind.put("n_place_of_reg", commercialObject.getN_place_of_reg());
         bind.put("f_place_of_reg", commercialObject.getF_place_of_reg());
         bind.put("b_place_of_reg", commercialObject.getB_place_of_reg());
+        bind.put("degree_risk_link",commercialObject.getDegree_risk_link());
         bind.put("description", commercialObject.getDescription());
         bind.put("creator_link", commercialObject.getCreator_link().toLowerCase());
         KeyHolder keyHolder = new GeneratedKeyHolder();

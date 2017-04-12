@@ -177,7 +177,47 @@ public class EventController {
 
 
     }
+    //--------------ADD CHECK COMM OBJ------------------------------------------------
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "/addcheckcommobj", method = RequestMethod.GET)
+    public String addCheckCommObj(Model uiModel, RedirectAttributes redirectAttributes,
+                                HttpServletRequest httpServletRequest) {
+        uiModel.addAttribute("title", "Комерційні об'єкти");
+        CheckingCommObj checkingCommObj = new CheckingCommObj();
+        CheckEventSupplemented checkEvent = (CheckEventSupplemented) uiModel.asMap().get("event");
 
+        if (checkEvent == null) {
+            redirectAttributes.addFlashAttribute("ex", "Виберіть перевірку");
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        try {
+
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        uiModel.addAttribute("checkEvent", checkEvent);
+        checkingCommObj.setCheck_event_link(checkEvent.getId());
+        BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
+        uiModel.addAttribute("command", checkingCommObj);
+        uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
+        return "addcheckcommobj";
+    }
+
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "/addcheckcommobjpost", method = RequestMethod.POST)
+    public String addCheckCommObjPost(@ModelAttribute CheckingCommObj checkingCommObj, RedirectAttributes redirectAttributes,
+                                    HttpServletRequest httpServletRequest, BindingResult bindingResult) {
+        try {
+
+
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+
+    return myRdrct(httpServletRequest) + "addcheckcommobj";
+    }
     //-------ADD ARTICLES --------------
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addoffencearticles", method = RequestMethod.GET)
@@ -508,7 +548,7 @@ public class EventController {
             case 2:
                 return myRdrct(httpServletRequest) + "/addoffencearticles";
             case 3:
-                return myRdrct(httpServletRequest) + "/test";
+                return myRdrct(httpServletRequest) + "/addcheckcommobj";
             case 4:
                 return myRdrct(httpServletRequest) + "/addprecautions";
             case 5:

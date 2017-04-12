@@ -36,6 +36,11 @@
                         <td><span class="error"></span></td>
                     </tr>
                     <tr>
+                        <td><form:label path="degree_risk_link">Група ризику</form:label></td>
+                        <td><form:select path="degree_risk_link" items="${degree_risk_list}"/></td>
+                        <td><span class="error"></span></td>
+                    </tr>
+                    <tr>
                         <td><form:label path="a_place_of_reg">Адреса</form:label></td>
                         <td><form:input path="a_place_of_reg" id="a_place_of_reg"
                                         onclick="javascript:LocPopUpShow();"/></td>

@@ -95,7 +95,9 @@
     <definition extends="default" name="addpunishmentarticles">
         <put-attribute name="body" value="/WEB-INF/pages/body/masterchecking/addpunismentarticles.jsp"/>
     </definition>
-
+    <definition extends="default" name="addcheckcommobj">
+        <put-attribute name="body" value="/WEB-INF/pages/body/masterchecking/addcheckcommobj.jsp"/>
+    </definition>
     <!-- END OF BLOCK -->
     <definition extends="default" name="viewslist_ufop">
         <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_ufop.jsp"/>

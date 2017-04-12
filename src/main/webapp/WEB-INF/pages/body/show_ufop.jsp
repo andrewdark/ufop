@@ -117,6 +117,7 @@
             <tr>
                 <th>НАЗВА</th>
                 <th>ТИП</th>
+                <th>ГР.РИЗИКУ</th>
                 <th>АДРЕСА</th>
                 <th>Основна група товарів</th>
                 <th></th>
@@ -126,6 +127,7 @@
                 <tr class="border_bottom">
                     <td>${co.obj_name}</td>
                     <td>${co.s_obj_type}</td>
+                    <td>${co.s_degree_risk_link}</td>
                     <td>
                         <c:if test="${not empty co.locationCatalog}">
                             <c:forEach items="${co.locationCatalog}" var="fulladdress">

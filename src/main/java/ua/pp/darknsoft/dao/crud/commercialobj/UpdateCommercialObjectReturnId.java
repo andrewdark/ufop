@@ -12,7 +12,7 @@ import java.sql.Types;
 public class UpdateCommercialObjectReturnId extends SqlUpdate {
     private final static String SQL_INSERT_USER="UPDATE comm_object_table SET " +
             "ufop_link=:ufop_link,obj_type=:obj_type,obj_name=:obj_name,a_place_of_reg=:a_place_of_reg, " +
-            "n_place_of_reg=:n_place_of_reg,f_place_of_reg=:f_place_of_reg,b_place_of_reg=:b_place_of_reg, " +
+            "n_place_of_reg=:n_place_of_reg,f_place_of_reg=:f_place_of_reg,b_place_of_reg=:b_place_of_reg,degree_risk_link=:degree_risk_link, " +
             "creator_link=(SELECT id FROM user_table WHERE LOWER (username) = LOWER (:creator_link)),description=:description " +
             "WHERE id=:id";
 
@@ -26,6 +26,7 @@ public class UpdateCommercialObjectReturnId extends SqlUpdate {
         super.declareParameter(new SqlParameter("n_place_of_reg", Types.VARCHAR));
         super.declareParameter(new SqlParameter("f_place_of_reg", Types.VARCHAR));
         super.declareParameter(new SqlParameter("b_place_of_reg", Types.VARCHAR));
+        super.declareParameter(new SqlParameter("degree_risk_link", Types.INTEGER));
         super.declareParameter(new SqlParameter("creator_link", Types.VARCHAR));
         super.declareParameter(new SqlParameter("description", Types.VARCHAR));
         super.setGeneratedKeysColumnNames(new String[] {"id"});

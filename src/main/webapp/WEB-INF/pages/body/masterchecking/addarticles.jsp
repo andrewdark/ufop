@@ -29,6 +29,10 @@
                 </tr>
             </table>
         </form:form>
+        <form method="get" action="/show_event/">
+            <input type="hidden" name="id" value="${checkEvent.id}" />
+            <input type="submit" value="Завершити" />
+        </form>
         <hr />
         <table width="100%">
             <caption>Інформація про перевірку</caption>
@@ -49,10 +53,6 @@
             </tr>
         </table>
     </div>
-    <form method="get" action="/show_event/">
-        <input type="hidden" name="id" value="${checkEvent.id}" />
-        <input type="submit" value="Завершити" />
-    </form>
     <div class="clr"></div>
 </div>
 <div class="b-popup" id="popup5">
