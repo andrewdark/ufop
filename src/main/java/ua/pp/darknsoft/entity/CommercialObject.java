@@ -15,6 +15,8 @@ public class CommercialObject {
     private String n_place_of_reg;
     private String f_place_of_reg;
     private String b_place_of_reg;
+    private int degree_risk_link;
+    private String s_degree_risk_link;
     private Timestamp datereg;
     private String creator_link;
     private String description;
@@ -23,6 +25,14 @@ public class CommercialObject {
     private boolean additionalinformation;
     private int nav;
     private List<GoodsOfCommObj> goodsList;
+
+    public int getDegree_risk_link() { return degree_risk_link; }
+
+    public void setDegree_risk_link(int degree_risk_link) { this.degree_risk_link = degree_risk_link; }
+
+    public String getS_degree_risk_link() { return s_degree_risk_link; }
+
+    public void setS_degree_risk_link(String s_degree_risk_link) { this.s_degree_risk_link = s_degree_risk_link; }
 
     public long getId() {
         return id;
