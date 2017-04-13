@@ -128,7 +128,7 @@
                 <td>Групи товарів</td>
                 <td>
                     <c:forEach items="${event.groupofgoods_list}" var="groupofgoods_list">
-
+                       ${groupofgoods_list.s_goods_catalog_link}<br />
                     </c:forEach>
                 </td>
                 <td></td>

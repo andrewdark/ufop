@@ -23,21 +23,23 @@ import java.util.Map;
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private DataSource dataSource;
-    private SelectCheckEventByUfop_link selectCheckEventByUfop_link;
+
     private InsertCheckEventReturnId insertCheckEventReturnId;
     private InsertCheckingCommObj insertCheckingCommObj;
     private InsertOffenseArticles insertOffenseArticles;
     private InsertCheckingGoods insertCheckingGoods;
-    private SelectCheckEventById selectCheckEventById;
-    private InsertPrecaution insertPrecaution;
-    private SelectPrecautionByCheck_event_link selectPrecautionByCheck_event_link;
-    private InsertPunishmentArticles insertPunishmentArticles;
-    private SelectPunishmentArticlesByCheckEventLink selectPunishmentArticlesByCheckEventLink;
-    private SelectSanctionByCheckEventLink selectSanctionByCheckEventLink;
     private InsertSanction insertSanction;
     private InsertLawsuits insertLawsuits;
+    private InsertPrecaution insertPrecaution;
+    private InsertPunishmentArticles insertPunishmentArticles;
+    private SelectCheckEventById selectCheckEventById;
+    private SelectCheckEventByUfop_link selectCheckEventByUfop_link;
+    private SelectPrecautionByCheck_event_link selectPrecautionByCheck_event_link;
+    private SelectPunishmentArticlesByCheckEventLink selectPunishmentArticlesByCheckEventLink;
+    private SelectSanctionByCheckEventLink selectSanctionByCheckEventLink;
     private SelectLawsuitsByCheck_event_link selectLawsuitsByCheck_event_link;
     private SelectOffenseArticlesByCheck_event_link selectOffenseArticlesByCheck_event_link;
+    private SelectCheckGoodsByEvent_link selectCheckGoodsByEvent_link;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -58,8 +60,15 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.insertLawsuits = new InsertLawsuits(dataSource);
         this.selectLawsuitsByCheck_event_link = new SelectLawsuitsByCheck_event_link(dataSource);
         this.selectOffenseArticlesByCheck_event_link = new SelectOffenseArticlesByCheck_event_link(dataSource);
+        this.selectCheckGoodsByEvent_link = new SelectCheckGoodsByEvent_link(dataSource);
     }
 
+    @Override
+    public List<CheckingGroupOfGoods> getCheckingGroupOfGoodsByCheckEventLink(long check_event_link) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("check_event_link", check_event_link);
+        return selectCheckGoodsByEvent_link.executeByNamedParam(bind);
+    }
     @Override
     public List<Sanction> getSanctionEventByCheckEventLink(long check_event_link) {
         Map<String, Long> bind = new HashMap<>();

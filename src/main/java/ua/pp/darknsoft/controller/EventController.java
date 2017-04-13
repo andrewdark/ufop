@@ -514,6 +514,7 @@ public class EventController {
             if (checkEventSupplemented == null) {
                 checkEventSupplemented = checkEventDao.getCheckEventById(Long.parseLong(id)).get(0);
             }
+            checkEventSupplemented.setGroupofgoods_list(checkEventDao.getCheckingGroupOfGoodsByCheckEventLink(Long.parseLong(id)));
             //uiModel.addAttribute("",checkEventDao);
             uiModel.addAttribute("offensearticles",checkEventDao.getOffenseArticlesByCheckEventLink(checkEventSupplemented.getId()));
             uiModel.addAttribute("precaution",checkEventDao.getPrecautionByCheckEventLink(checkEventSupplemented.getId()));

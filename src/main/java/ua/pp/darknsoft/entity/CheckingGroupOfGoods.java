@@ -7,6 +7,7 @@ public class CheckingGroupOfGoods {
     private long id;
     private long check_event_link;
     private String goods_catalog_link;
+    private String s_goods_catalog_link;
     private boolean checking;
     private boolean additionalinformation;
     private int nav;
@@ -53,5 +54,13 @@ public class CheckingGroupOfGoods {
 
     public void setAdditionalinformation(boolean additionalinformation) {
         this.additionalinformation = additionalinformation;
+    }
+
+    public String getS_goods_catalog_link() {
+        return s_goods_catalog_link;
+    }
+
+    public void setS_goods_catalog_link(String s_goods_catalog_link) {
+        this.s_goods_catalog_link = s_goods_catalog_link;
     }
 }
