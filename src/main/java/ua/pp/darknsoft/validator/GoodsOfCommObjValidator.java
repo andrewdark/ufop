@@ -34,13 +34,13 @@ public class GoodsOfCommObjValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         GoodsOfCommObj goodsOfCommObj = (GoodsOfCommObj) o;
-boolean chech_goods = false;
         String str="";
         try {
             List<GoodsOfCommObj> goods_list =  commercialObjectDao.getCommObjGoodsByCommObjlink(goodsOfCommObj.getComm_obj_link());
             for (GoodsOfCommObj items : goods_list
                  ) {
-                if(goodsOfCommObj.getGoods_catalog_link()==items.getGoods_catalog_link()) chech_goods = true;
+                if(goodsOfCommObj.getGoods_catalog_link().equals(items.getGoods_catalog_link()))
+                    errors.rejectValue("goods_catalog_link", "goods_catalog_link.full", "Група товарів вже існує"+str);
 
             }
 
@@ -50,9 +50,6 @@ boolean chech_goods = false;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "comm_obj_link", "comm_obj_link.empty", "comm_obj_link must not be empty.");
 
-        if (chech_goods) {
-                errors.rejectValue("goods_catalog_link", "goods_catalog_link.full", "Група товарів вже існує"+str);
-        }
         if(goodsOfCommObj.getComm_obj_link()<=0){
             errors.rejectValue("comm_obj_link", "comm_obj_link.empty", "Вкажіть комерційний об'єкт");
         }
