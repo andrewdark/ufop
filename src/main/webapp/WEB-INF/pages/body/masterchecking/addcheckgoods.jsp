@@ -12,7 +12,12 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content_wide">
-
+        <div id="goods_list">
+            <c:forEach items="${checkingGoods}" var="checkingGoods">
+                <li />${checkingGoods.s_goods_catalog_link}
+                <a href="/deletecheckinggroupofgoods?id=${checkingGoods.id}&EventId=${checkingGoods.check_event_link}">Видалити</a><br />
+            </c:forEach>
+        </div>
         <form:form action="/addcheckgoodspost" method="post">
             <form:hidden path="check_event_link"/>
             <form:hidden path="nav"/>
@@ -30,16 +35,18 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><form:checkbox path="additionalinformation"/>Завершити </td>
+                    <td>
+                            <%-- form:checkbox path="additionalinformation"/>Завершити --%>
+                    </td>
                     <td><input type="submit" value="Додати"/></td>
                 </tr>
             </table>
         </form:form>
         <form method="get" action="/show_event/">
-            <input type="hidden" name="id" value="${checkEvent.id}" />
-            <input type="submit" value="Завершити" />
+            <input type="hidden" name="id" value="${checkEvent.id}"/>
+            <input type="submit" value="Завершити"/>
         </form>
-        <hr />
+        <hr/>
         <table width="100%">
             <caption>Інформація про перевірку</caption>
             <tr>

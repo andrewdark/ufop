@@ -12,7 +12,13 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content_wide">
-
+        <div id="punishmentArticles_list">
+            <c:forEach items="${punishmentArticles_list}" var="punishmentArticles_list">
+                <li />${punishmentArticles_list.caption}
+                <a href="/deletepunishmentarticles?id=${punishmentArticles_list.id}&EventId=${punishmentArticles_list.check_event_link}">Видалити</a>
+                <br />
+            </c:forEach>
+        </div>
         <form:form method="post" action="/addpunishmentarticlespost">
             <form:hidden path="check_event_link"/>
             <table>

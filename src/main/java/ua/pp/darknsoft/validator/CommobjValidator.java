@@ -13,7 +13,7 @@ import ua.pp.darknsoft.entity.CommercialObject;
 public class CommobjValidator implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
-        return false;
+        return CommercialObject.class.isAssignableFrom(aClass);
     }
 
     @Override

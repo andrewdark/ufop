@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Andrew on 29.03.2017.
  */
 @Component
-public class PunismentArticlesValidator implements Validator {
+public class PunishmentArticlesValidator implements Validator {
     @Autowired
     CheckEventDao checkEventDao;
     @Override
@@ -30,7 +30,7 @@ public class PunismentArticlesValidator implements Validator {
             List<PunishmentArticles> list = checkEventDao.getPunishmentArticlesByCheckEventLink(punishmentArticles.getCheck_event_link());
             if(!list.isEmpty()){
                 for (PunishmentArticles items: list){
-                    if(items.getArticles_law_link() == punishmentArticles.getArticles_law_link())errors.rejectValue("articles_law_link", "articles_law_link.lenght", "Данна стаття вже добавлена");
+                    if(items.getArticles_law_link().equals(punishmentArticles.getArticles_law_link()))errors.rejectValue("articles_law_link", "articles_law_link.lenght", "Данна стаття вже добавлена");
                 }
 
             }

@@ -31,7 +31,7 @@
             <c:if test="${not empty command.punishmentArticlesList}">
                 <c:forEach items="${command.punishmentArticlesList}" var="pa">
                     <li/>
-                    ${pa.name}<br/>
+                    ${pa.caption}<br/>
                 </c:forEach>
             </c:if>
             <c:if test="${not empty testSanction}">

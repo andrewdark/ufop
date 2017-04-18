@@ -1,6 +1,5 @@
 package ua.pp.darknsoft.controller;
 
-import com.sun.javafx.sg.prism.NGShape;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,13 +34,15 @@ public class EventController {
     @Autowired
     EventValidator eventValidator;
     @Autowired
+    CheckingGoodsValidator checkingGoodsValidator;
+    @Autowired
     PrecautionValidator precautionValidator;
     @Autowired
     SanctionValidator sanctionValidator;
     @Autowired
     LawSuitsValidator lawSuitsValidator;
     @Autowired
-    PunismentArticlesValidator punismentArticlesValidator;
+    PunishmentArticlesValidator punishmentArticlesValidator;
     @Autowired
     OffenseArticlesValidator offenseArticlesValidator;
 
@@ -118,7 +119,7 @@ public class EventController {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
         }
-        return myRdrct(httpServletRequest) + "/show_event?id="+checkEventSupplemented.getId();
+        return myRdrct(httpServletRequest) + "/show_event?id=" + checkEventSupplemented.getId();
     }
 
     //--------------ADD CHECK GOODS------------------------------------------------
@@ -136,8 +137,9 @@ public class EventController {
         }
         try {
             uiModel.addAttribute("goodsTop", catalogDao.getGoodsTop());
+            uiModel.addAttribute("checkingGoods", checkEventDao.getCheckingGroupOfGoodsByCheckEventLink(checkEvent.getId()));
         } catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("ex", ex);
+            redirectAttributes.addFlashAttribute("ex", "Method: addCheckGoods() <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
         }
         uiModel.addAttribute("checkEvent", checkEvent);
@@ -154,8 +156,14 @@ public class EventController {
     @RequestMapping(value = "/addcheckgoodspost", method = RequestMethod.POST)
     public String addCheckGoodsPost(@ModelAttribute CheckingGroupOfGoods checkingGroupOfGoods, RedirectAttributes redirectAttributes,
                                     HttpServletRequest httpServletRequest, BindingResult bindingResult) {
+        checkingGoodsValidator.validate(checkingGroupOfGoods, bindingResult);
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("b1", bindingResult);
+            redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(checkingGroupOfGoods.getCheck_event_link()).get(0));
+            return myRdrct(httpServletRequest) + "/addcheckgoods";
+        }
         try {
-            if (!checkingGroupOfGoods.getGoods_catalog_link().equals("0"))
+            if (!checkingGroupOfGoods.getGoods_catalog_link().isEmpty())
                 checkEventDao.createCheckingGroupOfGoods(checkingGroupOfGoods);
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(checkingGroupOfGoods.getCheck_event_link()).get(0));
             if (checkingGroupOfGoods.isAdditionalinformation()) {
@@ -171,17 +179,18 @@ public class EventController {
             } else return myRdrct(httpServletRequest) + "/addcheckgoods";
 
         } catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("ex", ex);
+            redirectAttributes.addFlashAttribute("ex", "Method: addCheckGoodsPost() <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
         }
 
 
     }
+
     //--------------ADD CHECK COMM OBJ------------------------------------------------
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addcheckcommobj", method = RequestMethod.GET)
     public String addCheckCommObj(Model uiModel, RedirectAttributes redirectAttributes,
-                                HttpServletRequest httpServletRequest) {
+                                  HttpServletRequest httpServletRequest) {
         uiModel.addAttribute("title", "Комерційні об'єкти");
         CheckingCommObj checkingCommObj = new CheckingCommObj();
         CheckEventSupplemented checkEvent = (CheckEventSupplemented) uiModel.asMap().get("event");
@@ -207,7 +216,7 @@ public class EventController {
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addcheckcommobjpost", method = RequestMethod.POST)
     public String addCheckCommObjPost(@ModelAttribute CheckingCommObj checkingCommObj, RedirectAttributes redirectAttributes,
-                                    HttpServletRequest httpServletRequest, BindingResult bindingResult) {
+                                      HttpServletRequest httpServletRequest, BindingResult bindingResult) {
         try {
 
 
@@ -216,8 +225,9 @@ public class EventController {
             return myRdrct(httpServletRequest) + "/message";
         }
 
-    return myRdrct(httpServletRequest) + "addcheckcommobj";
+        return myRdrct(httpServletRequest) + "addcheckcommobj";
     }
+
     //-------ADD ARTICLES --------------
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addoffencearticles", method = RequestMethod.GET)
@@ -228,6 +238,7 @@ public class EventController {
         CheckEventSupplemented checkEvent = (CheckEventSupplemented) uiModel.asMap().get("event");
         try {
             uiModel.addAttribute("articlesTop", catalogDao.getArticleTop());
+            uiModel.addAttribute("offenseArticles_list",checkEventDao.getOffenseArticlesByCheckEventLink(checkEvent.getId()));
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
@@ -239,7 +250,7 @@ public class EventController {
         offenseArticles.setCheck_event_link(checkEvent.getId());
         uiModel.addAttribute("checkEvent", checkEvent);
         BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
-        uiModel.addAttribute("command",offenseArticles);
+        uiModel.addAttribute("command", offenseArticles);
         uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
         return "addarticles";
     }
@@ -253,7 +264,7 @@ public class EventController {
             redirectAttributes.addFlashAttribute("b1", bindingResult);
             try {
                 List<CheckEventSupplemented> event = null;
-                if((Long)offenseArticles.getCheck_event_link() != null)
+                if ((Long) offenseArticles.getCheck_event_link() != null)
                     event = checkEventDao.getCheckEventById(offenseArticles.getCheck_event_link());
                 if (event.isEmpty()) return myRdrct(httpServletRequest) + "/addoffencearticles";
                 redirectAttributes.addFlashAttribute("event", event.get(0));
@@ -265,8 +276,8 @@ public class EventController {
             return myRdrct(httpServletRequest) + "/addoffencearticles";
         }
         try {
-            if(!offenseArticles.getArticles_law_link().isEmpty())
-            checkEventDao.createOffenseArticles(offenseArticles);
+            if (!offenseArticles.getArticles_law_link().isEmpty())
+                checkEventDao.createOffenseArticles(offenseArticles);
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(offenseArticles.getCheck_event_link()).get(0));
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
@@ -337,16 +348,18 @@ public class EventController {
     //---next form
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addpunishmentarticles", method = RequestMethod.GET)
-    public String addPunismentArticles(Model uiModel, RedirectAttributes redirectAttributes,
+    public String addPunishmentArticles(Model uiModel, RedirectAttributes redirectAttributes,
                                        HttpServletRequest httpServletRequest) {
         PunishmentArticles punishmentArticles = new PunishmentArticles();
+        CheckEventSupplemented checkEvent = (CheckEventSupplemented) uiModel.asMap().get("event");
         try {
             uiModel.addAttribute("articlesTop", catalogDao.getArticleTop());
+            uiModel.addAttribute("punishmentArticles_list",checkEventDao.getPunishmentArticlesByCheckEventLink(checkEvent.getId()));
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
         }
-        CheckEventSupplemented checkEvent = (CheckEventSupplemented) uiModel.asMap().get("event");
+
         uiModel.addAttribute("title", "Статті покарання");
         uiModel.addAttribute("checkEvent", checkEvent);
         BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
@@ -358,35 +371,35 @@ public class EventController {
 
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addpunishmentarticlespost", method = RequestMethod.POST)
-    public String addPunismentArticlesPost(@ModelAttribute PunishmentArticles punishmentArticles, HttpServletRequest httpServletRequest,
+    public String addPunishmentArticlesPost(@ModelAttribute PunishmentArticles punishmentArticles, HttpServletRequest httpServletRequest,
                                            RedirectAttributes redirectAttributes, BindingResult bindingResult) {
-        punismentArticlesValidator.validate(punishmentArticles, bindingResult);
+        punishmentArticlesValidator.validate(punishmentArticles, bindingResult);
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("b1", bindingResult);
             try {
                 List<CheckEventSupplemented> event = null;
-                if((Long)punishmentArticles.getCheck_event_link() != null)
-                 event = checkEventDao.getCheckEventById(punishmentArticles.getCheck_event_link());
+                if ((Long) punishmentArticles.getCheck_event_link() != null)
+                    event = checkEventDao.getCheckEventById(punishmentArticles.getCheck_event_link());
                 if (event.isEmpty()) return myRdrct(httpServletRequest) + "/addpunishmentarticles";
                 redirectAttributes.addFlashAttribute("event", event.get(0));
             } catch (Exception ex) {
-                redirectAttributes.addFlashAttribute("ex", "/addaddpunishmentarticlespost - punismentArticlesValidator.validate<br />" + ex);
+                redirectAttributes.addFlashAttribute("ex", "/addaddpunishmentarticlespost - punishmentArticlesValidator.validate<br />" + ex);
                 return myRdrct(httpServletRequest) + "/message";
             }
 
             return myRdrct(httpServletRequest) + "/addpunishmentarticles";
         }
         try {
-            if(!punishmentArticles.getArticles_law_link().isEmpty())
-            checkEventDao.createPunishmentArticlesByCheckEventLink(punishmentArticles);
+            if (!punishmentArticles.getArticles_law_link().isEmpty())
+                checkEventDao.createPunishmentArticlesByCheckEventLink(punishmentArticles);
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(punishmentArticles.getCheck_event_link()).get(0));
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", "/addaddpunishmentarticlespost - createPunishmentArticles<br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
         }
-        if(punishmentArticles.isAdditionalinformation())return myRdrct(httpServletRequest) + "/addsanctions";
-            else
-        return myRdrct(httpServletRequest) + "/addpunishmentarticles";
+        if (punishmentArticles.isAdditionalinformation()) return myRdrct(httpServletRequest) + "/addsanctions";
+        else
+            return myRdrct(httpServletRequest) + "/addpunishmentarticles";
     }
 
     //---NEXT PAGE--
@@ -399,7 +412,7 @@ public class EventController {
         CheckEventSupplemented checkEvent = (CheckEventSupplemented) uiModel.asMap().get("event");
         try {
             sanction.setPunishmentArticlesList(checkEventDao.getPunishmentArticlesByCheckEventLink(checkEvent.getId()));
-            uiModel.addAttribute("testSanction",checkEventDao.getSanctionEventByCheckEventLink(checkEvent.getId()));
+            uiModel.addAttribute("testSanction", checkEventDao.getSanctionEventByCheckEventLink(checkEvent.getId()));
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", "/addsanctions <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
@@ -439,7 +452,7 @@ public class EventController {
             return myRdrct(httpServletRequest) + "/message";
         }
 
-        return myRdrct(httpServletRequest) + "/show_event?id="+sanction.getCheck_event_link()+"#tabs-3";
+        return myRdrct(httpServletRequest) + "/show_event?id=" + sanction.getCheck_event_link() + "#tabs-3";
     }
 
     //---NEXT PAGE--
@@ -448,16 +461,16 @@ public class EventController {
     public String addLawSuits(Model uiModel, RedirectAttributes redirectAttributes,
                               HttpServletRequest httpServletRequest) {
         Lawsuits lawsuits = new Lawsuits();
-        Map<Integer,String> select = new HashMap<>();
+        Map<Integer, String> select = new HashMap<>();
 
 
-        try{
-            for (LawsuitsResultCatalog items: catalogDao.getLawsuitsResultCatalog()
-                 ) {
-                select.put(items.getId(),items.getName());
+        try {
+            for (LawsuitsResultCatalog items : catalogDao.getLawsuitsResultCatalog()
+                    ) {
+                select.put(items.getId(), items.getName());
             }
-            uiModel.addAttribute("select",select);
-        }catch (Exception ex){
+            uiModel.addAttribute("select", select);
+        } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", "/addsanctionspost - checkEventDao.getCheckEventById <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
         }
@@ -497,7 +510,7 @@ public class EventController {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
         }
-        return myRdrct(httpServletRequest) + "/show_event?id="+lawsuits.getCheck_event_link()+"#tabs-4";
+        return myRdrct(httpServletRequest) + "/show_event?id=" + lawsuits.getCheck_event_link() + "#tabs-4";
     }
 
 
@@ -516,11 +529,11 @@ public class EventController {
             }
             checkEventSupplemented.setGroupofgoods_list(checkEventDao.getCheckingGroupOfGoodsByCheckEventLink(Long.parseLong(id)));
             //uiModel.addAttribute("",checkEventDao);
-            uiModel.addAttribute("offensearticles",checkEventDao.getOffenseArticlesByCheckEventLink(checkEventSupplemented.getId()));
-            uiModel.addAttribute("precaution",checkEventDao.getPrecautionByCheckEventLink(checkEventSupplemented.getId()));
-            uiModel.addAttribute("punishmentarticles",checkEventDao.getPunishmentArticlesByCheckEventLink(checkEventSupplemented.getId()));
-            uiModel.addAttribute("testSanction",checkEventDao.getSanctionEventByCheckEventLink(checkEventSupplemented.getId()));
-            uiModel.addAttribute("lawsuits",checkEventDao.getLawsuitsByCheckEventLink(checkEventSupplemented.getId()));
+            uiModel.addAttribute("offensearticles", checkEventDao.getOffenseArticlesByCheckEventLink(checkEventSupplemented.getId()));
+            uiModel.addAttribute("precaution", checkEventDao.getPrecautionByCheckEventLink(checkEventSupplemented.getId()));
+            uiModel.addAttribute("punishmentarticles", checkEventDao.getPunishmentArticlesByCheckEventLink(checkEventSupplemented.getId()));
+            uiModel.addAttribute("testSanction", checkEventDao.getSanctionEventByCheckEventLink(checkEventSupplemented.getId()));
+            uiModel.addAttribute("lawsuits", checkEventDao.getLawsuitsByCheckEventLink(checkEventSupplemented.getId()));
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такої перевірки не знайдено");
             return "message";
@@ -563,6 +576,52 @@ public class EventController {
 
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------DELETE METHOD-----------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/deletecheckinggroupofgoods", method = RequestMethod.GET)
+    public String deleteCheckingGroupOfGoods(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String EventId,
+                                              HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+        try {
+            checkEventDao.deleteCheckingGroupOfGoods(Long.parseLong(id));
+            redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
+        } catch (Exception ex) {
+            String error = "Method: deleteCheckingGroupOfGoods.<br /> String id = "+id+" String EventId=" + EventId + "<br />"+ex;
+            redirectAttributes.addFlashAttribute("ex", error);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+
+        return myRdrct(httpServletRequest) + "/addcheckgoods";
+    }
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/deleteoffensearticles", method = RequestMethod.GET)
+    public String deleteOffenseArticles(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String EventId,
+                                             HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+        try {
+            checkEventDao.deleteOffenseArticles(Long.parseLong(id));
+            redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
+        } catch (Exception ex) {
+            String error = "Method: deleteOffenseArticles.<br /> String id = "+id+" String EventId=" + EventId + "<br />"+ex;
+            redirectAttributes.addFlashAttribute("ex", error);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        return myRdrct(httpServletRequest) + "/addoffencearticles";
+    }
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/deletepunishmentarticles", method = RequestMethod.GET)
+    public String deletePunishmentArticles(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String EventId,
+                                        HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+        try {
+            checkEventDao.deletePunishmentArticles(Long.parseLong(id));
+            redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
+        } catch (Exception ex) {
+            String error = "Method: deleteOffenseArticles.<br /> String id = "+id+" String EventId=" + EventId + "<br />"+ex;
+            redirectAttributes.addFlashAttribute("ex", error);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        return myRdrct(httpServletRequest) + "/addpunishmentarticles";
+    }
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------STATIC METHOD-----------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------

@@ -121,4 +121,9 @@
     <definition extends="default" name="show_event">
         <put-attribute name="body" value="/WEB-INF/pages/body/show_event.jsp"/>
     </definition>
+    <!-- INFO BLOCK-->
+    <definition extends="default" name="article_info">
+        <put-attribute name="body" value="/WEB-INF/pages/body/infopages/article_info.jsp"/>
+    </definition>
+    <!-- END OF BLOCK -->
 </tiles-definitions>

@@ -12,7 +12,12 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content_wide">
-
+        <div id="offenseArticles_list">
+            <c:forEach items="${offenseArticles_list}" var="offenseArticles_list">
+                <li />${offenseArticles_list.caption}
+                <a href="/deleteoffensearticles?id=${offenseArticles_list.id}&EventId=${offenseArticles_list.check_event_link}">Видалити</a>
+            </c:forEach>
+        </div>
         <form:form method="post" action="/addoffencearticlespost">
             <form:hidden path="check_event_link"/>
             <table>
@@ -20,7 +25,7 @@
                     <td><form:label path="articles_law_link">Виберіть статтю</form:label></td>
                     <td><form:input path="articles_law_link" id="articles"
                                     onclick="javascript:ArticlesPopUpShow();"/></td>
-                    <td><span class="error"><form:errors path="articles_law_link" /></span> </td>
+                    <td><span class="error"><form:errors path="articles_law_link"/></span></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -30,10 +35,10 @@
             </table>
         </form:form>
         <form method="get" action="/show_event/">
-            <input type="hidden" name="id" value="${checkEvent.id}" />
-            <input type="submit" value="Завершити" />
+            <input type="hidden" name="id" value="${checkEvent.id}"/>
+            <input type="submit" value="Завершити"/>
         </form>
-        <hr />
+        <hr/>
         <table width="100%">
             <caption>Інформація про перевірку</caption>
             <tr>

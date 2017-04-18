@@ -128,12 +128,11 @@
                 <td>Групи товарів</td>
                 <td>
                     <c:forEach items="${event.groupofgoods_list}" var="groupofgoods_list">
-                       ${groupofgoods_list.s_goods_catalog_link}<br />
+                        ${groupofgoods_list.s_goods_catalog_link}<br/>
                     </c:forEach>
                 </td>
                 <td></td>
             </tr>
-
         </table>
     </div>
     <div id="tabs-2">
@@ -206,9 +205,14 @@
         <c:if test="${event.check_violation==1}">
             <c:if test="${empty testSanction}"><span>Інформація по накладеним санкціям відсутня</span></c:if>
             <c:if test="${not empty punishmentarticles}">
-                <c:forEach items="${punishmentarticles}" var="punishmentarticles">
-                    <li /> ${punishmentarticles.name}
-                </c:forEach>
+                <table width="100%">
+                    <caption><span style="font-size: 150%;">СТАТТІ ПОКАРАННЯ</span></caption>
+                    <c:forEach items="${punishmentarticles}" var="punishmentarticles">
+                        <tr>
+                            <td>${punishmentarticles.caption} <a href="/" target="_blank"><img src="../resources/images/info.png" width="10px"/></a> </td>
+                        </tr>
+                    </c:forEach>
+                </table>
             </c:if>
             <c:if test="${not empty testSanction}">
                 <c:forEach items="${testSanction}" var="testSanction">

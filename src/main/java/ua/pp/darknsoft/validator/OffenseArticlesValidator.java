@@ -30,7 +30,7 @@ public class OffenseArticlesValidator implements Validator {
             List<OffenseArticles> list = checkEventDao.getOffenseArticlesByCheckEventLink(offenseArticles.getCheck_event_link());
             if(!list.isEmpty()){
                 for (OffenseArticles items: list){
-                    if(items.getArticles_law_link() == offenseArticles.getArticles_law_link())errors.rejectValue("articles_law_link", "articles_law_link.lenght", "Дана стаття вже добавлена");
+                    if(items.getArticles_law_link().equals(offenseArticles.getArticles_law_link()))errors.rejectValue("articles_law_link", "articles_law_link.lenght", "Дана стаття вже добавлена");
 
                 }
 

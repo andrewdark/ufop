@@ -37,4 +37,10 @@ public interface CheckEventDao {
     void createLawsuits(Lawsuits lawsuits);
 
     CheckEventSupplemented createEventSupplemented(CheckEventSupplemented checkEventSupplemented);
+
+    void deleteCheckingGroupOfGoods(long id);
+
+    void deleteOffenseArticles(long id);
+
+    void deletePunishmentArticles(long id);
 }

@@ -27,7 +27,7 @@ public class SelectPunishmentArticlesByCheckEventLink extends MappingSqlQuery<Pu
         punishmentArticles.setId(resultSet.getLong("id"));
         punishmentArticles.setCheck_event_link(resultSet.getLong("check_event_link"));
         punishmentArticles.setArticles_law_link(resultSet.getString("articles_law_link"));
-        punishmentArticles.setName(resultSet.getString("caption"));
+        punishmentArticles.setCaption(resultSet.getString("caption"));
         return punishmentArticles;
     }
 }

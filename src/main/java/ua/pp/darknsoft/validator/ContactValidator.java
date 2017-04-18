@@ -18,7 +18,7 @@ public class ContactValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return false;
+        return Contact.class.isAssignableFrom(aClass);
     }
     @Autowired
     ContactDao contactDao;

@@ -8,7 +8,7 @@ public class PunishmentArticles {
     private long check_event_link;
     private String articles_law_link;
     private boolean additionalinformation;
-    private String name;
+    private String caption;
     private int nav;
 
     public long getId() {
@@ -51,11 +51,11 @@ public class PunishmentArticles {
         this.nav = nav;
     }
 
-    public String getName() {
-        return name;
+    public String getCaption() {
+        return caption;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCaption(String caption) {
+        this.caption = caption;
     }
 }
