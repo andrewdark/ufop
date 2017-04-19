@@ -15,8 +15,9 @@
         <div id="punishmentArticles_list">
             <c:forEach items="${punishmentArticles_list}" var="punishmentArticles_list">
                 <li />${punishmentArticles_list.caption}
+                <a href="/article_info?id=${punishmentArticles_list.articles_law_link}" target="_blank"><img src="../resources/images/info.png" width="10px"/></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="/deletepunishmentarticles?id=${punishmentArticles_list.id}&EventId=${punishmentArticles_list.check_event_link}">Видалити</a>
-                <br />
             </c:forEach>
         </div>
         <form:form method="post" action="/addpunishmentarticlespost">
@@ -50,7 +51,7 @@
                 <td>Тип</td>
                 <td>
                     <c:if test="${checkEvent.check_type==0}">Планова</c:if>
-                    <c:if test="${checkEvent.check_type==0}">Позапланова</c:if>
+                    <c:if test="${checkEvent.check_type==1}">Позапланова</c:if>
                 </td>
             </tr>
             <tr>

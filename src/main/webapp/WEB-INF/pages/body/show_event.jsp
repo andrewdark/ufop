@@ -157,7 +157,8 @@
                         <c:if test="${not empty offensearticles}">
                             <c:forEach items="${offensearticles}" var="offensearticles">
                                 <li/>
-                                ${offensearticles.caption} <br/>
+                                ${offensearticles.caption} <a href="/article_info?id=${offensearticles.articles_law_link}" target="_blank"><img src="../resources/images/info.png" width="10px"/></a>
+                                <br/>
                             </c:forEach>
                         </c:if>
                     </td>
@@ -209,7 +210,7 @@
                     <caption><span style="font-size: 150%;">СТАТТІ ПОКАРАННЯ</span></caption>
                     <c:forEach items="${punishmentarticles}" var="punishmentarticles">
                         <tr>
-                            <td>${punishmentarticles.caption} <a href="/article_info" target="_blank"><img src="../resources/images/info.png" width="10px"/></a> </td>
+                            <td>${punishmentarticles.caption} <a href="/article_info?id=${punishmentarticles.articles_law_link}" target="_blank"><img src="../resources/images/info.png" width="10px"/></a> </td>
                         </tr>
                     </c:forEach>
                 </table>

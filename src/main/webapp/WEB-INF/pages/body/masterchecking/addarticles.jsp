@@ -15,7 +15,10 @@
         <div id="offenseArticles_list">
             <c:forEach items="${offenseArticles_list}" var="offenseArticles_list">
                 <li />${offenseArticles_list.caption}
+                <a href="/article_info?id=${offenseArticles_list.articles_law_link}" target="_blank"><img src="../resources/images/info.png" width="10px"/></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="/deleteoffensearticles?id=${offenseArticles_list.id}&EventId=${offenseArticles_list.check_event_link}">Видалити</a>
+
             </c:forEach>
         </div>
         <form:form method="post" action="/addoffencearticlespost">
@@ -49,7 +52,7 @@
                 <td>Тип</td>
                 <td>
                     <c:if test="${checkEvent.check_type==0}">Планова</c:if>
-                    <c:if test="${checkEvent.check_type==0}">Позапланова</c:if>
+                    <c:if test="${checkEvent.check_type==1}">Позапланова</c:if>
                 </td>
             </tr>
             <tr>

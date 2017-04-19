@@ -38,6 +38,8 @@ public class MainController {
     @Autowired
     KvedDao kvedDao;
     @Autowired
+    InfoDao infoDao;
+    @Autowired
     CommercialObjectDao commercialObjectDao;
     @Autowired
     ContactValidator contactValidator;
@@ -86,7 +88,7 @@ public class MainController {
         ufop = ufopDao.getEntrepreneurByPaginator(total, pageid1, (short) 0);
 
         uiModel.addAttribute("u_size", ufop.size());
-        uiModel.addAttribute("viewslistu","viewslisti");
+        uiModel.addAttribute("viewslistu", "viewslisti");
         uiModel.addAttribute("ufop", ufop);
         uiModel.addAttribute("page_id", pageid);
         uiModel.addAttribute("total_page", "NAN");
@@ -115,7 +117,7 @@ public class MainController {
         ufop = ufopDao.getEntrepreneurByPaginator(total, pageid1, (short) 1);
 
         uiModel.addAttribute("u_size", ufop.size());
-        uiModel.addAttribute("viewslistu","viewsliste");
+        uiModel.addAttribute("viewslistu", "viewsliste");
         uiModel.addAttribute("ufop", ufop);
         uiModel.addAttribute("page_id", pageid);
         uiModel.addAttribute("total_page", "NAN");
@@ -272,13 +274,13 @@ public class MainController {
             pageid1 = (pageid1 - 1) * total + 1;
         }
         List<Ufop> ufop = new LinkedList<Ufop>();
-        if(stext.length()>2)ufop = ufopDao.getUfopByPaginatorMultiple(total, pageid1, stext);
+        if (stext.length() > 2) ufop = ufopDao.getUfopByPaginatorMultiple(total, pageid1, stext);
 
         uiModel.addAttribute("u_size", ufop.size());
-        uiModel.addAttribute("viewslistu","viewslistsearch");
+        uiModel.addAttribute("viewslistu", "viewslistsearch");
         uiModel.addAttribute("ufop", ufop);
         uiModel.addAttribute("page_id", pageid);
-        uiModel.addAttribute("getparam","?stext="+stext);
+        uiModel.addAttribute("getparam", "?stext=" + stext);
         uiModel.addAttribute("total_page", "NAN");
 
         uiModel.addAttribute("title_name", "Власник");
@@ -287,6 +289,7 @@ public class MainController {
         }
         return "viewslist_ufop";
     }
+
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addcontact_1")
     public String legal_entity(@ModelAttribute Contact contact, Model uiModel) {
@@ -315,14 +318,28 @@ public class MainController {
         }
         return "addcontact_1";
     }
+
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------INFO BLOCK--------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
-    @RequestMapping(value = "/article_info",method = RequestMethod.GET)
-    public String articleInfo(Model uiModel){
-        uiModel.addAttribute("title","Відомості про статтю");
+    @RequestMapping(value = "/article_info", method = RequestMethod.GET)
+    public String articleInfo(@RequestParam(defaultValue="1") String id, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+        uiModel.addAttribute("title", "Відомості про статтю");
+        try {
+            uiModel.addAttribute("articles", infoDao.getArticleById(id).get(0));
+        } catch (IndexOutOfBoundsException ex) {
+            uiModel.addAttribute("ex", "Такої статті не знайдено");
+            return "message";
+        } catch (NumberFormatException ex) {
+            uiModel.addAttribute("ex", "не вірна вказівка на статтю");
+            return "message";
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", "Method:articleInfo <br />" + ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
         return "article_info";
     }
+
     //------------------------------------------------------------------------------------------------------------------
     //-------------------------------------------SERVICE----------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
@@ -339,6 +356,7 @@ public class MainController {
         }
         return "redirect:/?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
+
     private static String myRdrct(HttpServletRequest httpServletRequest) {
         String scheme = httpServletRequest.getScheme() + "://";
         String serverName = httpServletRequest.getServerName();
