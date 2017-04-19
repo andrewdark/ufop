@@ -35,24 +35,36 @@
                     <tr>
                         <td><form:label path="filed_on_action">Позов до суду </form:label></td>
                         <td>
-                            <form:radiobutton path="filed_on_action" value="0"/>Не подано позову<br/>
-                            <form:radiobutton path="filed_on_action" value="1"/>Подано позов
+                            <form:radiobutton path="filed_on_action" value="0" onchange="javascript:isFiled_on_action0();"/>Не подано позову<br/>
+                            <form:radiobutton path="filed_on_action" value="1" onchange="javascript:isFiled_on_action1();"/>Подано позов
                         </td>
                         <td><span class="error"></span></td>
                     </tr>
                     <tr>
-                        <td><form:label path="filed_date">Дата позову</form:label></td>
-                        <td><form:input path="filed_date" id="filed_date"/></td>
+                        <td>
+                            <div class="is_filed_on_action"><form:label path="filed_date">Дата позову</form:label></div>
+                        </td>
+                        <td>
+                            <div class="is_filed_on_action"><form:input path="filed_date" id="filed_date"/></div>
+                        </td>
                         <td><span class="error"><form:errors path="filed_date"/></span></td>
                     </tr>
                     <tr>
-                        <td><form:label path="result_link">Результат позову</form:label></td>
-                        <td><form:select path="result_link" items="${select}"/></td>
+                        <td>
+                            <div class="is_filed_on_action"><form:label path="result_link">Результат позову</form:label></div>
+                        </td>
+                        <td>
+                            <div class="is_filed_on_action"><form:select path="result_link" items="${select}"/></div>
+                        </td>
                         <td><span class="error"><form:errors path="result_link"/></span></td>
                     </tr>
                     <tr>
-                        <td><form:label path="description">Додаткова інформація</form:label></td>
-                        <td><form:textarea path="description" rows="10"/></td>
+                        <td>
+                            <div class="is_filed_on_action"><form:label path="description">Додаткова інформація</form:label></div>
+                        </td>
+                        <td>
+                            <div class="is_filed_on_action"><form:textarea path="description" rows="10"/></div>
+                        </td>
                         <td><span class="error"><form:errors path="description"/></span></td>
                     </tr>
                     <tr>
@@ -106,3 +118,13 @@
     </div>
     <div class="clr"></div>
 </div>
+<c:if test="${command.filed_on_action == 0}">
+    <script type="text/javascript">
+        isFiled_on_action0();
+    </script>
+</c:if>
+<c:if test="${command.filed_on_action == 1}">
+    <script type="text/javascript">
+        isFiled_on_action1();
+    </script>
+</c:if>

@@ -4,12 +4,9 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
     <definition name="default" template="/WEB-INF/layouts/default.jsp">
+        <put-attribute name="head_include" value="/WEB-INF/pages/head_include.jsp"/>
         <put-attribute name="body" value="/WEB-INF/pages/body/index.jsp"/>
-        <put-attribute name="menu_nav" value="/WEB-INF/pages/menu_nav.jsp"/>
-        <put-attribute name="login_gadget" value="/WEB-INF/pages/login.jsp"/>
-        <put-attribute name="menu_gadget" value="/WEB-INF/pages/menu.jsp"/>
-        <put-attribute name="admin_gadget" value="/WEB-INF/pages/adminmenu.jsp"/>
-        <put-attribute name="chief_gadget" value="/WEB-INF/pages/chiefmenu.jsp"/>
+        <put-attribute name="sidebar" value="/WEB-INF/pages/sidebar.jsp"/>
         <put-attribute name="header" value="/WEB-INF/pages/header.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/pages/footer.jsp"/>
     </definition>
@@ -123,7 +120,11 @@
     </definition>
     <!-- INFO BLOCK-->
     <definition extends="default" name="article_info">
+        <put-attribute name="head_include" value=""/>
         <put-attribute name="body" value="/WEB-INF/pages/body/infopages/article_info.jsp"/>
+        <put-attribute name="sidebar" value=""/>
+        <put-attribute name="header" value=""/>
+        <put-attribute name="footer" value=""/>
     </definition>
     <!-- END OF BLOCK -->
 </tiles-definitions>

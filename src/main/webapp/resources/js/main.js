@@ -343,7 +343,7 @@ function ArticlesPopUpShow() {
 var count_articles = 1;
 function ArticlesPopUpHide() {
 
-    if (count_articles == 1) $("#articles_law_link").val($("#my_selecttop1 option:selected").val());
+    if (count_articles == 1) $("#articles").val($("#my_selecttop1 option:selected").val());
 
     if (count_articles == 2) {
         if ($("#my_selecttop2 option:selected").val().length > 1) {
@@ -390,7 +390,6 @@ function looparticlesdown(level) {
     if (level == 2) {
         var aj = "treemark=" + $("#my_selecttop1 option:selected").val() + "&nlevel=2";
         $("#ArticlesType2").load("/ajax_select_articles", aj);
-
         $("#ArticlesType3").html("");
         $("#ArticlesType4").html("");
     }
@@ -448,4 +447,10 @@ function isViolations0() {
 }
 function isViolations1() {
     $(".is_violation").show();
+}
+function isFiled_on_action0() {
+    $(".is_filed_on_action").hide();
+}
+function isFiled_on_action1() {
+    $(".is_filed_on_action").show();
 }

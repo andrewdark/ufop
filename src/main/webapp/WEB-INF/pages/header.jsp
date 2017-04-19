@@ -1,3 +1,5 @@
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -8,19 +10,28 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="header_resize">
     <div class="slider">
-        <div id="coin-slider"> <a href="#"><img src="resources/images/slide1.jpg" width="960" height="500" alt="" /> </a> <a href="#"><img src="images/slide2.jpg" width="960" height="500" alt="" /> </a> <a href="#"><img src="images/slide3.jpg" width="960" height="500" alt="" /> </a> </div>
+        <div id="coin-slider"><a href="/"><img src="/resources/images/40fe6b04a2ea.png" width="360" height="240"
+                                               alt=""/> </a></div>
     </div>
     <div class="menu_nav">
         <ul>
-            <li class="active"><a href="index.html"><span>Home Page</span></a></li>
-            <li><a href="support.html"><span>Support</span></a></li>
-            <li><a href="about.html"><span>About Us</span></a></li>
-            <li><a href="blog.html"><span>Blog</span></a></li>
-            <li><a href="contact.html"><span>Contact Us</span></a></li>
+            <sec:authorize access="isAnonymous()">
+                <li class="active"><a href="/#" class="disabled"><span>Мій робочий час</span></a></li>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <li class="active"><a href="/myworktime"><span>Мій робочий час</span></a></li>
+            </sec:authorize>
+
+            <li><a href="/chat"><span>Чат</span></a></li>
+            <li><a href="/search"><span>Детальний пошук</span></a></li>
+            <li><a href="/my_office"><span>Мій кабінет</span></a></li>
+            <li><a href="/catalog"><span>Довідник</span></a></li>
         </ul>
     </div>
     <div class="logo">
-        <h1><a href="index.html"><span>Brightpulse</span> <small>Company Slogan Here</small></a></h1>
+        <h1><a href="/"><span>UFOP</span>
+            <small>business activity monitoring</small>
+        </a></h1>
     </div>
     <div class="clr"></div>
 </div>

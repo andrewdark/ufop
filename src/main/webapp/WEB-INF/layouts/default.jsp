@@ -14,8 +14,7 @@
     <link rel="shortcut icon" href="${pageContext.servletContext.contextPath}/resources/images/od_obl.png"/>
     <link rel="icon" type="image/x-icon" href="${pageContext.servletContext.contextPath}/resources/images/od_obl.png"/>
     <link rel="logo" href="${pageContext.servletContext.contextPath}/resources/images/od_obl.png"/>
-    <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/css/main.css"/>
-    <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/resources/js/jquery-ui-1.12.1.custom/jquery-ui.css"/>
+    <tiles:insertAttribute name="head_include" ignore="true"/>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.1.1.js"></script>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/main.js"></script>
@@ -23,21 +22,7 @@
 <body>
 <div class="main">
     <div class="header">
-        <div class="header_resize">
-            <div class="slider">
-                <div id="coin-slider"><a href="/"><img src="/resources/images/40fe6b04a2ea.png" width="360" height="240"
-                                                       alt=""/> </a></div>
-            </div>
-            <div class="menu_nav">
-                <tiles:insertAttribute name="menu_nav" ignore="true"/>
-            </div>
-            <div class="logo">
-                <h1><a href="/"><span>UFOP</span>
-                    <small>business activity monitoring</small>
-                </a></h1>
-            </div>
-            <div class="clr"></div>
-        </div>
+        <tiles:insertAttribute name="header" ignore="true"/>
     </div>
     <div class="content">
         <div class="content_resize">
@@ -45,33 +30,7 @@
                 <tiles:insertAttribute name="body" ignore="true"/>
             </div>
             <div class="sidebar">
-                <div class="searchform">
-                    <form id="formsearch" name="formsearch" method="get" action="/viewslistsearch/1">
-                        <span>
-                        <input name="stext" class="editbox_search" id="editbox_search" maxlength="80"
-                               value="" type="text"/>
-                        </span>
-                        <input src="/resources/images/search.gif" class="button_search"
-                               type="image"/>
-                    </form>
-                </div>
-                <div class="clr"></div>
-                <div id="menu_gadget" class="gadget">
-                    <tiles:insertAttribute name="menu_gadget" ignore="true"/>
-                </div>
-                <sec:authorize access="hasAnyRole('ROLE_ADMINISTRATOR,ROLE_CHIEF')">
-                    <div id="chief_gadget" class="gadget">
-                        <tiles:insertAttribute name="chief_gadget" ignore="true"/>
-                    </div>
-                </sec:authorize>
-                <sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
-                    <div id="admin_gadget" class="gadget">
-                        <tiles:insertAttribute name="admin_gadget" ignore="true"/>
-                    </div>
-                </sec:authorize>
-                <div id="login_gadget" class="gadget">
-                    <tiles:insertAttribute name="login_gadget" ignore="true"/>
-                </div>
+                <tiles:insertAttribute name="sidebar" ignore="true"/>
             </div>
             <div class="clr"></div>
         </div>

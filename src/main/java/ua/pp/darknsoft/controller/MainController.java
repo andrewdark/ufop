@@ -1,5 +1,6 @@
 package ua.pp.darknsoft.controller;
 
+import com.sun.javafx.sg.prism.NGShape;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -314,7 +315,14 @@ public class MainController {
         }
         return "addcontact_1";
     }
-
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------INFO BLOCK--------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    @RequestMapping(value = "/article_info",method = RequestMethod.GET)
+    public String articleInfo(Model uiModel){
+        uiModel.addAttribute("title","Відомості про статтю");
+        return "article_info";
+    }
     //------------------------------------------------------------------------------------------------------------------
     //-------------------------------------------SERVICE----------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
