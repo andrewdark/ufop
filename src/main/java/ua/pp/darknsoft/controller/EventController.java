@@ -55,7 +55,8 @@ public class EventController {
         uiModel.addAttribute("title", "Створення нової перевірки");
         CheckEventSupplemented checkEventSupplemented = new CheckEventSupplemented();
         Ufop ufop = (Ufop) uiModel.asMap().get("ufop");
-
+        uiModel.addAttribute("actionlink", "/addeventsupplementedpost");
+        uiModel.addAttribute("buttonvalue", "Створити перевірку");
         List<CheckingCommObj> checkingCommObjs_list = new LinkedList<>();
         checkEventSupplemented.setCommobj_list(checkingCommObjs_list);
         try {
@@ -238,7 +239,7 @@ public class EventController {
         CheckEventSupplemented checkEvent = (CheckEventSupplemented) uiModel.asMap().get("event");
         try {
             uiModel.addAttribute("articlesTop", catalogDao.getArticleTop());
-            uiModel.addAttribute("offenseArticles_list",checkEventDao.getOffenseArticlesByCheckEventLink(checkEvent.getId()));
+            uiModel.addAttribute("offenseArticles_list", checkEventDao.getOffenseArticlesByCheckEventLink(checkEvent.getId()));
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
@@ -349,12 +350,12 @@ public class EventController {
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addpunishmentarticles", method = RequestMethod.GET)
     public String addPunishmentArticles(Model uiModel, RedirectAttributes redirectAttributes,
-                                       HttpServletRequest httpServletRequest) {
+                                        HttpServletRequest httpServletRequest) {
         PunishmentArticles punishmentArticles = new PunishmentArticles();
         CheckEventSupplemented checkEvent = (CheckEventSupplemented) uiModel.asMap().get("event");
         try {
             uiModel.addAttribute("articlesTop", catalogDao.getArticleTop());
-            uiModel.addAttribute("punishmentArticles_list",checkEventDao.getPunishmentArticlesByCheckEventLink(checkEvent.getId()));
+            uiModel.addAttribute("punishmentArticles_list", checkEventDao.getPunishmentArticlesByCheckEventLink(checkEvent.getId()));
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
@@ -372,7 +373,7 @@ public class EventController {
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/addpunishmentarticlespost", method = RequestMethod.POST)
     public String addPunishmentArticlesPost(@ModelAttribute PunishmentArticles punishmentArticles, HttpServletRequest httpServletRequest,
-                                           RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+                                            RedirectAttributes redirectAttributes, BindingResult bindingResult) {
         punishmentArticlesValidator.validate(punishmentArticles, bindingResult);
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("b1", bindingResult);
@@ -577,51 +578,130 @@ public class EventController {
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    //------------------------------------DELETE METHOD-----------------------------------------------------------
+    //--------------------------------------EDIT EVENT METHOD-----------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "editeventsupplemented", method = RequestMethod.GET)
+    public String editEvent(@RequestParam(defaultValue = "0") String id, Model uiModel, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
+        CheckEventSupplemented checkEventSupplemented = (CheckEventSupplemented) uiModel.asMap().get("event");
+
+        try {
+
+            if (checkEventSupplemented == null && !id.equals("0")) {
+
+                checkEventSupplemented = checkEventDao.getCheckEventById(Long.parseLong(id)).get(0);
+//                uiModel.addAttribute("ex", "Такої перевірки не знайдено");
+//                return "message";
+            } else {
+
+            }
+            List<CheckingCommObj> checkingCommObjs_list = new LinkedList<>();
+            List<CommercialObject> comobj_list = commercialObjectDao.getCommObjByUfop_link(checkEventSupplemented.getUfop_link());
+            for (CommercialObject items : comobj_list) {
+                checkingCommObjs_list.add(new CheckingCommObj());
+                checkingCommObjs_list.get(checkingCommObjs_list.size() - 1).setComm_obj_link(items.getId());
+            }
+            uiModel.addAttribute("comobj_list", comobj_list);
+            checkEventSupplemented.setCommobj_list(checkingCommObjs_list);
+        } catch (IndexOutOfBoundsException ex) {
+            uiModel.addAttribute("ex", "Такої перевірки не знайдено");
+            return "message";
+        } catch (NumberFormatException ex) {
+            uiModel.addAttribute("ex", "не вірна вказівка на перевірку");
+            return "message";
+        } catch (Exception ex) {
+            uiModel.addAttribute("ex", ex);
+            return "message";
+        }
+        uiModel.addAttribute("actionlink", "/editeventsupplementedpost");
+        uiModel.addAttribute("buttonvalue", "Записати зміни");
+        BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
+        uiModel.addAttribute("command", checkEventSupplemented);
+        uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
+        return "addevent";
+    }
+
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "/editeventsupplementedpost", method = RequestMethod.POST)
+    public String editEventSupplementedPost(@ModelAttribute CheckEventSupplemented checkEventSupplemented, Model uiModel,
+                                            HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
+                                            BindingResult bindingResult) {
+
+        eventValidator.validate(checkEventSupplemented, bindingResult);
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("b1", bindingResult);
+            redirectAttributes.addFlashAttribute("event", checkEventSupplemented);
+            return myRdrct(httpServletRequest) + "/editeventsupplemented";
+        }
+        try {
+
+            for (int i = 0; i < checkEventSupplemented.getCommobj_list().size(); i++) {
+                if (checkEventSupplemented.getCommobj_list().get(i).isChecking()) {
+
+                } else {
+                    checkEventSupplemented.getCommobj_list().remove(i);
+                }
+            }
+
+            checkEventSupplemented.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
+            // checkEventSupplemented = checkEventDao.createEventSupplemented(checkEventSupplemented);
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        redirectAttributes.addFlashAttribute("event", checkEventSupplemented);
+        return myRdrct(httpServletRequest) + "/show_event?id=" + checkEventSupplemented.getId();
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------DELETE EVENT METHOD----------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/deletecheckinggroupofgoods", method = RequestMethod.GET)
     public String deleteCheckingGroupOfGoods(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String EventId,
-                                              HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+                                             HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         try {
             checkEventDao.deleteCheckingGroupOfGoods(Long.parseLong(id));
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
         } catch (Exception ex) {
-            String error = "Method: deleteCheckingGroupOfGoods.<br /> String id = "+id+" String EventId=" + EventId + "<br />"+ex;
+            String error = "Method: deleteCheckingGroupOfGoods.<br /> String id = " + id + " String EventId=" + EventId + "<br />" + ex;
             redirectAttributes.addFlashAttribute("ex", error);
             return myRdrct(httpServletRequest) + "/message";
         }
 
         return myRdrct(httpServletRequest) + "/addcheckgoods";
     }
+
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/deleteoffensearticles", method = RequestMethod.GET)
     public String deleteOffenseArticles(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String EventId,
-                                             HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+                                        HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         try {
             checkEventDao.deleteOffenseArticles(Long.parseLong(id));
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
         } catch (Exception ex) {
-            String error = "Method: deleteOffenseArticles.<br /> String id = "+id+" String EventId=" + EventId + "<br />"+ex;
+            String error = "Method: deleteOffenseArticles.<br /> String id = " + id + " String EventId=" + EventId + "<br />" + ex;
             redirectAttributes.addFlashAttribute("ex", error);
             return myRdrct(httpServletRequest) + "/message";
         }
         return myRdrct(httpServletRequest) + "/addoffencearticles";
     }
+
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/deletepunishmentarticles", method = RequestMethod.GET)
     public String deletePunishmentArticles(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String EventId,
-                                        HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+                                           HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         try {
             checkEventDao.deletePunishmentArticles(Long.parseLong(id));
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
         } catch (Exception ex) {
-            String error = "Method: deleteOffenseArticles.<br /> String id = "+id+" String EventId=" + EventId + "<br />"+ex;
+            String error = "Method: deleteOffenseArticles.<br /> String id = " + id + " String EventId=" + EventId + "<br />" + ex;
             redirectAttributes.addFlashAttribute("ex", error);
             return myRdrct(httpServletRequest) + "/message";
         }
         return myRdrct(httpServletRequest) + "/addpunishmentarticles";
     }
+
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------STATIC METHOD-----------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------

@@ -17,7 +17,8 @@
     </div>
     <div class="post_content_wide">
         <div id="co_message"></div>
-        <form:form action="/addeventsupplementedpost" method="post">
+        <form:form action="${actionlink}" method="post">
+            <form:hidden path="id"/>
             <form:hidden path="ufop_link"/>
             <table>
                 <tr>
@@ -120,7 +121,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" value="Створити перевірку"></td>
+                    <td><input type="submit" value="${buttonvalue}"></td>
                     <td></td>
                 </tr>
             </table>

@@ -70,7 +70,11 @@
                     <c:if test="${event.check_type==0}">Планова</c:if>
                     <c:if test="${event.check_type==1}">Позапланова</c:if>
                 </td>
-                <td></td>
+                <td>
+                    <sec:authorize access="isAuthenticated()">
+                        <a href="/editeventsupplemented?id=${event.id}">Редагувати</a>
+                    </sec:authorize>
+                </td>
             </tr>
             <tr>
                 <td>Результати перевірки</td>
@@ -157,7 +161,9 @@
                         <c:if test="${not empty offensearticles}">
                             <c:forEach items="${offensearticles}" var="offensearticles">
                                 <li/>
-                                ${offensearticles.caption} <a href="/article_info?id=${offensearticles.articles_law_link}" target="_blank"><img src="../resources/images/info.png" width="10px"/></a>
+                                ${offensearticles.caption} <a
+                                    href="/article_info?id=${offensearticles.articles_law_link}" target="_blank"><img
+                                    src="../resources/images/info.png" width="10px"/></a>
                                 <br/>
                             </c:forEach>
                         </c:if>
@@ -210,7 +216,9 @@
                     <caption><span style="font-size: 150%;">СТАТТІ ПОКАРАННЯ</span></caption>
                     <c:forEach items="${punishmentarticles}" var="punishmentarticles">
                         <tr>
-                            <td>${punishmentarticles.caption} <a href="/article_info?id=${punishmentarticles.articles_law_link}" target="_blank"><img src="../resources/images/info.png" width="10px"/></a> </td>
+                            <td>${punishmentarticles.caption} <a
+                                    href="/article_info?id=${punishmentarticles.articles_law_link}" target="_blank"><img
+                                    src="../resources/images/info.png" width="10px"/></a></td>
                         </tr>
                     </c:forEach>
                 </table>
