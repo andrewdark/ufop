@@ -43,6 +43,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private DeleteCheckingGoodsById deleteCheckingGoodsById;
     private DeleteOffenseArticlesById deleteOffenseArticlesById;
     private DeletePunishmentArticlesById deletePunishmentArticlesById;
+    private SelectCheckingCommercialObject selectCheckingCommercialObject;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -67,6 +68,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.deleteCheckingGoodsById = new DeleteCheckingGoodsById(dataSource);
         this.deleteOffenseArticlesById = new DeleteOffenseArticlesById(dataSource);
         this.deletePunishmentArticlesById = new DeletePunishmentArticlesById(dataSource);
+        this.selectCheckingCommercialObject = new SelectCheckingCommercialObject(dataSource);
     }
 
     @Override
@@ -74,6 +76,12 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         Map<String, Long> bind = new HashMap<>();
         bind.put("check_event_link", check_event_link);
         return selectCheckGoodsByEvent_link.executeByNamedParam(bind);
+    }
+    @Override
+    public List<CheckingCommObj> getCheckingCommercialObjectByEventLink(long check_event_link) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("check_event_link", check_event_link);
+        return selectCheckingCommercialObject.executeByNamedParam(bind);
     }
 
     @Override

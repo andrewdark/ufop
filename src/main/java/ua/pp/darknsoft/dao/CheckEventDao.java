@@ -10,6 +10,8 @@ import java.util.List;
 public interface CheckEventDao {
     List<CheckingGroupOfGoods> getCheckingGroupOfGoodsByCheckEventLink(long check_event_link);
 
+    List<CheckingCommObj> getCheckingCommercialObjectByEventLink(long check_event_link);
+
     List<Sanction> getSanctionEventByCheckEventLink(long check_event_link);
 
     List<Lawsuits> getLawsuitsByCheckEventLink(long check_event_link);

@@ -8,6 +8,7 @@ public class CheckingCommObj {
     private long check_event_link;
     private long comm_obj_link;
     private boolean checking;
+    private String comm_obj_name;
 
     public long getId() {
         return id;
@@ -40,4 +41,8 @@ public class CheckingCommObj {
     public void setChecking(boolean checking) {
         this.checking = checking;
     }
+
+    public String getComm_obj_name() { return comm_obj_name; }
+
+    public void setComm_obj_name(String comm_obj_name) { this.comm_obj_name = comm_obj_name; }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Dark on 26.03.2017.
  */
-public class CheckEventSupplemented extends CheckEvent{
+public class CheckEventSupplemented extends CheckEvent {
     private List<CheckingCommObj> commobj_list;
     private List<CheckingGroupOfGoods> groupofgoods_list;
     private List<OffenseArticles> offensearticles_list;
@@ -39,16 +39,16 @@ public class CheckEventSupplemented extends CheckEvent{
     }
 
     public String getCurrent_state() {
-        try{
+        try {
             SimpleDateFormat parser = new SimpleDateFormat("yy-MM-dd");
 
             Date date_end = parser.parse(getEvent_date_end());
             Date date_begin = parser.parse(getEvent_date_begin());
-            if(getCheck_sampling()==1 && date_begin.after(date_end))return "Перевірка проб";
-            if(date_begin.before(date_end))return "Завершена";
-            if (date_begin.after(date_end))return "В стадії перевірки";
-        }catch (Exception ex){
-            return "Error: "+ex;
+            if (getCheck_sampling() == 1 && date_begin.after(date_end)) return "Перевірка проб";
+            if (date_begin.before(date_end)) return "Завершена";
+            if (date_begin.after(date_end)) return "В стадії перевірки";
+        } catch (Exception ex) {
+            return "Error: " + ex;
         }
 
 

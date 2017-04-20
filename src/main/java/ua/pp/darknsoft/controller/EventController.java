@@ -596,10 +596,15 @@ public class EventController {
 
             }
             List<CheckingCommObj> checkingCommObjs_list = new LinkedList<>();
+            List<CheckingCommObj> checkingCommObjs_list_db=checkEventDao.getCheckingCommercialObjectByEventLink(checkEventSupplemented.getId());
             List<CommercialObject> comobj_list = commercialObjectDao.getCommObjByUfop_link(checkEventSupplemented.getUfop_link());
             for (CommercialObject items : comobj_list) {
                 checkingCommObjs_list.add(new CheckingCommObj());
                 checkingCommObjs_list.get(checkingCommObjs_list.size() - 1).setComm_obj_link(items.getId());
+                for (CheckingCommObj items1: checkingCommObjs_list_db){
+                    if(checkingCommObjs_list.get(checkingCommObjs_list.size() - 1).getComm_obj_link()==items1.getComm_obj_link())
+                        checkingCommObjs_list.get(checkingCommObjs_list.size() - 1).setChecking(true);
+                }
             }
             uiModel.addAttribute("comobj_list", comobj_list);
             checkEventSupplemented.setCommobj_list(checkingCommObjs_list);
