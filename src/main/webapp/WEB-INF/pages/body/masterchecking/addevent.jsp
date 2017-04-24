@@ -100,11 +100,17 @@
                         <c:forEach items="${comobj_list}" var="co">
                             ${co.obj_name}<br/>
                         </c:forEach>
+                        <c:forEach items="${comobj_list1}" var="co">
+                            ${co.comm_obj_name}<br/>
+                        </c:forEach>
                     </td>
                     <td>
                         <c:forEach items="${command.commobj_list}" var="co_list" varStatus="status">
                             <form:checkbox path="commobj_list[${status.index}].checking"/> додати до перевірки
-                            <form:hidden path="commobj_list[${status.index}].comm_obj_link"/><br/>
+                            <form:hidden path="commobj_list[${status.index}].comm_obj_link"/>
+                            <form:hidden path="commobj_list[${status.index}].check_event_link"/>
+                            <form:hidden path="commobj_list[${status.index}].id"/>
+                            <br/>
                         </c:forEach>
                     </td>
                     <td><span class="error"><form:errors path="commobj_list"/></span></td>

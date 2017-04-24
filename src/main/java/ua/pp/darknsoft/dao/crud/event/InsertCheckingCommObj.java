@@ -18,5 +18,6 @@ public class InsertCheckingCommObj extends SqlUpdate {
         super.declareParameter(new SqlParameter("check_event_link", Types.BIGINT));
         super.declareParameter(new SqlParameter("comm_obj_link", Types.BIGINT));
         super.declareParameter(new SqlParameter("checking", Types.BOOLEAN));
+        compile();
     }
 }

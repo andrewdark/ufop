@@ -232,7 +232,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     @Override
     public void createCheckingCommObj(CheckingCommObj checkingCommObj){
        Map<String,Object> bindCommObj = new HashMap<>();
-        bindCommObj.put("check_event_link", checkingCommObj.getId());
+        bindCommObj.put("check_event_link", checkingCommObj.getCheck_event_link());
         bindCommObj.put("comm_obj_link", checkingCommObj.getComm_obj_link());
         bindCommObj.put("checking", checkingCommObj.isChecking());
         insertCheckingCommObj.updateByNamedParam(bindCommObj);
