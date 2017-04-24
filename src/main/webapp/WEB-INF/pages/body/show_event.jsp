@@ -26,6 +26,7 @@
                     <form:hidden path="creator_link"/>
                     <form:hidden path="structure_catalog_link"/>
                     <form:hidden path="datereg"/>
+                    <form:hidden path="checking"/>
                     <td></td>
                     <td>
                         <table>

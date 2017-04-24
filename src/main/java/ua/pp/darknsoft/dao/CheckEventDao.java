@@ -45,4 +45,6 @@ public interface CheckEventDao {
     void deleteOffenseArticles(long id);
 
     void deletePunishmentArticles(long id);
+
+    CheckEventSupplemented editEvent(CheckEventSupplemented eventSupplemented);
 }

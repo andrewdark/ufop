@@ -42,7 +42,7 @@
                         <form:radiobutton path="check_violation" value="1" onchange="javascript:isViolations1();"/>Порушення
                         виявлено
                     </td>
-                    <td></td>
+                    <td><span class="error"><form:errors path="check_violation"/></span></td>
                 </tr>
                 <tr>
                     <td>

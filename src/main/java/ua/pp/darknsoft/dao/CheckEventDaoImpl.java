@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.event.*;
 import ua.pp.darknsoft.entity.*;
@@ -44,6 +45,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private DeleteOffenseArticlesById deleteOffenseArticlesById;
     private DeletePunishmentArticlesById deletePunishmentArticlesById;
     private SelectCheckingCommercialObject selectCheckingCommercialObject;
+    private UpdateCheckEventReturnID updateCheckEventReturnID;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -69,6 +71,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.deleteOffenseArticlesById = new DeleteOffenseArticlesById(dataSource);
         this.deletePunishmentArticlesById = new DeletePunishmentArticlesById(dataSource);
         this.selectCheckingCommercialObject = new SelectCheckingCommercialObject(dataSource);
+        this.updateCheckEventReturnID = new UpdateCheckEventReturnID(dataSource);
     }
 
     @Override
@@ -241,5 +244,25 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         Map<String, Long> bind = new HashMap<>();
         bind.put("id", id);
         deletePunishmentArticlesById.updateByNamedParam(bind);
+    }
+    @Override
+    public CheckEventSupplemented editEvent(CheckEventSupplemented eventSupplemented) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("id",eventSupplemented.getId());
+        bind.put("event_number", eventSupplemented.getEvent_number());
+        bind.put("event_date_begin", eventSupplemented.getEvent_date_begin());
+        bind.put("event_date_end", eventSupplemented.getEvent_date_end());
+        bind.put("check_type", eventSupplemented.getCheck_type());
+        bind.put("is_checking", eventSupplemented.isChecking());
+        bind.put("check_violation", eventSupplemented.getCheck_violation());
+        bind.put("event_result", eventSupplemented.getEvent_result());
+        bind.put("check_sampling", eventSupplemented.getCheck_sampling());
+        bind.put("result_sampling", eventSupplemented.getResult_sampling());
+        bind.put("creator_link", eventSupplemented.getCreator_link());
+        bind.put("structure_catalog_link", eventSupplemented.getStructure_catalog_link());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        updateCheckEventReturnID.updateByNamedParam(bind, keyHolder);
+        eventSupplemented.setId(keyHolder.getKey().longValue());
+        return eventSupplemented;
     }
 }

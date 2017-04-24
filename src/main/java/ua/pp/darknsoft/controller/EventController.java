@@ -649,7 +649,7 @@ public class EventController {
             }
 
             checkEventSupplemented.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
-            // checkEventSupplemented = checkEventDao.createEventSupplemented(checkEventSupplemented);
+            checkEventSupplemented = checkEventDao.editEvent(checkEventSupplemented);
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";

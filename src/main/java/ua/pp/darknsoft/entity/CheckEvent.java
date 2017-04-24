@@ -22,10 +22,15 @@ public class CheckEvent {
     private int structure_catalog_link;
     private Timestamp datereg;
     private int nav;
+    private boolean checking;
 
-    public int getNav() { return nav; }
+    public int getNav() {
+        return nav;
+    }
 
-    public void setNav(int nav) { this.nav = nav; }
+    public void setNav(int nav) {
+        this.nav = nav;
+    }
 
     public long getId() {
         return id;
@@ -132,4 +137,8 @@ public class CheckEvent {
     public void setEvent_number(String event_number) {
         this.event_number = event_number;
     }
+
+    public boolean isChecking() { return checking; }
+
+    public void setChecking(boolean checking) { this.checking = checking; }
 }
