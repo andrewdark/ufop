@@ -40,6 +40,8 @@ public interface CheckEventDao {
 
     CheckEventSupplemented createEventSupplemented(CheckEventSupplemented checkEventSupplemented);
 
+    void createCheckingCommObj(CheckingCommObj checkingCommObj);
+
     void deleteCheckingGroupOfGoods(long id);
 
     void deleteOffenseArticles(long id);
@@ -47,4 +49,6 @@ public interface CheckEventDao {
     void deletePunishmentArticles(long id);
 
     CheckEventSupplemented editEvent(CheckEventSupplemented eventSupplemented);
+
+    void updateCheckingCommObjById(CheckingCommObj checkingCommObj);
 }

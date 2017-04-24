@@ -527,6 +527,7 @@ public class EventController {
         try {
             if (checkEventSupplemented == null) {
                 checkEventSupplemented = checkEventDao.getCheckEventById(Long.parseLong(id)).get(0);
+                checkEventSupplemented.setCommobj_list(checkEventDao.getCheckingCommercialObjectByEventLink(Long.parseLong(id)));
             }
             checkEventSupplemented.setGroupofgoods_list(checkEventDao.getCheckingGroupOfGoodsByCheckEventLink(Long.parseLong(id)));
             //uiModel.addAttribute("",checkEventDao);
@@ -590,22 +591,27 @@ public class EventController {
             if (checkEventSupplemented == null && !id.equals("0")) {
 
                 checkEventSupplemented = checkEventDao.getCheckEventById(Long.parseLong(id)).get(0);
+                checkEventSupplemented.setCommobj_list(checkEventDao.getCheckingCommercialObjectByEventLink(Long.parseLong(id)));
 //                uiModel.addAttribute("ex", "Такої перевірки не знайдено");
 //                return "message";
             } else {
 
             }
+
             List<CheckingCommObj> checkingCommObjs_list = new LinkedList<>();
-            List<CheckingCommObj> checkingCommObjs_list_db=checkEventDao.getCheckingCommercialObjectByEventLink(checkEventSupplemented.getId());
+            List<CheckingCommObj> checkingCommObjs_list_db = checkEventDao.getCheckingCommercialObjectByEventLink(checkEventSupplemented.getId());
             List<CommercialObject> comobj_list = commercialObjectDao.getCommObjByUfop_link(checkEventSupplemented.getUfop_link());
             for (CommercialObject items : comobj_list) {
                 checkingCommObjs_list.add(new CheckingCommObj());
                 checkingCommObjs_list.get(checkingCommObjs_list.size() - 1).setComm_obj_link(items.getId());
-                for (CheckingCommObj items1: checkingCommObjs_list_db){
-                    if(checkingCommObjs_list.get(checkingCommObjs_list.size() - 1).getComm_obj_link()==items1.getComm_obj_link())
+                for (CheckingCommObj items1 : checkingCommObjs_list_db) {
+                    if (checkingCommObjs_list.get(checkingCommObjs_list.size() - 1).getComm_obj_link() == items1.getComm_obj_link()) {
                         checkingCommObjs_list.get(checkingCommObjs_list.size() - 1).setChecking(true);
+                    }
+
                 }
             }
+
             uiModel.addAttribute("comobj_list", comobj_list);
             checkEventSupplemented.setCommobj_list(checkingCommObjs_list);
         } catch (IndexOutOfBoundsException ex) {
@@ -618,6 +624,7 @@ public class EventController {
             uiModel.addAttribute("ex", ex);
             return "message";
         }
+        uiModel.addAttribute("title", "Редагування перевірки id = " + checkEventSupplemented.getId());
         uiModel.addAttribute("actionlink", "/editeventsupplementedpost");
         uiModel.addAttribute("buttonvalue", "Записати зміни");
         BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
@@ -640,16 +647,25 @@ public class EventController {
         }
         try {
 
-            for (int i = 0; i < checkEventSupplemented.getCommobj_list().size(); i++) {
-                if (checkEventSupplemented.getCommobj_list().get(i).isChecking()) {
-
-                } else {
-                    checkEventSupplemented.getCommobj_list().remove(i);
-                }
-            }
+//            for (int i = 0; i < checkEventSupplemented.getCommobj_list().size(); i++) {
+//                if (checkEventSupplemented.getCommobj_list().get(i).isChecking()) {
+//
+//                } else {
+//                    checkEventSupplemented.getCommobj_list().remove(i);
+//                }
+//            }
 
             checkEventSupplemented.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
             checkEventSupplemented = checkEventDao.editEvent(checkEventSupplemented);
+            List<CheckingCommObj> commObjList_db = checkEventDao.getCheckingCommercialObjectByEventLink(checkEventSupplemented.getId());
+            for (int i = 0; i < checkEventSupplemented.getCommobj_list().size(); i++) {
+                checkEventSupplemented.getCommobj_list().get(i).setCheck_event_link(checkEventSupplemented.getId());
+                for (int j = 0; j < commObjList_db.size(); j++) {
+                   //insert or update comm object
+                }
+
+            }
+
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";

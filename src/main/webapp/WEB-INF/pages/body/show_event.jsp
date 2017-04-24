@@ -99,12 +99,14 @@
                 <td></td>
             </tr>
             <tr>
-                <td>Результати проб</td>
-                <td>
-                    <c:if test="${event.result_sampling==0}">Відповідають вимогам</c:if>
-                    <c:if test="${event.result_sampling==1}">Не відповідають вимогам</c:if>
-                </td>
-                <td></td>
+                <c:if test="${event.check_sampling==1}">
+                    <td>Результати проб</td>
+                    <td>
+                        <c:if test="${event.result_sampling==0}">Відповідають вимогам</c:if>
+                        <c:if test="${event.result_sampling==1}">Не відповідають вимогам</c:if>
+                    </td>
+                    <td></td>
+                </c:if>
             </tr>
             <tr>
                 <td>Початок перевірки</td>
@@ -124,7 +126,9 @@
                 <td>Перевірені комерційні об'єкти</td>
                 <td>
                     <c:forEach items="${event.commobj_list}" var="commobj_list">
-                        ${commobj_list.comm_obj_link}<br/>
+                       <li /> ${commobj_list.comm_obj_link} ${commobj_list.comm_obj_name} -
+                       <c:if test="${commobj_list.checking}">перевірявся</c:if>
+                        <c:if test="${not commobj_list.checking}">знятий з перевірки</c:if>
                     </c:forEach>
                 </td>
                 <td></td>

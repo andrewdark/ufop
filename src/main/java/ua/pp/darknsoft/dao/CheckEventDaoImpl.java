@@ -1,5 +1,6 @@
 package ua.pp.darknsoft.dao;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -46,6 +47,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private DeletePunishmentArticlesById deletePunishmentArticlesById;
     private SelectCheckingCommercialObject selectCheckingCommercialObject;
     private UpdateCheckEventReturnID updateCheckEventReturnID;
+    private UpdateCheckingCommObj updateCheckingCommObj;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -72,6 +74,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.deletePunishmentArticlesById = new DeletePunishmentArticlesById(dataSource);
         this.selectCheckingCommercialObject = new SelectCheckingCommercialObject(dataSource);
         this.updateCheckEventReturnID = new UpdateCheckEventReturnID(dataSource);
+        this.updateCheckingCommObj = new UpdateCheckingCommObj(dataSource);
     }
 
     @Override
@@ -226,6 +229,14 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
 
         return checkEventSupplemented;
     }
+    @Override
+    public void createCheckingCommObj(CheckingCommObj checkingCommObj){
+       Map<String,Object> bindCommObj = new HashMap<>();
+        bindCommObj.put("check_event_link", checkingCommObj.getId());
+        bindCommObj.put("comm_obj_link", checkingCommObj.getComm_obj_link());
+        bindCommObj.put("checking", checkingCommObj.isChecking());
+        insertCheckingCommObj.updateByNamedParam(bindCommObj);
+    }
 
     @Override
     public void deleteCheckingGroupOfGoods(long id) {
@@ -264,5 +275,12 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         updateCheckEventReturnID.updateByNamedParam(bind, keyHolder);
         eventSupplemented.setId(keyHolder.getKey().longValue());
         return eventSupplemented;
+    }
+    @Override
+    public void updateCheckingCommObjById(CheckingCommObj checkingCommObj){
+        Map<String,Object> bind = new HashMap<>();
+        bind.put("id",checkingCommObj.getId());
+        bind.put("checking",checkingCommObj.isChecking());
+        updateCheckingCommObj.updateByNamedParam(bind);
     }
 }
