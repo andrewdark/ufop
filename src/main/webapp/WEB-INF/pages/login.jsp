@@ -28,7 +28,7 @@
                                                        placeholder="${labelpwd}" required="required"
                                                        class="form-control"/>
 
-            <input name="submit" type="submit" class="btn btn-default" id="submitBtn" value="Войти"/>
+            <input name="submit" type="submit" class="btn btn-default" id="submitBtn" value="Увійти"/>
             <div class="reg-restore">
                 <span><a href=/registration>Реєстрація</a></span>
                 <span><a href="/restore">Відновити пароль</a></span>

@@ -118,37 +118,40 @@
                 <input type="submit" value="перейти до КВЕДів"/>
             </form:form>
         </c:if>
-        <c:if test="${ufop.ufop_nav!=1}">
-            <form action="/show_ufop" method="get">
-                <input type="hidden" name="id" value="${ufop.id}"/>
-                <input type="submit" value="Завершити"/>
-            </form>
-        </c:if>
-        <hr/>
-        <h3>Інформація про суб'єкт господарювання</h3><br/>
-        <c:if test="${ufop.ufop_is==0}">
-            <c:set var="u_name" value="ПІБ фізичної особи"/>
-            <c:set var="u_code" value="ІПН фізичної особи"/>
-        </c:if>
-        <c:if test="${ufop.ufop_is==1}">
-            <c:set var="u_name" value="Назва юридичної особи"/>
-            <c:set var="u_code" value="ІПН юридичної особи"/>
-        </c:if>
-        <table>
-            <tr>
-                <td>ІД номер</td>
-                <td>${ufop.id}</td>
-            </tr>
-            <tr>
-                <td>${u_name}</td>
-                <td>${ufop.ufop_name}</td>
-            </tr>
-            <tr>
-                <td>${u_code}</td>
-                <td>${ufop.ufop_code}</td>
-            </tr>
-        </table>
-
+        <div class="d_right">
+            <c:if test="${ufop.ufop_nav!=1}">
+                <form action="/show_ufop" method="get">
+                    <input type="hidden" name="id" value="${ufop.id}"/>
+                    <input type="submit" value="Завершити"/>
+                </form>
+            </c:if>
+        </div>
+        <div class="info_padding">
+            <hr/>
+            <h3>Інформація про суб'єкт господарювання</h3><br/>
+            <c:if test="${ufop.ufop_is==0}">
+                <c:set var="u_name" value="ПІБ фізичної особи"/>
+                <c:set var="u_code" value="ІПН фізичної особи"/>
+            </c:if>
+            <c:if test="${ufop.ufop_is==1}">
+                <c:set var="u_name" value="Назва юридичної особи"/>
+                <c:set var="u_code" value="ІПН юридичної особи"/>
+            </c:if>
+            <table>
+                <tr>
+                    <td>ІД номер</td>
+                    <td>${ufop.id}</td>
+                </tr>
+                <tr>
+                    <td>${u_name}</td>
+                    <td>${ufop.ufop_name}</td>
+                </tr>
+                <tr>
+                    <td>${u_code}</td>
+                    <td>${ufop.ufop_code}</td>
+                </tr>
+            </table>
+        </div>
         <a onclick="look('hide1'); return false;" href="#">Довідка</a>
         <div id="hide1" style="display: none;">
             <li/>

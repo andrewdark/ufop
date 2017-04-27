@@ -6,4 +6,16 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-NOT SUPPORT YET
+<div class="article">
+    <h2><span>ДОВІДНИКИ</span></h2>
+    <div class="clr"></div>
+    <div class="img">
+
+    </div>
+    <div class="post_content">
+
+
+
+    </div>
+    <div class="clr"></div>
+</div>

@@ -510,15 +510,20 @@ a {
 }
 .d_right{
     /* border:1px solid red; */
-    width:165px;
-    height:50px;
+    /*width:165px;*/
+    /*height:50px;*/
     float:right;
+
+
 }
 .d_right_brdr_red{
     border:1px solid red;
     width:150px;
     height:50px;
     float:right;
+}
+.info_padding{
+    padding: 30px;
 }
 span.error {
     color: red;

@@ -8,6 +8,7 @@ $(function () {
     $("#tabs").tabs();
     $("#ufoptabs").tabs();
     $("#eventtabs").tabs();
+    $("#searchtabs").tabs();
 });
 //ajax is used here
 function looplocation() {

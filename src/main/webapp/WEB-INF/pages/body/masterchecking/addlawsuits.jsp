@@ -35,8 +35,10 @@
                     <tr>
                         <td><form:label path="filed_on_action">Позов до суду </form:label></td>
                         <td>
-                            <form:radiobutton path="filed_on_action" value="0" onchange="javascript:isFiled_on_action0();"/>Не подано позову<br/>
-                            <form:radiobutton path="filed_on_action" value="1" onchange="javascript:isFiled_on_action1();"/>Подано позов
+                            <form:radiobutton path="filed_on_action" value="0"
+                                              onchange="javascript:isFiled_on_action0();"/>Не подано позову<br/>
+                            <form:radiobutton path="filed_on_action" value="1"
+                                              onchange="javascript:isFiled_on_action1();"/>Подано позов
                         </td>
                         <td><span class="error"></span></td>
                     </tr>
@@ -51,7 +53,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <div class="is_filed_on_action"><form:label path="result_link">Результат позову</form:label></div>
+                            <div class="is_filed_on_action"><form:label
+                                    path="result_link">Результат позову</form:label></div>
                         </td>
                         <td>
                             <div class="is_filed_on_action"><form:select path="result_link" items="${select}"/></div>
@@ -60,7 +63,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <div class="is_filed_on_action"><form:label path="description">Додаткова інформація</form:label></div>
+                            <div class="is_filed_on_action"><form:label
+                                    path="description">Додаткова інформація</form:label></div>
                         </td>
                         <td>
                             <div class="is_filed_on_action"><form:textarea path="description" rows="10"/></div>
@@ -74,47 +78,48 @@
                     </tr>
                 </table>
             </form:form>
-            <form method="get" action="/show_event/">
-                <input type="hidden" name="id" value="${checkEvent.id}"/>
-                <input type="submit" value="Завершити"/>
-            </form>
+            <div class="d_right">
+                <form method="get" action="/show_event/">
+                    <input type="hidden" name="id" value="${checkEvent.id}"/>
+                    <input type="submit" value="Завершити"/>
+                </form>
+            </div>
         </c:if>
-        <div id="co_message"></div>
-
-        <hr/>
-        <table width="100%">
-            <caption>Інформація про перевірку</caption>
-            <tr>
-                <td>ІД</td>
-                <td>${checkEvent.id}</td>
-            </tr>
-            <tr>
-                <td>Номер</td>
-                <td>${checkEvent.event_number}</td>
-
-            </tr>
-            <tr>
-                <td>Тип</td>
-                <td>
-                    <c:if test="${checkEvent.check_type==0}">Планова</c:if>
-                    <c:if test="${checkEvent.check_type==1}">Позапланова</c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>Тип</td>
-                <td>
-                    <c:if test="${checkEvent.check_violation==0}">Порушень не знайдено</c:if>
-                    <c:if test="${checkEvent.check_violation==1}">Порушення виявлено</c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>Опис</td>
-                <td>
-                    <c:if test="${checkEvent.check_violation==0}">N/A</c:if>
-                    <c:if test="${checkEvent.check_violation==1}"> ${checkEvent.event_result}</c:if>
-                </td>
-            </tr>
-        </table>
+        <div class="info_padding">
+            <hr/>
+            <table width="100%">
+                <caption>Інформація про перевірку</caption>
+                <tr>
+                    <td>ІД</td>
+                    <td>${checkEvent.id}</td>
+                </tr>
+                <tr>
+                    <td>Номер</td>
+                    <td>${checkEvent.event_number}</td>
+                </tr>
+                <tr>
+                    <td>Тип</td>
+                    <td>
+                        <c:if test="${checkEvent.check_type==0}">Планова</c:if>
+                        <c:if test="${checkEvent.check_type==1}">Позапланова</c:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Тип</td>
+                    <td>
+                        <c:if test="${checkEvent.check_violation==0}">Порушень не знайдено</c:if>
+                        <c:if test="${checkEvent.check_violation==1}">Порушення виявлено</c:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Опис</td>
+                    <td>
+                        <c:if test="${checkEvent.check_violation==0}">N/A</c:if>
+                        <c:if test="${checkEvent.check_violation==1}"> ${checkEvent.event_result}</c:if>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="clr"></div>
 </div>

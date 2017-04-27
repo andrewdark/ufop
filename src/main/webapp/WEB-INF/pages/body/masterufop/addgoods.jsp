@@ -43,33 +43,37 @@
                 </tr>
             </table>
         </form:form>
-        <form action="/show_ufop" method="get">
-            <input type="hidden" name="id" value="${co.ufop_link}">
-            <input type="submit" value="Завершити"/>
-        </form>
-        <hr/>
-        <table>
-            <th>Інформація про комерційний об'єкт</th>
-            <tr>
-                <td>ІД номер</td>
-                <td>${co.id}</td>
-            </tr>
-            <tr>
-                <td>Назва</td>
-                <td>${co.obj_name}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
+        <div class="d_right">
+            <form action="/show_ufop" method="get">
+                <input type="hidden" name="id" value="${co.ufop_link}">
+                <input type="submit" value="Завершити"/>
+            </form>
+        </div>
+        <div class="info_padding">
+            <hr/>
+            <table>
+                <th>Інформація про комерційний об'єкт</th>
+                <tr>
+                    <td>ІД номер</td>
+                    <td>${co.id}</td>
+                </tr>
+                <tr>
+                    <td>Назва</td>
+                    <td>${co.obj_name}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="clr"></div>
 </div>
 <div class="b-popup" id="popup4">
     ${ex}<br/>
     <div class="b-popup-content" id="setgoods_popup">
-        <select id="my_selecttop1" name="my_selecttop" onchange="loopgoodsdown(2)" >
+        <select id="my_selecttop1" name="my_selecttop" onchange="loopgoodsdown(2)">
             <option value=""></option>
             <c:forEach items="${goodsTop}" var="goodsTop">
                 <option value="${goodsTop.treemark}">${goodsTop.name}</option>

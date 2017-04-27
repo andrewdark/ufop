@@ -86,26 +86,26 @@
                 <td></td>
             </tr>
             <c:if test="${not empty fulladdress}">
-            <tr>
-                <td>Адреса реєстрації</td>
-                <td>
-                    <c:forEach items="${fulladdress}" var="fulladdress">
-                        ${fulladdress.stype}: ${fulladdress.name}<br/>
-                    </c:forEach>
-                    <c:if test="${ufop.n_place_of_reg ne ''}">
-                        Дім: ${ufop.n_place_of_reg}<br/>
-                    </c:if>
-                    <c:if test="${ufop.b_place_of_reg ne ''}">
-                        Корпус: ${ufop.b_place_of_reg}<br/>
-                    </c:if>
-                    <c:if test="${ufop.f_place_of_reg ne ''}">
-                        Квартира: ${ufop.f_place_of_reg}<br/>
-                    </c:if>
+                <tr>
+                    <td>Адреса реєстрації</td>
+                    <td>
+                        <c:forEach items="${fulladdress}" var="fulladdress">
+                            ${fulladdress.stype}: ${fulladdress.name}<br/>
+                        </c:forEach>
+                        <c:if test="${ufop.n_place_of_reg ne ''}">
+                            Дім: ${ufop.n_place_of_reg}<br/>
+                        </c:if>
+                        <c:if test="${ufop.b_place_of_reg ne ''}">
+                            Корпус: ${ufop.b_place_of_reg}<br/>
+                        </c:if>
+                        <c:if test="${ufop.f_place_of_reg ne ''}">
+                            Квартира: ${ufop.f_place_of_reg}<br/>
+                        </c:if>
 
-                </td>
-                <td></td>
-            </tr>
-        </c:if>
+                    </td>
+                    <td></td>
+                </tr>
+            </c:if>
         </table>
 
     </div>
@@ -147,7 +147,7 @@
 
                     <td width="50px">
                         <c:forEach items="${co.goodsList}" var="goodsList">
-                           <span style="font-size: 14px;"> ${goodsList.name}</span><br/>
+                            <span style="font-size: 14px;"> ${goodsList.name}</span><br/>
                         </c:forEach>
                     </td>
 
@@ -162,9 +162,8 @@
     </div>
 
     <div id="tabs-3">
-        <p>Перелік планових та позапланових перевірок</p>
         <table width="100%">
-            <caption></caption>
+            <caption>ПЕРЕЛІК ПЛАНОВИХ ТА ПОЗАПЛАНОВИХ ПЕРЕВІРОК</caption>
 
             <th>Дата</th>
             <th>Тип</th>
@@ -206,16 +205,28 @@
     </div>
 
     <div id="tabs-4">
-        <p>Перелік КВЕД</p>
-        <c:forEach items="${kveds}" var="kveds">
-            ${kveds.kved_catalog_label} -  ${kveds.kved_catalog_name}<br/>
-        </c:forEach>
+        <table width="100%">
+            <caption>ПЕРЕЛІК КВЕД</caption>
+            <c:forEach items="${kveds}" var="kveds">
+                <tr>
+                    <td>${kveds.kved_catalog_label}</td>
+                    <td>${kveds.kved_catalog_name}</td>
+                    <td></td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
 
     <div id="tabs-5">
-        <p>Перелік контактних осіб</p>
-        <c:forEach items="${ci_list}" var="ci">
-            ${ci.last_name} ${ci.first_name} ${ci.patronymic_name} <br/>
-        </c:forEach>
+        <table width="100%">
+            <caption>ПЕРЕЛІК КОНТАКТНИХ ОСІБ</caption>
+            <c:forEach items="${ci_list}" var="ci">
+                <tr>
+                    <td>${ci.last_name} ${ci.first_name} ${ci.patronymic_name}</td>
+                    <td>- ${ci.position}</td>
+                    <td></td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
 </div>

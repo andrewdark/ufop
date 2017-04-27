@@ -22,8 +22,9 @@
             </c:forEach>
         </table>
         <c:if test="${empty command.commobj_list}">
-            <br /><br />
-            <b>Всі комерційні об'єкти, які були в наявності у <a href="/show_ufop?id=${event.ufop_link}">суб'єкта господарювання</a>, були внесені в існуючу перевірку.</b>
+            <br/><br/>
+            <b>Всі комерційні об'єкти, які були в наявності у <a href="/show_ufop?id=${event.ufop_link}">суб'єкта
+                господарювання</a>, були внесені в існуючу перевірку.</b>
         </c:if>
         <c:if test="${not empty command.commobj_list}">
             <form:form action="${actionlink}" method="post">
@@ -55,30 +56,34 @@
 
             </form:form>
         </c:if>
-        <form method="get" action="/show_event/">
-            <input type="hidden" name="id" value="${checkEvent.id}"/>
-            <input type="submit" value="Завершити"/>
-        </form>
-        <hr/>
-        <table width="100%">
-            <caption>Інформація про перевірку</caption>
-            <tr>
-                <td>ІД</td>
-                <td>${checkEvent.id}</td>
+        <div class="d_right">
+            <form method="get" action="/show_event/">
+                <input type="hidden" name="id" value="${checkEvent.id}"/>
+                <input type="submit" value="Завершити"/>
+            </form>
+        </div>
+        <div class="info_padding">
+            <hr/>
+            <table width="100%">
+                <caption>Інформація про перевірку</caption>
+                <tr>
+                    <td>ІД</td>
+                    <td>${checkEvent.id}</td>
 
-            </tr>
-            <tr>
-                <td>Тип</td>
-                <td>
-                    <c:if test="${checkEvent.check_type==0}">Планова</c:if>
-                    <c:if test="${checkEvent.check_type==1}">Позапланова</c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>Опис</td>
-                <td>${checkEvent.event_result}</td>
-            </tr>
-        </table>
+                </tr>
+                <tr>
+                    <td>Тип</td>
+                    <td>
+                        <c:if test="${checkEvent.check_type==0}">Планова</c:if>
+                        <c:if test="${checkEvent.check_type==1}">Позапланова</c:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Опис</td>
+                    <td>${checkEvent.event_result}</td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="clr"></div>
 </div>

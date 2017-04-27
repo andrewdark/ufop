@@ -224,7 +224,7 @@ for(Iterator<CheckingCommObj> iterator = checkEventSupplemented.getCommobj_list(
         checkEventSupplemented.setCommobj_list(checkingCommObjList_e);
 
         uiModel.addAttribute("checkEvent", checkEventSupplemented);
-        uiModel.addAttribute("title", "Редагування перевірки id = " + checkEventSupplemented.getId());
+        uiModel.addAttribute("title", "Додавання нових комерційних об'єктів");
         uiModel.addAttribute("actionlink", "/addcheckcommobjpost");
         uiModel.addAttribute("buttonvalue", "Записати зміни");
         BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");

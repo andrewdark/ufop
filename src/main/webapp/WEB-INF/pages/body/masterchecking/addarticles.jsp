@@ -14,8 +14,10 @@
     <div class="post_content_wide">
         <div id="offenseArticles_list">
             <c:forEach items="${offenseArticles_list}" var="offenseArticles_list">
-                <li />${offenseArticles_list.caption}
-                <a href="/article_info?id=${offenseArticles_list.articles_law_link}" target="_blank"><img src="../resources/images/info.png" width="10px"/></a>
+                <li/>
+                ${offenseArticles_list.caption}
+                <a href="/article_info?id=${offenseArticles_list.articles_law_link}" target="_blank"><img
+                        src="../resources/images/info.png" width="10px"/></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="/deleteoffensearticles?id=${offenseArticles_list.id}&EventId=${offenseArticles_list.check_event_link}">Видалити</a>
 
@@ -37,29 +39,33 @@
                 </tr>
             </table>
         </form:form>
-        <form method="get" action="/show_event/">
-            <input type="hidden" name="id" value="${checkEvent.id}"/>
-            <input type="submit" value="Завершити"/>
-        </form>
-        <hr/>
-        <table width="100%">
-            <caption>Інформація про перевірку</caption>
-            <tr>
-                <td>ІД</td>
-                <td>${checkEvent.id}</td>
-            </tr>
-            <tr>
-                <td>Тип</td>
-                <td>
-                    <c:if test="${checkEvent.check_type==0}">Планова</c:if>
-                    <c:if test="${checkEvent.check_type==1}">Позапланова</c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>Опис</td>
-                <td>${checkEvent.event_result}</td>
-            </tr>
-        </table>
+        <div class="d_right">
+            <form method="get" action="/show_event/">
+                <input type="hidden" name="id" value="${checkEvent.id}"/>
+                <input type="submit" value="Завершити"/>
+            </form>
+        </div>
+        <div class="info_padding">
+            <hr/>
+            <table width="100%">
+                <caption>Інформація про перевірку</caption>
+                <tr>
+                    <td>ІД</td>
+                    <td>${checkEvent.id}</td>
+                </tr>
+                <tr>
+                    <td>Тип</td>
+                    <td>
+                        <c:if test="${checkEvent.check_type==0}">Планова</c:if>
+                        <c:if test="${checkEvent.check_type==1}">Позапланова</c:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Опис</td>
+                    <td>${checkEvent.event_result}</td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="clr"></div>
 </div>

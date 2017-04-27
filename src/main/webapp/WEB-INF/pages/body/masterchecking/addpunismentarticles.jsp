@@ -14,8 +14,10 @@
     <div class="post_content_wide">
         <div id="punishmentArticles_list">
             <c:forEach items="${punishmentArticles_list}" var="punishmentArticles_list">
-                <li />${punishmentArticles_list.caption}
-                <a href="/article_info?id=${punishmentArticles_list.articles_law_link}" target="_blank"><img src="../resources/images/info.png" width="10px"/></a>
+                <li/>
+                ${punishmentArticles_list.caption}
+                <a href="/article_info?id=${punishmentArticles_list.articles_law_link}" target="_blank"><img
+                        src="../resources/images/info.png" width="10px"/></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="/deletepunishmentarticles?id=${punishmentArticles_list.id}&EventId=${punishmentArticles_list.check_event_link}">Видалити</a>
             </c:forEach>
@@ -27,7 +29,7 @@
                     <td><form:label path="articles_law_link">Виберіть статтю</form:label></td>
                     <td><form:input path="articles_law_link" id="articles"
                                     onclick="javascript:ArticlesPopUpShow();"/></td>
-                    <td><span class="error"><form:errors path="articles_law_link" /></span> </td>
+                    <td><span class="error"><form:errors path="articles_law_link"/></span></td>
                 </tr>
                 <tr>
                     <td><form:checkbox path="additionalinformation"/>Накласти штраф</td>
@@ -36,29 +38,33 @@
                 </tr>
             </table>
         </form:form>
-        <form method="get" action="/show_event/">
-            <input type="hidden" name="id" value="${checkEvent.id}" />
-            <input type="submit" value="Завершити" />
-        </form>
-        <hr />
-        <table width="100%">
-            <caption>Інформація про перевірку</caption>
-            <tr>
-                <td>ІД</td>
-                <td>${checkEvent.id}</td>
-            </tr>
-            <tr>
-                <td>Тип</td>
-                <td>
-                    <c:if test="${checkEvent.check_type==0}">Планова</c:if>
-                    <c:if test="${checkEvent.check_type==1}">Позапланова</c:if>
-                </td>
-            </tr>
-            <tr>
-                <td>Опис</td>
-                <td>${checkEvent.event_result}</td>
-            </tr>
-        </table>
+        <div class="d_right">
+            <form method="get" action="/show_event/">
+                <input type="hidden" name="id" value="${checkEvent.id}"/>
+                <input type="submit" value="Завершити"/>
+            </form>
+        </div>
+        <div class="info_padding">
+            <hr/>
+            <table width="100%">
+                <caption>Інформація про перевірку</caption>
+                <tr>
+                    <td>ІД</td>
+                    <td>${checkEvent.id}</td>
+                </tr>
+                <tr>
+                    <td>Тип</td>
+                    <td>
+                        <c:if test="${checkEvent.check_type==0}">Планова</c:if>
+                        <c:if test="${checkEvent.check_type==1}">Позапланова</c:if>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Опис</td>
+                    <td>${checkEvent.event_result}</td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="clr"></div>
 </div>
