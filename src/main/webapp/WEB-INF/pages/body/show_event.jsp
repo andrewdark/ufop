@@ -126,8 +126,9 @@
                 <td>Перевірені комерційні об'єкти</td>
                 <td>
                     <c:forEach items="${event.commobj_list}" var="commobj_list">
-                       <li /> ${commobj_list.comm_obj_link} ${commobj_list.comm_obj_name} -
-                       <c:if test="${commobj_list.checking}">перевірявся</c:if>
+                        <li/>
+                        ${commobj_list.comm_obj_link} ${commobj_list.comm_obj_name} -
+                        <c:if test="${commobj_list.checking}">перевірявся</c:if>
                         <c:if test="${not commobj_list.checking}">знятий з перевірки</c:if>
                     </c:forEach>
                 </td>
@@ -178,16 +179,17 @@
             </table>
             <br/>
             <c:if test="${not empty precaution}">
-                <c:forEach items="${precaution}" var="precaution">
-                    <table width="100%">
-                        <caption><span style="font-size: 150%;">ПРИЙНЯТІ ЗАХОДИ</span></caption>
+                <table width="100%">
+                    <caption><span style="font-size: 150%;">ПРИЙНЯТІ ЗАХОДИ</span></caption>
+                    <c:forEach items="${precaution}" var="precaution">
+
                         <br/>
                         <tr>
                             <td>Назва заходу</td>
                             <td>
                                     ${precaution.precaution_name}
                             </td>
-                            <td></td>
+                            <td><a href="/editprecaution?id=${precaution.id}">редагувати</a></td>
                         </tr>
                         <tr>
                             <td>Виконати до</td>
@@ -206,8 +208,8 @@
                             </td>
                             <td></td>
                         </tr>
-                    </table>
-                </c:forEach>
+                    </c:forEach>
+                </table>
             </c:if>
 
         </c:if>

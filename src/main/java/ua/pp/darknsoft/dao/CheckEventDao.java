@@ -20,6 +20,8 @@ public interface CheckEventDao {
 
     List<CheckEventSupplemented> getCheckEventById(long checkEvent_link);
 
+    List<Precaution> getPrecautionById(long id);
+
     List<Precaution> getPrecautionByCheckEventLink(long check_event_link);
 
     List<PunishmentArticles> getPunishmentArticlesByCheckEventLink(long check_event_link);
@@ -48,7 +50,11 @@ public interface CheckEventDao {
 
     void deletePunishmentArticles(long id);
 
+    void deletePrecaution(long id);
+
     CheckEventSupplemented editEvent(CheckEventSupplemented eventSupplemented);
 
     void updateCheckingCommObjById(CheckingCommObj checkingCommObj);
+
+    void updatePrecautionDate(Precaution precaution);
 }

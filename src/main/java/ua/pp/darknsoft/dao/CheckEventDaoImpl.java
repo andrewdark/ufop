@@ -1,12 +1,9 @@
 package ua.pp.darknsoft.dao;
 
-import org.apache.commons.collections.map.HashedMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.event.*;
 import ua.pp.darknsoft.entity.*;
@@ -36,6 +33,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private InsertPunishmentArticles insertPunishmentArticles;
     private SelectCheckEventById selectCheckEventById;
     private SelectCheckEventByUfop_link selectCheckEventByUfop_link;
+    private SelectPrecautionById selectPrecautionById;
     private SelectPrecautionByCheck_event_link selectPrecautionByCheck_event_link;
     private SelectPunishmentArticlesByCheckEventLink selectPunishmentArticlesByCheckEventLink;
     private SelectSanctionByCheckEventLink selectSanctionByCheckEventLink;
@@ -45,9 +43,11 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private DeleteCheckingGoodsById deleteCheckingGoodsById;
     private DeleteOffenseArticlesById deleteOffenseArticlesById;
     private DeletePunishmentArticlesById deletePunishmentArticlesById;
+    private DeletePrecautionById deletePrecautionById;
     private SelectCheckingCommercialObject selectCheckingCommercialObject;
     private UpdateCheckEventReturnID updateCheckEventReturnID;
     private UpdateCheckingCommObj updateCheckingCommObj;
+    private UpdatePrecautionById updatePrecautionById;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -60,6 +60,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.insertCheckingGoods = new InsertCheckingGoods(dataSource);
         this.selectCheckEventById = new SelectCheckEventById(dataSource);
         this.insertPrecaution = new InsertPrecaution(dataSource);
+        this.selectPrecautionById = new SelectPrecautionById(dataSource);
         this.selectPrecautionByCheck_event_link = new SelectPrecautionByCheck_event_link(dataSource);
         this.insertPunishmentArticles = new InsertPunishmentArticles(dataSource);
         this.selectPunishmentArticlesByCheckEventLink = new SelectPunishmentArticlesByCheckEventLink(dataSource);
@@ -72,9 +73,11 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.deleteCheckingGoodsById = new DeleteCheckingGoodsById(dataSource);
         this.deleteOffenseArticlesById = new DeleteOffenseArticlesById(dataSource);
         this.deletePunishmentArticlesById = new DeletePunishmentArticlesById(dataSource);
+        this.deletePrecautionById = new DeletePrecautionById(dataSource);
         this.selectCheckingCommercialObject = new SelectCheckingCommercialObject(dataSource);
         this.updateCheckEventReturnID = new UpdateCheckEventReturnID(dataSource);
         this.updateCheckingCommObj = new UpdateCheckingCommObj(dataSource);
+        this.updatePrecautionById = new UpdatePrecautionById(dataSource);
     }
 
     @Override
@@ -83,6 +86,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         bind.put("check_event_link", check_event_link);
         return selectCheckGoodsByEvent_link.executeByNamedParam(bind);
     }
+
     @Override
     public List<CheckingCommObj> getCheckingCommercialObjectByEventLink(long check_event_link) {
         Map<String, Long> bind = new HashMap<>();
@@ -116,6 +120,13 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         Map<String, Long> bind = new HashMap<>();
         bind.put("id", id);
         return selectCheckEventById.executeByNamedParam(bind);
+    }
+
+    @Override
+    public List<Precaution> getPrecautionById(long id) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("id", id);
+        return selectPrecautionById.executeByNamedParam(bind);
     }
 
     @Override
@@ -229,9 +240,10 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
 
         return checkEventSupplemented;
     }
+
     @Override
-    public void createCheckingCommObj(CheckingCommObj checkingCommObj){
-       Map<String,Object> bindCommObj = new HashMap<>();
+    public void createCheckingCommObj(CheckingCommObj checkingCommObj) {
+        Map<String, Object> bindCommObj = new HashMap<>();
         bindCommObj.put("check_event_link", checkingCommObj.getCheck_event_link());
         bindCommObj.put("comm_obj_link", checkingCommObj.getComm_obj_link());
         bindCommObj.put("checking", checkingCommObj.isChecking());
@@ -244,22 +256,32 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         bind.put("id", id);
         deleteCheckingGoodsById.updateByNamedParam(bind);
     }
+
     @Override
     public void deleteOffenseArticles(long id) {
         Map<String, Long> bind = new HashMap<>();
         bind.put("id", id);
         deleteOffenseArticlesById.updateByNamedParam(bind);
     }
+
     @Override
     public void deletePunishmentArticles(long id) {
         Map<String, Long> bind = new HashMap<>();
         bind.put("id", id);
         deletePunishmentArticlesById.updateByNamedParam(bind);
     }
+
+    @Override
+    public void deletePrecaution(long id) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("id", id);
+        deletePrecautionById.updateByNamedParam(bind);
+    }
+
     @Override
     public CheckEventSupplemented editEvent(CheckEventSupplemented eventSupplemented) {
         Map<String, Object> bind = new HashMap<>();
-        bind.put("id",eventSupplemented.getId());
+        bind.put("id", eventSupplemented.getId());
         bind.put("event_number", eventSupplemented.getEvent_number());
         bind.put("event_date_begin", eventSupplemented.getEvent_date_begin());
         bind.put("event_date_end", eventSupplemented.getEvent_date_end());
@@ -276,11 +298,22 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         eventSupplemented.setId(keyHolder.getKey().longValue());
         return eventSupplemented;
     }
+
     @Override
-    public void updateCheckingCommObjById(CheckingCommObj checkingCommObj){
-        Map<String,Object> bind = new HashMap<>();
-        bind.put("id",checkingCommObj.getId());
-        bind.put("checking",checkingCommObj.isChecking());
+    public void updateCheckingCommObjById(CheckingCommObj checkingCommObj) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("id", checkingCommObj.getId());
+        bind.put("checking", checkingCommObj.isChecking());
         updateCheckingCommObj.updateByNamedParam(bind);
+    }
+
+    @Override
+    public void updatePrecautionDate(Precaution precaution) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("id", precaution.getId());
+        bind.put("service_date", precaution.getService_date());
+        bind.put("plan_date", precaution.getPlan_date());
+        bind.put("fact_date", precaution.getFact_date());
+        updatePrecautionById.updateByNamedParam(bind);
     }
 }

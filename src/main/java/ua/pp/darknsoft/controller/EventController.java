@@ -103,9 +103,9 @@ public class EventController {
             return myRdrct(httpServletRequest) + "/addevent";
         }
         try {
-for(Iterator<CheckingCommObj> iterator = checkEventSupplemented.getCommobj_list().iterator();iterator.hasNext();){
-    if(iterator.next().isChecking()==false) iterator.remove();
-}
+            for (Iterator<CheckingCommObj> iterator = checkEventSupplemented.getCommobj_list().iterator(); iterator.hasNext(); ) {
+                if (iterator.next().isChecking() == false) iterator.remove();
+            }
 
             checkEventSupplemented.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
             //redirectAttributes.addFlashAttribute("event", checkEventDao.createEventSupplemented(checkEventSupplemented));
@@ -194,24 +194,24 @@ for(Iterator<CheckingCommObj> iterator = checkEventSupplemented.getCommobj_list(
             List<CheckingCommObj> eventCommObjList = checkEventDao.getCheckingCommercialObjectByEventLink(checkEventSupplemented.getId());
 
 
-            for(ListIterator<CommercialObject> iterator = ufopCommObjList.listIterator(); iterator.hasNext();){
+            for (ListIterator<CommercialObject> iterator = ufopCommObjList.listIterator(); iterator.hasNext(); ) {
                 CommercialObject obj = iterator.next();
-                for (CheckingCommObj list2 : eventCommObjList){
-                    if(obj.getId()==list2.getComm_obj_link()) {
+                for (CheckingCommObj list2 : eventCommObjList) {
+                    if (obj.getId() == list2.getComm_obj_link()) {
                         iterator.remove();
                     }
                 }
             }
 
-                for (CommercialObject list1 : ufopCommObjList
-                        ) {
+            for (CommercialObject list1 : ufopCommObjList
+                    ) {
 
-                    checkingCommObjList_e.add(new CheckingCommObj());
-                    checkingCommObjList_e.get(checkingCommObjList_e.size() - 1).setCheck_event_link(checkEventSupplemented.getId());
-                    checkingCommObjList_e.get(checkingCommObjList_e.size() - 1).setComm_obj_link(list1.getId());
-                    checkingCommObjList_e.get(checkingCommObjList_e.size() - 1).setComm_obj_name(list1.getObj_name());
+                checkingCommObjList_e.add(new CheckingCommObj());
+                checkingCommObjList_e.get(checkingCommObjList_e.size() - 1).setCheck_event_link(checkEventSupplemented.getId());
+                checkingCommObjList_e.get(checkingCommObjList_e.size() - 1).setComm_obj_link(list1.getId());
+                checkingCommObjList_e.get(checkingCommObjList_e.size() - 1).setComm_obj_name(list1.getObj_name());
 
-                }
+            }
 
 
             uiModel.addAttribute("checkingCommObjList_e", checkingCommObjList_e);
@@ -326,6 +326,7 @@ for(Iterator<CheckingCommObj> iterator = checkEventSupplemented.getCommobj_list(
             }
             uiModel.addAttribute("precautioncatalog", precaution_cat);
             precaution.setCheck_event_link(checkEvent.getId());
+            uiModel.addAttribute("precaution_list", checkEventDao.getPrecautionByCheckEventLink(checkEvent.getId()));
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", "/addprecautions - catalogDao.getPrecautionCatalog() <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
@@ -683,6 +684,58 @@ for(Iterator<CheckingCommObj> iterator = checkEventSupplemented.getCommobj_list(
         }
         return myRdrct(httpServletRequest) + "/show_event?id=" + checkEventSupplemented.getId();
     }
+// EDIT PRECAUTION
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "editprecaution", method = RequestMethod.GET)
+    public String editPrecaution(@RequestParam(defaultValue = "0") String id, Model uiModel, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
+        Precaution precaution = (Precaution) uiModel.asMap().get("precaution");
+
+        try {
+            if (precaution == null && !id.equals("0")) {
+                List<Precaution> precaution_list = checkEventDao.getPrecautionById(Long.parseLong(id));
+                precaution = precaution_list.get(0);
+                uiModel.addAttribute("precaution_list", precaution_list);
+            }
+        uiModel.addAttribute("checkEvent",checkEventDao.getCheckEventById(precaution.getCheck_event_link()).get(0));
+        } catch (IndexOutOfBoundsException ex) {
+            uiModel.addAttribute("ex", "Такої перевірки не знайдено");
+            return "message";
+        } catch (NumberFormatException ex) {
+            uiModel.addAttribute("ex", "не вірна вказівка на перевірку");
+            return "message";
+        } catch (Exception ex) {
+            uiModel.addAttribute("ex", ex);
+            return "message";
+        }
+        uiModel.addAttribute("title", "Редагування прийнятого заходу id = " + precaution.getId());
+        uiModel.addAttribute("actionlink", "/editprecautionpost");
+        uiModel.addAttribute("buttonvalue", "Записати зміни");
+        BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
+        uiModel.addAttribute("command", precaution);
+        uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
+        return "addprecautions";
+    }
+
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "/editprecautionpost", method = RequestMethod.POST)
+    public String editPrecautionPost(@ModelAttribute Precaution precaution, Model uiModel,
+                                     HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
+                                     BindingResult bindingResult) {
+
+        //precautionValidator.validate(precaution, bindingResult);
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("b1", bindingResult);
+            redirectAttributes.addFlashAttribute("precaution", precaution);
+            return myRdrct(httpServletRequest) + "/editprecaution?id=" + precaution.getId();
+        }
+        try {
+            checkEventDao.updatePrecautionDate(precaution);
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        return myRdrct(httpServletRequest) + "/show_event?id=" + precaution.getCheck_event_link();
+    }
 
     //------------------------------------------------------------------------------------------------------------------
     //-------------------------------------DELETE EVENT METHOD----------------------------------------------------------
@@ -716,6 +769,22 @@ for(Iterator<CheckingCommObj> iterator = checkEventSupplemented.getCommobj_list(
             return myRdrct(httpServletRequest) + "/message";
         }
         return myRdrct(httpServletRequest) + "/addoffencearticles";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/deleteprecaution", method = RequestMethod.GET)
+    public String deletePrecaution(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String EventId,
+                                   HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+        try {
+            checkEventDao.deletePrecaution(Long.parseLong(id));
+            redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
+        } catch (Exception ex) {
+            String error = "Method: deletePrecaution.<br /> String id = " + id + " String EventId=" + EventId + "<br />" + ex;
+            redirectAttributes.addFlashAttribute("ex", error);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+
+        return myRdrct(httpServletRequest) + "/addprecautions";
     }
 
     @PreAuthorize("isAuthenticated()")

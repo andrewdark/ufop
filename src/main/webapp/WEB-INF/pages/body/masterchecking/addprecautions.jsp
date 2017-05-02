@@ -16,6 +16,15 @@
 
     </div>
     <div class="post_content_wide">
+        <div id="precaution_list">
+            <c:forEach items="${precaution_list}" var="precaution_list">
+                <li/>
+                ${precaution_list.precaution_name}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/deleteprecaution?id=${precaution_list.id}&EventId=${precaution_list.check_event_link}">Видалити</a>
+
+            </c:forEach>
+        </div>
         <c:if test="${checkEvent.check_violation==0}"><p>Порушеннь не виявлено</p>
             <p>В ході даної перевірки порушень не знайдено<br/><a href="/show_event?id=${event.id}">Повернутись до
                 перевірки</a></p>
@@ -29,14 +38,16 @@
             <form:form method="post" action="/addprecautionspost">
                 <table>
                     <tr>
-                        <td></td>
+                        <td><form:hidden path="id"/></td>
                         <td><form:hidden path="check_event_link"/></td>
                         <td><span class="error"><form:errors path="check_event_link"/></span></td>
                     </tr>
                     <tr>
-                        <td><form:label path="precaution_catalog_link">Вкажіть захід</form:label></td>
-                        <td><form:select path="precaution_catalog_link" items="${precautioncatalog}"/></td>
-                        <td><span class="error"><form:errors path="precaution_catalog_link"/></span></td>
+                        <c:if test="${empty command.id}">
+                            <td><form:label path="precaution_catalog_link">Вкажіть захід</form:label></td>
+                            <td><form:select path="precaution_catalog_link" items="${precautioncatalog}"/></td>
+                            <td><span class="error"><form:errors path="precaution_catalog_link"/></span></td>
+                        </c:if>
                     </tr>
                     <tr>
                         <td><form:label path="service_date">Дата прийняття заходу</form:label></td>
