@@ -11,7 +11,7 @@
     <mvc:annotation-driven/>
     <context:component-scan base-package="ua.pp.darknsoft"/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
-    <security:global-method-security pre-post-annotations="enabled" /> <!-- Защита методов-->
+    <security:global-method-security pre-post-annotations="enabled"/> <!-- Защита методов-->
     <bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
     </bean>
@@ -25,10 +25,10 @@
     </bean>
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <!-- SMTP settings -->
-        <property name="host" value="${mail.host}" />
-        <property name="port" value="${mail.port}" />
-        <property name="username" value="${mail.username}" />
-        <property name="password" value="${mail.password}" />
+        <property name="host" value="${mail.host}"/>
+        <property name="port" value="${mail.port}"/>
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
 
         <property name="javaMailProperties">
             <!-- additional properties specific to JavaMail -->
@@ -41,7 +41,12 @@
     </bean>
     <context:property-placeholder location="WEB-INF/properties/mail.properties"/>
 
-
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="order" value="0"/>
+        <property name="location">
+            <value>/WEB-INF/excel-pdf-config.xml</value>
+        </property>
+    </bean>
 
 
 </beans>
