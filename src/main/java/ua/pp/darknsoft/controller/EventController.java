@@ -333,6 +333,8 @@ public class EventController {
         }
 
         uiModel.addAttribute("title", "Прийняті заходи");
+        uiModel.addAttribute("actionlink", "/addprecautionspost");
+        uiModel.addAttribute("buttonvalue", "Додати");
         uiModel.addAttribute("checkEvent", checkEvent);
         BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
         uiModel.addAttribute("command", precaution);

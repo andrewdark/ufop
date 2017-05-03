@@ -25,7 +25,7 @@ public class PrecautionValidator implements Validator {
         Precaution precaution = (Precaution) o;
         try{
 
-            if(checkEventDao.getPrecautionByCheckEventLink(precaution.getCheck_event_link()).get(0).getPrecaution_catalog_link()==precaution.getPrecaution_catalog_link()){
+            if(checkEventDao.getPrecautionByEventAndPrecautionLink(precaution.getCheck_event_link(),precaution.getPrecaution_catalog_link()).get(0).getPrecaution_catalog_link() == precaution.getPrecaution_catalog_link()){
                 errors.rejectValue("precaution_catalog_link", "precaution_catalog_link.lenght", "Прийнятий захід вже існує");
             }
         }catch (Exception ex){

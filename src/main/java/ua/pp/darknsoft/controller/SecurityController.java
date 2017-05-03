@@ -66,7 +66,8 @@ public class SecurityController {
                 model.addAttribute("ex", ex);
                 return "message";
             }
-            String congrad = "<h1>Вітаємо! Залишилось лише увійти в систему під своїм логіном та паролем</h1>";
+            String congrad = "<h3>Вітаємо! Ви зареєструвались в системі, зверніться до адміністратора бази даних для " +
+                    "внесення додадкових даних та подальшої роботи в системи</h3>";
             redirectAttributes.addFlashAttribute("ex",congrad);
             return rdrct + "/message";
         }

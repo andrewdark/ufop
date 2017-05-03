@@ -24,6 +24,8 @@ public interface CheckEventDao {
 
     List<Precaution> getPrecautionByCheckEventLink(long check_event_link);
 
+    List<Precaution> getPrecautionByEventAndPrecautionLink(long check_event_link, long precaution_catalog_link);
+
     List<PunishmentArticles> getPunishmentArticlesByCheckEventLink(long check_event_link);
 
     List<OffenseArticles> getOffenseArticlesByCheckEventLink(long check_event_link);

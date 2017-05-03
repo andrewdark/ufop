@@ -35,7 +35,7 @@
         </c:if>
 
         <c:if test="${checkEvent.check_violation==1}">
-            <form:form method="post" action="/addprecautionspost">
+            <form:form method="post" action="${actionlink}">
                 <table>
                     <tr>
                         <td><form:hidden path="id"/></td>
@@ -43,7 +43,7 @@
                         <td><span class="error"><form:errors path="check_event_link"/></span></td>
                     </tr>
                     <tr>
-                        <c:if test="${empty command.id}">
+                        <c:if test="${command.id == 0}">
                             <td><form:label path="precaution_catalog_link">Вкажіть захід</form:label></td>
                             <td><form:select path="precaution_catalog_link" items="${precautioncatalog}"/></td>
                             <td><span class="error"><form:errors path="precaution_catalog_link"/></span></td>
@@ -66,7 +66,7 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="submit" value="записати"></td>
+                        <td><input type="submit" value="${buttonvalue}"></td>
                         <td></td>
                     </tr>
                 </table>

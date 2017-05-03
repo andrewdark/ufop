@@ -35,6 +35,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private SelectCheckEventByUfop_link selectCheckEventByUfop_link;
     private SelectPrecautionById selectPrecautionById;
     private SelectPrecautionByCheck_event_link selectPrecautionByCheck_event_link;
+    private SelectPrecautionByEventAndPrecaution_link selectPrecautionByEventAndPrecaution_link;
     private SelectPunishmentArticlesByCheckEventLink selectPunishmentArticlesByCheckEventLink;
     private SelectSanctionByCheckEventLink selectSanctionByCheckEventLink;
     private SelectLawsuitsByCheck_event_link selectLawsuitsByCheck_event_link;
@@ -62,6 +63,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.insertPrecaution = new InsertPrecaution(dataSource);
         this.selectPrecautionById = new SelectPrecautionById(dataSource);
         this.selectPrecautionByCheck_event_link = new SelectPrecautionByCheck_event_link(dataSource);
+        this.selectPrecautionByEventAndPrecaution_link = new SelectPrecautionByEventAndPrecaution_link(dataSource);
         this.insertPunishmentArticles = new InsertPunishmentArticles(dataSource);
         this.selectPunishmentArticlesByCheckEventLink = new SelectPunishmentArticlesByCheckEventLink(dataSource);
         this.selectSanctionByCheckEventLink = new SelectSanctionByCheckEventLink(dataSource);
@@ -134,6 +136,14 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         Map<String, Long> bind = new HashMap<>();
         bind.put("check_event_link", check_event_link);
         return selectPrecautionByCheck_event_link.executeByNamedParam(bind);
+    }
+
+    @Override
+    public List<Precaution> getPrecautionByEventAndPrecautionLink(long check_event_link, long precaution_catalog_link) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("check_event_link", check_event_link);
+        bind.put("precaution_catalog_link", precaution_catalog_link);
+        return selectPrecautionByEventAndPrecaution_link.executeByNamedParam(bind);
     }
 
     @Override
