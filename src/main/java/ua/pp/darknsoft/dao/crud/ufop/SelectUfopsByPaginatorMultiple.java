@@ -14,7 +14,8 @@ import java.sql.Types;
  */
 public class SelectUfopsByPaginatorMultiple extends MappingSqlQuery<Ufop> {
     private static final String SQL_SelectUfopsByPaginator = "SELECT ufop.*,u.username FROM ufop_table ufop " +
-            "INNER JOIN user_table u ON(u.id = ufop.creator_link)WHERE ufop_code like :stext OR ufop_name like :stext ORDER BY ufop.id LIMIT :total OFFSET :pageid";
+            "INNER JOIN user_table u ON(u.id = ufop.creator_link) WHERE lower(ufop_code) like lower(:stext) OR " +
+            "lower(ufop_name) like lower(:stext) ORDER BY ufop.id LIMIT :total OFFSET :pageid";
 
     public SelectUfopsByPaginatorMultiple(DataSource ds) {
         super(ds, SQL_SelectUfopsByPaginator);
