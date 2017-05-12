@@ -51,7 +51,7 @@ public class ExcelDocument extends AbstractExcelView {
         for (Ufop ufop : ufops_list) {
             HSSFRow row = excelSheet.createRow(rowCount++);
             row.createCell(0).setCellValue(rowCount-1);
-            row.createCell(1).setCellValue(ufop.getUfop_name());
+            row.createCell(1).setCellValue(rejectHtml(ufop.getUfop_name()));
             row.createCell(2).setCellValue("x");
             row.createCell(3).setCellValue(ufop.getUfop_code());
             row.createCell(4).setCellValue("x");
@@ -85,5 +85,17 @@ public class ExcelDocument extends AbstractExcelView {
         header.getCell(7).setCellStyle(styleHeader);
         header.createCell(8).setCellValue("Найменування органу державного нагляду  (контролю)");
         header.getCell(8).setCellStyle(styleHeader);
+    }
+    private String rejectHtml(String input) {
+        String output = "";
+        if (input == null) return "";
+        else {
+            input = input.replaceAll("&lt;", "<");
+            input = input.replaceAll("&gt;", ">");
+            input = input.replaceAll("&rsquo;", "\'");
+            output = input.replaceAll("&quot;", "\"");
+            return output;
+        }
+
     }
 }
