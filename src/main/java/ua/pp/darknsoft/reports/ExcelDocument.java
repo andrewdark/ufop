@@ -27,6 +27,8 @@ public class ExcelDocument extends AbstractExcelView {
         excelSheet.setColumnWidth(1,20 * 256);
         excelSheet.setColumnWidth(2,20 * 256);
         excelSheet.setColumnWidth(3,11 * 256);
+        CellStyle styleCell = hssfWorkbook.createCellStyle();
+        styleCell.setWrapText(true);
         //Excel file name change
         httpServletResponse.setHeader("Content-Disposition", "attachment; filename=excelDocument.xls");
 
@@ -58,7 +60,10 @@ public class ExcelDocument extends AbstractExcelView {
             row.createCell(5).setCellValue("x");
             row.createCell(6).setCellValue("x");
             row.createCell(7).setCellValue("Відповідно до встановлених вимог");
+            row.getCell(7).setCellStyle(styleCell);
             row.createCell(8).setCellValue("ГУ Держпродспоживслужби в Одеській області");
+            row.getCell(8).setCellStyle(styleCell);
+
 
         }
     }

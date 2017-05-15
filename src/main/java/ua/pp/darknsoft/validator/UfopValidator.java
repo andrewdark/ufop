@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 public class UfopValidator implements Validator {
     private final static Pattern RNTC_PATTERN = Pattern.compile("^[0-9]+$");
     private final static Pattern SR_PASSPORT_PATTERN = Pattern.compile("^[a-zA-Z]+$");
+    private final static Pattern SR_ADDRESS_PATTERN = Pattern.compile("^[a-zA-Z0-9.]+$");
     private Ufop sqlUfop = new Ufop();
     @Autowired
     UfopDao ufopDao;
@@ -70,13 +71,19 @@ public class UfopValidator implements Validator {
             if (ufop.getUfop_code().length() != 8 && ufop.getUfop_code().length() > 0)
                 errors.rejectValue("ufop_code", "ufop_code.lenght", "Не вірний формат");
         }
+
+        if(!ufop.getA_place_of_reg().isEmpty()){
+            if(!isAddress(ufop.getA_place_of_reg()))errors.rejectValue("a_place_of_reg","a_place_of_reg","Не вірний код клисифікатора");
+        }
     }
 
     private boolean isSrPassport(String value) {
         return SR_PASSPORT_PATTERN.matcher(value).matches();
     }
 
-    private boolean isNumber(String value) {
-        return RNTC_PATTERN.matcher(value).matches();
+    private boolean isNumber(String value) { return RNTC_PATTERN.matcher(value).matches(); }
+
+    private boolean isAddress(String value) {
+        return SR_ADDRESS_PATTERN.matcher(value).matches();
     }
 }
