@@ -19,7 +19,8 @@
                 <a href="/article_info?id=${punishmentArticles_list.articles_law_link}" target="_blank"><img
                         src="../resources/images/info.png" width="10px"/></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="/deletepunishmentarticles?id=${punishmentArticles_list.id}&EventId=${punishmentArticles_list.check_event_link}">Видалити</a>
+                <a href="/deletepunishmentarticles?id=${punishmentArticles_list.id}&EventId=${punishmentArticles_list.check_event_link}"
+                   onclick="return confirmDelete();">Видалити</a>
             </c:forEach>
         </div>
         <form:form method="post" action="/addpunishmentarticlespost">

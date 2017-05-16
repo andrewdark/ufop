@@ -10,12 +10,15 @@ import ua.pp.darknsoft.entity.PunishmentArticles;
 import ua.pp.darknsoft.entity.Sanction;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by Andrew on 29.03.2017.
  */
 @Component
 public class SanctionValidator implements Validator {
+    private final static Pattern DATE_PATTERN = Pattern.compile("[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])");
+    private final static Pattern PRICE_PATTERN = Pattern.compile("^[0-9.]+$");
     @Autowired
     CheckEventDao checkEventDao;
     @Override
@@ -37,5 +40,15 @@ public class SanctionValidator implements Validator {
         }
         if(sanction.getCheck_event_link()==0)errors.rejectValue("check_event_link", "check_event_link.lenght", "Відсутня вказівка на перевірку");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "check_event_link", "check_event_link.empty", "Відсутня вказівка на перевірку");
+
+        if(!isDate(sanction.getService_date()))errors.rejectValue("service_date", "service_date", "Не вірний формат. РРРР-ММ-ДД");
+        if(!isDate(sanction.getPlan_date()))errors.rejectValue("plan_date", "plan_date", "Не вірний формат. РРРР-ММ-ДД");
+        if(!isDate(sanction.getFact_date()))errors.rejectValue("fact_date", "fact_date", "Не вірний формат. РРРР-ММ-ДД");
+        if(!isPrice(sanction.getCharged_amount()))errors.rejectValue("charged_amount", "charged_amount", "Не вірний формат.");
     }
+
+    private boolean isDate(String value) {
+        return DATE_PATTERN.matcher(value).matches();
+    }
+    private boolean isPrice(String value) { return PRICE_PATTERN.matcher(value).matches(); }
 }

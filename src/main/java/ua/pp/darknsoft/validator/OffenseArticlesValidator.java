@@ -10,12 +10,14 @@ import ua.pp.darknsoft.entity.OffenseArticles;
 import ua.pp.darknsoft.entity.PunishmentArticles;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by Andrew on 29.03.2017.
  */
 @Component
 public class OffenseArticlesValidator implements Validator {
+    private final static Pattern TREE_MARK_PATTERN = Pattern.compile("^[a-zA-Z0-9.]+$");
     @Autowired
     CheckEventDao checkEventDao;
     @Override
@@ -41,5 +43,9 @@ public class OffenseArticlesValidator implements Validator {
         if(offenseArticles.getCheck_event_link()==0)errors.rejectValue("check_event_link", "check_event_link.lenght", "Відсутня вказівка на перевірку");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "check_event_link", "check_event_link.empty", "Відсутня вказівка на перевірку");
         if(offenseArticles.getArticles_law_link().isEmpty())errors.rejectValue("articles_law_link", "articles_law_link.lenght", "Виберіть статтю");
+        if(!isTreemark(offenseArticles.getArticles_law_link())) errors.rejectValue("articles_law_link", "articles_law_link", "Не вірний код клисифікатора");
+    }
+    private boolean isTreemark(String value) {
+        return TREE_MARK_PATTERN.matcher(value).matches();
     }
 }

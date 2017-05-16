@@ -27,8 +27,14 @@ public class ExcelDocument extends AbstractExcelView {
         excelSheet.setColumnWidth(1,20 * 256);
         excelSheet.setColumnWidth(2,20 * 256);
         excelSheet.setColumnWidth(3,11 * 256);
+        excelSheet.setColumnWidth(7,20 * 256);
+        excelSheet.setColumnWidth(8,20 * 256);
         CellStyle styleCell = hssfWorkbook.createCellStyle();
         styleCell.setWrapText(true);
+        styleCell.setBorderBottom((short) 1);
+        styleCell.setBorderLeft((short) 1);
+        styleCell.setBorderTop((short) 1);
+        styleCell.setBorderRight((short) 1);
         //Excel file name change
         httpServletResponse.setHeader("Content-Disposition", "attachment; filename=excelDocument.xls");
 
@@ -43,7 +49,11 @@ public class ExcelDocument extends AbstractExcelView {
         styleHeader.setFillPattern(CellStyle.SOLID_FOREGROUND);
         styleHeader.setFont(font);
         styleHeader.setWrapText(true);
+        //Set Borders
         styleHeader.setBorderBottom((short) 2);
+        styleHeader.setBorderLeft((short) 2);
+        styleHeader.setBorderTop((short) 2);
+        styleHeader.setBorderRight((short) 2);
         //Set excel header
         setExcelHeader(excelSheet, styleHeader);
 
@@ -53,12 +63,19 @@ public class ExcelDocument extends AbstractExcelView {
         for (Ufop ufop : ufops_list) {
             HSSFRow row = excelSheet.createRow(rowCount++);
             row.createCell(0).setCellValue(rowCount-1);
+            row.getCell(0).setCellStyle(styleCell);
             row.createCell(1).setCellValue(rejectHtml(ufop.getUfop_name()));
+            row.getCell(1).setCellStyle(styleCell);
             row.createCell(2).setCellValue("x");
+            row.getCell(2).setCellStyle(styleCell);
             row.createCell(3).setCellValue(ufop.getUfop_code());
+            row.getCell(3).setCellStyle(styleCell);
             row.createCell(4).setCellValue("x");
+            row.getCell(4).setCellStyle(styleCell);
             row.createCell(5).setCellValue("x");
+            row.getCell(5).setCellStyle(styleCell);
             row.createCell(6).setCellValue("x");
+            row.getCell(6).setCellStyle(styleCell);
             row.createCell(7).setCellValue("Відповідно до встановлених вимог");
             row.getCell(7).setCellStyle(styleCell);
             row.createCell(8).setCellValue("ГУ Держпродспоживслужби в Одеській області");

@@ -19,7 +19,8 @@
                 <a href="/article_info?id=${offenseArticles_list.articles_law_link}" target="_blank"><img
                         src="../resources/images/info.png" width="10px"/></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="/deleteoffensearticles?id=${offenseArticles_list.id}&EventId=${offenseArticles_list.check_event_link}">Видалити</a>
+                <a href="/deleteoffensearticles?id=${offenseArticles_list.id}&EventId=${offenseArticles_list.check_event_link}"
+                   onclick="return confirmDelete();">Видалити</a>
 
             </c:forEach>
         </div>

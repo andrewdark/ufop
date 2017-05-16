@@ -25,6 +25,7 @@ public class GoodsOfCommObjValidator implements Validator {
     CommercialObjectDao commercialObjectDao;
     private final static Pattern EMAIL_PATTERN = Pattern.compile(".+@.+\\.[a-z]+");
     private final static Pattern LOGIN_PATTERN = Pattern.compile("[0-9a-zA-Z_@.'!$=?{}\\- ()]+");
+    private final static Pattern TREE_MARK_PATTERN = Pattern.compile("^[a-zA-Z0-9.]+$");
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -54,8 +55,10 @@ public class GoodsOfCommObjValidator implements Validator {
             errors.rejectValue("comm_obj_link", "comm_obj_link.empty", "Вкажіть комерційний об'єкт");
         }
         if(goodsOfCommObj.getGoods_catalog_link().equals("")) errors.rejectValue("goods_catalog_link", "goods_catalog_link.empty", "Виберіть групу товарів");
-
+        if(!isTreemark(goodsOfCommObj.getGoods_catalog_link())) errors.rejectValue("goods_catalog_link", "goods_catalog_link", "Не вірний код клисифікатора");
     }
 
-
+    private boolean isTreemark(String value) {
+        return TREE_MARK_PATTERN.matcher(value).matches();
+    }
 }

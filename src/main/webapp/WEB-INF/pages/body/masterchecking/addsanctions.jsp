@@ -31,7 +31,9 @@
             <c:if test="${not empty command.punishmentArticlesList}">
                 <c:forEach items="${command.punishmentArticlesList}" var="pa">
                     <li/>
-                    ${pa.caption}<br/>
+                    ${pa.caption}
+                    <a href="/article_info?id=${punishmentArticles_list.articles_law_link}" target="_blank"><img
+                        src="../resources/images/info.png" width="10px"/></a><br/>
                 </c:forEach>
             </c:if>
             <c:if test="${not empty testSanction}">

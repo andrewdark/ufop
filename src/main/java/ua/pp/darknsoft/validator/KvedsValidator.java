@@ -9,12 +9,14 @@ import ua.pp.darknsoft.entity.KvedsUfop;
 import ua.pp.darknsoft.entity.OffenseArticles;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by Andrew on 06.04.2017.
  */
 @Component
 public class KvedsValidator implements Validator{
+    private final static Pattern TREE_MARK_PATTERN = Pattern.compile("^[a-zA-Z0-9.]+$");
     @Autowired
     KvedDao kvedDao;
     @Override
@@ -37,5 +39,9 @@ public class KvedsValidator implements Validator{
         }catch (org.springframework.jdbc.BadSqlGrammarException ex){
             errors.rejectValue("kved_catalog_link", "kved_catalog_link.lenght", "SQL error:" + ex);
         }
+        if(!isTreemark(kvedsUfop.getKved_catalog_link())) errors.rejectValue("kved_catalog_link", "kved_catalog_link", "Не вірний код клисифікатора");
+    }
+    private boolean isTreemark(String value) {
+        return TREE_MARK_PATTERN.matcher(value).matches();
     }
 }

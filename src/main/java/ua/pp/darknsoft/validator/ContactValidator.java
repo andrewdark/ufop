@@ -26,6 +26,7 @@ public class ContactValidator implements Validator {
     private final static Pattern EMAIL_PATTERN = Pattern.compile(".+@.+\\.[a-z]+");
     private final static Pattern RNTC_PATTERN = Pattern.compile("^[0-9]+$");
     private final static Pattern SR_PASSPORT_PATTERN = Pattern.compile("^[a-zA-Z]+$");
+    private final static Pattern TREE_MARK_PATTERN = Pattern.compile("^[a-zA-Z0-9.]+$");
     @Override
     public void validate(Object o, Errors errors) {
         Contact contact = (Contact) o;
@@ -64,6 +65,9 @@ public class ContactValidator implements Validator {
                 errors.rejectValue("birthday","date.notDog","Не вірний формат. РРРР-ММ-ДД");
             }
         }
+        if(!contact.getA_stay_address().isEmpty()){
+            if(!isTreemark(contact.getA_stay_address()))errors.rejectValue("a_stay_address", "a_stay_address", "Не вірний код клисифікатора");
+        }
 
     }
 
@@ -74,5 +78,8 @@ public class ContactValidator implements Validator {
     }
     private boolean isDate(String value) {
         return DATE_PATTERN.matcher(value).matches();
+    }
+    private boolean isTreemark(String value) {
+        return TREE_MARK_PATTERN.matcher(value).matches();
     }
 }

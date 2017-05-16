@@ -18,6 +18,7 @@
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.1.1.js"></script>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
     <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/main.js"></script>
+    <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/confirm_delete.js"></script>
 </head>
 <body>
 <div class="main">

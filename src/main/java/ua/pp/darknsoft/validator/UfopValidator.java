@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class UfopValidator implements Validator {
     private final static Pattern RNTC_PATTERN = Pattern.compile("^[0-9]+$");
     private final static Pattern SR_PASSPORT_PATTERN = Pattern.compile("^[a-zA-Z]+$");
-    private final static Pattern SR_ADDRESS_PATTERN = Pattern.compile("^[a-zA-Z0-9.]+$");
+    private final static Pattern TREE_MARK_PATTERN = Pattern.compile("^[a-zA-Z0-9.]+$");
     private Ufop sqlUfop = new Ufop();
     @Autowired
     UfopDao ufopDao;
@@ -84,6 +84,6 @@ public class UfopValidator implements Validator {
     private boolean isNumber(String value) { return RNTC_PATTERN.matcher(value).matches(); }
 
     private boolean isAddress(String value) {
-        return SR_ADDRESS_PATTERN.matcher(value).matches();
+        return TREE_MARK_PATTERN.matcher(value).matches();
     }
 }

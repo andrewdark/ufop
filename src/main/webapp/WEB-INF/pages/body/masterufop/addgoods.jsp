@@ -17,7 +17,8 @@
             <c:if test="${not empty goods_list}">
                 <c:forEach items="${goods_list}" var="goods_list">
                     <li/>
-                    ${goods_list.name}  <a href="/deletegoods?id=${goods_list.id}&co=${co.id}">Удалить</a> <br/>
+                    ${goods_list.name}  <a href="/deletegoods?id=${goods_list.id}&co=${co.id}"
+                                           onclick="return confirmDelete();">Удалить</a> <br/>
                 </c:forEach>
             </c:if>
         </div>

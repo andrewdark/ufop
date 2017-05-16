@@ -16,7 +16,8 @@
             <c:forEach items="${checkingGoods}" var="checkingGoods">
                 <li/>
                 ${checkingGoods.s_goods_catalog_link}
-                <a href="/deletecheckinggroupofgoods?id=${checkingGoods.id}&EventId=${checkingGoods.check_event_link}">Видалити</a><br/>
+                <a href="/deletecheckinggroupofgoods?id=${checkingGoods.id}&EventId=${checkingGoods.check_event_link}"
+                   onclick="return confirmDelete();">Видалити</a><br/>
             </c:forEach>
         </div>
         <form:form action="/addcheckgoodspost" method="post">

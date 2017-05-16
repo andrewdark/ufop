@@ -21,7 +21,8 @@
                 <li/>
                 ${precaution_list.precaution_name}
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="/deleteprecaution?id=${precaution_list.id}&EventId=${precaution_list.check_event_link}">Видалити</a>
+                <a href="/deleteprecaution?id=${precaution_list.id}&EventId=${precaution_list.check_event_link}"
+                   onclick="return confirmDelete();">Видалити</a>
 
             </c:forEach>
         </div>

@@ -18,7 +18,8 @@
                 <c:forEach items="${kveds_list}" var="kveds_list">
                     <li/>
                     ${kveds_list.kved_catalog_label} - ${kveds_list.kved_catalog_name}  <a
-                        href="/deletekveds?id=${kveds_list.id}&ufop_id=${ufop.id}&ufop_nav=${ufop.ufop_nav}">Удалить</a>
+                        href="/deletekveds?id=${kveds_list.id}&ufop_id=${ufop.id}&ufop_nav=${ufop.ufop_nav}"
+                        onclick="return confirmDelete();">Удалить</a>
                     <br/>
                 </c:forEach>
             </c:if>

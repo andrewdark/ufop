@@ -8,12 +8,14 @@ import ua.pp.darknsoft.dao.CheckEventDao;
 import ua.pp.darknsoft.entity.CheckingGroupOfGoods;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by Andrew on 18.04.2017.
  */
 @Component
 public class CheckingGoodsValidator implements Validator {
+    private final static Pattern TREE_MARK_PATTERN = Pattern.compile("^[a-zA-Z0-9.]+$");
     @Autowired
     CheckEventDao checkEventDao;
     @Override
@@ -34,6 +36,9 @@ public class CheckingGoodsValidator implements Validator {
         }catch (Exception ex){
 
         }
-
+        if(!isTreemark(checkingGroupOfGoods.getGoods_catalog_link())) errors.rejectValue("goods_catalog_link","goods_catalog_link","Не вірний код клисифікатора");
+    }
+    private boolean isTreemark(String value) {
+        return TREE_MARK_PATTERN.matcher(value).matches();
     }
 }
