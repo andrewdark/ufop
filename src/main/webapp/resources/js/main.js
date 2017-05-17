@@ -38,7 +38,7 @@ $(function () {
     $.datepicker.setDefaults(
         $.extend(
             {'dateFormat': 'yy-mm-dd'},
-            $.datepicker.regional['nl']
+            $.datepicker.regional['uk']
         )
     );
 
