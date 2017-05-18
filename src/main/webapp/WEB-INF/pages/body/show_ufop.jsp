@@ -222,9 +222,12 @@
             <caption>ПЕРЕЛІК КОНТАКТНИХ ОСІБ</caption>
             <c:forEach items="${ci_list}" var="ci">
                 <tr>
-                    <td>${ci.last_name} ${ci.first_name} ${ci.patronymic_name}</td>
+                    <td>${ci.last_name} ${ci.first_name} ${ci.patronymic_name}
+                        <a href="/contact_info?id=${ci.id}" target="_blank"><img
+                                src="../resources/images/info.png" width="10px"/></a>
+                    </td>
                     <td>- ${ci.position}</td>
-                    <td></td>
+                    <td> <a href="/edit_contact?id=${ci.id}">редагувати</a> </td>
                 </tr>
             </c:forEach>
         </table>

@@ -1,5 +1,7 @@
 package ua.pp.darknsoft.dao;
 
+import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -8,10 +10,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
-import ua.pp.darknsoft.dao.crud.contact.InsertContact;
-import ua.pp.darknsoft.dao.crud.contact.SelectContact;
-import ua.pp.darknsoft.dao.crud.contact.SelectContactByOrganizationLink;
-import ua.pp.darknsoft.dao.crud.contact.SelectContactByUserName;
+import ua.pp.darknsoft.dao.crud.contact.*;
 import ua.pp.darknsoft.entity.Contact;
 
 import javax.annotation.Resource;
@@ -34,6 +33,8 @@ public class ContactDaoImpl implements ContactDao, Serializable {
     SelectContactByUserName selectContactByUserName;
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     SelectContactByOrganizationLink contactByOrganizationLink;
+    SelectContactById selectContactById;
+    UpdateContact updateContact;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -43,6 +44,8 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         this.selectContactByUserName = new SelectContactByUserName(dataSource);
         this.contactByOrganizationLink = new SelectContactByOrganizationLink(dataSource);
+        this.selectContactById = new SelectContactById(dataSource);
+        this.updateContact = new UpdateContact(dataSource);
     }
 
     @Override
@@ -50,6 +53,13 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         Map<String, Long> bind = new HashMap<>(3);
         bind.put("organization", organization);
         return contactByOrganizationLink.executeByNamedParam(bind);
+    }
+
+    @Override
+    public List<Contact> getContactById(long id) {
+        Map<String, Long> bind = new HashMap<>(3);
+        bind.put("id", id);
+        return selectContactById.executeByNamedParam(bind);
     }
 
     @Override
@@ -120,5 +130,33 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         bind.put("rntc", rntc);
 
         return (String) namedParameterJdbcTemplate.queryForObject(sql, bind, String.class);
+    }
+
+    @Override
+    public void updateContact(Contact contact) {
+        Map<String, Object> bind = new HashedMap();
+        if (contact.getBirthday().isEmpty()) contact.setBirthday("0001-01-01");
+        bind.put("id", contact.getId());
+        bind.put("first_name", contact.getFirst_name());
+        bind.put("last_name", contact.getLast_name());
+        bind.put("patronymic_name", contact.getPatronymic_name());
+        bind.put("a_stay_address", contact.getA_stay_address());
+        bind.put("n_stay_address", contact.getN_stay_address());
+        bind.put("f_stay_address", contact.getF_stay_address());
+        bind.put("b_stay_address", contact.getB_stay_address());
+        bind.put("series_of_passport", contact.getSeries_of_passport());
+        bind.put("number_of_passport", contact.getNumber_of_passport());
+        bind.put("tel", contact.getTel());
+        bind.put("fax", contact.getFax());
+        bind.put("email", contact.getEmail());
+        bind.put("birthday", contact.getBirthday());
+        bind.put("organization", contact.getOrganization());
+        bind.put("position", contact.getPosition());
+        bind.put("creator_link", contact.getCreator_link());
+        bind.put("description", contact.getDescription());
+
+        if (contact.getRntc().length() == 10) bind.put("rntc", contact.getRntc());
+        else bind.put("rntc", null);
+        updateContact.updateByNamedParam(bind);
     }
 }

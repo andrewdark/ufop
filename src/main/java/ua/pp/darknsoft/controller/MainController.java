@@ -339,6 +339,23 @@ public class MainController {
         }
         return "article_info";
     }
+    @RequestMapping(value = "/contact_info", method = RequestMethod.GET)
+    public String contactInfo(@RequestParam(defaultValue="1") String id, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+        uiModel.addAttribute("title", "Відомості про контакт");
+        try {
+            uiModel.addAttribute("contact", contactDao.getContactById(Long.parseLong(id)).get(0));
+        } catch (IndexOutOfBoundsException ex) {
+            uiModel.addAttribute("ex", "Такого контакту не знайдено");
+            return "message";
+        } catch (NumberFormatException ex) {
+            uiModel.addAttribute("ex", "не вірна вказівка на контакт");
+            return "message";
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", "Method:contactInfo <br />" + ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        return "contact_info";
+    }
 
     //------------------------------------------------------------------------------------------------------------------
     //-------------------------------------------SERVICE----------------------------------------------------------------

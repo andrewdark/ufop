@@ -369,7 +369,7 @@ public class MasterController {
         Contact contact = new Contact();
         Ufop ufop = (Ufop) uiModel.asMap().get("ufop");
         uiModel.addAttribute("title", "Створення нового контакту");
-        uiModel.addAttribute("form_action_url", "/addcontactpost");
+        uiModel.addAttribute("actionlink", "/addcontactpost");
         uiModel.addAttribute("buttonvalue", "Додати контакт");
 
         if (ufop == null) {
@@ -546,9 +546,67 @@ public class MasterController {
             return myRdrct(httpServletRequest) + "/addgoods";
         } else return myRdrct(httpServletRequest) + "/show_ufop?id=" + co.getUfop_link() + "#tabs-2";
     }
+    //next form
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "edit_contact", method = RequestMethod.GET)
+    public String editContact(@RequestParam(defaultValue = "1") String id, Model uiModel,RedirectAttributes redirectAttributes,
+                              HttpServletRequest httpServletRequest) {
+        uiModel.addAttribute("title", "Редагування контакту");
+        uiModel.addAttribute("actionlink", "/editcontactpost");
+        uiModel.addAttribute("buttonvalue", "редагувати");
+        try {
+            uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        try {
+            Contact contact = contactDao.getContactById(Long.parseLong(id)).get(0);
+            contact.setNav(0);
+            contact.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+            uiModel.addAttribute("contact", contact);
+            BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
+            uiModel.addAttribute("command", contact);
+            uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
+        } catch (IndexOutOfBoundsException ex) {
+            uiModel.addAttribute("ex", "Такого контакта не існує");
+            return "message";
+        } catch (NumberFormatException ex) {
+            uiModel.addAttribute("ex", "Не вірна вказівка на контакт");
+            return "message";
+        } catch (Exception ex) {
+            uiModel.addAttribute("ex", "editContact" + ex);
+            return "message";
+        }
+
+        return "addcontact";
+    }
+
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "editcontactpost", method = RequestMethod.POST)
+    public String editContactPost(@ModelAttribute Contact contact, HttpServletRequest httpServletRequest,
+                                  RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+        contactValidator.validate(contact, bindingResult);
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("b1", bindingResult);
+            redirectAttributes.addFlashAttribute("contact", contact);
+            return myRdrct(httpServletRequest) + "/edit_contact?id=" + contact.getId();
+        }
+        try {
+            contact.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
+            contactDao.updateContact(contact);
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", "editCommObjPost " + ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+
+            redirectAttributes.addFlashAttribute("contact", contact);
+
+      return myRdrct(httpServletRequest) + "/show_ufop?id=" + contact.getOrganization() + "#tabs-5";
+    }
 
     //------------------------------------------------------------------------------------------------------------------
-    //------------------------------------DELETE UFOP-----------------------------------------------------------
+    //--------------------------------------------DELETE UFOP-----------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "deletegoods", method = RequestMethod.GET)

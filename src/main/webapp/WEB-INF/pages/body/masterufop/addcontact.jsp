@@ -12,8 +12,11 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content">
-        <form:form action="${pageContext.servletContext.contextPath}${form_action_url}" method="post">
+        <form:form action="${pageContext.servletContext.contextPath}${actionlink}" method="post">
             <form:hidden path="nav"/>
+            <form:hidden path="id"/>
+            <form:hidden path="organization"/>
+            <form:hidden path="creator_link"/>
             <table width="100%">
                 <tr>
                     <td><form:label path="last_name">Прізвище:</form:label></td>
