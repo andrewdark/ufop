@@ -17,4 +17,6 @@ public interface WorkTimeDao {
     List<WorkTime> getMyWorkWorkTimeDESC(String user_link, Integer limit);
 
     List<WorkTime> getMySlavesWorkTimeDesc(String user_link, String datereg_f,String datereg_l, Integer limit);
+
+    List<WorkTime> getWTUserDetail(int user_link, String datestart, String datestop);
 }

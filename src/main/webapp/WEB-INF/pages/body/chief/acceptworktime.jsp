@@ -35,7 +35,7 @@
         <th>Затвердити</th>
         <c:forEach var="worktime" items="${worktime}">
             <tr>
-                <td>${worktime.user_name}</td>
+                <td><a href="/acceptwt_detail?id=${worktime.user_link}">${worktime.user_name}</a> </td>
                 <td>
                     <c:if test="${worktime.type_of_action==0}">
                         <font color="red" size="4">Покинув р.м.</font>

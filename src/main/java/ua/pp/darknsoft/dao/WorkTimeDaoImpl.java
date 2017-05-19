@@ -25,6 +25,7 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
     private SelectWorkTimeByUser_NameDESC selectWorkTimeByUser_nameDESC;
     private SelectWorkTimeByUser_NameASC selectWorkTimeByUser_nameASC;
     private SelectWorkTimeMySlaveDESC selectWorkTimeMySlaveDESC;
+    private SelectWTByUserAndDate selectWTByUserAndDate;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -34,6 +35,7 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
         this.selectWorkTimeByUser_nameASC = new SelectWorkTimeByUser_NameASC(dataSource);
         this.selectWorkTimeByUser_nameDESC = new SelectWorkTimeByUser_NameDESC(dataSource);
         this.selectWorkTimeMySlaveDESC = new SelectWorkTimeMySlaveDESC(dataSource);
+        this.selectWTByUserAndDate = new SelectWTByUserAndDate(dataSource);
     }
     @Override
     public void setMyWorkWorkTime(String user_link, int cause_link){
@@ -79,5 +81,12 @@ public class WorkTimeDaoImpl implements WorkTimeDao, Serializable {
         return selectWorkTimeMySlaveDESC.executeByNamedParam(bind);
     }
 
-
+    @Override
+    public List<WorkTime> getWTUserDetail(int user_link, String datestart, String datestop){
+        Map<String,Object> bind = new HashedMap();
+        bind.put("user_link",user_link);
+        bind.put("datestart",datestart);
+        bind.put("datestop",datestop);
+        return selectWTByUserAndDate.executeByNamedParam(bind);
+    }
 }

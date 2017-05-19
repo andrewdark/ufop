@@ -106,6 +106,9 @@
     <definition extends="default" name="acceptworktime">
         <put-attribute name="body" value="/WEB-INF/pages/body/chief/acceptworktime.jsp"/>
     </definition>
+    <definition extends="default" name="acceptwt_detail">
+        <put-attribute name="body" value="/WEB-INF/pages/body/chief/acceptwt_detail.jsp"/>
+    </definition>
     <definition extends="default" name="showmysubordinates">
         <put-attribute name="body" value="/WEB-INF/pages/body/chief/showmysubordinates.jsp"/>
     </definition>
