@@ -34,7 +34,6 @@
         <th>Дата погодження</th>
         <th>Затвердити</th>
         <c:forEach var="worktime" items="${worktime}">
-
             <tr>
                 <td>${worktime.user_name}</td>
                 <td>

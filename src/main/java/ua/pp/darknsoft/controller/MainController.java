@@ -343,7 +343,11 @@ public class MainController {
     public String contactInfo(@RequestParam(defaultValue="1") String id, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         uiModel.addAttribute("title", "Відомості про контакт");
         try {
-            uiModel.addAttribute("contact", contactDao.getContactById(Long.parseLong(id)).get(0));
+            Contact contact = contactDao.getContactById(Long.parseLong(id)).get(0);
+            uiModel.addAttribute("contact", contact);
+            if (contact.getA_stay_address().length() > 0) {
+                uiModel.addAttribute("fulladdress", catalogDao.getParentLocationByTreemark(contact.getA_stay_address()));
+            }
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такого контакту не знайдено");
             return "message";
@@ -355,6 +359,40 @@ public class MainController {
             return myRdrct(httpServletRequest) + "/message";
         }
         return "contact_info";
+    }
+    @RequestMapping(value = "/ufop_info/{id}", method = RequestMethod.GET)
+    public String ufopInfo(@PathVariable("id") String id, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+        uiModel.addAttribute("title", "Відомості про суб'єкта господарювання");
+        try {
+            uiModel.addAttribute("ufop",id);
+        } catch (IndexOutOfBoundsException ex) {
+            uiModel.addAttribute("ex", "Такої статті не знайдено");
+            return "message";
+        } catch (NumberFormatException ex) {
+            uiModel.addAttribute("ex", "не вірна вказівка на статтю");
+            return "message";
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", "Method:articleInfo <br />" + ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        return "ufop_info";
+    }
+    @RequestMapping(value = "/event_info", method = RequestMethod.GET)
+    public String eventInfo(@PathVariable("id") String id, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+        uiModel.addAttribute("title", "Відомості про перевірку");
+        try {
+            uiModel.addAttribute("event",id);
+        } catch (IndexOutOfBoundsException ex) {
+            uiModel.addAttribute("ex", "Такої статті не знайдено");
+            return "message";
+        } catch (NumberFormatException ex) {
+            uiModel.addAttribute("ex", "не вірна вказівка на статтю");
+            return "message";
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", "Method:articleInfo <br />" + ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        return "event_info";
     }
 
     //------------------------------------------------------------------------------------------------------------------

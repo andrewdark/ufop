@@ -45,8 +45,13 @@
     </ul>
 
     <div id="tabs-1">
+        <div class="d_right">
+            <a href="/ufop_info/${ufop.id}" target="_blank"><img src="/resources/images/printer.png" width="64"/></a>
+        </div>
         <table width="100%">
-            <caption>ВІДОМОСТІ ПРО СУБ'ЄКТА ГОСПОДАРЮВАННЯ</caption>
+            <caption>
+                ВІДОМОСТІ ПРО СУБ'ЄКТА ГОСПОДАРЮВАННЯ
+            </caption>
             <tr>
                 <td>Id в базі</td>
                 <td>${ufop.id}</td>

@@ -133,5 +133,19 @@
         <put-attribute name="header" value=""/>
         <put-attribute name="footer" value=""/>
     </definition>
+    <definition extends="default" name="ufop_info">
+        <put-attribute name="head_include" value=""/>
+        <put-attribute name="body" value="/WEB-INF/pages/body/infopages/ufop_info.jsp"/>
+        <put-attribute name="sidebar" value=""/>
+        <put-attribute name="header" value=""/>
+        <put-attribute name="footer" value=""/>
+    </definition>
+    <definition extends="default" name="event_info">
+        <put-attribute name="head_include" value=""/>
+        <put-attribute name="body" value="/WEB-INF/pages/body/infopages/event_info.jsp"/>
+        <put-attribute name="sidebar" value=""/>
+        <put-attribute name="header" value=""/>
+        <put-attribute name="footer" value=""/>
+    </definition>
     <!-- END OF BLOCK -->
 </tiles-definitions>
