@@ -84,7 +84,7 @@ public class UserDaoImpl implements UserDao, Serializable {
         Map<String, Object> bind = new HashMap<>();
         bind.put("id", id);
 
-        return (String) namedParameterJdbcTemplate.queryForObject(sql, bind, String.class);
+        return (String) namedParameterJdbcTemplate.queryForObject(sql, bind, String.class).toLowerCase();
     }
 
     @Override

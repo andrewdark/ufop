@@ -14,7 +14,7 @@ import java.sql.Types;
  */
 public class SelectContact extends MappingSqlQuery<Contact> {
 
-    private final static String SELECT_CONTACT_SQL="SELECT c.*,u.username,ut.name sorganization FROM contact_table c INNER JOIN user_table u ON(c.owner=u.id) INNER JOIN ufop_table ut ON (ut.id = c.organization) " +
+    private final static String SELECT_CONTACT_SQL="SELECT c.*,u.username,ut.ufop_name sorganization FROM contact_table c INNER JOIN user_table u ON(c.owner=u.id) INNER JOIN ufop_table ut ON (ut.id = c.organization) " +
             "ORDER BY c.id LIMIT :total OFFSET :pageid";
 
     public SelectContact(DataSource ds) {
@@ -34,10 +34,10 @@ public class SelectContact extends MappingSqlQuery<Contact> {
         contact.setRntc(resultSet.getString("rntc"));
         contact.setSeries_of_passport(resultSet.getString("series_of_passport"));
         contact.setNumber_of_passport(resultSet.getString("number_of_passport"));
-        contact.setA_stay_address(resultSet.getString("a_place_of_reg"));
-        contact.setN_stay_address(resultSet.getString("n_place_of_reg"));
-        contact.setF_stay_address(resultSet.getString("f_place_of_reg"));
-        contact.setB_stay_address(resultSet.getString("b_place_of_reg"));
+        contact.setA_stay_address(resultSet.getString("a_stay_address"));
+        contact.setN_stay_address(resultSet.getString("n_stay_address"));
+        contact.setF_stay_address(resultSet.getString("f_stay_address"));
+        contact.setB_stay_address(resultSet.getString("b_stay_address"));
         contact.setTel(resultSet.getString("tel"));
         contact.setFax(resultSet.getString("fax"));
         contact.setEmail(resultSet.getString("email"));

@@ -13,8 +13,8 @@ import java.sql.Types;
  * Created by Andrew on 03.03.2017.
  */
 public class SelectContactByUserName extends MappingSqlQuery<Contact> {
-    private final static String SELECT_CONTACT_SQL = "SELECT c.*,ut.name sorganization FROM contact_table c INNER JOIN ufop_table ut ON (ut.id = c.organization) " +
-            "WHERE id=(SELECT contact_link FROM user_table WHERE LOWER(username)=LOWER(:username))";
+    private final static String SELECT_CONTACT_SQL = "SELECT c.*,ut.ufop_name sorganization FROM contact_table c LEFT JOIN ufop_table ut ON (ut.id = c.organization) " +
+            "WHERE c.id=(SELECT contact_link FROM user_table WHERE LOWER(username)=LOWER(:username))";
 
     public SelectContactByUserName(DataSource ds) {
         super(ds, SELECT_CONTACT_SQL);
@@ -32,10 +32,10 @@ public class SelectContactByUserName extends MappingSqlQuery<Contact> {
         contact.setRntc(resultSet.getString("rntc"));
         contact.setSeries_of_passport(resultSet.getString("series_of_passport"));
         contact.setNumber_of_passport(resultSet.getString("number_of_passport"));
-        contact.setA_stay_address(resultSet.getString("a_place_of_reg"));
-        contact.setN_stay_address(resultSet.getString("n_place_of_reg"));
-        contact.setF_stay_address(resultSet.getString("f_place_of_reg"));
-        contact.setB_stay_address(resultSet.getString("b_place_of_reg"));
+        contact.setA_stay_address(resultSet.getString("a_stay_address"));
+        contact.setN_stay_address(resultSet.getString("n_stay_address"));
+        contact.setF_stay_address(resultSet.getString("f_stay_address"));
+        contact.setB_stay_address(resultSet.getString("b_stay_address"));
         contact.setTel(resultSet.getString("tel"));
         contact.setFax(resultSet.getString("fax"));
         contact.setEmail(resultSet.getString("email"));

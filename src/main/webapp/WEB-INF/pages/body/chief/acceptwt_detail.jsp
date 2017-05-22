@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -11,23 +12,41 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content_wide">
-        ${wt_user}
+        <h3> ${wt_user} </h3>
+
         <c:if test="${p_or_e}">
-            Користувач ${username} знаходиться на робочому місці<br />
+            <h3> Користувач ${command.user_name} знаходиться на робочому місці</h3>
+            <form:form action="/acceptwt_detailpost" method="post">
+                <form:hidden path="user_link"/>
+                <form:hidden path="user_name"/>
+                <form:hidden path="s_user_accepted_link"/>
+                <form:select path="cause_link" items="${causes}"/><input type="submit" value="Завершити" />
+            </form:form>
         </c:if>
+
         <c:if test="${not p_or_e}">
-            Користувач ${username} відсутній на робочому місці<br />
+            <h3> Користувач ${command.user_name} відсутній на робочому місці</h3>
         </c:if>
+
         <c:if test="${not empty worktime}">
-            <table>
+            <table width="100%">
+                <caption>
+                    ДЕТАЛЬНИЙ РОЗКЛАД РОБОЧОГО ЧАСУ
+                </caption>
+                <tr>
+                    <th></th><th>Час</th><th>Причина</th>
+                </tr>
                 <c:forEach var="worktime" items="${worktime}">
                     <tr>
                         <td>${worktime.user_name} </td>
                         <td>${worktime.datereg} </td>
                         <td>${worktime.s_cause_link} </td>
+
                     </tr>
                 </c:forEach>
             </table>
         </c:if>
+
     </div>
+    <div class="clr"></div>
 </div>

@@ -193,21 +193,18 @@ public class WorkTimeController {
                                  @RequestParam(defaultValue = "0001-01-01") String datestop,
                                  @ModelAttribute WorkTime myWorkTime, Model uiModel, HttpServletRequest httpServletRequest,
                                  RedirectAttributes redirectAttributes) {
+        WorkTime workTime = new WorkTime();
 
         if (datestart.equals("0001-01-01")) datestart = LocalDate.now().toString();
         if (datestop.equals("0001-01-01")) datestop = LocalDate.now().plusDays(1).toString();
-        String ld_f, ld_l;
         String user = SecurityContextHolder.getContext().getAuthentication().getName().toString();
-        try {
-            ld_f = dtf.format(LocalDate.parse(datestart));
-            ld_l = ld_f;
-        } catch (Exception ex) {
-            ld_f = dtf.format(localDate);
-            ld_l = dtf.format(localDate);
-        }
 
         try {
-            List<WorkTime> wtList = workTimeDao.getMyWorkWorkTimeDESC(id, 1);
+            workTime.setUser_link(Integer.parseInt(id));
+            workTime.setS_user_accepted_link(user);
+            workTime.setUser_name(userDao.getUserNameById(Integer.parseInt(id)));
+            Map<Integer, String> causes = new HashMap<>();
+            List<WorkTime> wtList = workTimeDao.getMyWorkWorkTimeDESC(workTime.getUser_name(),1);
             if (wtList.isEmpty()) {
                 uiModel.addAttribute("p_or_e", false);
             } else {
@@ -215,37 +212,47 @@ public class WorkTimeController {
                     uiModel.addAttribute("p_or_e", false);
                 } else {
                     uiModel.addAttribute("p_or_e", true);
+                    List<CauseCatalog>ccListAbsent = catalogDao.getCauseCatalogByType((short)2);
+                    for (CauseCatalog cc : ccListAbsent) {
+                        causes.put(cc.getId(), cc.getName());
+                    }
+                    uiModel.addAttribute("causes", causes);
                 }
             }
             uiModel.addAttribute("worktime", workTimeDao.getWTUserDetail(Integer.parseInt(id), datestart, datestop));
-            uiModel.addAttribute("wt_user", "id: " + id + "datestart: " + datestart + "datestop: " + datestop);
-            uiModel.addAttribute("title", "РОБОЧИЙ ЧАС КОРИСТУВАЧА");
+            uiModel.addAttribute("wt_user", "id: " + id + " За період від: " + datestart + " до: " + datestop);
+            uiModel.addAttribute("title", "РОБОЧИЙ ЧАС КОРИСТУВАЧА "+workTime.getUser_name());
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
         }
-
+        uiModel.addAttribute("command",workTime);
         return "acceptwt_detail";
     }
 
     @PreAuthorize(value = "hasAnyRole('ROLE_ADMINISTRATOR,ROLE_CHIEF')")
     @RequestMapping(value = "/acceptwt_detailpost", method = RequestMethod.POST)
-    public String acceptWTDetailpost(@RequestParam long id, @RequestParam Boolean accept, HttpServletRequest httpServletRequest,
+    public String acceptWTDetailpost(@ModelAttribute WorkTime workTime, HttpServletRequest httpServletRequest,
                                      RedirectAttributes redirectAttributes, Model uiModel) {
-        WorkTime myWorkTime = new WorkTime();
-        String user = SecurityContextHolder.getContext().getAuthentication().getName().toString();
 
-        myWorkTime.setUser_accepted_link(userDao.getUserIdByUserName(user.toLowerCase()));
         try {
-//            myWorkTime.setId(id);
-//            myWorkTime.setAccepted(accept);
-//            myWorkTime.setUser_accepted_link(userDao.getUserIdByUserName(user.toLowerCase()));
-//            workTimeDao.acceptWorkTime(myWorkTime);
+            workTime.setS_user_accepted_link(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+            List<WorkTime> wtList = workTimeDao.getMyWorkWorkTimeDESC(workTime.getUser_name(),1);
+            if (wtList.isEmpty()) {
+                return myRdrct(httpServletRequest) + "/acceptwt_detail?id="+workTime.getUser_link();
+            } else {
+                if (wtList.get(0).getType_of_action() == 0) {
+                    redirectAttributes.addFlashAttribute("ex", "Користувач пішов з роботи самостійно");
+                    return myRdrct(httpServletRequest) + "/message";
+                } else {
+                  workTimeDao.setWorkTimeUserByBoss(workTime);
+                }
+            }
         } catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("ex", ex);
+            redirectAttributes.addFlashAttribute("ex", "METHOD: acceptWTDetailpost for user:"+workTime.getUser_name()+"<br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
         }
-        return myRdrct(httpServletRequest) + "/acceptwt_detail";
+        return myRdrct(httpServletRequest) + "/acceptwt_detail?id="+workTime.getUser_link();
     }
 
     //------------------------------------------------------------------------------------------------------------------

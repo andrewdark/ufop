@@ -19,4 +19,6 @@ public interface WorkTimeDao {
     List<WorkTime> getMySlavesWorkTimeDesc(String user_link, String datereg_f,String datereg_l, Integer limit);
 
     List<WorkTime> getWTUserDetail(int user_link, String datestart, String datestop);
+
+    void setWorkTimeUserByBoss(WorkTime workTime);
 }
