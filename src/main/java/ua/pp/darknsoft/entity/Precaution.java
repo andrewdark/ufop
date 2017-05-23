@@ -7,6 +7,7 @@ public class Precaution {
     private long id;
     private long check_event_link;
     private int precaution_catalog_link;
+    private String decision_number;
     private String precaution_name;
     private String service_date;
     private String plan_date;
@@ -34,6 +35,14 @@ public class Precaution {
 
     public void setPrecaution_catalog_link(int precaution_catalog_link) {
         this.precaution_catalog_link = precaution_catalog_link;
+    }
+
+    public String getDecision_number() {
+        return decision_number;
+    }
+
+    public void setDecision_number(String decision_number) {
+        this.decision_number = decision_number;
     }
 
     public String getService_date() {

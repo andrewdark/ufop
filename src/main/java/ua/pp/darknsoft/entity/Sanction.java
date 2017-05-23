@@ -1,15 +1,23 @@
 package ua.pp.darknsoft.entity;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Andrew on 29.03.2017.
  */
 public class Sanction {
     private long id;
     private long check_event_link;
-    private String charged_amount;
+    private BigDecimal charged_amount;
+    private String sanction_number;
+    private String articles_law_link;
     private String service_date;
     private String plan_date;
     private String fact_date;
+    private String creator_link;
+    private boolean additionalinformation;
+    private String caption;
+    private int nav;
 
     public long getId() {
         return id;
@@ -27,16 +35,64 @@ public class Sanction {
         this.check_event_link = check_event_link;
     }
 
-    public String getCharged_amount() {
+    public BigDecimal getCharged_amount() {
         return charged_amount;
     }
 
-    public void setCharged_amount(String charged_amount) {
+    public void setCharged_amount(BigDecimal charged_amount) {
         this.charged_amount = charged_amount;
+    }
+
+    public String getSanction_number() {
+        return sanction_number;
+    }
+
+    public void setSanction_number(String sanction_number) {
+        this.sanction_number = sanction_number;
+    }
+
+    public String getArticles_law_link() {
+        return articles_law_link;
+    }
+
+    public void setArticles_law_link(String articles_law_link) {
+        this.articles_law_link = articles_law_link;
+    }
+
+    public boolean isAdditionalinformation() {
+        return additionalinformation;
+    }
+
+    public void setAdditionalinformation(boolean additionalinformation) {
+        this.additionalinformation = additionalinformation;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public int getNav() {
+        return nav;
+    }
+
+    public void setNav(int nav) {
+        this.nav = nav;
     }
 
     public String getService_date() {
         return service_date;
+    }
+
+    public String getCreator_link() {
+        return creator_link;
+    }
+
+    public void setCreator_link(String creator_link) {
+        this.creator_link = creator_link;
     }
 
     public void setService_date(String service_date) {
@@ -61,4 +117,5 @@ public class Sanction {
         if(fact_date.isEmpty()) this.fact_date = "0001-01-01";
         else this.fact_date = fact_date;
     }
+
 }

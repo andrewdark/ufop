@@ -26,13 +26,9 @@ public interface CheckEventDao {
 
     List<Precaution> getPrecautionByEventAndPrecautionLink(long check_event_link, long precaution_catalog_link);
 
-    List<PunishmentArticles> getPunishmentArticlesByCheckEventLink(long check_event_link);
-
     List<OffenseArticles> getOffenseArticlesByCheckEventLink(long check_event_link);
 
     void createCheckingGroupOfGoods(CheckingGroupOfGoods checkingGroupOfGoods);
-
-    void createPunishmentArticlesByCheckEventLink(PunishmentArticles punishmentArticles);
 
     void createPrecaution(Precaution precaution);
 
@@ -49,8 +45,6 @@ public interface CheckEventDao {
     void deleteCheckingGroupOfGoods(long id);
 
     void deleteOffenseArticles(long id);
-
-    void deletePunishmentArticles(long id);
 
     void deletePrecaution(long id);
 

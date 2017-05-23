@@ -78,6 +78,24 @@
                 </td>
             </tr>
             <tr>
+                <td>Номер акту</td>
+                <td>${event.event_number}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Початок перевірки</td>
+                <td>${event.event_date_begin}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Кінець перевірки</td>
+                <td>
+                    <c:if test="${event.event_date_end eq '0001-01-01'}">N/A</c:if>
+                    <c:if test="${event.event_date_end ne '0001-01-01'}">${event.event_date_end}</c:if>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
                 <td>Результати перевірки</td>
                 <td>
                     <c:if test="${event.check_violation==0}">Порушень не виявлено</c:if>
@@ -107,20 +125,6 @@
                     </td>
                     <td></td>
                 </c:if>
-            </tr>
-            <tr>
-                <td>Початок перевірки</td>
-                <td>${event.event_date_begin}</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Кінець перевірки</td>
-                <td>
-                    <c:if test="${event.event_date_end eq '0001-01-01'}">N/A</c:if>
-                    <c:if test="${event.event_date_end ne '0001-01-01'}">${event.event_date_end}</c:if>
-
-                </td>
-                <td></td>
             </tr>
             <tr>
                 <td>Перевірені комерційні об'єкти</td>
@@ -191,6 +195,13 @@
                             </td>
                             <td><a href="/editprecaution?id=${precaution.id}">редагувати</a></td>
                         </tr>
+                        <c:if test="${not empty precaution.decision_number}">
+                            <tr>
+                                <td>Номер рішення</td>
+                                <td>${precaution.decision_number}</td>
+                                <td></td>
+                            </tr>
+                        </c:if>
                         <tr>
                             <td>Виконати до</td>
                             <td>

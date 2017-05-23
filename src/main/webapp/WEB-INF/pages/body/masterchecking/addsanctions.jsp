@@ -25,60 +25,19 @@
                 перевірки</a></p>
         </c:if>
         <c:if test="${checkEvent.check_violation==1}">
-            <c:if test="${empty command.punishmentArticlesList}">
-                <span class="error">немає жодної статті для накладання санкцій</span>
-            </c:if>
-            <c:if test="${not empty command.punishmentArticlesList}">
-                <c:forEach items="${command.punishmentArticlesList}" var="pa">
-                    <li/>
-                    ${pa.caption}
-                    <a href="/article_info?id=${punishmentArticles_list.articles_law_link}" target="_blank"><img
-                        src="../resources/images/info.png" width="10px"/></a><br/>
-                </c:forEach>
-            </c:if>
-            <c:if test="${not empty testSanction}">
-                <c:forEach items="${testSanction}" var="testSanction">
-                    <table width="100%">
-                        <caption>Накладена санкція</caption>
-                        <tr>
-                            <td>Сума</td>
-                            <td>${testSanction.charged_amount} грн.</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Дата вручення постанови</td>
-                            <td>
-                                <c:if test="${testSanction.service_date eq '0001-01-01'}">N/A</c:if>
-                                <c:if test="${testSanction.service_date ne '0001-01-01'}">${testSanction.service_date}</c:if>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Планова дата</td>
-                            <td>
-                                <c:if test="${testSanction.plan_date eq '0001-01-01'}">N/A</c:if>
-                                <c:if test="${testSanction.plan_date ne '0001-01-01'}">${testSanction.plan_date}</c:if>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Фактична дата</td>
-                            <td>
-                                <c:if test="${testSanction.fact_date eq '0001-01-01'}">N/A</c:if>
-                                <c:if test="${testSanction.fact_date ne '0001-01-01'}">${testSanction.fact_date}</c:if>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </c:forEach>
-            </c:if>
-            <c:if test="${empty testSanction}">
+
                 <form:form method="post" action="/addsanctionspost">
                     <table>
                         <tr>
                             <td></td>
                             <td><form:hidden path="check_event_link"/></td>
                             <td><span class="error"><form:errors path="check_event_link"/></span></td>
+                        </tr>
+                        <tr>
+                            <td><form:label path="articles_law_link">Виберіть статтю</form:label></td>
+                            <td><form:input path="articles_law_link" id="articles"
+                                            onclick="javascript:ArticlesPopUpShow();"/></td>
+                            <td><span class="error"><form:errors path="articles_law_link"/></span></td>
                         </tr>
                         <tr>
                             <td><form:label path="charged_amount">Сума</form:label></td>
@@ -107,7 +66,7 @@
                         </tr>
                     </table>
                 </form:form>
-            </c:if>
+
         </c:if>
         <div class="d_right">
             <form method="get" action="/show_event/">
@@ -153,4 +112,20 @@
         </div>
     </div>
     <div class="clr"></div>
+</div>
+<div class="b-popup" id="popup5">
+    ${ex}<br/>
+    <div class="b-popup-content" id="setarticles_popup">
+        <select id="my_selecttop1" name="my_selecttop" onchange="looparticlesdown(2)">
+            <option value=""></option>
+            <c:forEach items="${articlesTop}" var="articlesTop">
+                <option value="${articlesTop.treemark}">${articlesTop.caption}</option>
+            </c:forEach>
+        </select><br/>
+        <div id="ArticlesType2"></div>
+        <div id="ArticlesType3"></div>
+        <div id="ArticlesType4"></div>
+        <div id="ArticlesType5"></div>
+        <a href="javascript:ArticlesPopUpHide()">Додати закон</a>
+    </div>
 </div>

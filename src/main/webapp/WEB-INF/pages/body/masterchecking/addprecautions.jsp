@@ -44,6 +44,11 @@
                         <td><span class="error"><form:errors path="check_event_link"/></span></td>
                     </tr>
                     <tr>
+                        <td><form:label path="precaution_catalog_link">№ Рішення</form:label></td>
+                        <td><form:input path="decision_number"/></td>
+                        <td><span class="error"><form:errors path="decision_number"/></span></td>
+                    </tr>
+                    <tr>
                         <c:if test="${command.id == 0}">
                             <td><form:label path="precaution_catalog_link">Вкажіть захід</form:label></td>
                             <td><form:select path="precaution_catalog_link" items="${precautioncatalog}"/></td>

@@ -29,6 +29,7 @@ public class SelectPrecautionByEventAndPrecaution_link extends MappingSqlQuery<P
         precaution.setId(resultSet.getLong("id"));
         precaution.setCheck_event_link(resultSet.getLong("check_event_link"));
         precaution.setPrecaution_catalog_link(resultSet.getInt("precaution_catalog_link"));
+        precaution.setDecision_number(resultSet.getString("decision_number"));
         precaution.setService_date(resultSet.getString("service_date"));
         precaution.setPlan_date(resultSet.getString("plan_date"));
         precaution.setFact_date(resultSet.getString("fact_date"));

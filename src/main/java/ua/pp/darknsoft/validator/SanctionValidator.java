@@ -44,7 +44,7 @@ public class SanctionValidator implements Validator {
         if(!isDate(sanction.getService_date()))errors.rejectValue("service_date", "service_date", "Не вірний формат. РРРР-ММ-ДД");
         if(!isDate(sanction.getPlan_date()))errors.rejectValue("plan_date", "plan_date", "Не вірний формат. РРРР-ММ-ДД");
         if(!isDate(sanction.getFact_date()))errors.rejectValue("fact_date", "fact_date", "Не вірний формат. РРРР-ММ-ДД");
-        if(!isPrice(sanction.getCharged_amount()))errors.rejectValue("charged_amount", "charged_amount", "Не вірний формат.");
+        //if(!isPrice(sanction.getCharged_amount()))errors.rejectValue("charged_amount", "charged_amount", "Не вірний формат.");
     }
 
     private boolean isDate(String value) {
