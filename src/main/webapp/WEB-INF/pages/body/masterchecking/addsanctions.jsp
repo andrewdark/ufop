@@ -34,6 +34,11 @@
                             <td><span class="error"><form:errors path="check_event_link"/></span></td>
                         </tr>
                         <tr>
+                            <td><form:label path="sanction_number">Номер акту</form:label></td>
+                            <td><form:input path="sanction_number"/></td>
+                            <td><span class="error"><form:errors path="sanction_number"/></span></td>
+                        </tr>
+                        <tr>
                             <td><form:label path="articles_law_link">Виберіть статтю</form:label></td>
                             <td><form:input path="articles_law_link" id="articles"
                                             onclick="javascript:ArticlesPopUpShow();"/></td>

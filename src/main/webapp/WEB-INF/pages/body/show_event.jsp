@@ -233,7 +233,7 @@
             <c:if test="${not empty testSanction}">
                 <c:forEach items="${testSanction}" var="testSanction">
                     <table width="100%">
-                        <caption><span style="font-size: 150%;">НАКЛАДЕНА САНКЦІЯ</span></caption>
+                        <caption>НАКЛАДЕНА САНКЦІЯ № ${testSanction.sanction_number}</caption>
                         <tr>
                             <td>Стаття</td>
                             <td>${testSanction.articles_law_caption}
@@ -242,14 +242,18 @@
                             </td>
                             <td>
                                 <sec:authorize access="isAuthenticated()">
-                                Редагувати
+                                    <a href="#">Редагувати</a>
                                 </sec:authorize>
                             </td>
                         </tr>
                         <tr>
                             <td>Сума</td>
                             <td>${testSanction.charged_amount} грн.</td>
-                            <td></td>
+                            <td>
+                                <sec:authorize access="isAuthenticated()">
+                                    <a href="#" onclick="return confirmDelete();">Видалити</a>
+                                </sec:authorize>
+                            </td>
                         </tr>
                         <tr>
                             <td>Дата вручення постанови</td>
@@ -275,7 +279,7 @@
                             </td>
                             <td></td>
                         </tr>
-                    </table>
+                    </table><br /><br />
                 </c:forEach><br /><hr />
                 <b>Загальна сума штрафних санкцій складає:&nbsp;&nbsp;</b>${sum}&nbsp; грн.
             </c:if>

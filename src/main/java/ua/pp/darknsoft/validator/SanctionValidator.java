@@ -44,6 +44,7 @@ public class SanctionValidator implements Validator {
         }
         if(sanction.getCheck_event_link()==0)errors.rejectValue("articles_law_link", "articles_law_link.lenght", "* Обов'язкове поле");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "check_event_link", "check_event_link.empty", "Відсутня вказівка на перевірку");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sanction_number", "sanction_number.empty", "* Обов'язкове поле");
 if(sanction.getService_date().equals("0001-01-01")) errors.rejectValue("service_date", "service_date.empty", "Вкажіть дату вручення постанови");
         if(!isDate(sanction.getService_date()))errors.rejectValue("service_date", "service_date", "Не вірний формат. РРРР-ММ-ДД");
         if(!isDate(sanction.getPlan_date()))errors.rejectValue("plan_date", "plan_date", "Не вірний формат. РРРР-ММ-ДД");
