@@ -18,7 +18,7 @@
                 <c:forEach items="${goods_list}" var="goods_list">
                     <li/>
                     ${goods_list.name}  <a href="/deletegoods?id=${goods_list.id}&co=${co.id}"
-                                           onclick="return confirmDelete();">Удалить</a> <br/>
+                                           onclick="return confirmDelete();">Видалити</a> <br/>
                 </c:forEach>
             </c:if>
         </div>

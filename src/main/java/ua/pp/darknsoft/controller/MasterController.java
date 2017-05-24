@@ -700,7 +700,7 @@ public class MasterController {
 
             for (int i = 0; i <= downkved.size() - 1; i++) {
 
-                option = option + "<option value=\"" + downkved.get(i).getTreemark() + "\">" + downkved.get(i).getDegree_of_a_risk_link() + "-" + downkved.get(i).getName() + "</option>";
+                option = option + "<option value=\"" + downkved.get(i).getTreemark() + "\">"+ downkved.get(i).getName() + "</option>";
             }
 
         } catch (Exception ex) {

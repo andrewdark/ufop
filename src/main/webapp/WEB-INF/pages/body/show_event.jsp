@@ -171,8 +171,8 @@
                         <c:if test="${not empty offensearticles}">
                             <c:forEach items="${offensearticles}" var="offensearticles">
                                 <li/>
-                                ${offensearticles.caption} <a
-                                    href="/article_info?id=${offensearticles.articles_law_link}" target="_blank"><img
+                                ${offensearticles.caption}
+                                <a href="/article_info?id=${offensearticles.articles_law_link}" target="_blank"><img
                                     src="../resources/images/info.png" width="10px"/></a>
                                 <br/>
                             </c:forEach>
@@ -193,7 +193,7 @@
                             <td>
                                     ${precaution.precaution_name}
                             </td>
-                            <td><a href="/editprecaution?id=${precaution.id}">редагувати</a></td>
+                            <td><a href="/editprecaution?id=${precaution.id}">Редагувати</a></td>
                         </tr>
                         <c:if test="${not empty precaution.decision_number}">
                             <tr>
