@@ -14,7 +14,8 @@ import java.sql.Types;
  * Created by Andrew on 23.05.2017.
  */
 public class SelectSanctionByCheckEventLink extends MappingSqlQuery<Sanction> {
-    private static final String SQL_SELECT = "SELECT *,charged_amount::money::numeric::float8 amount FROM sanctions_table WHERE check_event_link = :check_event_link";
+    private static final String SQL_SELECT = "SELECT st.*,st.charged_amount::money::numeric::float8 amount,cat.caption FROM sanctions_table st " +
+            "INNER JOIN articles_law_catalog_table cat ON (st.articles_law_link::ltree = cat.treemark) WHERE st.check_event_link = :check_event_link";
 
     public SelectSanctionByCheckEventLink(DataSource ds) {
         super(ds, SQL_SELECT);
@@ -27,8 +28,9 @@ public class SelectSanctionByCheckEventLink extends MappingSqlQuery<Sanction> {
         sanction.setId(resultSet.getLong("id"));
         sanction.setCheck_event_link(resultSet.getLong("check_event_link"));
         sanction.setArticles_law_link(resultSet.getString("articles_law_link"));
+        sanction.setArticles_law_caption(resultSet.getString("caption"));
         sanction.setSanction_number(resultSet.getString("sanction_number"));
-        sanction.setCharged_amount(resultSet.getBigDecimal("amount"));
+        sanction.setCharged_amount(resultSet.getBigDecimal("amount").setScale(2, BigDecimal.ROUND_HALF_DOWN));
         sanction.setService_date(resultSet.getString("service_date"));
         sanction.setPlan_date(resultSet.getString("plan_date"));
         sanction.setFact_date(resultSet.getString("fact_date"));

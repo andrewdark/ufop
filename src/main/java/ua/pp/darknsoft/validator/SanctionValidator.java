@@ -31,20 +31,24 @@ public class SanctionValidator implements Validator {
         Sanction sanction = (Sanction) o;
         try{
             List<Sanction> list = checkEventDao.getSanctionEventByCheckEventLink(sanction.getCheck_event_link());
-            if(!list.isEmpty()){errors.rejectValue("check_event_link", "check_event_link.empty", "Санкція вже накладена");
+            if(!list.isEmpty()){
+                for (Sanction items: list){
+                    if(items.getArticles_law_link().equals(sanction.getArticles_law_link()))errors.rejectValue("articles_law_link", "articles_law_link.lenght", "Дана стаття вже добавлена");
 
+                }
 
             }
+
         }catch (org.springframework.jdbc.BadSqlGrammarException ex){
             errors.rejectValue("check_event_link", "check_event_link.empty", "SQL error:" + ex);
         }
-        if(sanction.getCheck_event_link()==0)errors.rejectValue("check_event_link", "check_event_link.lenght", "Відсутня вказівка на перевірку");
+        if(sanction.getCheck_event_link()==0)errors.rejectValue("articles_law_link", "articles_law_link.lenght", "* Обов'язкове поле");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "check_event_link", "check_event_link.empty", "Відсутня вказівка на перевірку");
-
+if(sanction.getService_date().equals("0001-01-01")) errors.rejectValue("service_date", "service_date.empty", "Вкажіть дату вручення постанови");
         if(!isDate(sanction.getService_date()))errors.rejectValue("service_date", "service_date", "Не вірний формат. РРРР-ММ-ДД");
         if(!isDate(sanction.getPlan_date()))errors.rejectValue("plan_date", "plan_date", "Не вірний формат. РРРР-ММ-ДД");
         if(!isDate(sanction.getFact_date()))errors.rejectValue("fact_date", "fact_date", "Не вірний формат. РРРР-ММ-ДД");
-        //if(!isPrice(sanction.getCharged_amount()))errors.rejectValue("charged_amount", "charged_amount", "Не вірний формат.");
+        if(!isPrice(sanction.getCharged_amount_str()))errors.rejectValue("charged_amount", "charged_amount", "Не вірний формат.");
     }
 
     private boolean isDate(String value) {

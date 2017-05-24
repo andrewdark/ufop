@@ -229,22 +229,23 @@
         <c:if test="${event.check_violation==0}">Порушень не виявлено</c:if>
         <c:if test="${event.check_violation==1}">
             <c:if test="${empty testSanction}"><span>Інформація по накладеним санкціям відсутня</span></c:if>
-            <c:if test="${not empty punishmentarticles}">
-                <table width="100%">
-                    <caption><span style="font-size: 150%;">СТАТТІ ПОКАРАННЯ</span></caption>
-                    <c:forEach items="${punishmentarticles}" var="punishmentarticles">
-                        <tr>
-                            <td>${punishmentarticles.caption} <a
-                                    href="/article_info?id=${punishmentarticles.articles_law_link}" target="_blank"><img
-                                    src="../resources/images/info.png" width="10px"/></a></td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </c:if>
+
             <c:if test="${not empty testSanction}">
                 <c:forEach items="${testSanction}" var="testSanction">
                     <table width="100%">
                         <caption><span style="font-size: 150%;">НАКЛАДЕНА САНКЦІЯ</span></caption>
+                        <tr>
+                            <td>Стаття</td>
+                            <td>${testSanction.articles_law_caption}
+                                <a href="/article_info?id=${testSanction.articles_law_link}" target="_blank"><img
+                                        src="../resources/images/info.png" width="10px"/></a>
+                            </td>
+                            <td>
+                                <sec:authorize access="isAuthenticated()">
+                                Редагувати
+                                </sec:authorize>
+                            </td>
+                        </tr>
                         <tr>
                             <td>Сума</td>
                             <td>${testSanction.charged_amount} грн.</td>
@@ -275,7 +276,8 @@
                             <td></td>
                         </tr>
                     </table>
-                </c:forEach>
+                </c:forEach><br /><hr />
+                <b>Загальна сума штрафних санкцій складає:&nbsp;&nbsp;</b>${sum}&nbsp; грн.
             </c:if>
         </c:if>
 

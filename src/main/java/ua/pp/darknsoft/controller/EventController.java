@@ -1,5 +1,6 @@
 package ua.pp.darknsoft.controller;
 
+import javafx.util.converter.BigDecimalStringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,7 @@ import ua.pp.darknsoft.entity.*;
 import ua.pp.darknsoft.validator.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -470,6 +472,7 @@ public class EventController {
             return myRdrct(httpServletRequest) + "/addsanctions";
         }
         try {
+            sanction.setCharged_amount(BigDecimal.valueOf(Double.parseDouble(sanction.getCharged_amount_str())) );
             sanction.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
             checkEventDao.createSanction(sanction);
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(sanction.getCheck_event_link()).get(0));
@@ -554,13 +557,18 @@ public class EventController {
                 checkEventSupplemented = checkEventDao.getCheckEventById(Long.parseLong(id)).get(0);
 
             }
+            List<Sanction> sanctionList = checkEventDao.getSanctionEventByCheckEventLink(checkEventSupplemented.getId());
+            BigDecimal sum = new BigDecimal(0.00);
+            for(Sanction items: sanctionList){
+                sum = sum.add(items.getCharged_amount());
+            }
             checkEventSupplemented.setCommobj_list(checkEventDao.getCheckingCommercialObjectByEventLink(Long.parseLong(id)));
             checkEventSupplemented.setGroupofgoods_list(checkEventDao.getCheckingGroupOfGoodsByCheckEventLink(Long.parseLong(id)));
-            //uiModel.addAttribute("",checkEventDao);
+
             uiModel.addAttribute("offensearticles", checkEventDao.getOffenseArticlesByCheckEventLink(checkEventSupplemented.getId()));
             uiModel.addAttribute("precaution", checkEventDao.getPrecautionByCheckEventLink(checkEventSupplemented.getId()));
-           // uiModel.addAttribute("punishmentarticles", checkEventDao.getPunishmentArticlesByCheckEventLink(checkEventSupplemented.getId()));
-            uiModel.addAttribute("testSanction", checkEventDao.getSanctionEventByCheckEventLink(checkEventSupplemented.getId()));
+            uiModel.addAttribute("sum", sum);
+            uiModel.addAttribute("testSanction", sanctionList);
             uiModel.addAttribute("lawsuits", checkEventDao.getLawsuitsByCheckEventLink(checkEventSupplemented.getId()));
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такої перевірки не знайдено");

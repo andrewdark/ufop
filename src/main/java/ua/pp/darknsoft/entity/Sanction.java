@@ -9,8 +9,10 @@ public class Sanction {
     private long id;
     private long check_event_link;
     private BigDecimal charged_amount;
+    private String charged_amount_str;
     private String sanction_number;
     private String articles_law_link;
+    private String articles_law_caption;
     private String service_date;
     private String plan_date;
     private String fact_date;
@@ -59,6 +61,14 @@ public class Sanction {
         this.articles_law_link = articles_law_link;
     }
 
+    public String getArticles_law_caption() {
+        return articles_law_caption;
+    }
+
+    public void setArticles_law_caption(String articles_law_caption) {
+        this.articles_law_caption = articles_law_caption;
+    }
+
     public boolean isAdditionalinformation() {
         return additionalinformation;
     }
@@ -95,8 +105,16 @@ public class Sanction {
         this.creator_link = creator_link;
     }
 
+    public String getCharged_amount_str() {
+        return charged_amount_str;
+    }
+
+    public void setCharged_amount_str(String charged_amount_str) {
+        this.charged_amount_str = charged_amount_str;
+    }
+
     public void setService_date(String service_date) {
-        if(service_date.isEmpty())this.service_date = "0001-01-01";
+        if (service_date.isEmpty()) this.service_date = "0001-01-01";
         else this.service_date = service_date;
     }
 
@@ -105,7 +123,7 @@ public class Sanction {
     }
 
     public void setPlan_date(String plan_date) {
-        if(plan_date.isEmpty()) this.plan_date = "0001-01-01";
+        if (plan_date.isEmpty()) this.plan_date = "0001-01-01";
         else this.plan_date = plan_date;
     }
 
@@ -114,8 +132,9 @@ public class Sanction {
     }
 
     public void setFact_date(String fact_date) {
-        if(fact_date.isEmpty()) this.fact_date = "0001-01-01";
+        if (fact_date.isEmpty()) this.fact_date = "0001-01-01";
         else this.fact_date = fact_date;
     }
+
 
 }

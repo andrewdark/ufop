@@ -40,8 +40,8 @@
                             <td><span class="error"><form:errors path="articles_law_link"/></span></td>
                         </tr>
                         <tr>
-                            <td><form:label path="charged_amount">Сума</form:label></td>
-                            <td><form:input path="charged_amount"/> грн.</td>
+                            <td><form:label path="charged_amount_str">Сума</form:label></td>
+                            <td><form:input path="charged_amount_str"/> грн.</td>
                             <td><span class="error"><form:errors path="charged_amount"/></span></td>
                         </tr>
                         <tr>
