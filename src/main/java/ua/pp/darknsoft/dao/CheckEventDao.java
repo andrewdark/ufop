@@ -14,6 +14,8 @@ public interface CheckEventDao {
 
     List<Sanction> getSanctionEventByCheckEventLink(long check_event_link);
 
+    List<Sanction> getSanctionById(long id);
+
     List<Lawsuits> getLawsuitsByCheckEventLink(long check_event_link);
 
     List<CheckEventSupplemented> getCheckEventByUfopLink(long ufop_link);
@@ -53,4 +55,6 @@ public interface CheckEventDao {
     void updateCheckingCommObjById(CheckingCommObj checkingCommObj);
 
     void updatePrecautionDate(Precaution precaution);
+
+    void updateSanctionById(Sanction sanction);
 }

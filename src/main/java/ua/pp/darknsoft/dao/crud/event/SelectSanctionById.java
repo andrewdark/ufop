@@ -13,14 +13,13 @@ import java.sql.Types;
 /**
  * Created by Andrew on 23.05.2017.
  */
-public class SelectSanctionByCheckEventLink extends MappingSqlQuery<Sanction> {
+public class SelectSanctionById extends MappingSqlQuery<Sanction> {
     private static final String SQL_SELECT = "SELECT st.*,st.charged_amount::money::numeric::float8 amount,cat.caption FROM sanctions_table st " +
-            "INNER JOIN articles_law_catalog_table cat ON (st.articles_law_link::ltree = cat.treemark) WHERE st.check_event_link = :check_event_link " +
-            "ORDER BY st.id";
+            "INNER JOIN articles_law_catalog_table cat ON (st.articles_law_link::ltree = cat.treemark) WHERE st.id = :id";
 
-    public SelectSanctionByCheckEventLink(DataSource ds) {
+    public SelectSanctionById(DataSource ds) {
         super(ds, SQL_SELECT);
-        super.declareParameter(new SqlParameter("check_event_link", Types.BIGINT));
+        super.declareParameter(new SqlParameter("id", Types.BIGINT));
     }
 
     @Override

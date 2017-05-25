@@ -35,6 +35,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private SelectPrecautionById selectPrecautionById;
     private SelectPrecautionByCheck_event_link selectPrecautionByCheck_event_link;
     private SelectPrecautionByEventAndPrecaution_link selectPrecautionByEventAndPrecaution_link;
+    private SelectSanctionById selectSanctionById;
     private SelectSanctionByCheckEventLink selectSanctionByCheckEventLink;
     private SelectLawsuitsByCheck_event_link selectLawsuitsByCheck_event_link;
     private SelectOffenseArticlesByCheck_event_link selectOffenseArticlesByCheck_event_link;
@@ -47,6 +48,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private UpdateCheckEventReturnID updateCheckEventReturnID;
     private UpdateCheckingCommObj updateCheckingCommObj;
     private UpdatePrecautionById updatePrecautionById;
+    private UpdateSanction updateSanction;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -62,6 +64,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.selectPrecautionById = new SelectPrecautionById(dataSource);
         this.selectPrecautionByCheck_event_link = new SelectPrecautionByCheck_event_link(dataSource);
         this.selectPrecautionByEventAndPrecaution_link = new SelectPrecautionByEventAndPrecaution_link(dataSource);
+        this.selectSanctionById = new SelectSanctionById(dataSource);
         this.selectSanctionByCheckEventLink = new SelectSanctionByCheckEventLink(dataSource);
         this.insertSanction = new InsertSanction(dataSource);
         this.insertLawsuits = new InsertLawsuits(dataSource);
@@ -76,6 +79,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.updateCheckEventReturnID = new UpdateCheckEventReturnID(dataSource);
         this.updateCheckingCommObj = new UpdateCheckingCommObj(dataSource);
         this.updatePrecautionById = new UpdatePrecautionById(dataSource);
+        this.updateSanction = new UpdateSanction(dataSource);
     }
 
     @Override
@@ -98,7 +102,12 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         bind.put("check_event_link", check_event_link);
         return selectSanctionByCheckEventLink.executeByNamedParam(bind);
     }
-
+    @Override
+    public List<Sanction> getSanctionById(long id) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("id", id);
+        return selectSanctionById.executeByNamedParam(bind);
+    }
     @Override
     public List<Lawsuits> getLawsuitsByCheckEventLink(long check_event_link) {
         Map<String, Long> bind = new HashMap<>();
@@ -303,5 +312,15 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         bind.put("plan_date", precaution.getPlan_date());
         bind.put("fact_date", precaution.getFact_date());
         updatePrecautionById.updateByNamedParam(bind);
+    }
+
+    @Override
+    public void updateSanctionById(Sanction sanction){
+        Map<String,Object> bind = new HashMap<String,Object>();
+        bind.put("id",sanction.getId());
+        bind.put("service_date",sanction.getService_date());
+        bind.put("plan_date",sanction.getPlan_date());
+        bind.put("fact_date",sanction.getFact_date());
+        updateSanction.updateByNamedParam(bind);
     }
 }

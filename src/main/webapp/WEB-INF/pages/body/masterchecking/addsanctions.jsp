@@ -26,7 +26,9 @@
         </c:if>
         <c:if test="${checkEvent.check_violation==1}">
 
-                <form:form method="post" action="/addsanctionspost">
+                <form:form method="post" action="${actionlink}">
+                    <form:hidden path="id"/>
+                    <form:hidden path="charged_amount"/>
                     <table>
                         <tr>
                             <td></td>
@@ -66,7 +68,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td><input type="submit" value="записати"></td>
+                            <td><input type="submit" value="${buttonvalue}"></td>
                             <td></td>
                         </tr>
                     </table>

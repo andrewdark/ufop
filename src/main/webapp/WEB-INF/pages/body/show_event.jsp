@@ -240,16 +240,16 @@
                                 <a href="/article_info?id=${testSanction.articles_law_link}" target="_blank"><img
                                         src="../resources/images/info.png" width="10px"/></a>
                             </td>
-                            <td>
+                            <td width="163.2px">
                                 <sec:authorize access="isAuthenticated()">
-                                    <a href="#">Редагувати</a>
+                                    <a href="/editsanction?id=${testSanction.id}">Редагувати</a>
                                 </sec:authorize>
                             </td>
                         </tr>
                         <tr>
                             <td>Сума</td>
                             <td>${testSanction.charged_amount} грн.</td>
-                            <td>
+                            <td width="163.2px">
                                 <sec:authorize access="isAuthenticated()">
                                     <a href="#" onclick="return confirmDelete();">Видалити</a>
                                 </sec:authorize>
