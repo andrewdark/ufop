@@ -95,19 +95,22 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         bind.put("check_event_link", check_event_link);
         return selectCheckingCommercialObject.executeByNamedParam(bind);
     }
-//this
+
+    //this
     @Override
     public List<Sanction> getSanctionEventByCheckEventLink(long check_event_link) {
         Map<String, Long> bind = new HashMap<>();
         bind.put("check_event_link", check_event_link);
         return selectSanctionByCheckEventLink.executeByNamedParam(bind);
     }
+
     @Override
     public List<Sanction> getSanctionById(long id) {
         Map<String, Long> bind = new HashMap<>();
         bind.put("id", id);
         return selectSanctionById.executeByNamedParam(bind);
     }
+
     @Override
     public List<Lawsuits> getLawsuitsByCheckEventLink(long check_event_link) {
         Map<String, Long> bind = new HashMap<>();
@@ -173,24 +176,25 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         Map<String, Object> bind = new HashMap<>();
         bind.put("check_event_link", precaution.getCheck_event_link());
         bind.put("precaution_catalog_link", precaution.getPrecaution_catalog_link());
-        bind.put("decision_number",precaution.getDecision_number());
+        bind.put("decision_number", precaution.getDecision_number());
         bind.put("service_date", precaution.getService_date());
         bind.put("plan_date", precaution.getPlan_date());
         bind.put("fact_date", precaution.getFact_date());
         insertPrecaution.updateByNamedParam(bind);
     }
+
     //this
     @Override
     public void createSanction(Sanction sanction) {
         Map<String, Object> bind = new HashMap<>();
         bind.put("check_event_link", sanction.getCheck_event_link());
-        bind.put("articles_law_link",sanction.getArticles_law_link());
-        bind.put("sanction_number",sanction.getSanction_number());
+        bind.put("articles_law_link", sanction.getArticles_law_link());
+        bind.put("sanction_number", sanction.getSanction_number());
         bind.put("charged_amount", sanction.getCharged_amount());
         bind.put("service_date", sanction.getService_date());
         bind.put("plan_date", sanction.getPlan_date());
         bind.put("fact_date", sanction.getFact_date());
-        bind.put("creator_link",sanction.getCreator_link());
+        bind.put("creator_link", sanction.getCreator_link());
         insertSanction.updateByNamedParam(bind);
     }
 
@@ -315,12 +319,19 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     }
 
     @Override
-    public void updateSanctionById(Sanction sanction){
-        Map<String,Object> bind = new HashMap<String,Object>();
-        bind.put("id",sanction.getId());
-        bind.put("service_date",sanction.getService_date());
-        bind.put("plan_date",sanction.getPlan_date());
-        bind.put("fact_date",sanction.getFact_date());
+    public void updateSanctionById(Sanction sanction) {
+        Map<String, Object> bind = new HashMap<String, Object>();
+        bind.put("id", sanction.getId());
+        bind.put("service_date", sanction.getService_date());
+        bind.put("plan_date", sanction.getPlan_date());
+        bind.put("fact_date", sanction.getFact_date());
         updateSanction.updateByNamedParam(bind);
+    }
+
+    @Override
+    public void deleteSanctionById(long id) {
+        Map<String, Object> bind = new HashMap<String, Object>();
+        bind.put("id", id);
+        deleteSanctionById.updateByNamedParam(bind);
     }
 }

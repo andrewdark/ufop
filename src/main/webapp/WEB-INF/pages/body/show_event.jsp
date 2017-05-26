@@ -60,7 +60,8 @@
         <li><a href="#tabs-2">Результати нагляду</a></li>
         <li><a href="#tabs-3">Санкції</a></li>
         <li><a href="#tabs-4">Судові рішення</a></li>
-        <li><a href="#tabs-5">Контролі</a></li>
+        <li><a href="#tabs-5">Перевіряючі</a></li>
+        <li><a href="#tabs-6">Контролі</a></li>
     </ul>
     <div id="tabs-1">
         <table width="100%">
@@ -251,7 +252,7 @@
                             <td>${testSanction.charged_amount} грн.</td>
                             <td width="163.2px">
                                 <sec:authorize access="isAuthenticated()">
-                                    <a href="#" onclick="return confirmDelete();">Видалити</a>
+                                    <a href="/deletesanction?id=${testSanction.id}&EventId=${testSanction.check_event_link}" onclick="return confirmDelete();">Видалити</a>
                                 </sec:authorize>
                             </td>
                         </tr>
@@ -339,6 +340,18 @@
 
     </div>
     <div id="tabs-5">
+        <c:if test="${event.check_violation==0}">Порушень не виявлено</c:if>
+        <c:if test="${event.check_violation==1}">
+            <table>
+                <tr>
+                    <td>інспектор</td>
+                    <td>ПІБ</td>
+                    <td>підрозділ</td>
+                </tr>
+            </table>
+        </c:if>
+    </div>
+    <div id="tabs-6">
         <c:if test="${event.check_violation==0}">Порушень не виявлено</c:if>
         <c:if test="${event.check_violation==1}">
 

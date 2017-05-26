@@ -57,4 +57,6 @@ public interface CheckEventDao {
     void updatePrecautionDate(Precaution precaution);
 
     void updateSanctionById(Sanction sanction);
+
+    void deleteSanctionById(long id);
 }

@@ -805,14 +805,14 @@ public class EventController {
     public String deleteSanction(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String EventId,
                                  HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         try {
-            //checkEventDao.deletePunishmentArticles(Long.parseLong(id));
+            checkEventDao.deleteSanctionById(Long.parseLong(id));
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
         } catch (Exception ex) {
             String error = "Method: deleteSanction.<br /> String id = " + id + " String EventId=" + EventId + "<br />" + ex;
             redirectAttributes.addFlashAttribute("ex", error);
             return myRdrct(httpServletRequest) + "/message";
         }
-        return myRdrct(httpServletRequest) + "/addsanctions";
+        return myRdrct(httpServletRequest) + "/show_event?id="+EventId+"#tabs-3";
     }
 
     //------------------------------------------------------------------------------------------------------------------
