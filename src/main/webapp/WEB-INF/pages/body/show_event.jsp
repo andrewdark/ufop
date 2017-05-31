@@ -32,17 +32,24 @@
                         <table>
                             <tr>
                                 <td><form:radiobutton path="nav" value="1"/> основні групи товарів</td>
+                                <td><form:radiobutton path="nav" value="7"/> перевіряючі</td>
                                 <c:if test="${event.check_violation==1}">
                                     <td><form:radiobutton path="nav" value="2"/> статті правопорушень</td>
-                                    <td><form:radiobutton path="nav" value="3"/> комерційні об'єкти</td>
                                 </c:if>
+                                <td></td>
                             </tr>
                             <tr>
                                 <c:if test="${event.check_violation==1}">
                                     <td><form:radiobutton path="nav" value="4"/> прийняті заходи</td>
                                     <td><form:radiobutton path="nav" value="5"/> внесені санкції</td>
                                     <td><form:radiobutton path="nav" value="6"/> судова справа</td>
+                                    <td><form:radiobutton path="nav" value="3"/> комерційні об'єкти</td>
                                 </c:if>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </table>
                     </td>
@@ -174,7 +181,7 @@
                                 <li/>
                                 ${offensearticles.caption}
                                 <a href="/article_info?id=${offensearticles.articles_law_link}" target="_blank"><img
-                                    src="../resources/images/info.png" width="10px"/></a>
+                                        src="../resources/images/info.png" width="10px"/></a>
                                 <br/>
                             </c:forEach>
                         </c:if>
@@ -252,7 +259,8 @@
                             <td>${testSanction.charged_amount} грн.</td>
                             <td width="163.2px">
                                 <sec:authorize access="isAuthenticated()">
-                                    <a href="/deletesanction?id=${testSanction.id}&EventId=${testSanction.check_event_link}" onclick="return confirmDelete();">Видалити</a>
+                                    <a href="/deletesanction?id=${testSanction.id}&EventId=${testSanction.check_event_link}"
+                                       onclick="return confirmDelete();">Видалити</a>
                                 </sec:authorize>
                             </td>
                         </tr>
@@ -280,8 +288,10 @@
                             </td>
                             <td></td>
                         </tr>
-                    </table><br /><br />
-                </c:forEach><br /><hr />
+                    </table>
+                    <br/><br/>
+                </c:forEach><br/>
+                <hr/>
                 <b>Загальна сума штрафних санкцій складає:&nbsp;&nbsp;</b>${sum}&nbsp; грн.
             </c:if>
         </c:if>
@@ -340,16 +350,19 @@
 
     </div>
     <div id="tabs-5">
-        <c:if test="${event.check_violation==0}">Порушень не виявлено</c:if>
-        <c:if test="${event.check_violation==1}">
-            <table>
+        <c:if test="${empty inspectorsList}">Інформація по перевіряючим відсутня</c:if>
+        <c:if test="${not empty inspectorsList}">
+        <table width="100%">
+            <c:forEach var="inspectorsList" items="${inspectorsList}">
                 <tr>
-                    <td>інспектор</td>
-                    <td>ПІБ</td>
-                    <td>підрозділ</td>
+                    <td>${inspectorsList.user_name}</td>
+                    <td>${inspectorsList.structure_name}</td>
+                    <td></td>
                 </tr>
-            </table>
-        </c:if>
+            </c:forEach>
+
+            </c:if>
+        </table>
     </div>
     <div id="tabs-6">
         <c:if test="${event.check_violation==0}">Порушень не виявлено</c:if>

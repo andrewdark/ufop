@@ -30,6 +30,8 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private InsertSanction insertSanction;
     private InsertLawsuits insertLawsuits;
     private InsertPrecaution insertPrecaution;
+    private InsertInspectors insertInspectors;
+    private SelectInspectorsByEvent_link selectInspectorsByEvent_link;
     private SelectCheckEventById selectCheckEventById;
     private SelectCheckEventByUfop_link selectCheckEventByUfop_link;
     private SelectPrecautionById selectPrecautionById;
@@ -66,6 +68,8 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.selectPrecautionByEventAndPrecaution_link = new SelectPrecautionByEventAndPrecaution_link(dataSource);
         this.selectSanctionById = new SelectSanctionById(dataSource);
         this.selectSanctionByCheckEventLink = new SelectSanctionByCheckEventLink(dataSource);
+        this.selectInspectorsByEvent_link = new SelectInspectorsByEvent_link(dataSource);
+        this.insertInspectors = new InsertInspectors(dataSource);
         this.insertSanction = new InsertSanction(dataSource);
         this.insertLawsuits = new InsertLawsuits(dataSource);
         this.selectLawsuitsByCheck_event_link = new SelectLawsuitsByCheck_event_link(dataSource);
@@ -80,6 +84,13 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.updateCheckingCommObj = new UpdateCheckingCommObj(dataSource);
         this.updatePrecautionById = new UpdatePrecautionById(dataSource);
         this.updateSanction = new UpdateSanction(dataSource);
+    }
+
+    @Override
+    public List<Inspectors> getInspectorsByCheckEventLink(long check_event_link) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("check_event_link", check_event_link);
+        return selectInspectorsByEvent_link.executeByNamedParam(bind);
     }
 
     @Override
@@ -160,6 +171,15 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         Map<String, Long> bind = new HashMap<>();
         bind.put("check_event_link", check_event_link);
         return selectOffenseArticlesByCheck_event_link.executeByNamedParam(bind);
+    }
+
+    @Override
+    public void createInspectors(Inspectors inspectors) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("check_event_link",inspectors.getCheck_event_link());
+        bind.put("user_link",inspectors.getUser_link());
+        bind.put("creator_name",inspectors.getCreator_name());
+        insertInspectors.updateByNamedParam(bind);
     }
 
     @Override

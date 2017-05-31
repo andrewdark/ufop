@@ -34,6 +34,7 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
     private SelectPrecautionCatalog selectPrecautionCatalog;
     private SelectLawsuitsResultCatalog selectLawsuitsResultCatalog;
     private SelectDegreeRiskCatalog selectDegreeRiskCatalog;
+    private SelectUsersBySelectorStructureLink selectUsersBySelectorStructureLink;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource){
@@ -51,7 +52,16 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         this.selectPrecautionCatalog = new SelectPrecautionCatalog(dataSource);
         this.selectLawsuitsResultCatalog = new SelectLawsuitsResultCatalog(dataSource);
         this.selectDegreeRiskCatalog = new SelectDegreeRiskCatalog(dataSource);
+        this.selectUsersBySelectorStructureLink = new SelectUsersBySelectorStructureLink(dataSource);
     }
+
+    @Override
+    public List<User> getInspectorsBySelectorStructureLink(String username){
+        Map<String,String> bind = new HashMap<>();
+        bind.put("username",username);
+        return selectUsersBySelectorStructureLink.executeByNamedParam(bind);
+    }
+
     @Override
     public List<DegreeRisk> getDegreeRiskCatalog(){ return selectDegreeRiskCatalog.execute(); }
     @Override

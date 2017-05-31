@@ -487,7 +487,63 @@ public class EventController {
         }
         return myRdrct(httpServletRequest) + "/show_event?id=" + lawsuits.getCheck_event_link() + "#tabs-4";
     }
+    //add inspectors
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "/addinspectors", method = RequestMethod.GET)
+    public String addInspectors(Model uiModel, RedirectAttributes redirectAttributes,
+                              HttpServletRequest httpServletRequest) {
+        Inspectors inspectors = new Inspectors();
+        CheckEventSupplemented checkEvent = (CheckEventSupplemented) uiModel.asMap().get("event");
+        if (checkEvent == null) {
+            redirectAttributes.addFlashAttribute("ex", "Виберіть перевірку");
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        inspectors.setCheck_event_link(checkEvent.getId());
+        inspectors.setCreator_name(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
+        try{
+            Map<Integer,String> inspectorsList = new HashMap<>();
+            for (User items:catalogDao.getInspectorsBySelectorStructureLink(inspectors.getCreator_name())
+                 ) {
+            inspectorsList.put(items.getId(),items.getId() +"-"+ items.getUsername());
+            }
+            uiModel.addAttribute("inspectorsList",inspectorsList);
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
 
+        uiModel.addAttribute("checkEvent", checkEvent);
+        uiModel.addAttribute("title", "Співробітники, що перевіряли");
+        uiModel.addAttribute("actionlink", "/addinspectorspost");
+        uiModel.addAttribute("buttonvalue", "Додати");
+        BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
+        uiModel.addAttribute("command", inspectors);
+        uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
+        return "addinspectors";
+    }
+    @PreAuthorize(value = "isAuthenticated()")
+    @RequestMapping(value = "/addinspectorspost", method = RequestMethod.POST)
+    public String addInspectorsPost(@ModelAttribute Inspectors inspectors, Model uiModel,
+                                  HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
+                                  BindingResult bindingResult) {
+
+        try {
+            if(inspectors.getUser_link()>0){
+                checkEventDao.createInspectors(inspectors);
+            }
+            else {
+                redirectAttributes.addFlashAttribute("ex", "Check_event_link: " + inspectors.getCheck_event_link()+"<br /> User_link: " + inspectors.getUser_link()
+                + " <br /> Creator_name: " + inspectors.getCreator_name());
+                return myRdrct(httpServletRequest) + "/message";
+            }
+            redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(inspectors.getCheck_event_link()).get(0));
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        return myRdrct(httpServletRequest) + "/show_event?id=" + inspectors.getCheck_event_link() + "#tabs-5";
+
+    }
 
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------SHOW EVENT DETAIL-----------------------------------------------------------
@@ -510,7 +566,7 @@ public class EventController {
             }
             checkEventSupplemented.setCommobj_list(checkEventDao.getCheckingCommercialObjectByEventLink(Long.parseLong(id)));
             checkEventSupplemented.setGroupofgoods_list(checkEventDao.getCheckingGroupOfGoodsByCheckEventLink(Long.parseLong(id)));
-
+            uiModel.addAttribute("inspectorsList",checkEventDao.getInspectorsByCheckEventLink(Long.parseLong(id)));
             uiModel.addAttribute("offensearticles", checkEventDao.getOffenseArticlesByCheckEventLink(checkEventSupplemented.getId()));
             uiModel.addAttribute("precaution", checkEventDao.getPrecautionByCheckEventLink(checkEventSupplemented.getId()));
             uiModel.addAttribute("sum", sum);
@@ -551,6 +607,8 @@ public class EventController {
                 return myRdrct(httpServletRequest) + "/addsanctions";
             case 6:
                 return myRdrct(httpServletRequest) + "/addlawsuits";
+            case 7:
+                return myRdrct(httpServletRequest) + "/addinspectors";
             default:
                 return myRdrct(httpServletRequest) + "/show_event?id=" + checkEventSupplemented.getId();
         }

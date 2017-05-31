@@ -8,6 +8,8 @@ import java.util.List;
  * Created by Dark on 26.03.2017.
  */
 public interface CheckEventDao {
+    List<Inspectors> getInspectorsByCheckEventLink(long check_event_link);
+
     List<CheckingGroupOfGoods> getCheckingGroupOfGoodsByCheckEventLink(long check_event_link);
 
     List<CheckingCommObj> getCheckingCommercialObjectByEventLink(long check_event_link);
@@ -29,6 +31,8 @@ public interface CheckEventDao {
     List<Precaution> getPrecautionByEventAndPrecautionLink(long check_event_link, long precaution_catalog_link);
 
     List<OffenseArticles> getOffenseArticlesByCheckEventLink(long check_event_link);
+
+    void createInspectors(Inspectors inspectors);
 
     void createCheckingGroupOfGoods(CheckingGroupOfGoods checkingGroupOfGoods);
 
