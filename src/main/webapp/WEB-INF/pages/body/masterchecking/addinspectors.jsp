@@ -20,7 +20,7 @@
                 <tr>
                     <td></td>
                     <td><form:select path="user_link" items="${inspectorsList}" /></td>
-                    <td></td>
+                    <td><span class="error"><form:errors path="user_link"/></span></td>
                 </tr>
                 <tr>
                     <td></td>

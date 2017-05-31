@@ -45,6 +45,8 @@ public class EventController {
     LawSuitsValidator lawSuitsValidator;
     @Autowired
     OffenseArticlesValidator offenseArticlesValidator;
+    @Autowired
+    InspectorsValidator inspectorsValidator;
 
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------MASTER CHECK EVENT-----------------------------------------------------------
@@ -527,6 +529,21 @@ public class EventController {
                                   HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
                                   BindingResult bindingResult) {
 
+        inspectorsValidator.validate(inspectors, bindingResult);
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("b1", bindingResult);
+            try {
+                List<CheckEventSupplemented> event = null;
+                if ((Long) inspectors.getCheck_event_link() != null)
+                    event = checkEventDao.getCheckEventById(inspectors.getCheck_event_link());
+                redirectAttributes.addFlashAttribute("event", event.get(0));
+            } catch (Exception ex) {
+                redirectAttributes.addFlashAttribute("ex", "/addInspectors - inspectorsValidator.validate<br />" + ex);
+                return myRdrct(httpServletRequest) + "/message";
+            }
+
+            return myRdrct(httpServletRequest) + "/addinspectors";
+        }
         try {
             if(inspectors.getUser_link()>0){
                 checkEventDao.createInspectors(inspectors);
