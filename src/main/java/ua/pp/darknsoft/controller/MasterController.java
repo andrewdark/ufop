@@ -92,8 +92,7 @@ public class MasterController {
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
 
-        Ufop ufop;
-
+        Ufop ufop = (Ufop) uiModel.asMap().get("ufop");
         try {
             uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
             Map<Integer, String> itemsType = new HashMap<>();
@@ -488,6 +487,7 @@ public class MasterController {
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "edit_commobj", method = RequestMethod.GET)
     public String editCommObjGet(@RequestParam(defaultValue = "1") String id, Model uiModel) {
+        Ufop ufop = (Ufop) uiModel.asMap().get("ufop");
         uiModel.addAttribute("title", "Редагування комерційного об'єкта");
         uiModel.addAttribute("actionlink", "/editcommobjpost");
         uiModel.addAttribute("buttonvalue", "редагувати");
