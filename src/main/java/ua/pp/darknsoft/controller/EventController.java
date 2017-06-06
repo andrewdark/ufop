@@ -506,7 +506,7 @@ public class EventController {
             Map<Integer,String> inspectorsList = new HashMap<>();
             for (User items:catalogDao.getInspectorsBySelectorStructureLink(inspectors.getCreator_name())
                  ) {
-            inspectorsList.put(items.getId(),items.getId() +"-"+ items.getUsername());
+            inspectorsList.put(items.getId(),items.getUsername());
             }
             uiModel.addAttribute("inspectorsList",inspectorsList);
         }catch (Exception ex){

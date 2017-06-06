@@ -16,6 +16,7 @@
                 <form:form action="/show_eventpost" method="post">
                     <form:hidden path="id"/>
                     <form:hidden path="ufop_link"/>
+                    <form:hidden path="event_number"/>
                     <form:hidden path="event_date_begin"/>
                     <form:hidden path="event_date_end"/>
                     <form:hidden path="check_type"/>
@@ -71,6 +72,9 @@
         <li><a href="#tabs-6">Контролі</a></li>
     </ul>
     <div id="tabs-1">
+        <div class="d_right">
+            <a href="/event_info/${event.id}" target="_blank"><img src="/resources/images/printer.png" width="64"/></a>
+        </div>
         <table width="100%">
             <caption>ПЕРЕВІРКА <a href="/show_ufop?id=${event.ufop_link}">СУБ'ЄКТА ГОСПОДАРЮВАННЯ</a></caption>
             <tr>

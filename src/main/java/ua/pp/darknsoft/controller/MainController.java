@@ -364,7 +364,8 @@ public class MainController {
     public String ufopInfo(@PathVariable("id") String id, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         uiModel.addAttribute("title", "Відомості про суб'єкта господарювання");
         try {
-            uiModel.addAttribute("ufop",id);
+
+            uiModel.addAttribute("ufop",ufopDao.searchUfopById(Long.parseLong(id)).get(0));
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такої статті не знайдено");
             return "message";

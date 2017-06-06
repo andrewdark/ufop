@@ -57,7 +57,10 @@
                 <tr>
                     <td>ІД</td>
                     <td>${checkEvent.id}</td>
-
+                </tr>
+                <tr>
+                    <td>Номер</td>
+                    <td>${checkEvent.event_number}</td>
                 </tr>
                 <tr>
                     <td>Тип</td>
@@ -67,8 +70,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Порушення</td>
+                    <td>
+                        <c:if test="${checkEvent.check_violation==0}">Порушень не знайдено</c:if>
+                        <c:if test="${checkEvent.check_violation==1}">Порушення виявлено</c:if>
+                    </td>
+                </tr>
+                <tr>
                     <td>Опис</td>
-                    <td>${checkEvent.event_result}</td>
+                    <td>
+                        <c:if test="${checkEvent.check_violation==0}">N/A</c:if>
+                        <c:if test="${checkEvent.check_violation==1}"> ${checkEvent.event_result}</c:if>
+                    </td>
                 </tr>
             </table>
         </div>

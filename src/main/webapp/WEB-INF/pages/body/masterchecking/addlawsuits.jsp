@@ -105,7 +105,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Тип</td>
+                    <td>Порушення</td>
                     <td>
                         <c:if test="${checkEvent.check_violation==0}">Порушень не знайдено</c:if>
                         <c:if test="${checkEvent.check_violation==1}">Порушення виявлено</c:if>

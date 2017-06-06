@@ -13,7 +13,7 @@
     <div class="clr"></div>
     <div class="post_content_wide">
         <table width="100%">
-            <caption>Існуючі комерційні об'єкти</caption>
+            <caption>ІСНУЮЧІ КОМЕРЦІЙНІ ОБ'ЄКТИ</caption>
             <c:forEach items="${checkingCommObjList_d}" var="d">
                 <tr>
                     <td>${d.comm_obj_name}</td>
@@ -21,6 +21,7 @@
                 <br/>
             </c:forEach>
         </table>
+        <br /><br />
         <c:if test="${empty command.commobj_list}">
             <br/><br/>
             <b>Всі комерційні об'єкти, які були в наявності у <a href="/show_ufop?id=${event.ufop_link}">суб'єкта
@@ -30,7 +31,7 @@
             <form:form action="${actionlink}" method="post">
                 <form:hidden path="id"/>
                 <table width="100%">
-                    <caption>Нові комерційні об'єкти</caption>
+                    <caption>НОВІ КОМЕРЦІЙНІ ОБ'ЄКТИ</caption>
                     <tr>
                         <td>
                             <c:forEach items="${command.commobj_list}" var="co_list">
@@ -69,7 +70,10 @@
                 <tr>
                     <td>ІД</td>
                     <td>${checkEvent.id}</td>
-
+                </tr>
+                <tr>
+                    <td>Номер</td>
+                    <td>${checkEvent.event_number}</td>
                 </tr>
                 <tr>
                     <td>Тип</td>
@@ -79,8 +83,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Порушення</td>
+                    <td>
+                        <c:if test="${checkEvent.check_violation==0}">Порушень не знайдено</c:if>
+                        <c:if test="${checkEvent.check_violation==1}">Порушення виявлено</c:if>
+                    </td>
+                </tr>
+                <tr>
                     <td>Опис</td>
-                    <td>${checkEvent.event_result}</td>
+                    <td>
+                        <c:if test="${checkEvent.check_violation==0}">N/A</c:if>
+                        <c:if test="${checkEvent.check_violation==1}"> ${checkEvent.event_result}</c:if>
+                    </td>
                 </tr>
             </table>
         </div>

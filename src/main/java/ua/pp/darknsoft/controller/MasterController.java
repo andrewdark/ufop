@@ -494,6 +494,7 @@ public class MasterController {
 
         try {
             CommercialObject co = commercialObjectDao.getCommObjById(Long.parseLong(id)).get(0);
+            if(ufop==null){ufop = ufopDao.searchUfopById(co.getUfop_link()).get(0);}
             co.setNav(0);
             co.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString());
             uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
@@ -505,6 +506,7 @@ public class MasterController {
             for (DegreeRisk items2 : catalogDao.getDegreeRiskCatalog()) {
                 itemsType2.put(items2.getId(), items2.getTitle());
             }
+            uiModel.addAttribute("ufop",ufop);
             uiModel.addAttribute("it", itemsType);
             uiModel.addAttribute("degree_risk_list",itemsType2);
             uiModel.addAttribute("co", co);
@@ -551,6 +553,7 @@ public class MasterController {
     @RequestMapping(value = "edit_contact", method = RequestMethod.GET)
     public String editContact(@RequestParam(defaultValue = "1") String id, Model uiModel,RedirectAttributes redirectAttributes,
                               HttpServletRequest httpServletRequest) {
+        Ufop ufop = (Ufop) uiModel.asMap().get("ufop");
         uiModel.addAttribute("title", "Редагування контакту");
         uiModel.addAttribute("actionlink", "/editcontactpost");
         uiModel.addAttribute("buttonvalue", "редагувати");
@@ -562,9 +565,11 @@ public class MasterController {
         }
         try {
             Contact contact = contactDao.getContactById(Long.parseLong(id)).get(0);
+            if(ufop==null){ufop = ufopDao.searchUfopById(contact.getOrganization()).get(0);}
             contact.setNav(0);
             contact.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString());
             uiModel.addAttribute("contact", contact);
+            uiModel.addAttribute("ufop",ufop);
             BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
             uiModel.addAttribute("command", contact);
             uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
