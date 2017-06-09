@@ -66,7 +66,7 @@ public class EventValidator implements Validator {
         try{
             Date date_end = parser.parse(event.getEvent_date_end());
             Date date_begin = parser.parse(event.getEvent_date_begin());
-            if(!date_end.equals(parser.parse("0001-01-01")) && !date_begin.before(date_end))
+            if(!date_end.equals(parser.parse("0001-01-01")) && date_begin.after(date_end))
                 errors.rejectValue("event_date_end","date.notDog","Не вірна дата закінчення.");
         }catch (Exception ex){
 

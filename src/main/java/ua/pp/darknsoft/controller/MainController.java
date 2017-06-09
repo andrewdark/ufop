@@ -364,8 +364,15 @@ public class MainController {
     public String ufopInfo(@PathVariable("id") String id, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         uiModel.addAttribute("title", "Відомості про суб'єкта господарювання");
         try {
-
-            uiModel.addAttribute("ufop",ufopDao.searchUfopById(Long.parseLong(id)).get(0));
+            Ufop ufop =  ufopDao.searchUfopById(Long.parseLong(id)).get(0);
+            uiModel.addAttribute("ufop",ufop);
+            if (ufop.getA_place_of_reg().length() > 0) {
+                uiModel.addAttribute("fulladdress", catalogDao.getParentLocationByTreemark(ufop.getA_place_of_reg()));
+            }
+            uiModel.addAttribute("co_list", commercialObjectDao.getCommObjByUfop_link(ufop.getId()));
+            uiModel.addAttribute("kveds", kvedDao.getKvedsByUfopLink(Long.parseLong(id)));
+            uiModel.addAttribute("ci_list", contactDao.getContactByOrganizationLink(Long.parseLong(id)));
+            uiModel.addAttribute("checkEventList", checkEventDao.getCheckEventByUfopLink(ufop.getId()));
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такої статті не знайдено");
             return "message";
@@ -378,16 +385,16 @@ public class MainController {
         }
         return "ufop_info";
     }
-    @RequestMapping(value = "/event_info", method = RequestMethod.GET)
+    @RequestMapping(value = "/event_info/{id}", method = RequestMethod.GET)
     public String eventInfo(@PathVariable("id") String id, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         uiModel.addAttribute("title", "Відомості про перевірку");
         try {
             uiModel.addAttribute("event",id);
         } catch (IndexOutOfBoundsException ex) {
-            uiModel.addAttribute("ex", "Такої статті не знайдено");
+            uiModel.addAttribute("ex", "Такої перевірки не знайдено");
             return "message";
         } catch (NumberFormatException ex) {
-            uiModel.addAttribute("ex", "не вірна вказівка на статтю");
+            uiModel.addAttribute("ex", "не вірна вказівка на перевірку");
             return "message";
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", "Method:articleInfo <br />" + ex);

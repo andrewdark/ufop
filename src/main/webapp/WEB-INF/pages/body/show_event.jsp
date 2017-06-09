@@ -37,18 +37,16 @@
                                 <c:if test="${event.check_violation==1}">
                                     <td><form:radiobutton path="nav" value="2"/> статті правопорушень</td>
                                 </c:if>
-                                <td></td>
                             </tr>
                             <tr>
                                 <c:if test="${event.check_violation==1}">
                                     <td><form:radiobutton path="nav" value="4"/> прийняті заходи</td>
                                     <td><form:radiobutton path="nav" value="5"/> внесені санкції</td>
                                     <td><form:radiobutton path="nav" value="6"/> судова справа</td>
-                                    <td><form:radiobutton path="nav" value="3"/> комерційні об'єкти</td>
                                 </c:if>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><form:radiobutton path="nav" value="3"/> комерційні об'єкти</td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -205,7 +203,11 @@
                             <td>
                                     ${precaution.precaution_name}
                             </td>
-                            <td><a href="/editprecaution?id=${precaution.id}">Редагувати</a></td>
+                            <td>
+                                <sec:authorize access="isAuthenticated()">
+                                    <a href="/editprecaution?id=${precaution.id}">Редагувати</a>
+                                </sec:authorize>
+                            </td>
                         </tr>
                         <c:if test="${not empty precaution.decision_number}">
                             <tr>

@@ -68,3 +68,16 @@
         </tr>
     </c:if>
 </table>
+<table width="100%">
+    <caption>
+        ВІДОМОСТІ ПРО КОМЕРЦІЙНІ ОБ'ЄКТИ
+    </caption>
+    <c:forEach var="co_list" items="${co_list}">
+
+    </c:forEach>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>

@@ -127,11 +127,13 @@ function looplocationdown(level) {
     if (level == 4) {
         var aj = "treemark=" + $("#my_selecttop3 option:selected").val() + "&nlevel=4";
         $("#LocationType4").load("/ajax_select_loc", aj);
+        $("#LocationType5").html("");
     }
     if (level == 5) {
         var aj = "treemark=" + $("#my_selecttop4 option:selected").val() + "&nlevel=5";
-        $("#LocationType4").load("/ajax_select_loc", aj);
+        $("#LocationType5").load("/ajax_select_loc", aj);
     }
+
 };
 
 //Функция отображения PopUp
@@ -169,6 +171,14 @@ function LocPopUpHide() {
             $("#a_place_of_reg").val($("#my_selecttop4 option:selected").val());
         } else {
             $("#a_place_of_reg").val($("#my_selecttop3 option:selected").val());
+        }
+    }
+    ;
+    if (count_loc == 5) {
+        if ($("#my_selecttop5 option:selected").val().length > 1) {
+            $("#a_place_of_reg").val($("#my_selecttop5 option:selected").val());
+        } else {
+            $("#a_place_of_reg").val($("#my_selecttop4 option:selected").val());
         }
     }
     ;
