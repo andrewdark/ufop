@@ -18,6 +18,7 @@ import ua.pp.darknsoft.validator.ContactValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -389,7 +390,21 @@ public class MainController {
     public String eventInfo(@PathVariable("id") String id, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         uiModel.addAttribute("title", "Відомості про перевірку");
         try {
-            uiModel.addAttribute("event",id);
+            CheckEventSupplemented checkEventSupplemented = checkEventDao.getCheckEventById(Long.parseLong(id)).get(0);
+            List<Sanction> sanctionList = checkEventDao.getSanctionEventByCheckEventLink(checkEventSupplemented.getId());
+            BigDecimal sum = new BigDecimal(0.00);
+            for (Sanction items : sanctionList) {
+                sum = sum.add(items.getCharged_amount());
+            }
+            checkEventSupplemented.setCommobj_list(checkEventDao.getCheckingCommercialObjectByEventLink(Long.parseLong(id)));
+            checkEventSupplemented.setGroupofgoods_list(checkEventDao.getCheckingGroupOfGoodsByCheckEventLink(Long.parseLong(id)));
+            uiModel.addAttribute("inspectorsList",checkEventDao.getInspectorsByCheckEventLink(Long.parseLong(id)));
+            uiModel.addAttribute("offensearticles", checkEventDao.getOffenseArticlesByCheckEventLink(checkEventSupplemented.getId()));
+            uiModel.addAttribute("precaution", checkEventDao.getPrecautionByCheckEventLink(checkEventSupplemented.getId()));
+            uiModel.addAttribute("sum", sum);
+            uiModel.addAttribute("testSanction", sanctionList);
+            uiModel.addAttribute("lawsuits", checkEventDao.getLawsuitsByCheckEventLink(checkEventSupplemented.getId()));
+            uiModel.addAttribute("event",checkEventSupplemented);
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такої перевірки не знайдено");
             return "message";
