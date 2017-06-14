@@ -33,11 +33,7 @@ public class WorkTimeController {
     WorkTimeDao workTimeDao;
     @Autowired
     UserDao userDao;
-    private final String datenow = LocalDate.now() + "";
 
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDate localDate = LocalDate.now();
-    String searchdate = dtf.format(localDate);
 
 
     //------------------------------------------------------------------------------------------------------------------
@@ -115,6 +111,8 @@ public class WorkTimeController {
     @RequestMapping(value = "/acceptworktime", method = RequestMethod.GET)
     public String acceptingWorkTime(@RequestParam(defaultValue = "") String date, @ModelAttribute WorkTime myWorkTime, Model uiModel, HttpServletRequest httpServletRequest,
                                     RedirectAttributes redirectAttributes) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.now();
         String ld_f, ld_l;
         String user = SecurityContextHolder.getContext().getAuthentication().getName().toString();
         try {
