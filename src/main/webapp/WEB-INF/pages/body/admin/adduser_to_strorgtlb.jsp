@@ -59,22 +59,22 @@
 
 
 
-<form:form method="post" action="">
-    <table width="100%">
-        <tr>
-            <td><form:label path="treemark">Прізвище:</form:label></td>
-            <td><form:input htmlEscape="true" path="treemark" class="form-control" maxlength="128"/></td>
-            <td><span class="error"><form:errors path="treemark"/></span></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <button type="submit"><img src="resources/images/add.jpg"/></button>
-            </td>
-            <td></td>
-        </tr>
-    </table>
+<%--<form:form method="post" action="">--%>
+    <%--<table width="100%">--%>
+        <%--<tr>--%>
+            <%--<td><form:label path="treemark">Прізвище:</form:label></td>--%>
+            <%--<td><form:input htmlEscape="true" path="treemark" class="form-control" maxlength="128"/></td>--%>
+            <%--<td><span class="error"><form:errors path="treemark"/></span></td>--%>
+        <%--</tr>--%>
+        <%--<tr>--%>
+            <%--<td></td>--%>
+            <%--<td>--%>
+                <%--<button type="submit"><img src="resources/images/add.jpg"/></button>--%>
+            <%--</td>--%>
+            <%--<td></td>--%>
+        <%--</tr>--%>
+    <%--</table>--%>
 
 
 
-</form:form>
+<%--</form:form>--%>
