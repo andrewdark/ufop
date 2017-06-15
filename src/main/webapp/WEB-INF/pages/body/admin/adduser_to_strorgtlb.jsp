@@ -38,7 +38,7 @@
             },
             minLength: 1,
             select: function( event, ui ) {
-                log( "Selected: " + ui.item.username + " aka " + ui.item.id );
+                log( "Selected: " + ui.item.value + " aka " + ui.item.id );
             }
         } );
     } );
@@ -49,12 +49,14 @@
 <div class="ui-widget">
     <label for="birds">Birds: </label>
     <input id="birds">
+    <button onclick="javascript:userstart();">Get</button>
 </div>
 
 <div class="ui-widget" style="margin-top:2em; font-family:Arial">
     Result:
     <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
 </div>
+<div id="UserInfo"></div>
 
 
 

@@ -7,6 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.pp.darknsoft.dao.CatalogDao;
+import ua.pp.darknsoft.dao.UserDao;
+import ua.pp.darknsoft.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -18,14 +20,16 @@ import java.util.*;
 public class AdminController {
     @Autowired
     CatalogDao catalogDao;
+    @Autowired
+    UserDao userDao;
 
 
     @RequestMapping(value = "/adduser_to_strorgtlb", method = RequestMethod.GET)
-    public String addUserToStrOrg( Model uiModel) {
+    public String addUserToStrOrg(Model uiModel) {
 
         BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
         uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
-        uiModel.addAttribute("command",null);
+        uiModel.addAttribute("command", null);
 
         return "adduser_to_strorgtlb";
     }
@@ -51,17 +55,46 @@ public class AdminController {
 
     @RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
     @ResponseBody
-    public List<String> ajaxTest(@RequestParam(defaultValue ="term",value = "term") String term) {
-        List<String> records = new LinkedList<>();
-        //List<>
-//        User u1 = new User();
-//        u1.setId(1); u1.setUsername("dark1");
-//        User u2 = new User();
-//        u2.setId(2); u2.setUsername("dark2");
-//        records.add(u1);
-//        records.add(u2);
-records.add("String 1"+term);
-records.add("String 2"+term);
+    public List<String> ajaxTest(@RequestParam(defaultValue = "term", value = "term") String term) {
+        List<User> userList;
+        List<String> records = new ArrayList<>();
+        try{
+            userList=userDao.getUsersByUserNameLike("%"+term+"%");
+            for (User items: userList
+                 ) {
+                records.add(items.getUsername());
+            }
+        }catch (Exception ex){
+
+        }
+
+
+//        records.add("String 1 +" + term);
+//        records.add("String 2 +" + term);
         return records;
     }
+    @RequestMapping(value = "/ajax_start_user", produces = {"application/json; charset=UTF-8"})
+    @ResponseBody
+    public String ajax_select_loc(@RequestParam(defaultValue = "NAN") String treemark, @RequestParam(defaultValue = "0") String username, Model uiModel) {
+        String html = "hello world";
+        String option = "<option disabled>Виберіть населений пункт</option><option value=\"\"></option>";
+        List<User> userList;
+        try {
+            if(!username.equals("0")){
+                userList = userDao.getUsersByUserNameLike(username);
+                html = "" + userList.get(0).getId() +" "+userList.get(0).getUsername() + " " + userList.get(0).getEmail();
+            }else {
+                html = "User not found";
+            }
+
+        } catch (Exception e) {
+            return "Error: " + e;
+        }
+
+
+
+        return html;
+    }
+
+
 }

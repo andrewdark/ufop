@@ -31,6 +31,7 @@ public class UserDaoImpl implements UserDao, Serializable {
     private DeleteUser deleteUser;
     private SelectUserByStructure_link selectUserByStructure_link;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private SelectUserListByUserNameLike selectUserListByUserNameLike;
 
 
     @Resource(name = "dataSource")
@@ -42,6 +43,7 @@ public class UserDaoImpl implements UserDao, Serializable {
         this.deleteUser = new DeleteUser(dataSource);
         this.selectUserByStructure_link = new SelectUserByStructure_link(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.selectUserListByUserNameLike = new SelectUserListByUserNameLike(dataSource);
     }
 
     public void createUser(User user) {
@@ -114,5 +116,12 @@ public class UserDaoImpl implements UserDao, Serializable {
         Map<String, String> bind = new HashMap<>(3);
         bind.put("structure_link", treemark);
         return selectUserByStructure_link.executeByNamedParam(bind);
+    }
+
+    @Override
+    public List<User> getUsersByUserNameLike(String username) {
+        Map<String, String> bind = new HashMap<>(3);
+        bind.put("username", username);
+        return selectUserListByUserNameLike.executeByNamedParam(bind);
     }
 }

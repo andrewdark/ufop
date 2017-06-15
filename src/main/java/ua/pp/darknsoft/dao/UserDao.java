@@ -26,4 +26,6 @@ public interface UserDao {
     String getUserStructureNameByUserName(String username);
 
     List<OverUser> getUsersByStructureLink(String treemark);
+
+    List<User> getUsersByUserNameLike(String username);
 }

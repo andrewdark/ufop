@@ -107,6 +107,12 @@ $(document).ready(function () {
         return null; // специальная клавиша
     }
 });
+//--------------------admin ajax-----------------------------------
+function userstart() {
+    var aj = "username=" + $("#birds").val() + "&treemark=2";
+    $("#UserInfo").load("/ajax_start_user", aj);
+
+}
 //--------------------LOCATION ADD---------------------------------
 var count_loc = 1;
 
