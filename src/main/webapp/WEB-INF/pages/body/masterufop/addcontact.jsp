@@ -59,17 +59,17 @@
                 </tr>
                 <tr>
                     <td><form:label path="n_stay_address">Номер будівлі:</form:label></td>
-                    <td><form:input htmlEscape="true" path="n_stay_address" class="form-control" maxlength="35"/></td>
+                    <td><form:input htmlEscape="true" path="n_stay_address" class="form-control" maxlength="6"/></td>
                     <td><span class="error"><form:errors path="n_stay_address"/></span></td>
                 </tr>
                 <tr>
                     <td><form:label path="n_stay_address">Номер корпусу:</form:label></td>
-                    <td><form:input htmlEscape="true" path="b_stay_address" class="form-control" maxlength="35"/></td>
+                    <td><form:input htmlEscape="true" path="b_stay_address" class="form-control" maxlength="5"/></td>
                     <td><span class="error"><form:errors path="n_stay_address"/></span></td>
                 </tr>
                 <tr>
                     <td><form:label path="n_stay_address">Номер квартири:</form:label></td>
-                    <td><form:input htmlEscape="true" path="f_stay_address" class="form-control" maxlength="35"/></td>
+                    <td><form:input htmlEscape="true" path="f_stay_address" class="form-control" maxlength="5"/></td>
                     <td><span class="error"><form:errors path="n_stay_address"/></span></td>
                 </tr>
                 <tr>

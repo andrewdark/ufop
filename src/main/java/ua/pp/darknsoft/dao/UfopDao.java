@@ -20,6 +20,8 @@ public interface UfopDao {
 
     List<Ufop> getUfopByPaginatorMultiple(int total, int pageid, String stext);
 
+    List<Ufop> getUfopByCreatorLink(int total, int pageid, int creator_link);
+
     @PreAuthorize(value = "isAuthenticated()")
     Ufop editUfop(Ufop ufop);
 }

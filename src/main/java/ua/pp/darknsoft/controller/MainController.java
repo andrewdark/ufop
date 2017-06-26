@@ -19,8 +19,10 @@ import ua.pp.darknsoft.validator.ContactValidator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Andrew on 10.01.2017.
@@ -148,8 +150,22 @@ public class MainController {
         return "catalog";
     }
 
+    @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/search")
-    public String search() {
+    public String search(Model uiModel, RedirectAttributes redirectAttributes,
+                         HttpServletRequest httpServletRequest) {
+        try{
+            Map<Integer,String> inspectorsList = new HashMap<>();
+            for (User items:catalogDao.getInspectorsBySelectorStructureLink(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase())
+                    ) {
+                inspectorsList.put(items.getId(),items.getUsername());
+            }
+            uiModel.addAttribute("inspectorsList",inspectorsList);
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex", ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+
         return "search";
     }
 
@@ -319,7 +335,45 @@ public class MainController {
         }
         return "addcontact_1";
     }
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------SEARCH BLOCK--------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+@RequestMapping(value = "/viewslistbycreator/{pageid}", method = RequestMethod.GET)
+public String viewsListByCreatorLink(@PathVariable int pageid, @RequestParam(defaultValue = "1") String id, Model uiModel,
+                                     RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
 
+    if (pageid <= 0) {
+        uiModel.addAttribute("ex", "Не вірна сторінка");
+        return "message";
+    }
+    int total = 5;
+    int pageid1 = pageid;
+    if (pageid == 1) {
+        pageid1 = 0;
+    } else {
+        pageid1 = (pageid1 - 1) * total + 1;
+    }
+    List<Ufop> ufop = new LinkedList<Ufop>();
+    try{
+        ufop = ufopDao.getUfopByCreatorLink(total, pageid1, Integer.parseInt(id));
+    }catch (Exception ex){
+        redirectAttributes.addFlashAttribute("ex", "Method:viewsListByCreatorLink <br />" + ex);
+        return myRdrct(httpServletRequest) + "/message";
+    }
+
+
+    uiModel.addAttribute("u_size", ufop.size());
+    uiModel.addAttribute("viewslistu", "viewslistbycreator");
+    uiModel.addAttribute("ufop", ufop);
+    uiModel.addAttribute("page_id", pageid);
+    uiModel.addAttribute("id", id);
+    uiModel.addAttribute("total_page", "NAN");
+
+    if (ufop.isEmpty()) {
+        uiModel.addAttribute("ex", "Нажаль, немає жодного запису");
+    }
+    return "viewslist_ufop";
+}
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------INFO BLOCK--------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------

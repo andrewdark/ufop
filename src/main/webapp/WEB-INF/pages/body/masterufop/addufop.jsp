@@ -70,9 +70,9 @@
                 </tr>
                 <tr>
                     <td>Буд./Корпус/Кв.</td>
-                    <td><form:input path="n_place_of_reg" size="2"/>
-                        <form:input path="b_place_of_reg" size="2"/>
-                        <form:input path="f_place_of_reg" size="2"/>
+                    <td><form:input path="n_place_of_reg" size="2" maxlength="6"/>
+                        <form:input path="b_place_of_reg" size="2" maxlength="5"/>
+                        <form:input path="f_place_of_reg" size="2" maxlength="5"/>
                     </td>
                     <td>
                         <span class="error"><form:errors path="n_place_of_reg"/></span>

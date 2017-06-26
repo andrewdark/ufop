@@ -30,6 +30,7 @@ public class UfopDaoImpl implements UfopDao, Serializable {
     private SelectUfopsByPaginator selectUfopsByPaginator;
     private UpdateUfopReturnId updateUfopReturnId;
     private SelectUfopsByPaginatorMultiple selectUfopsByPaginatorMultiple;
+    private SelectUfopByCreator_link selectUfopByCreator_link;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -40,6 +41,7 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         this.selectUfopsByPaginator = new SelectUfopsByPaginator(dataSource);
         this.updateUfopReturnId = new UpdateUfopReturnId(dataSource);
         this.selectUfopsByPaginatorMultiple = new SelectUfopsByPaginatorMultiple(dataSource);
+        this.selectUfopByCreator_link = new SelectUfopByCreator_link(dataSource);
     }
 
     @Override
@@ -90,6 +92,14 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         bind.put("pageid", pageid);
         bind.put("stext", "%"+stext+"%");
         return selectUfopsByPaginatorMultiple.executeByNamedParam(bind);
+    }
+    @Override
+    public List<Ufop> getUfopByCreatorLink(int total, int pageid, int creator_link) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("total", total);
+        bind.put("pageid", pageid);
+        bind.put("creator_link", creator_link);
+        return selectUfopByCreator_link.executeByNamedParam(bind);
     }
     @PreAuthorize(value = "isAuthenticated()")
     @Override

@@ -10,18 +10,18 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 /**
- * Created by Dark on 25.03.2017.
+ * Created by Andrew on 26.06.2017.
  */
-public class SelectUfopsByPaginator extends MappingSqlQuery<Ufop> {
-    private static final String SQL_SelectUfopsByPaginator = "SELECT ufop.*,u.username FROM ufop_table ufop " +
-            "INNER JOIN user_table u ON(u.id = ufop.creator_link)WHERE ufop.ufop_is = :ufop_is ORDER BY ufop.id " +
+public class SelectUfopByCreator_link extends MappingSqlQuery<Ufop> {
+    private static final String SQL = "SELECT ufop.*,u.username FROM ufop_table ufop " +
+            "INNER JOIN user_table u ON(u.id = ufop.creator_link)WHERE ufop.creator_link = :creator_link ORDER BY ufop.id " +
             "LIMIT :total OFFSET :pageid";
 
-    public SelectUfopsByPaginator(DataSource ds) {
-        super(ds, SQL_SelectUfopsByPaginator);
+    public SelectUfopByCreator_link(DataSource ds) {
+        super(ds, SQL);
+        super.declareParameter(new SqlParameter("creator_link", Types.INTEGER));
         super.declareParameter(new SqlParameter("total", Types.INTEGER));
         super.declareParameter(new SqlParameter("pageid", Types.INTEGER));
-        super.declareParameter(new SqlParameter("ufop_is", Types.SMALLINT));
     }
 
     @Override
@@ -37,8 +37,6 @@ public class SelectUfopsByPaginator extends MappingSqlQuery<Ufop> {
         ufop.setA_place_of_reg(resultSet.getString("b_place_of_reg"));
         ufop.setSeries_of_passport(resultSet.getString("series_of_passport"));
         ufop.setNumber_of_passport(resultSet.getString("number_of_passport"));
-        ufop.setScreator_link(resultSet.getString("username"));
-
         return ufop;
     }
 }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -14,6 +15,15 @@
 
     <div id="tabs-1">
         Детальний пошук суб'єктів господарювання <br />
+        <form action="/viewslistbycreator/1/" method="get">
+            <select name="id">
+                <c:forEach var="item" items="${inspectorsList}">
+                    <option value="${item.key}">${item.value}</option>
+                </c:forEach>
+            </select>
+            <input type="submit" value="Переглянути"/>
+        </form>
+        <br />
         <a href="/excel">Вигрузити всіх суб'єктів господарювання до EXCEL</a>
     </div>
     <div id="tabs-2">
