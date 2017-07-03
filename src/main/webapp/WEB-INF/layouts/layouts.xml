@@ -102,7 +102,12 @@
     <definition extends="default" name="viewslist_ufop">
         <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_ufop.jsp"/>
     </definition>
-
+    <definition extends="default" name="viewslist_event">
+        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_event.jsp"/>
+    </definition>
+    <definition extends="default" name="viewslist_commobj">
+        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_commobj.jsp"/>
+    </definition>
     <definition extends="default" name="adduser_to_strorgtlb">
         <put-attribute name="body" value="/WEB-INF/pages/body/admin/adduser_to_strorgtlb.jsp"/>
     </definition>

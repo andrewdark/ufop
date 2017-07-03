@@ -189,10 +189,6 @@ public class MainController {
             if (ufop.getA_place_of_reg().length() > 0) {
                 uiModel.addAttribute("fulladdress", catalogDao.getParentLocationByTreemark(ufop.getA_place_of_reg()));
             }
-
-//
-//
-
 //           uiModel.addAttribute("ie",ie);
 
             uiModel.addAttribute("co_list", commercialObjectDao.getCommObjByUfop_link(ufop.getId()));
@@ -459,6 +455,7 @@ public String viewsListByCreatorLink(@PathVariable int pageid, @RequestParam(def
             uiModel.addAttribute("testSanction", sanctionList);
             uiModel.addAttribute("lawsuits", checkEventDao.getLawsuitsByCheckEventLink(checkEventSupplemented.getId()));
             uiModel.addAttribute("event",checkEventSupplemented);
+            uiModel.addAttribute("ufop",ufopDao.searchUfopById(checkEventSupplemented.getUfop_link()).get(0));
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такої перевірки не знайдено");
             return "message";

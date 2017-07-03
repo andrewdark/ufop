@@ -7,7 +7,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div style="text-align: center;"><h2>${title}</h2></div>
+<div style="text-align: center;"><h2>${title}<br />
+    <c:if test="${ufop.ufop_is eq 0}">ФОП&nbsp;</c:if>${ufop.ufop_name}</h2></div>
+<br />
 <table width="100%">
     <caption>ПЕРЕВІРКА СУБ'ЄКТА ГОСПОДАРЮВАННЯ</caption>
     <tr>

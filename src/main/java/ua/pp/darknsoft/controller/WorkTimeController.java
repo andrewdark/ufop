@@ -49,7 +49,7 @@ public class WorkTimeController {
             List<CauseCatalog> ccListAbsent;
             List<CauseCatalog> ccListPresent;
             Map<Integer, String> causes = new HashMap<>();
-            uiModel.addAttribute("myWorkTime", workTimeDao.getMyWorkWorkTimeASC(user, 25));
+            uiModel.addAttribute("myWorkTime", workTimeDao.getMyWorkWorkTimeDESC(user, 25));
 
             if (wtList.isEmpty()) {
                 uiModel.addAttribute("p_or_e", false);

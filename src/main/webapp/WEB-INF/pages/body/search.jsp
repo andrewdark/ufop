@@ -11,10 +11,13 @@
     <ul>
         <li><a href="#tabs-1">Суб'єкт господарювання</a></li>
         <li><a href="#tabs-2">Перевірки</a></li>
+        <li><a href="#tabs-3">Комерційні об'єкти</a></li>
+        <li><a href="#tabs-4">Контакти</a></li>
+        <li><a href="#tabs-5">Відвантаження до Excel</a></li>
     </ul>
 
     <div id="tabs-1">
-        Детальний пошук суб'єктів господарювання <br />
+        Детальний пошук суб'єктів господарювання <br /><br />
         <form action="/viewslistbycreator/1/" method="get">
             <select name="id">
                 <c:forEach var="item" items="${inspectorsList}">
@@ -24,9 +27,12 @@
             <input type="submit" value="Переглянути"/>
         </form>
         <br />
-        <a href="/excel">Вигрузити всіх суб'єктів господарювання до EXCEL</a>
+
     </div>
     <div id="tabs-2">
-        Детальний пошук перевірок
+        Детальний пошук перевірок<br /><br />
+    </div>
+    <div id="tabs-3">
+        <li /> <a href="/excel">Вигрузити всіх суб'єктів господарювання до EXCEL</a>
     </div>
 </div>
