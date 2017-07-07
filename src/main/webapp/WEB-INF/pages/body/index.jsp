@@ -13,7 +13,7 @@
         <p>17 січня 2017 року спеціалістами з фітосанітарної безпеки Головного управління Держпродспоживслужби в Одеській області
             при проведенні фітосанітарного контролю в паромному комплексі Чорноморського морського торговельного порту
             було виявлено відсутній на території України карантинний організм – середземноморську плодову муху</p>
-        <p class="spec"><a href="http://odesa.consumer.gov.ua/press-center/novini/324-do-odeskoi-oblasti-nadiyshov-vantazh" class="rm">Read more</a></p>
+        <p class="spec"><a href="http://odesa.consumer.gov.ua/press-center/novini/324-do-odeskoi-oblasti-nadiyshov-vantazh" class="rm">Переглянути</a></p>
     </div>
     <div class="clr"></div>
 </div>
@@ -37,7 +37,7 @@
             - джемпер ТМ «Манго» арт. REF 73025528 ш/к 8433885402645, країна походження Китай — вміст металевого волокна 10,1%;<br/>
             - джемпер ТМ «Манго» арт. REF 73045585 ш/к 8433885792746 країна походження Китай — вміст металевого волокна 12,2%;<br/>
             - джемпер ТМ «Манго» арт. REF 73007570 ш/к 8433885764491, країна походження Китай — вміст металевого волокна 16,5%.</p>
-        <p class="spec"><a href="http://odesa.consumer.gov.ua/press-center/novini/317-v-odesi-viyavleno-odyag-shcho-ne-vidpovidae-sanitarno-gigienichnim-normam" class="rm">Read more</a></p>
+        <p class="spec"><a href="http://odesa.consumer.gov.ua/press-center/novini/317-v-odesi-viyavleno-odyag-shcho-ne-vidpovidae-sanitarno-gigienichnim-normam" class="rm">Переглянути</a></p>
     </div>
     <div class="clr"></div>
 </div>

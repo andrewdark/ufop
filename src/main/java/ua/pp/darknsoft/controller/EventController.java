@@ -61,6 +61,18 @@ public class EventController {
         uiModel.addAttribute("buttonvalue", "Створити перевірку");
         List<CheckingCommObj> checkingCommObjs_list = new LinkedList<>();
         checkEventSupplemented.setCommobj_list(checkingCommObjs_list);
+        Map<Integer,String> struct = new HashMap<>();
+        try{
+            List<StructureCatalog> allStruct = catalogDao.getMyStructureByMyStatus(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
+            for (StructureCatalog structList: allStruct
+                 ) {
+                struct.put(structList.getId(),structList.getName());
+            }
+            uiModel.addAttribute("structMap",struct);
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex", "Неможливо зчитати структуру підприємства <br />" + ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
         try {
 
             if (ufop == null) {
@@ -640,7 +652,18 @@ public class EventController {
     @RequestMapping(value = "editeventsupplemented", method = RequestMethod.GET)
     public String editEvent(@RequestParam(defaultValue = "0") String id, Model uiModel, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
         CheckEventSupplemented checkEventSupplemented = (CheckEventSupplemented) uiModel.asMap().get("event");
-
+        Map<Integer,String> struct = new HashMap<>();
+        try{
+            List<StructureCatalog> allStruct = catalogDao.getMyStructureByMyStatus(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
+            for (StructureCatalog structList: allStruct
+                    ) {
+                struct.put(structList.getId(),structList.getName());
+            }
+            uiModel.addAttribute("structMap",struct);
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex", "Неможливо зчитати структуру підприємства <br />" + ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
         try {
 
             if (checkEventSupplemented == null && !id.equals("0")) {

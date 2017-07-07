@@ -22,6 +22,11 @@
             <form:hidden path="ufop_link"/>
             <table>
                 <tr>
+                    <td><form:label path="structure_catalog_link">Вкажіть підрозділ</form:label></td>
+                    <td><form:select path="structure_catalog_link" items="${structMap}"/></td>
+                    <td><span class="error"><form:errors path="structure_catalog_link"/></span></td>
+                </tr>
+                <tr>
                     <td><form:label path="event_number">Номер акту</form:label></td>
                     <td><form:input path="event_number"/></td>
                     <td><span class="error"><form:errors path="event_number"/></span></td>

@@ -29,8 +29,8 @@
         </ul>
     </div>
     <div class="logo">
-        <h1><a href="/"><span>UFOP</span>
-            <small>business activity monitoring</small>
+        <h1><a href="/"><span>Захист споживачів</span>
+            <small>автоматизоване робоче місце</small>
         </a></h1>
     </div>
     <div class="clr"></div>

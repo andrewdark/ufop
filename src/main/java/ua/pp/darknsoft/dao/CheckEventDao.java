@@ -22,6 +22,8 @@ public interface CheckEventDao {
 
     List<CheckEventSupplemented> getCheckEventByUfopLink(long ufop_link);
 
+    List<CheckEvent> getLastCheckEventByUfopLink(long ufop_link);
+
     List<CheckEventSupplemented> getCheckEventById(long checkEvent_link);
 
     List<Precaution> getPrecautionById(long id);

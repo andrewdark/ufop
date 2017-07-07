@@ -51,6 +51,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
     private UpdateCheckingCommObj updateCheckingCommObj;
     private UpdatePrecautionById updatePrecautionById;
     private UpdateSanction updateSanction;
+    private SelectLastCheckEventByUfop_link selectLastCheckEventByUfop_link;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -84,6 +85,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.updateCheckingCommObj = new UpdateCheckingCommObj(dataSource);
         this.updatePrecautionById = new UpdatePrecautionById(dataSource);
         this.updateSanction = new UpdateSanction(dataSource);
+        this.selectLastCheckEventByUfop_link = new SelectLastCheckEventByUfop_link(dataSource);
     }
 
     @Override
@@ -134,6 +136,12 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         Map<String, Long> bind = new HashMap<>();
         bind.put("ufop_link", ufop_link);
         return selectCheckEventByUfop_link.executeByNamedParam(bind);
+    }
+    @Override
+    public List<CheckEvent> getLastCheckEventByUfopLink(long ufop_link) {
+        Map<String, Long> bind = new HashMap<>();
+        bind.put("ufop_link", ufop_link);
+        return selectLastCheckEventByUfop_link.executeByNamedParam(bind);
     }
 
     @Override

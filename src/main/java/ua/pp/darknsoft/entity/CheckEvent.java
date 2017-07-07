@@ -20,6 +20,7 @@ public class CheckEvent {
     private int result_sampling;
     private String creator_link;
     private int structure_catalog_link;
+    private String structure_catalog_name;
     private Timestamp datereg;
     private int nav;
     private boolean checking;
@@ -141,4 +142,12 @@ public class CheckEvent {
     public boolean isChecking() { return checking; }
 
     public void setChecking(boolean checking) { this.checking = checking; }
+
+    public String getStructure_catalog_name() {
+        return structure_catalog_name;
+    }
+
+    public void setStructure_catalog_name(String structure_catalog_name) {
+        this.structure_catalog_name = structure_catalog_name;
+    }
 }

@@ -1,6 +1,7 @@
 package ua.pp.darknsoft.controller;
 
 import com.sun.javafx.sg.prism.NGShape;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -88,7 +89,12 @@ public class MainController {
             pageid1 = (pageid1 - 1) * total + 1;
         }
         List<Ufop> ufop = new LinkedList<Ufop>();
-        ufop = ufopDao.getEntrepreneurByPaginator(total, pageid1, (short) 0);
+
+        try {
+            ufop = setLastEvent(ufopDao.getEntrepreneurByPaginator(total, pageid1, (short) 0));
+        } catch (Exception ex) {
+
+        }
 
         uiModel.addAttribute("u_size", ufop.size());
         uiModel.addAttribute("viewslistu", "viewslisti");
@@ -117,8 +123,11 @@ public class MainController {
             pageid1 = (pageid1 - 1) * total + 1;
         }
         List<Ufop> ufop = new LinkedList<Ufop>();
-        ufop = ufopDao.getEntrepreneurByPaginator(total, pageid1, (short) 1);
+        try{
+            ufop = setLastEvent(ufopDao.getEntrepreneurByPaginator(total, pageid1, (short) 1));
+        }catch (Exception ex){
 
+        }
         uiModel.addAttribute("u_size", ufop.size());
         uiModel.addAttribute("viewslistu", "viewsliste");
         uiModel.addAttribute("ufop", ufop);
@@ -273,7 +282,8 @@ public class MainController {
     //------------------------------------------------------------------------------------------------------------------
 
     @RequestMapping(value = "/viewslistsearch/{pageid}", method = RequestMethod.GET)
-    public String viewsListSearch(@PathVariable int pageid, @RequestParam(defaultValue = "1") String stext, Model uiModel) {
+    public String viewsListSearch(@PathVariable int pageid, @RequestParam(defaultValue = "1") String stext,
+                                  Model uiModel, RedirectAttributes redirectAttributes,HttpServletRequest httpServletRequest) {
 
         if (pageid <= 0) {
             uiModel.addAttribute("ex", "Не вірна сторінка");
@@ -286,9 +296,15 @@ public class MainController {
         } else {
             pageid1 = (pageid1 - 1) * total + 1;
         }
-        List<Ufop> ufop = new LinkedList<Ufop>();
-        if (stext.length() > 2) ufop = ufopDao.getUfopByPaginatorMultiple(total, pageid1, stext);
-
+        List<Ufop> ufop = new LinkedList<>();
+        try{
+            if (stext.length() > 2) {
+                ufop = setLastEvent(ufopDao.getUfopByPaginatorMultiple(total, pageid1, stext));
+            }
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex", "Method:viewsListSearch <br />" + ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
         uiModel.addAttribute("u_size", ufop.size());
         uiModel.addAttribute("viewslistu", "viewslistsearch");
         uiModel.addAttribute("ufop", ufop);
@@ -349,9 +365,9 @@ public String viewsListByCreatorLink(@PathVariable int pageid, @RequestParam(def
     } else {
         pageid1 = (pageid1 - 1) * total + 1;
     }
-    List<Ufop> ufop = new LinkedList<Ufop>();
+    List<Ufop> ufop;
     try{
-        ufop = ufopDao.getUfopByCreatorLink(total, pageid1, Integer.parseInt(id));
+        ufop = setLastEvent(ufopDao.getUfopByCreatorLink(total, pageid1, Integer.parseInt(id)));
     }catch (Exception ex){
         redirectAttributes.addFlashAttribute("ex", "Method:viewsListByCreatorLink <br />" + ex);
         return myRdrct(httpServletRequest) + "/message";
@@ -493,6 +509,21 @@ public String viewsListByCreatorLink(@PathVariable int pageid, @RequestParam(def
         String contextPath = httpServletRequest.getContextPath();
         String rdrct = "redirect:" + scheme + serverName + serverPort;
         return rdrct;
+    }
+
+    private List<Ufop> setLastEvent(List<Ufop> ufopList){
+        for (int i = 0; i < ufopList.size(); i++) {
+            try {
+                CheckEvent temp = checkEventDao.getLastCheckEventByUfopLink(ufopList.get(i).getId()).get(0);
+                ufopList.get(i).setLast_event(temp.getEvent_date_end() + " " + temp.getStructure_catalog_name());
+            }catch ( java.lang.IndexOutOfBoundsException ex){
+                ufopList.get(i).setLast_event("Не перевірявся");
+            }
+            catch (Exception ex) {
+                ufopList.get(i).setLast_event("" + ex);
+            }
+        }
+        return ufopList;
     }
 
 }

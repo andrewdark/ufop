@@ -39,7 +39,9 @@
                     </c:if>
                 </b>
             </p>
-
+            <p>Остання перевірка:
+                <b> ${ufop.last_event} </b>
+            </p>
             <p class="spec"><a href="/show_ufop/?id=${ufop.id}" class="rm">Див. деталі</a></p>
         </div>
         <div class="clr"></div>

@@ -22,6 +22,7 @@ public class Ufop {
     private String description;
     private boolean additionalinformation;
     private int ufop_nav;
+    private String last_event;
 
     public long getId() {
         return id;
@@ -146,6 +147,14 @@ public class Ufop {
     public int getUfop_nav() { return ufop_nav; }
 
     public void setUfop_nav(int ufop_nav) { this.ufop_nav = ufop_nav; }
+
+    public String getLast_event() {
+        return last_event;
+    }
+
+    public void setLast_event(String last_event) {
+        this.last_event = last_event;
+    }
 
     private String rejectHtml(String input) {
         String output = "";

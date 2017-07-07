@@ -55,12 +55,12 @@ a {
 .logo {
     position:relative;
     top:100px;
-    left:42%;
+    left:45%;
     padding:0;
     float:none;
     float:left;
     width:auto;
-    height:88px;
+    height:90px;
     z-index:1001;
 }
 h1 {
