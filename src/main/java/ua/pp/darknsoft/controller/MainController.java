@@ -59,7 +59,7 @@ public class MainController {
     @RequestMapping(value = "/viewslistcontact/{pageid}", method = RequestMethod.GET)
     public String viewsListContact(@PathVariable int pageid, Model uiModel) {
 
-        int total = 5;
+        int total = 10;
         int pageid1 = pageid;
         if (pageid == 1) {
             pageid1 = 0;
@@ -81,7 +81,7 @@ public class MainController {
             uiModel.addAttribute("ex", "Не вірна сторінка");
             return "message";
         }
-        int total = 5;
+        int total = 10;
         int pageid1 = pageid;
         if (pageid == 1) {
             pageid1 = 0;
@@ -115,7 +115,7 @@ public class MainController {
             uiModel.addAttribute("ex", "Не вірна сторінка");
             return "message";
         }
-        int total = 5;
+        int total = 10;
         int pageid1 = pageid;
         if (pageid == 1) {
             pageid1 = 0;
@@ -289,7 +289,7 @@ public class MainController {
             uiModel.addAttribute("ex", "Не вірна сторінка");
             return "message";
         }
-        int total = 5;
+        int total = 10;
         int pageid1 = pageid;
         if (pageid == 1) {
             pageid1 = 0;
@@ -350,42 +350,7 @@ public class MainController {
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------SEARCH BLOCK--------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
-@RequestMapping(value = "/viewslistbycreator/{pageid}", method = RequestMethod.GET)
-public String viewsListByCreatorLink(@PathVariable int pageid, @RequestParam(defaultValue = "1") String id, Model uiModel,
-                                     RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
 
-    if (pageid <= 0) {
-        uiModel.addAttribute("ex", "Не вірна сторінка");
-        return "message";
-    }
-    int total = 5;
-    int pageid1 = pageid;
-    if (pageid == 1) {
-        pageid1 = 0;
-    } else {
-        pageid1 = (pageid1 - 1) * total + 1;
-    }
-    List<Ufop> ufop;
-    try{
-        ufop = setLastEvent(ufopDao.getUfopByCreatorLink(total, pageid1, Integer.parseInt(id)));
-    }catch (Exception ex){
-        redirectAttributes.addFlashAttribute("ex", "Method:viewsListByCreatorLink <br />" + ex);
-        return myRdrct(httpServletRequest) + "/message";
-    }
-
-
-    uiModel.addAttribute("u_size", ufop.size());
-    uiModel.addAttribute("viewslistu", "viewslistbycreator");
-    uiModel.addAttribute("ufop", ufop);
-    uiModel.addAttribute("page_id", pageid);
-    uiModel.addAttribute("id", id);
-    uiModel.addAttribute("total_page", "NAN");
-
-    if (ufop.isEmpty()) {
-        uiModel.addAttribute("ex", "Нажаль, немає жодного запису");
-    }
-    return "viewslist_ufop";
-}
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------INFO BLOCK--------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------

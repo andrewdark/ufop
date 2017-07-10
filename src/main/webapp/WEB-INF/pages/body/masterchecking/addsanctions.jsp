@@ -49,7 +49,7 @@
                         <tr>
                             <td><form:label path="charged_amount_str">Сума</form:label></td>
                             <td><form:input path="charged_amount_str"/> грн.</td>
-                            <td><span class="error"><form:errors path="charged_amount"/></span></td>
+                            <td><span class="error"><form:errors path="charged_amount_str"/></span></td>
                         </tr>
                         <tr>
                             <td><form:label path="service_date">Дата вручення постанови</form:label></td>
