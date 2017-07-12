@@ -17,16 +17,26 @@
     </ul>
 
     <div id="tabs-1">
-        Детальний пошук суб'єктів господарювання <br /><br />
-        <form action="/viewslistbycreator/1/" method="get">
-            <select name="id">
-                <c:forEach var="item" items="${inspectorsList}">
-                    <option value="${item.key}">${item.value}</option>
-                </c:forEach>
-            </select>
-            <input type="submit" value="Переглянути"/>
-        </form>
+        <div class="searchmenu">
+            <b>Пошук за реєстратором</b>
+            <form action="/viewslistbycreator/1/" method="get">
+                <select name="id">
+                    <c:forEach var="item" items="${inspectorsList}">
+                        <option value="${item.key}">${item.value}</option>
+                    </c:forEach>
+                </select>
+                <input type="submit" value="Переглянути"/>
+            </form>
+        </div>
+
         <br />
+        <div class="searchmenu">
+            <b>Пошук за перевіряючим органом</b>
+        </div>
+        <br />
+        <div class="searchmenu">
+            <b>Пошук без перевірок</b>
+        </div>
 
     </div>
     <div id="tabs-2">

@@ -24,4 +24,8 @@ public interface UfopDao {
 
     @PreAuthorize(value = "isAuthenticated()")
     Ufop editUfop(Ufop ufop);
+
+    List<Ufop> getUfopByWithoutEvent(int total, int pageid);
+
+    List<Ufop> getUfopByWithoutEventForOneYear(int total, int pageid);
 }

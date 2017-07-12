@@ -1,4 +1,4 @@
-package ua.pp.darknsoft.dao.crud.ufop;
+package ua.pp.darknsoft.dao.crud.ufop.search;
 
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
@@ -11,18 +11,18 @@ import java.sql.Types;
 
 /**
  * Created by Dark on 25.03.2017.
- * Поиск либо по коду либо по имени
  */
-public class SelectUfopsByPaginatorMultiple extends MappingSqlQuery<Ufop> {
-    private static final String SQL_SelectUfopsByPaginator = "SELECT ufop.*,u.username FROM ufop_table ufop " +
-            "INNER JOIN user_table u ON(u.id = ufop.creator_link) WHERE lower(ufop_code) like lower(:stext) OR " +
-            "lower(ufop_name) like lower(:stext) ORDER BY ufop.id LIMIT :total OFFSET :pageid";
+public class SelectUfopsWithoutEventByPaginator extends MappingSqlQuery<Ufop> {
+    private static final String SQL_SelectUfopsByPaginator = "SELECT ufop.*,u.username,ch.ufop_link FROM ufop_table ufop " +
+            "INNER JOIN user_table u ON(u.id = ufop.creator_link) LEFT JOIN check_event_table ch ON(ufop.id=ch.ufop_link) " +
+            "WHERE ch.ufop_link is NULL OR ch.event_date_end > (now() - '362 days'::interval) ORDER BY ufop.id " +
+            "LIMIT :total OFFSET :pageid";
 
-    public SelectUfopsByPaginatorMultiple(DataSource ds) {
+    public SelectUfopsWithoutEventByPaginator(DataSource ds) {
         super(ds, SQL_SelectUfopsByPaginator);
         super.declareParameter(new SqlParameter("total", Types.INTEGER));
         super.declareParameter(new SqlParameter("pageid", Types.INTEGER));
-        super.declareParameter(new SqlParameter("stext", Types.VARCHAR));
+        super.declareParameter(new SqlParameter("ufop_is", Types.SMALLINT));
     }
 
     @Override

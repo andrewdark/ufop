@@ -8,6 +8,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.ufop.*;
+import ua.pp.darknsoft.dao.crud.ufop.search.SelectUfopsWithoutEventByPaginator;
+import ua.pp.darknsoft.dao.crud.ufop.search.SelectUfopsWithoutEventForOneYearByPaginator;
 import ua.pp.darknsoft.entity.Ufop;
 
 import javax.annotation.Resource;
@@ -31,6 +33,8 @@ public class UfopDaoImpl implements UfopDao, Serializable {
     private UpdateUfopReturnId updateUfopReturnId;
     private SelectUfopsByPaginatorMultiple selectUfopsByPaginatorMultiple;
     private SelectUfopByCreator_link selectUfopByCreator_link;
+    private SelectUfopsWithoutEventByPaginator selectUfopsWithoutEventByPaginator;
+    private SelectUfopsWithoutEventForOneYearByPaginator selectUfopsWithoutEventForOneYearByPaginator;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -42,6 +46,8 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         this.updateUfopReturnId = new UpdateUfopReturnId(dataSource);
         this.selectUfopsByPaginatorMultiple = new SelectUfopsByPaginatorMultiple(dataSource);
         this.selectUfopByCreator_link = new SelectUfopByCreator_link(dataSource);
+        this.selectUfopsWithoutEventByPaginator = new SelectUfopsWithoutEventByPaginator(dataSource);
+        this.selectUfopsWithoutEventForOneYearByPaginator = new SelectUfopsWithoutEventForOneYearByPaginator(dataSource);
     }
 
     @Override
@@ -119,5 +125,20 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         updateUfopReturnId.updateByNamedParam(bind, keyHolder);
         ufop.setId(keyHolder.getKey().longValue());
         return ufop;
+    }
+
+    @Override
+    public List<Ufop> getUfopByWithoutEvent(int total, int pageid) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("total", total);
+        bind.put("pageid", pageid);
+        return selectUfopsWithoutEventByPaginator.executeByNamedParam(bind);
+    }
+    @Override
+    public List<Ufop> getUfopByWithoutEventForOneYear(int total, int pageid) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("total", total);
+        bind.put("pageid", pageid);
+        return selectUfopsWithoutEventForOneYearByPaginator.executeByNamedParam(bind);
     }
 }
