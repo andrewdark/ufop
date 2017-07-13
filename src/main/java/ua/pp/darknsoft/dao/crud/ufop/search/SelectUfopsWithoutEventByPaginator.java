@@ -22,7 +22,7 @@ public class SelectUfopsWithoutEventByPaginator extends MappingSqlQuery<Ufop> {
         super(ds, SQL_SelectUfopsByPaginator);
         super.declareParameter(new SqlParameter("total", Types.INTEGER));
         super.declareParameter(new SqlParameter("pageid", Types.INTEGER));
-        super.declareParameter(new SqlParameter("ufop_is", Types.SMALLINT));
+
     }
 
     @Override
