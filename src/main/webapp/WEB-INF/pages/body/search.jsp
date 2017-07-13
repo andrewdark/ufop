@@ -1,4 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+    select {
+        width: 300px; /* Ширина списка в пикселах */
+    }
+</style>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -36,6 +41,14 @@
         <br />
         <div class="searchmenu">
             <b>Пошук без перевірок</b>
+            <form action="/viewslistwithoutevent/1/" method="get">
+                <select name="id" >
+                    <option value="1">Без перевірок</option>
+                    <option value="2">Без перевірок за останній рік</option>
+                </select>
+                <input type="submit" value="Переглянути"/>
+            </form>
+
         </div>
 
     </div>
@@ -43,6 +56,12 @@
         Детальний пошук перевірок<br /><br />
     </div>
     <div id="tabs-3">
+        Детальний пошук комерційних об'єктів<br /><br />
+    </div>
+    <div id="tabs-4">
+        Детальний пошук контактів<br /><br />
+    </div>
+    <div id="tabs-5">
         <li /> <a href="/excel">Вигрузити всіх суб'єктів господарювання до EXCEL</a>
     </div>
 </div>

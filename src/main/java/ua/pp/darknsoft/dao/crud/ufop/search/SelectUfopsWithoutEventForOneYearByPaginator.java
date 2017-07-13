@@ -15,7 +15,7 @@ import java.sql.Types;
 public class SelectUfopsWithoutEventForOneYearByPaginator extends MappingSqlQuery<Ufop> {
     private static final String SQL_SelectUfopsByPaginator = "SELECT ufop.*,u.username,ch.ufop_link FROM ufop_table ufop " +
             "INNER JOIN user_table u ON(u.id = ufop.creator_link) LEFT JOIN check_event_table ch ON(ufop.id=ch.ufop_link) " +
-            "WHERE ch.ufop_link is NULL OR ch.event_date_end > (now() - '362 days'::interval) " +
+            "WHERE ch.ufop_link is NULL OR ch.event_date_end > (now() - '362 days'::interval) ORDER BY ufop.id " +
             "LIMIT :total OFFSET :pageid";
 
     public SelectUfopsWithoutEventForOneYearByPaginator(DataSource ds) {
