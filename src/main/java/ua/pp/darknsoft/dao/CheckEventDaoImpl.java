@@ -86,6 +86,7 @@ public class CheckEventDaoImpl implements CheckEventDao, Serializable {
         this.updatePrecautionById = new UpdatePrecautionById(dataSource);
         this.updateSanction = new UpdateSanction(dataSource);
         this.selectLastCheckEventByUfop_link = new SelectLastCheckEventByUfop_link(dataSource);
+
     }
 
     @Override

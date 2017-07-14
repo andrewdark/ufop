@@ -37,6 +37,19 @@
         <br />
         <div class="searchmenu">
             <b>Пошук за перевіряючим органом</b>
+            <form action="/viewslistbyunitandtime/1" method="get">
+                <select name="id">
+                    <c:forEach var="item" items="${unitList}">
+                        <option value="${item.key}">${item.value}</option>
+                    </c:forEach>
+                </select><br />
+                <select name="id1">
+                    <c:forEach var="item" items="${utimeList}">
+                        <option value="${item.key}">${item.value}</option>
+                    </c:forEach>
+                </select>
+                <input type="submit" value="Переглянути"/>
+            </form>
         </div>
         <br />
         <div class="searchmenu">

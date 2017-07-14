@@ -163,18 +163,39 @@ public class MainController {
     @RequestMapping(value = "/search")
     public String search(Model uiModel, RedirectAttributes redirectAttributes,
                          HttpServletRequest httpServletRequest) {
+        String curent_user = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
         try{
             Map<Integer,String> inspectorsList = new HashMap<>();
-            for (User items:catalogDao.getInspectorsBySelectorStructureLink(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase())
+            for (User items:catalogDao.getInspectorsBySelectorStructureLink(curent_user)
                     ) {
                 inspectorsList.put(items.getId(),items.getUsername());
             }
             uiModel.addAttribute("inspectorsList",inspectorsList);
         }catch (Exception ex){
-            redirectAttributes.addFlashAttribute("ex", ex);
+            redirectAttributes.addFlashAttribute("ex", "User "+ex);
             return myRdrct(httpServletRequest) + "/message";
         }
+        try{
+            Map<Integer,String> unitList = new HashMap<>();
+            for (StructureCatalog items:catalogDao.getMyStructureByMyStatus(curent_user)
+                    ) {
+                unitList.put(items.getId(),items.getName());
+            }
 
+            Map<Integer,String> utimeList = new HashMap<>();
+            utimeList.put(0,"Поточний день");
+            utimeList.put(1,"Поточний + 1 день");
+            utimeList.put(2,"За тиждень");
+            utimeList.put(3,"За місяць");
+            utimeList.put(4,"За квартал");
+            utimeList.put(5,"За рік");
+            utimeList.put(6,"За весь час");
+            uiModel.addAttribute("utimeList",utimeList);
+            uiModel.addAttribute("unitList",unitList);
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex", "StructureCatalog "+ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
         return "search";
     }
 

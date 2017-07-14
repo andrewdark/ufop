@@ -28,4 +28,6 @@ public interface UfopDao {
     List<Ufop> getUfopByWithoutEvent(int total, int pageid);
 
     List<Ufop> getUfopByWithoutEventForOneYear(int total, int pageid);
+
+    List<Ufop> getUfopByUnitAndTime(int total, int pageid, String unit, String time);
 }

@@ -14,6 +14,7 @@ import ua.pp.darknsoft.entity.CheckEvent;
 import ua.pp.darknsoft.entity.Ufop;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,7 +63,7 @@ public class SearchController {
         }
         return "viewslist_ufop";
     }
-
+// NEXT 1
     @RequestMapping(value = "/viewslistwithoutevent/{pageid}", method = RequestMethod.GET)
     public String viewsListWithoutEvent(@PathVariable int pageid, @RequestParam(defaultValue = "1") String id, Model uiModel,
                                          RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
@@ -88,10 +89,53 @@ public class SearchController {
             return myRdrct(httpServletRequest) + "/message";
         }
         uiModel.addAttribute("u_size", ufop.size());
-        uiModel.addAttribute("viewslistu", "viewslistbycreator");
+        uiModel.addAttribute("viewslistu", "viewslistwithoutevent");
         uiModel.addAttribute("ufop", ufop);
         uiModel.addAttribute("page_id", pageid);
         uiModel.addAttribute("id", id);
+        uiModel.addAttribute("total_page", "NAN");
+
+        if (ufop.isEmpty()) {
+            uiModel.addAttribute("ex", "Нажаль, немає жодного запису");
+        }
+        return "viewslist_ufop";
+    }
+//NEXT2
+    @RequestMapping(value = "/viewslistbyunitandtime/{pageid}", method = RequestMethod.GET)
+    public String viewsListByUnitAndTime(@PathVariable int pageid, @RequestParam(defaultValue = "1") String id, @RequestParam(defaultValue = "0") String id1,
+                                         Model uiModel,RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
+
+        if (pageid <= 0) {
+            uiModel.addAttribute("ex", "Не вірна сторінка");
+            return "message";
+        }
+        int total = 10;
+        int pageid1 = pageid;
+        String utime="0 days";
+        if (pageid == 1) {
+            pageid1 = 0;
+        } else {
+            pageid1 = (pageid1 - 1) * total + 1;
+        }
+        List<Ufop> ufop = new ArrayList<Ufop>();
+        try{
+            if(Integer.parseInt(id1)==1)utime="1 days";
+            if(Integer.parseInt(id1)==2)utime="7 days";
+            if(Integer.parseInt(id1)==3)utime="31 days";
+            if(Integer.parseInt(id1)==4)utime="360 days";
+            if(Integer.parseInt(id1)==5)utime="3600 days";
+
+            ufop = setLastEvent(ufopDao.getUfopByUnitAndTime(total,pageid,id,utime));
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex", "Method:viewsListByUnitAndTime <br />" + ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        uiModel.addAttribute("u_size", ufop.size());
+        uiModel.addAttribute("viewslistu", "viewslistbyunitandtime");
+        uiModel.addAttribute("ufop", ufop);
+        uiModel.addAttribute("page_id", pageid);
+        uiModel.addAttribute("id", id);
+        uiModel.addAttribute("id1", id1);
         uiModel.addAttribute("total_page", "NAN");
 
         if (ufop.isEmpty()) {
@@ -125,6 +169,7 @@ public class SearchController {
     }
 
     private List<Ufop> setLastEvent(List<Ufop> ufopList){
+        if(ufopList.isEmpty())return ufopList;
         for (int i = 0; i < ufopList.size(); i++) {
             try {
                 CheckEvent temp = checkEventDao.getLastCheckEventByUfopLink(ufopList.get(i).getId()).get(0);
@@ -133,7 +178,7 @@ public class SearchController {
                 ufopList.get(i).setLast_event("Не перевірявся");
             }
             catch (Exception ex) {
-                ufopList.get(i).setLast_event("" + ex);
+                ufopList.get(i).setLast_event("setLastEvent " + ex);
             }
         }
         return ufopList;

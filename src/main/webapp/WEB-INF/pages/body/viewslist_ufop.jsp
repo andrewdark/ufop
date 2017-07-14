@@ -59,25 +59,25 @@
     ${ex}
     <p class="pages">
         <small>Page ${page_id} of ${total_page}</small>
-        <a href="/${viewslistu}/${page_id-1}${getparam}/?id=${id}">&laquo;</a>
-        <a href="/${viewslistu}/${page_id-1}${getparam}/?id=${id}">${page_id-1}</a><span>${page_id}</span>
+        <a href="/${viewslistu}/${page_id-1}${getparam}/?id=${id}&id1=${id1}">&laquo;</a>
+        <a href="/${viewslistu}/${page_id-1}${getparam}/?id=${id}&id1=${id1}">${page_id-1}</a><span>${page_id}</span>
     </p>
 </c:if>
 
 <c:if test="${not empty ufop and pageid !=1}">
     <p class="pages">
         <small>Page ${page_id} of ${total_page}</small>
-        <a href="/${viewslistu}/${page_id-1}${getparam}/?id=${id}">&laquo;</a><a
-            href="/${viewslistu}/${page_id-1}${getparam}/?id=${id}">${page_id-1}</a>
-        <span>${page_id}</span> <a href="/${viewslistu}/${page_id+1}${getparam}/?id=${id}">${page_id+1}</a> <a
-            href="/${viewslistu}/${page_id+1}${getparam}/?id=${id}">&raquo;</a>
+        <a href="/${viewslistu}/${page_id-1}${getparam}/?id=${id}&id1=${id1}">&laquo;</a><a
+            href="/${viewslistu}/${page_id-1}${getparam}/?id=${id}&id1=${id1}">${page_id-1}</a>
+        <span>${page_id}</span> <a href="/${viewslistu}/${page_id+1}${getparam}/?id=${id}&id1=${id1}">${page_id+1}</a> <a
+            href="/${viewslistu}/${page_id+1}${getparam}/?id=${id}&id1=${id1}">&raquo;</a>
     </p>
 </c:if>
 <c:if test="${not empty ufop and pageid ==1}">
     <p class="pages">
         <small>Page ${page_id} of ${total_page}</small>
 
-        <span>${page_id}</span> <a href="/${viewslistu}/${page_id+1}${getparam}/?id=${id}">${page_id+1}</a>
-        <a href="/${viewslistu}/${page_id+1}${getparam}/?id=${id}">&raquo;</a>
+        <span>${page_id}</span> <a href="/${viewslistu}/${page_id+1}${getparam}/?id=${id}&id1=${id1}">${page_id+1}</a>
+        <a href="/${viewslistu}/${page_id+1}${getparam}/?id=${id}&id1=${id1}">&raquo;</a>
     </p>
 </c:if>

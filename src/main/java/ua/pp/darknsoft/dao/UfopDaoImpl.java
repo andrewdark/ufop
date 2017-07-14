@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ua.pp.darknsoft.dao.crud.ufop.*;
+import ua.pp.darknsoft.dao.crud.ufop.search.SelectUfopsWhereUnitAndTimeByPaginator;
 import ua.pp.darknsoft.dao.crud.ufop.search.SelectUfopsWithoutEventByPaginator;
 import ua.pp.darknsoft.dao.crud.ufop.search.SelectUfopsWithoutEventForOneYearByPaginator;
 import ua.pp.darknsoft.entity.Ufop;
@@ -35,6 +36,7 @@ public class UfopDaoImpl implements UfopDao, Serializable {
     private SelectUfopByCreator_link selectUfopByCreator_link;
     private SelectUfopsWithoutEventByPaginator selectUfopsWithoutEventByPaginator;
     private SelectUfopsWithoutEventForOneYearByPaginator selectUfopsWithoutEventForOneYearByPaginator;
+    private SelectUfopsWhereUnitAndTimeByPaginator selectUfopsWhereUnitAndTimeByPaginator;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -48,6 +50,7 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         this.selectUfopByCreator_link = new SelectUfopByCreator_link(dataSource);
         this.selectUfopsWithoutEventByPaginator = new SelectUfopsWithoutEventByPaginator(dataSource);
         this.selectUfopsWithoutEventForOneYearByPaginator = new SelectUfopsWithoutEventForOneYearByPaginator(dataSource);
+        this.selectUfopsWhereUnitAndTimeByPaginator = new SelectUfopsWhereUnitAndTimeByPaginator(dataSource);
     }
 
     @Override
@@ -140,5 +143,14 @@ public class UfopDaoImpl implements UfopDao, Serializable {
         bind.put("total", total);
         bind.put("pageid", pageid);
         return selectUfopsWithoutEventForOneYearByPaginator.executeByNamedParam(bind);
+    }
+    @Override
+    public List<Ufop> getUfopByUnitAndTime(int total, int pageid, String unit, String utime) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("total", total);
+        bind.put("pageid", pageid);
+        bind.put("unit", unit);
+        bind.put("utime", utime);
+        return selectUfopsWhereUnitAndTimeByPaginator.executeByNamedParam(bind);
     }
 }
