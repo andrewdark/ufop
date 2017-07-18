@@ -14,8 +14,9 @@ import java.sql.Types;
  * Created by Dark on 26.03.2017.
  */
 public class SelectCheckEventByUfop_link extends MappingSqlQuery<CheckEventSupplemented> {
-    private static final String SQL_SELECT_CHECK_EVENT = "SELECT ce.*,u.username FROM check_event_table ce " +
-            "INNER JOIN user_table u ON(u.id = ce.creator_link) WHERE ce.ufop_link = :ufop_link";
+    private static final String SQL_SELECT_CHECK_EVENT = "SELECT ce.*,u.username, sct.name structure_catalog_name FROM check_event_table ce " +
+            "INNER JOIN user_table u ON(u.id = ce.creator_link) LEFT JOIN structure_catalog_table sct ON (ce.structure_catalog_link = sct.id) " +
+            "WHERE ce.ufop_link = :ufop_link";
 
     public SelectCheckEventByUfop_link(DataSource ds) {
         super(ds, SQL_SELECT_CHECK_EVENT);
@@ -37,6 +38,7 @@ public class SelectCheckEventByUfop_link extends MappingSqlQuery<CheckEventSuppl
         checkEvent.setResult_sampling(resultSet.getInt("result_sampling"));
         checkEvent.setCreator_link(resultSet.getString("username"));
         checkEvent.setStructure_catalog_link(resultSet.getInt("structure_catalog_link"));
+        checkEvent.setStructure_catalog_name(resultSet.getString("structure_catalog_name"));
         checkEvent.setDatereg(resultSet.getTimestamp("datereg"));
 
 

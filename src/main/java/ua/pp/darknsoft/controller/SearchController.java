@@ -122,8 +122,9 @@ public class SearchController {
             if(Integer.parseInt(id1)==1)utime="1 days";
             if(Integer.parseInt(id1)==2)utime="7 days";
             if(Integer.parseInt(id1)==3)utime="31 days";
-            if(Integer.parseInt(id1)==4)utime="360 days";
-            if(Integer.parseInt(id1)==5)utime="3600 days";
+            if(Integer.parseInt(id1)==4)utime="93 days";
+            if(Integer.parseInt(id1)==5)utime="360 days";
+            if(Integer.parseInt(id1)==6)utime="3600 days";
 
             ufop = setLastEvent(ufopDao.getUfopByUnitAndTime(total,pageid,id,utime));
         }catch (Exception ex){

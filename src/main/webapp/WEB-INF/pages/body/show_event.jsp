@@ -76,16 +76,23 @@
         <table width="100%">
             <caption>ПЕРЕВІРКА <a href="/show_ufop?id=${event.ufop_link}">СУБ'ЄКТА ГОСПОДАРЮВАННЯ</a></caption>
             <tr>
-                <td>Тип перевірки</td>
+                <td>Перевіряючий орган:</td>
                 <td>
-                    <c:if test="${event.check_type==0}">Планова</c:if>
-                    <c:if test="${event.check_type==1}">Позапланова</c:if>
+                    ${event.structure_catalog_name}
                 </td>
                 <td>
                     <sec:authorize access="isAuthenticated()">
                         <a href="/editeventsupplemented?id=${event.id}">Редагувати</a>
                     </sec:authorize>
                 </td>
+            </tr>
+            <tr>
+                <td>Тип перевірки</td>
+                <td>
+                    <c:if test="${event.check_type==0}">Планова</c:if>
+                    <c:if test="${event.check_type==1}">Позапланова</c:if>
+                </td>
+                <td> </td>
             </tr>
             <tr>
                 <td>Номер акту</td>

@@ -13,6 +13,12 @@
 <table width="100%">
     <caption>ПЕРЕВІРКА СУБ'ЄКТА ГОСПОДАРЮВАННЯ</caption>
     <tr>
+        <td>Перевіряючий орган:</td>
+        <td>
+            ${event.structure_catalog_name}
+        </td>
+    </tr>
+    <tr>
         <td>Тип перевірки</td>
         <td>
             <c:if test="${event.check_type==0}">Планова</c:if>
