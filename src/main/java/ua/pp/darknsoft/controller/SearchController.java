@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.pp.darknsoft.dao.CheckEventDao;
+import ua.pp.darknsoft.dao.SearchUniversalDao;
 import ua.pp.darknsoft.dao.UfopDao;
 import ua.pp.darknsoft.entity.CheckEvent;
 import ua.pp.darknsoft.entity.Ufop;
@@ -26,6 +27,8 @@ public class SearchController {
     UfopDao ufopDao;
     @Autowired
     CheckEventDao checkEventDao;
+    @Autowired
+    SearchUniversalDao searchUniversalDao;
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------SEARCH UFOP---------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
@@ -126,7 +129,7 @@ public class SearchController {
             if(Integer.parseInt(id1)==5)utime="360 days";
             if(Integer.parseInt(id1)==6)utime="3600 days";
 
-            ufop = setLastEvent(ufopDao.getUfopByUnitAndTime(total,pageid,id,utime));
+            ufop = setLastEvent(ufopDao.getUfopByUnitAndTime(total,pageid1,id,utime));
         }catch (Exception ex){
             redirectAttributes.addFlashAttribute("ex", "Method:viewsListByUnitAndTime <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
@@ -147,7 +150,47 @@ public class SearchController {
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------SEARCH Check event--------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
+    @RequestMapping(value = "/viewslistevent/{pageid}", method = RequestMethod.GET)
+    public String viewsListEvent(@PathVariable int pageid, @RequestParam(defaultValue = "1") String param0,
+                                 @RequestParam(defaultValue = "1") String param1,@RequestParam(defaultValue = "1") String param2,
+                                 @RequestParam(defaultValue = "1") String param3, @RequestParam(defaultValue = "1") String param4,
+                                 Model uiModel, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
 
+        if (pageid <= 0) {
+            uiModel.addAttribute("ex", "Не вірна сторінка");
+            return "message";
+        }
+        int total = 10;
+        int pageid1 = pageid;
+        if (pageid == 1) {
+            pageid1 = 0;
+        } else {
+            pageid1 = (pageid1 - 1) * total + 1;
+        }
+        List<CheckEvent> eventList;
+        try{
+            CheckEvent checkEvent = new CheckEvent();
+            checkEvent.setId(0);
+            checkEvent.setStructure_catalog_link(15);
+            eventList = searchUniversalDao.checkEventList(checkEvent,total,pageid1);
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex", "Method:viewsListEvent <br />" + ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        //uiModel.addAttribute("u_size", ufop.size());
+        String test = " "+param0+" "+param1+" "+param2+" "+param3+" "+param4;
+        uiModel.addAttribute("test", test);
+        uiModel.addAttribute("viewslistlink", "viewslistevent");
+        uiModel.addAttribute("eventList", eventList);
+        uiModel.addAttribute("page_id", pageid);
+        uiModel.addAttribute("param0", param0);
+        uiModel.addAttribute("total_page", "NAN");
+
+        if (eventList.isEmpty()) {
+            uiModel.addAttribute("ex", "Нажаль, немає жодного запису");
+        }
+        return "viewslist_event";
+    }
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------SEARCH Commercial object--------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------

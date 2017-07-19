@@ -108,6 +108,9 @@
     <definition extends="default" name="viewslist_commobj">
         <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_commobj.jsp"/>
     </definition>
+    <definition extends="default" name="viewslist_contact">
+        <put-attribute name="body" value="/WEB-INF/pages/body/viewslist_contact.jsp"/>
+    </definition>
     <definition extends="default" name="adduser_to_strorgtlb">
         <put-attribute name="body" value="/WEB-INF/pages/body/admin/adduser_to_strorgtlb.jsp"/>
     </definition>

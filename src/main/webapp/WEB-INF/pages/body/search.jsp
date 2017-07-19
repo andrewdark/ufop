@@ -67,6 +67,24 @@
     </div>
     <div id="tabs-2">
         Детальний пошук перевірок<br /><br />
+        <div class="searchmenu">
+            <form action="/viewslistevent/1/" method="get">
+                <input type="text" name="param0" value="" /><br />
+                <input type="date" name="param1"/><br />
+                <input type="date" name="param2"/><br />
+                <select name="param3" ><br />
+                    <option value="-1">Не враховувати</option>
+                    <option value="0">Планова</option>
+                    <option value="1">Позапланова</option>
+                </select>
+                <select name="param4" ><br />
+                    <option value="-1">Не враховувати</option>
+                    <option value="0">Не виявлені</option>
+                    <option value="1">Виявлені</option>
+                </select>
+                <input type="submit" value="Переглянути"/>
+            </form>
+        </div>
     </div>
     <div id="tabs-3">
         Детальний пошук комерційних об'єктів<br /><br />

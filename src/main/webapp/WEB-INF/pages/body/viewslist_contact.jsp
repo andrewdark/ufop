@@ -8,19 +8,40 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<c:forEach var="uop" items="${uop}">
-    <div class="article">
-        <h2><span>Назва ${uop}</span></h2>
-        <p class="infopost">Date reg: <span class="date">${uop}</span> by <a href="#">Admin</a> &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-            Filed under <a href="#">templates</a>, <a href="#">internet</a> &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+<c:forEach var="contacttList" items="${contacttList}">
 
-        <div class="clr"></div>
-        <div class="img"><img src="/resources/images/ufop.png" width="148" height="154" alt="" class="fl"/>
-        </div>
-        <div class="post_content">
-            <p>${uop} </p>
-            <p class="spec"><a href="${viewmore}" class="rm">Read more</a></p>
-        </div>
-        <div class="clr"></div>
-    </div>
 </c:forEach>
+<%--paginator--%>
+<c:if test="${empty contacttList and pageid ==1}">
+    ${ex}
+    <p class="pages">
+        <small>Page ${page_id} of NAN</small>
+        <span>${page_id}</span>
+    </p>
+</c:if>
+<c:if test="${empty contacttList and pageid !=1}">
+    ${ex}
+    <p class="pages">
+        <small>Page ${page_id} of ${total_page}</small>
+        <a href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}">&laquo;</a>
+        <a href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}">${page_id-1}</a><span>${page_id}</span>
+    </p>
+</c:if>
+
+<c:if test="${not empty contacttList and pageid !=1}">
+    <p class="pages">
+        <small>Page ${page_id} of ${total_page}</small>
+        <a href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}">&laquo;</a><a
+            href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}">${page_id-1}</a>
+        <span>${page_id}</span> <a href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}">${page_id+1}</a> <a
+            href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}">&raquo;</a>
+    </p>
+</c:if>
+<c:if test="${not empty contacttList and pageid ==1}">
+    <p class="pages">
+        <small>Page ${page_id} of ${total_page}</small>
+
+        <span>${page_id}</span> <a href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}">${page_id+1}</a>
+        <a href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}">&raquo;</a>
+    </p>
+</c:if>
