@@ -1,5 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+    select {
+        width: 300px; /* Ширина списка в пикселах */
+    }
+</style>
 <%--
   Created by IntelliJ IDEA.
   User: Dark
@@ -133,12 +138,20 @@
                 <tr>
                     <td></td>
                     <td><input type="submit" value="${buttonvalue}"></td>
-                    <td></td>
+                    <td>
+
+                    </td>
                 </tr>
             </table>
         </form:form>
-
-
+        <div class="d_right">
+            <c:if test="${command.id ne 0}">
+                <button onclick="window.location.href='/show_event?id=${command.id}'">Завершити</button>
+            </c:if>
+            <c:if test="${command.id eq 0}">
+                <button onclick="window.location.href='/show_ufop?id=${command.ufop_link}'">Завершити</button>
+            </c:if>
+        </div>
     </div>
     <div class="clr"></div>
 </div>

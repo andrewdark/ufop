@@ -66,23 +66,50 @@
 
     </div>
     <div id="tabs-2">
-        Детальний пошук перевірок<br /><br />
         <div class="searchmenu">
             <form action="/viewslistevent/1/" method="get">
-                <input type="text" name="param0" value="" /><br />
-                <input type="date" name="param1"/><br />
-                <input type="date" name="param2"/><br />
-                <select name="param3" ><br />
-                    <option value="-1">Не враховувати</option>
-                    <option value="0">Планова</option>
-                    <option value="1">Позапланова</option>
-                </select>
-                <select name="param4" ><br />
-                    <option value="-1">Не враховувати</option>
-                    <option value="0">Не виявлені</option>
-                    <option value="1">Виявлені</option>
-                </select>
-                <input type="submit" value="Переглянути"/>
+                <table>
+                    <tr>
+                        <td>Підрозділ</td>
+                        <td>
+                            <select name="param0">
+                                <c:forEach var="item" items="${unitList}">
+                                    <option value="${item.key}">${item.value}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Початкова дата</td>
+                        <td><input type="date" name="param1"/></td>
+                    </tr>
+                    <tr>
+                        <td>Кінцева дата</td>
+                        <td><input type="date" name="param2"/></td>
+                    </tr>
+                    <tr>
+                        <td>Тип перевірки</td>
+                        <td>
+                            <select name="param3" ><br />
+                                <option value="-1">Не враховувати</option>
+                                <option value="0">Планова</option>
+                                <option value="1">Позапланова</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Порушення</td>
+                        <td><select name="param4" ><br />
+                            <option value="-1">Не враховувати</option>
+                            <option value="0">Не виявлені</option>
+                            <option value="1">Виявлені</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Переглянути"/></td>
+                    </tr>
+                </table>
             </form>
         </div>
     </div>

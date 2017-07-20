@@ -16,6 +16,8 @@ import ua.pp.darknsoft.entity.Ufop;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -45,7 +47,7 @@ public class SearchController {
         if (pageid == 1) {
             pageid1 = 0;
         } else {
-            pageid1 = (pageid1 - 1) * total + 1;
+            pageid1 = (pageid1 - 1) * total;
         }
         List<Ufop> ufop;
         try{
@@ -80,7 +82,7 @@ public class SearchController {
         if (pageid == 1) {
             pageid1 = 0;
         } else {
-            pageid1 = (pageid1 - 1) * total + 1;
+            pageid1 = (pageid1 - 1) * total;
         }
         List<Ufop> ufop;
         try{
@@ -118,7 +120,7 @@ public class SearchController {
         if (pageid == 1) {
             pageid1 = 0;
         } else {
-            pageid1 = (pageid1 - 1) * total + 1;
+            pageid1 = (pageid1 - 1) * total;
         }
         List<Ufop> ufop = new ArrayList<Ufop>();
         try{
@@ -152,8 +154,8 @@ public class SearchController {
     //------------------------------------------------------------------------------------------------------------------
     @RequestMapping(value = "/viewslistevent/{pageid}", method = RequestMethod.GET)
     public String viewsListEvent(@PathVariable int pageid, @RequestParam(defaultValue = "1") String param0,
-                                 @RequestParam(defaultValue = "1") String param1,@RequestParam(defaultValue = "1") String param2,
-                                 @RequestParam(defaultValue = "1") String param3, @RequestParam(defaultValue = "1") String param4,
+                                 @RequestParam(defaultValue = "1980-01-01") String param1,@RequestParam(defaultValue = "2999-01-01") String param2,
+                                 @RequestParam(defaultValue = "-1") String param3, @RequestParam(defaultValue = "-1") String param4,
                                  Model uiModel, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
 
         if (pageid <= 0) {
@@ -165,13 +167,16 @@ public class SearchController {
         if (pageid == 1) {
             pageid1 = 0;
         } else {
-            pageid1 = (pageid1 - 1) * total + 1;
+            pageid1 = (pageid1 - 1) * total;
         }
         List<CheckEvent> eventList;
         try{
             CheckEvent checkEvent = new CheckEvent();
-            checkEvent.setId(0);
-            checkEvent.setStructure_catalog_link(15);
+            checkEvent.setStructure_catalog_link(Integer.parseInt(param0));
+            checkEvent.setEvent_date_begin(param1);
+            checkEvent.setEvent_date_end(param2);
+            checkEvent.setCheck_type(Integer.parseInt(param3));
+            checkEvent.setCheck_violation(Integer.parseInt(param4));
             eventList = searchUniversalDao.checkEventList(checkEvent,total,pageid1);
         }catch (Exception ex){
             redirectAttributes.addFlashAttribute("ex", "Method:viewsListEvent <br />" + ex);
@@ -184,6 +189,10 @@ public class SearchController {
         uiModel.addAttribute("eventList", eventList);
         uiModel.addAttribute("page_id", pageid);
         uiModel.addAttribute("param0", param0);
+        uiModel.addAttribute("param1", param1);
+        uiModel.addAttribute("param2", param2);
+        uiModel.addAttribute("param3", param3);
+        uiModel.addAttribute("param4", param4);
         uiModel.addAttribute("total_page", "NAN");
 
         if (eventList.isEmpty()) {

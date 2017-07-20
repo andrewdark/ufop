@@ -64,7 +64,7 @@ public class MainController {
         if (pageid == 1) {
             pageid1 = 0;
         } else {
-            pageid1 = (pageid1 - 1) * total + 1;
+            pageid1 = (pageid1 - 1) * total;
         }
         List<Contact> ufop = contactDao.getContact(total, pageid1);
         String link = "/individual_enterpreneur";
@@ -86,7 +86,7 @@ public class MainController {
         if (pageid == 1) {
             pageid1 = 0;
         } else {
-            pageid1 = (pageid1 - 1) * total + 1;
+            pageid1 = (pageid1 - 1) * total;
         }
         List<Ufop> ufop = new LinkedList<Ufop>();
 
@@ -120,7 +120,7 @@ public class MainController {
         if (pageid == 1) {
             pageid1 = 0;
         } else {
-            pageid1 = (pageid1 - 1) * total + 1;
+            pageid1 = (pageid1 - 1) * total;
         }
         List<Ufop> ufop = new LinkedList<Ufop>();
         try{
@@ -315,7 +315,7 @@ public class MainController {
         if (pageid == 1) {
             pageid1 = 0;
         } else {
-            pageid1 = (pageid1 - 1) * total + 1;
+            pageid1 = (pageid1 - 1) * total;
         }
         List<Ufop> ufop = new LinkedList<>();
         try{

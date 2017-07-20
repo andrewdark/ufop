@@ -31,9 +31,14 @@ public class SearchUniversalImpl implements SearchUniversalDao, Serializable {
     @Override
     public List<CheckEvent> checkEventList(CheckEvent checkEvent, int total, int pageid){
         Map<String, Object> bind = new HashMap<>();
-        if (checkEvent.getId()==0)bind.put("id",null);
-        else bind.put("id",checkEvent.getId());
-        bind.put("structure_catalog_link",checkEvent.getStructure_catalog_link());
+        if (checkEvent.getCheck_type()==-1)bind.put("check_type",null);
+        else bind.put("check_type",checkEvent.getCheck_type());
+        if (checkEvent.getCheck_violation()==-1)bind.put("check_violation",null);
+        else bind.put("check_violation",checkEvent.getCheck_violation());
+        if (checkEvent.getStructure_catalog_link()==1)bind.put("structure_catalog_link",null);
+        else bind.put("structure_catalog_link",checkEvent.getStructure_catalog_link());
+        bind.put("date_start", checkEvent.getEvent_date_begin());
+        bind.put("date_stop", checkEvent.getEvent_date_end());
         bind.put("total", total);
         bind.put("pageid", pageid);
         return selectCheckEventUniversalByPaginator.executeByNamedParam(bind);

@@ -16,7 +16,10 @@ import java.sql.Types;
 public class SelectCheckEventUniversalByPaginator extends MappingSqlQuery<CheckEvent> {
     private static final String SQL_SELECT_CHECK_EVENT = "SELECT ce.*,u.username, sct.name structure_catalog_name FROM check_event_table ce " +
             "INNER JOIN user_table u ON(u.id = ce.creator_link) LEFT JOIN structure_catalog_table sct ON (ce.structure_catalog_link = sct.id) " +
-            "WHERE (ce.id = :id and :id is not null or :id is null) AND " +
+            "WHERE " +
+            "(ce.check_type = :check_type and :check_type is not null or :check_type is null) AND " +
+            "(ce.check_violation = :check_violation and :check_violation is not null or :check_violation is null) AND " +
+            "(ce.event_date_end BETWEEN :date_start::DATE and :date_stop::DATE) AND " +
             "(ce.structure_catalog_link = :structure_catalog_link and :structure_catalog_link is not null or :structure_catalog_link is null) " +
             "ORDER BY ce.id LIMIT :total OFFSET :pageid";
 
@@ -24,9 +27,11 @@ public class SelectCheckEventUniversalByPaginator extends MappingSqlQuery<CheckE
         super(ds, SQL_SELECT_CHECK_EVENT);
         super.declareParameter(new SqlParameter("total", Types.INTEGER));
         super.declareParameter(new SqlParameter("pageid", Types.INTEGER));
-        super.declareParameter(new SqlParameter("id", Types.BIGINT));
+        super.declareParameter(new SqlParameter("check_type", Types.INTEGER));
+        super.declareParameter(new SqlParameter("check_violation", Types.INTEGER));
+        super.declareParameter(new SqlParameter("date_start",Types.DATE));
+        super.declareParameter(new SqlParameter("date_stop",Types.DATE));
         super.declareParameter(new SqlParameter("structure_catalog_link", Types.INTEGER));
-        //super.declareParameter(new SqlParameter("utime", Types.VARCHAR));
     }
 
     @Override

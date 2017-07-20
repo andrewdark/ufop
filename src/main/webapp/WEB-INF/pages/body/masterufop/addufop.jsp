@@ -34,7 +34,7 @@
                         <span id="ufop_name_1">ПІБ Фіз.Особи</span>
                         <span id="ufop_name_2" style="display: none;">Найменування Юр. особи</span>
                     </td>
-                    <td><form:input path="ufop_name"/></td>
+                    <td><form:input path="ufop_name" size="30"/></td>
                     <td><span class="error"><form:errors path="ufop_name"/></span></td>
                 </tr>
                 <tr>
@@ -49,17 +49,15 @@
                     <td>
                         <div id="passinfo">
                             <form:input path="series_of_passport" maxlength="2" size="2"/>
-                            <form:input path="number_of_passport" maxlength="10" size="6"/>
+                            <form:input path="number_of_passport" maxlength="10" size="8"/>
                         </div>
-
                     </td>
                     <td>
-                                <span class="error">
-                                    <form:errors path="series_of_passport"/>
-                                    <form:errors path="number_of_passport"/>
-                                </span>
+                        <span class="error">
+                             <form:errors path="series_of_passport"/>
+                             <form:errors path="number_of_passport"/>
+                        </span>
                     </td>
-
                 </tr>
 
                 <tr>
@@ -80,7 +78,7 @@
                 </tr>
                 <tr>
                     <td>Примітки</td>
-                    <td><form:textarea path="description"/></td>
+                    <td><form:textarea path="description" /></td>
                     <td><span class="error"><form:errors path="description"/></span></td>
                 </tr>
                 <tr>
@@ -94,7 +92,11 @@
                 </tr>
             </table>
         </form:form>
-
+        <div class="d_right">
+            <c:if test="${command.id ne 0}">
+                <button onclick="window.location.href='/show_ufop?id=${command.id}'">Завершити</button>
+            </c:if>
+        </div>
         <a onclick="look('hide1'); return false;" href="#">Довідка</a>
         <div id="hide1" style="display: none;">
             <li/>
