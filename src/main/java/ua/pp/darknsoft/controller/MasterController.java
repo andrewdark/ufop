@@ -1,5 +1,6 @@
 package ua.pp.darknsoft.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,7 +41,7 @@ public class MasterController {
     ContactValidator contactValidator;
     @Autowired
     KvedsValidator kvedsValidator;
-
+    private static final Logger log = Logger.getLogger(MasterController.class);
 
     //------------------------------------------------------------------------------------------------------------------
     //--------------------------------------- MASTER OF UFOP -----------------------------------------------------------
@@ -104,7 +105,7 @@ public class MasterController {
                 itemsType2.put(items2.getId(), items2.getTitle());
             }
             uiModel.addAttribute("it", itemsType);
-            uiModel.addAttribute("degree_risk_list",itemsType2);
+            uiModel.addAttribute("degree_risk_list", itemsType2);
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex + " locationTop");
             return rdrct + "/message";
@@ -209,7 +210,8 @@ public class MasterController {
             return myRdrct(httpServletRequest) + "/addgoods";
         }
         try {
-            if(!goodsOfCommObj.getGoods_catalog_link().equals(""))commercialObjectDao.addGoodsToCommObj(goodsOfCommObj);
+            if (!goodsOfCommObj.getGoods_catalog_link().equals(""))
+                commercialObjectDao.addGoodsToCommObj(goodsOfCommObj);
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
@@ -291,8 +293,7 @@ public class MasterController {
         if (ufop == null) {
             redirectAttributes.addFlashAttribute("ex", "Відсутнє посилання на батьківський об'єкт");
             return myRdrct(httpServletRequest) + "/message";
-        }
-        else {
+        } else {
             kvedsUfop.setUfop_link(ufop.getId());
             kvedsUfop.setNav(ufop.getUfop_nav());
         }
@@ -336,7 +337,7 @@ public class MasterController {
         }
         try {
             kvedsUfop.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName());
-            if(!kvedsUfop.getKved_catalog_link().equals(""))kvedDao.createEntrepreneursKveds(kvedsUfop);
+            if (!kvedsUfop.getKved_catalog_link().equals("")) kvedDao.createEntrepreneursKveds(kvedsUfop);
 
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", "addkvedpost: " + ex);
@@ -477,8 +478,12 @@ public class MasterController {
         try {
             ufopDao.editUfop(ufop);
         } catch (Exception ex) {
+            log.error(ex + "");
             redirectAttributes.addFlashAttribute("ex", "editufoppost" + ex);
             return myRdrct(httpServletRequest) + "/message";
+        } finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser + " UPDATE editufoppost id: " + ufop.getId());
         }
         return myRdrct(httpServletRequest) + "/show_ufop?id=" + ufop.getId();
     }
@@ -494,7 +499,9 @@ public class MasterController {
 
         try {
             CommercialObject co = commercialObjectDao.getCommObjById(Long.parseLong(id)).get(0);
-            if(ufop==null){ufop = ufopDao.searchUfopById(co.getUfop_link()).get(0);}
+            if (ufop == null) {
+                ufop = ufopDao.searchUfopById(co.getUfop_link()).get(0);
+            }
             co.setNav(0);
             co.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString());
             uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
@@ -506,9 +513,9 @@ public class MasterController {
             for (DegreeRisk items2 : catalogDao.getDegreeRiskCatalog()) {
                 itemsType2.put(items2.getId(), items2.getTitle());
             }
-            uiModel.addAttribute("ufop",ufop);
+            uiModel.addAttribute("ufop", ufop);
             uiModel.addAttribute("it", itemsType);
-            uiModel.addAttribute("degree_risk_list",itemsType2);
+            uiModel.addAttribute("degree_risk_list", itemsType2);
             uiModel.addAttribute("co", co);
             BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
             uiModel.addAttribute("command", co);
@@ -540,18 +547,23 @@ public class MasterController {
         try {
             commercialObjectDao.updateCommObj(co);
         } catch (Exception ex) {
+            log.error(ex + "");
             redirectAttributes.addFlashAttribute("ex", "editCommObjPost " + ex);
             return myRdrct(httpServletRequest) + "/message";
+        } finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser + " UPDATE editcommobjpost id: " + co.getId() + " UFOP id: " + co.getUfop_link());
         }
         if (co.isAdditionalinformation()) {
             redirectAttributes.addFlashAttribute("co", co);
             return myRdrct(httpServletRequest) + "/addgoods";
         } else return myRdrct(httpServletRequest) + "/show_ufop?id=" + co.getUfop_link() + "#tabs-2";
     }
+
     //next form
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "edit_contact", method = RequestMethod.GET)
-    public String editContact(@RequestParam(defaultValue = "1") String id, Model uiModel,RedirectAttributes redirectAttributes,
+    public String editContact(@RequestParam(defaultValue = "1") String id, Model uiModel, RedirectAttributes redirectAttributes,
                               HttpServletRequest httpServletRequest) {
         Ufop ufop = (Ufop) uiModel.asMap().get("ufop");
         uiModel.addAttribute("title", "Редагування контакту");
@@ -565,11 +577,13 @@ public class MasterController {
         }
         try {
             Contact contact = contactDao.getContactById(Long.parseLong(id)).get(0);
-            if(ufop==null){ufop = ufopDao.searchUfopById(contact.getOrganization()).get(0);}
+            if (ufop == null) {
+                ufop = ufopDao.searchUfopById(contact.getOrganization()).get(0);
+            }
             contact.setNav(0);
             contact.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString());
             uiModel.addAttribute("contact", contact);
-            uiModel.addAttribute("ufop",ufop);
+            uiModel.addAttribute("ufop", ufop);
             BindingResult bindingResult = (BindingResult) uiModel.asMap().get("b1");
             uiModel.addAttribute("command", contact);
             uiModel.addAttribute(BindingResult.class.getName() + ".command", bindingResult);
@@ -601,13 +615,17 @@ public class MasterController {
             contact.setCreator_link(SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase());
             contactDao.updateContact(contact);
         } catch (Exception ex) {
+            log.error(ex + "");
             redirectAttributes.addFlashAttribute("ex", "editCommObjPost " + ex);
             return myRdrct(httpServletRequest) + "/message";
+        } finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser + " UPDATE editcontactpost id: " + contact.getId() + " UFOP id: " + contact.getOrganization());
         }
 
-            redirectAttributes.addFlashAttribute("contact", contact);
+        redirectAttributes.addFlashAttribute("contact", contact);
 
-      return myRdrct(httpServletRequest) + "/show_ufop?id=" + contact.getOrganization() + "#tabs-5";
+        return myRdrct(httpServletRequest) + "/show_ufop?id=" + contact.getOrganization() + "#tabs-5";
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -621,27 +639,37 @@ public class MasterController {
             commercialObjectDao.deleteGoodsByCommObjLink(Long.parseLong(id));
             redirectAttributes.addFlashAttribute("co", commercialObjectDao.getCommObjById(Long.parseLong(co)).get(0));
         } catch (Exception ex) {
+            log.error(ex + "");
             redirectAttributes.addFlashAttribute("ex", "deleteGoodsPost <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
+        } finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser + " DELETE deletegoods id: " + id + " CommObj id: " + co);
         }
         return myRdrct(httpServletRequest) + "/addgoods";
     }
+
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "deletekveds", method = RequestMethod.GET)
-    public String deleteKvedsPost(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String ufop_id,@RequestParam(defaultValue = "0") String ufop_nav,
+    public String deleteKvedsPost(@RequestParam(defaultValue = "0") String id, @RequestParam(defaultValue = "0") String ufop_id, @RequestParam(defaultValue = "0") String ufop_nav,
                                   HttpServletRequest httpServletRequest,
                                   RedirectAttributes redirectAttributes) {
         try {
             kvedDao.deleteKvedsByUfopLink(Long.parseLong(id));
             Ufop ufop = ufopDao.searchUfopById(Long.parseLong(ufop_id)).get(0);
             ufop.setUfop_nav(Integer.parseInt(ufop_nav));
-            redirectAttributes.addFlashAttribute("ufop",ufop);
+            redirectAttributes.addFlashAttribute("ufop", ufop);
         } catch (Exception ex) {
+            log.error(ex + "");
             redirectAttributes.addFlashAttribute("ex", "deleteKvedsPost <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
+        } finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser + " DELETE deletekveds id: " + id + " UFOP id: " + ufop_id);
         }
         return myRdrct(httpServletRequest) + "/addkved";
     }
+
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------AJAX HELPER---------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
@@ -705,7 +733,7 @@ public class MasterController {
 
             for (int i = 0; i <= downkved.size() - 1; i++) {
 
-                option = option + "<option value=\"" + downkved.get(i).getTreemark() + "\">"+ downkved.get(i).getName() + "</option>";
+                option = option + "<option value=\"" + downkved.get(i).getTreemark() + "\">" + downkved.get(i).getName() + "</option>";
             }
 
         } catch (Exception ex) {

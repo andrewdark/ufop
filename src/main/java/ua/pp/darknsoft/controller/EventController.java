@@ -1,6 +1,7 @@
 package ua.pp.darknsoft.controller;
 
 import javafx.util.converter.BigDecimalStringConverter;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,7 +48,7 @@ public class EventController {
     OffenseArticlesValidator offenseArticlesValidator;
     @Autowired
     InspectorsValidator inspectorsValidator;
-
+    private static final Logger log = Logger.getLogger(EventController.class);
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------MASTER CHECK EVENT-----------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
@@ -732,8 +733,12 @@ public class EventController {
             }
 
         } catch (Exception ex) {
+            log.error(ex + "");
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
+        }finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser+" UPDATE editeventsupplementedpost id: "+checkEventSupplemented.getId());
         }
         return myRdrct(httpServletRequest) + "/show_event?id=" + checkEventSupplemented.getId();
     }
@@ -785,8 +790,12 @@ public class EventController {
         try {
             checkEventDao.updatePrecautionDate(precaution);
         } catch (Exception ex) {
+            log.error(ex + "");
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
+        }finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser+" UPDATE editprecautionpost id: "+precaution.getId()+" Event id: "+precaution.getCheck_event_link());
         }
         return myRdrct(httpServletRequest) + "/show_event?id=" + precaution.getCheck_event_link() + "#tabs-3";
     }
@@ -829,7 +838,7 @@ public class EventController {
 
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "/editsanctionpost", method = RequestMethod.POST)
-    public String editSanctionPost(@ModelAttribute Sanction sanction, Model uiModel,
+    public String editSanctionPost(@ModelAttribute Sanction sanction,
                                    HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
                                    BindingResult bindingResult) {
 
@@ -842,8 +851,12 @@ public class EventController {
         try {
             checkEventDao.updateSanctionById(sanction);
         } catch (Exception ex) {
+            log.error(ex + "");
             redirectAttributes.addFlashAttribute("ex", "METHOD:editsanctionpost <br/>"+ex);
             return myRdrct(httpServletRequest) + "/message";
+        }finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser+" UPDATE editsanctionpost id: "+sanction.getId()+" Event id: "+sanction.getCheck_event_link());
         }
         return myRdrct(httpServletRequest) + "/show_event?id=" + sanction.getCheck_event_link() + "#tabs-3";
     }
@@ -859,10 +872,15 @@ public class EventController {
             checkEventDao.deleteCheckingGroupOfGoods(Long.parseLong(id));
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
         } catch (Exception ex) {
+            log.error(ex + "");
             String error = "Method: deleteCheckingGroupOfGoods.<br /> String id = " + id + " String EventId=" + EventId + "<br />" + ex;
             redirectAttributes.addFlashAttribute("ex", error);
             return myRdrct(httpServletRequest) + "/message";
+        } finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser+" DELETE checking group of goods id: "+id+" Event id: "+EventId);
         }
+
 
         return myRdrct(httpServletRequest) + "/addcheckgoods";
     }
@@ -875,9 +893,13 @@ public class EventController {
             checkEventDao.deleteOffenseArticles(Long.parseLong(id));
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
         } catch (Exception ex) {
+            log.error(ex + "");
             String error = "Method: deleteOffenseArticles.<br /> String id = " + id + " String EventId=" + EventId + "<br />" + ex;
             redirectAttributes.addFlashAttribute("ex", error);
             return myRdrct(httpServletRequest) + "/message";
+        }finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser+" DELETE offensearticles id: "+id+" Event id: "+EventId);
         }
         return myRdrct(httpServletRequest) + "/addoffencearticles";
     }
@@ -890,9 +912,13 @@ public class EventController {
             checkEventDao.deletePrecaution(Long.parseLong(id));
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
         } catch (Exception ex) {
+            log.error(ex + "");
             String error = "Method: deletePrecaution.<br /> String id = " + id + " String EventId=" + EventId + "<br />" + ex;
             redirectAttributes.addFlashAttribute("ex", error);
             return myRdrct(httpServletRequest) + "/message";
+        }finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser+" DELETE deleteprecaution id: "+id+" Event id: "+EventId);
         }
 
         return myRdrct(httpServletRequest) + "/addprecautions";
@@ -906,9 +932,13 @@ public class EventController {
             checkEventDao.deleteSanctionById(Long.parseLong(id));
             redirectAttributes.addFlashAttribute("event", checkEventDao.getCheckEventById(Long.parseLong(EventId)).get(0));
         } catch (Exception ex) {
+            log.error(ex + "");
             String error = "Method: deleteSanction.<br /> String id = " + id + " String EventId=" + EventId + "<br />" + ex;
             redirectAttributes.addFlashAttribute("ex", error);
             return myRdrct(httpServletRequest) + "/message";
+        }finally {
+            String thisUser = SecurityContextHolder.getContext().getAuthentication().getName().toString().toLowerCase();
+            log.info(thisUser+" DELETE deletesanction id: "+id+" Event id: "+EventId);
         }
         return myRdrct(httpServletRequest) + "/show_event?id="+EventId+"#tabs-3";
     }

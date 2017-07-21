@@ -46,7 +46,7 @@
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
     <sec:authentication property="principal.username" var="username"/>
-    <a id="welcome" href="/my_office"><span>welcome</span> <span class="user_name">${username}</span></a>
+    <a id="welcome" href="/my_office"><span>Користувач: </span> <span class="user_name">${username}</span></a>
     <a href="<c:url value='/logout' />" > Вийти</a>
 </sec:authorize>
 
