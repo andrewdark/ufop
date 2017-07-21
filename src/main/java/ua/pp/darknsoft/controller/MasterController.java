@@ -465,7 +465,7 @@ public class MasterController {
     }
 
     @PreAuthorize(value = "isAuthenticated()")
-    @RequestMapping(value = "editufoppost")
+    @RequestMapping(value = "editufoppost", method = RequestMethod.POST)
     public String editUfopPost(@ModelAttribute Ufop ufop, HttpServletRequest httpServletRequest,
                                RedirectAttributes redirectAttributes, BindingResult bindingResult) {
         ufopValidator.validate(ufop, bindingResult);
