@@ -35,6 +35,7 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
     private SelectLawsuitsResultCatalog selectLawsuitsResultCatalog;
     private SelectDegreeRiskCatalog selectDegreeRiskCatalog;
     private SelectUsersBySelectorStructureLink selectUsersBySelectorStructureLink;
+    private SelectAllRole selectAllRole;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource){
@@ -53,6 +54,7 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         this.selectLawsuitsResultCatalog = new SelectLawsuitsResultCatalog(dataSource);
         this.selectDegreeRiskCatalog = new SelectDegreeRiskCatalog(dataSource);
         this.selectUsersBySelectorStructureLink = new SelectUsersBySelectorStructureLink(dataSource);
+        this.selectAllRole = new SelectAllRole(dataSource);
     }
 
     @Override
@@ -89,6 +91,8 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
     public List<BasicGroupOfGoodsCatalog> getGoodsTop(){
         return selectGoodsTop.execute();
     }
+    @Override
+    public List<Role> getAllRole(){ return selectAllRole.execute(); }
     @Override
     public List<LocationCatalog> getLocationByTreemark(String treemark, int level){
         Map<String, Object> paramMap = new HashMap<String, Object>();

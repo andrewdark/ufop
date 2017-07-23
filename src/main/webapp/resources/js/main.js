@@ -109,9 +109,11 @@ $(document).ready(function () {
 });
 //--------------------admin ajax-----------------------------------
 function userstart() {
-    var aj = "username=" + $("#birds").val() + "&treemark=2";
-    $("#UserInfo").load("/ajax_start_user", aj);
 
+    var aj = "id="+ $("#user_id").val() +"&structure_link=" + $("#structure_treemark option:selected").val()
+        +"&role_link=" + $("#role_id option:selected").val()+"&en=" + $("#user_enabled_new option:selected").val()+"&email="+ $("#user_email_new").val();
+    $("<div>").load("/ajax_start_user", aj).prependTo("#log");
+    $("#log").scrollTop(0);
 }
 //--------------------LOCATION ADD---------------------------------
 var count_loc = 1;

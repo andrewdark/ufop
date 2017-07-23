@@ -16,6 +16,7 @@ public class User implements Serializable{
     private boolean isEnabled;
     private long contact_link;
     private String structure_link;
+    private String role_name;
 
     public int getId() {
         return id;
@@ -88,4 +89,8 @@ public class User implements Serializable{
     public void setStructure_link(String structure_link) {
         this.structure_link = structure_link;
     }
+
+    public String getRole_name() { return role_name; }
+
+    public void setRole_name(String role_name) { this.role_name = role_name; }
 }

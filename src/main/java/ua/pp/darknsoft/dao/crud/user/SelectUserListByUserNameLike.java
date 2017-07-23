@@ -13,7 +13,10 @@ import java.sql.Types;
  * Created by Dark on 09.11.2016.
  */
 public class SelectUserListByUserNameLike extends MappingSqlQuery{
-    private static final String SQL_CHECK_USER="SELECT id,username,email,structure_link FROM user_table WHERE LOWER(username) LIKE LOWER(:username)";
+    private static final String SQL_CHECK_USER="SELECT ut.id,ut.username,ut.email,ut.structure_link,ut.enabled,sct.name,rt.role_name FROM user_table ut " +
+            "LEFT JOIN structure_catalog_table sct ON (ut.structure_link = sct.treemark) " +
+            "LEFT JOIN role_table rt ON (ut.role = rt.id)" +
+            "WHERE LOWER(ut.username) LIKE LOWER(:username)";
 
     public SelectUserListByUserNameLike(DataSource ds) {
         super(ds, SQL_CHECK_USER);
@@ -26,8 +29,10 @@ public class SelectUserListByUserNameLike extends MappingSqlQuery{
         User user = new User();
         user.setId(rs.getInt("id"));
         user.setUsername(rs.getString("username"));
+        user.setEnabled(rs.getBoolean("enabled"));
         user.setEmail(rs.getString("email"));
-        user.setStructure_link(rs.getString("structure_link"));
+        user.setStructure_link(rs.getString("name"));
+        user.setRole_name(rs.getString("role_name"));
         return user;
     }
 }

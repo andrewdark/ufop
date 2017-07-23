@@ -1,5 +1,6 @@
 package ua.pp.darknsoft.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -120,7 +121,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 
     @Override
     public List<User> getUsersByUserNameLike(String username) {
-        Map<String, String> bind = new HashMap<>(3);
+        Map<String, String> bind = new HashMap<>();
         bind.put("username", username);
         return selectUserListByUserNameLike.executeByNamedParam(bind);
     }

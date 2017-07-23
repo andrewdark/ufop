@@ -17,7 +17,7 @@
             <ul>
                 <li><div>Перегляд користувачів</div></li>
                 <li><div>Видалити користувача</div></li>
-                <li><div>Редагування користувача</div></li>
+                <li><div><a href="/adduser_to_strorgtlb">Редагування користувача</a></div></li>
             </ul>
         </li>
         <li><div>Довідники</div>

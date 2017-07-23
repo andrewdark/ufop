@@ -470,6 +470,16 @@ public class MainController {
         }
         return "event_info";
     }
+    @RequestMapping(value = "/auth", method = RequestMethod.GET)
+    public String auth(Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+
+        return "auth";
+    }
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+
+        return "login";
+    }
 
     //------------------------------------------------------------------------------------------------------------------
     //-------------------------------------------SERVICE----------------------------------------------------------------

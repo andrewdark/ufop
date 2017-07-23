@@ -24,6 +24,8 @@ public interface CatalogDao {
 
     List<BasicGroupOfGoodsCatalog> getGoodsTop();
 
+    List<Role> getAllRole();
+
     List<LocationCatalog> getLocationByTreemark(String treemark, int level);
 
     List<ArticlesLawCatalog> getArticlesByTreemark(String treemark, int level);
