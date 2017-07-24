@@ -32,6 +32,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     SelectCommObjGoodsByCommObj_link selectCommObjGoodsByCommObjlink;
     UpdateCommercialObjectReturnId updateCommercialObjectReturnId;
     DeleteGoodsByCommObjLink deleteGoodsByCommObjLink;
+    SelectCommObjByAdressAndGroupOfGoods selectCommObjByAdressAndGroupOfGoods;
 
 
     @Resource(name = "dataSource")
@@ -45,6 +46,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
         this.selectCommObjGoodsByCommObjlink = new SelectCommObjGoodsByCommObj_link(dataSource);
         this.updateCommercialObjectReturnId = new UpdateCommercialObjectReturnId(dataSource);
         this.deleteGoodsByCommObjLink = new DeleteGoodsByCommObjLink(dataSource);
+        this.selectCommObjByAdressAndGroupOfGoods = new SelectCommObjByAdressAndGroupOfGoods(dataSource);
     }
 
     @Override
@@ -106,7 +108,21 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
         bind.put("id", id);
         return selectCommObjById.executeByNamedParam(bind);
     }
-
+    @Override
+    public List<CommercialObject> getCommObjByAdressAndGroupOfGoods(CommercialObject comobj, String goods_catalog_link,
+                                                                    int total, int pageid) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("a_place_of_reg", comobj.getA_place_of_reg());
+        if(comobj.getDegree_risk_link()==-1)bind.put("degree_risk_link", null);
+        else bind.put("degree_risk_link", comobj.getDegree_risk_link());
+        if(comobj.getObj_type()==-1) bind.put("obj_type", null);
+        else bind.put("obj_type", comobj.getObj_type());
+        if(goods_catalog_link.equals("-1"))bind.put("goods_catalog_link", null);
+        else bind.put("goods_catalog_link", goods_catalog_link);
+        bind.put("total", total);
+        bind.put("pageid", pageid);
+        return selectCommObjByAdressAndGroupOfGoods.executeByNamedParam(bind);
+    }
     @Override
     public void addGoodsToCommObj(GoodsOfCommObj goods) {
         Map<String, Object> bind = new HashMap<>();
