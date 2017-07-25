@@ -33,6 +33,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
     UpdateCommercialObjectReturnId updateCommercialObjectReturnId;
     DeleteGoodsByCommObjLink deleteGoodsByCommObjLink;
     SelectCommObjByAdressAndGroupOfGoods selectCommObjByAdressAndGroupOfGoods;
+    SelectCommObjByAdressWIthOutGroupOfGoods selectCommObjByAdressWIthOutGroupOfGoods;
 
 
     @Resource(name = "dataSource")
@@ -47,6 +48,7 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
         this.updateCommercialObjectReturnId = new UpdateCommercialObjectReturnId(dataSource);
         this.deleteGoodsByCommObjLink = new DeleteGoodsByCommObjLink(dataSource);
         this.selectCommObjByAdressAndGroupOfGoods = new SelectCommObjByAdressAndGroupOfGoods(dataSource);
+        this.selectCommObjByAdressWIthOutGroupOfGoods = new SelectCommObjByAdressWIthOutGroupOfGoods(dataSource);
     }
 
     @Override
@@ -122,6 +124,18 @@ public class CommercialObjectDaoImpl implements CommercialObjectDao, Serializabl
         bind.put("total", total);
         bind.put("pageid", pageid);
         return selectCommObjByAdressAndGroupOfGoods.executeByNamedParam(bind);
+    }
+    @Override
+    public List<CommercialObject> getCommObjByAdressWithOutGroupOfGoods(CommercialObject comobj, int total, int pageid) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("a_place_of_reg", comobj.getA_place_of_reg());
+        if(comobj.getDegree_risk_link()==-1)bind.put("degree_risk_link", null);
+        else bind.put("degree_risk_link", comobj.getDegree_risk_link());
+        if(comobj.getObj_type()==-1) bind.put("obj_type", null);
+        else bind.put("obj_type", comobj.getObj_type());
+        bind.put("total", total);
+        bind.put("pageid", pageid);
+        return selectCommObjByAdressWIthOutGroupOfGoods.executeByNamedParam(bind);
     }
     @Override
     public void addGoodsToCommObj(GoodsOfCommObj goods) {

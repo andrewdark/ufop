@@ -21,19 +21,21 @@ import java.util.Map;
 public class SelectCommObjByAdressWIthOutGroupOfGoods extends MappingSqlQuery<CommercialObject>{
     private SelectParentLocationByTreemark selectParentLocationByTreemark;
     private SelectCommObjGoodsByCommObj_link selectCommObjGoodsByCommObj_link;
-    private static final String SELECT_ENTREPRENEUR_COMM_OBJ = "SELECT coet.*, cott.name s_obj_type, drkt.title s_degree_risk_link  " +
+    private static final String SELECT_ENTREPRENEUR_COMM_OBJ = "SELECT coet.*, cott.name s_obj_type, drkt.title s_degree_risk_link,u.username  " +
             "FROM comm_object_table coet LEFT JOIN commercial_object_type_table cott ON(cott.id = coet.obj_type) " +
             "LEFT JOIN degree_risk_catalog_table drkt ON(drkt.id = coet.degree_risk_link) " +
-            "WHERE coet.a_place_of_reg::ltree <@ :a_place_of_reg::ltree AND " +
+            "LEFT JOIN commercial_object_basic_group_of_goods_table bgt ON (coet.id=bgt.comm_obj_link) " +
+            "LEFT JOIN user_table u ON(coet.creator_link = u.id) " +
+            "WHERE bgt.comm_obj_link is null AND " +
+            "(coet.a_place_of_reg::ltree <@ :a_place_of_reg::ltree) AND " +
             "(coet.degree_risk_link = :degree_risk_link and :degree_risk_link is not null or :degree_risk_link is null) AND " +
             "(coet.obj_type = :obj_type and :obj_type is not null or :obj_type is null) " +
-            "GROUP BY coet.id,cott.name,drkt.title " +
+            "GROUP BY coet.id,cott.name,drkt.title,u.username " +
             "ORDER BY coet.id LIMIT :total OFFSET :pageid";
 
     public SelectCommObjByAdressWIthOutGroupOfGoods(DataSource ds) {
         super(ds, SELECT_ENTREPRENEUR_COMM_OBJ);
         super.declareParameter(new SqlParameter("a_place_of_reg", Types.VARCHAR));
-        super.declareParameter(new SqlParameter("goods_catalog_link", Types.VARCHAR));
         super.declareParameter(new SqlParameter("degree_risk_link", Types.INTEGER));
         super.declareParameter(new SqlParameter("obj_type", Types.INTEGER));
         super.declareParameter(new SqlParameter("total", Types.INTEGER));
@@ -46,6 +48,8 @@ public class SelectCommObjByAdressWIthOutGroupOfGoods extends MappingSqlQuery<Co
     protected CommercialObject mapRow(ResultSet resultSet, int i) throws SQLException {
         CommercialObject commObj = new CommercialObject();
         commObj.setId(resultSet.getLong("id"));
+        commObj.setUfop_link(resultSet.getLong("ufop_link"));
+        commObj.setCreator_link(resultSet.getString("username"));
         commObj.setObj_name(resultSet.getString("obj_name"));
         commObj.setObj_type(resultSet.getInt("obj_type"));
         commObj.setS_obj_type(resultSet.getString("s_obj_type"));

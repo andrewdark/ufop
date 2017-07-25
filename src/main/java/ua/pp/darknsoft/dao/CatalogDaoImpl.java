@@ -121,11 +121,6 @@ public class CatalogDaoImpl implements CatalogDao,Serializable{
         paramMap.put("treemark", treemark.toLowerCase());
         paramMap.put("nlevel",level);
         List<BasicGroupOfGoodsCatalog> downloc = selectGoodsByTreemark.executeByNamedParam(paramMap);
-        if(downloc.isEmpty()){
-            BasicGroupOfGoodsCatalog lc = new BasicGroupOfGoodsCatalog();
-            lc.setId(0); lc.setTreemark("0.0"); lc.setName("No data");
-            //downloc.add(lc);
-        }
         return downloc;
     }
     @Override

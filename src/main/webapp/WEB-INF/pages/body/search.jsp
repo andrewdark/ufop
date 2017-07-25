@@ -34,7 +34,7 @@
             </form>
         </div>
 
-        <br />
+        <br/>
         <div class="searchmenu">
             <b>Пошук за перевіряючим органом</b>
             <form action="/viewslistbyunitandtime/1" method="get">
@@ -42,7 +42,7 @@
                     <c:forEach var="item" items="${unitList}">
                         <option value="${item.key}">${item.value}</option>
                     </c:forEach>
-                </select><br />
+                </select><br/>
                 <select name="id1">
                     <c:forEach var="item" items="${utimeList}">
                         <option value="${item.key}">${item.value}</option>
@@ -51,11 +51,11 @@
                 <input type="submit" value="Переглянути"/>
             </form>
         </div>
-        <br />
+        <br/>
         <div class="searchmenu">
             <b>Пошук без перевірок</b>
             <form action="/viewslistwithoutevent/1/" method="get">
-                <select name="id" >
+                <select name="id">
                     <option value="1">Без перевірок</option>
                     <option value="2">Без перевірок за останній рік</option>
                 </select>
@@ -90,7 +90,7 @@
                     <tr>
                         <td>Тип перевірки</td>
                         <td>
-                            <select name="param3" ><br />
+                            <select name="param3"><br/>
                                 <option value="-1">Не враховувати</option>
                                 <option value="0">Планова</option>
                                 <option value="1">Позапланова</option>
@@ -99,7 +99,7 @@
                     </tr>
                     <tr>
                         <td>Порушення</td>
-                        <td><select name="param4" ><br />
+                        <td><select name="param4"><br/>
                             <option value="-1">Не враховувати</option>
                             <option value="0">Не виявлені</option>
                             <option value="1">Виявлені</option>
@@ -114,12 +114,89 @@
         </div>
     </div>
     <div id="tabs-3">
-        Детальний пошук комерційних об'єктів<br /><br />
+        <form action="/viewslistcommobj/1/" method="get">
+            <table>
+                <tr>
+                    <td>Адреса:</td>
+                    <td>
+                        <input type="text" name="param0" id="a_place_of_reg" onclick="javascript:LocPopUpShow();"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Група ризику</td>
+                    <td>
+                        <select  name="param1">
+                            <option value="-1">Не враховувати</option>
+                            <c:forEach items="${riskList}" var="item">
+                                <option value="${item.id}">${item.title}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Тип об'єку</td>
+                    <td>
+                        <select  name="param2">
+                            <option value="-1">Не враховувати</option>
+                            <c:forEach items="${typeList}" var="item">
+                                <option value="${item.id}">${item.name}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Група товару</td>
+                    <td>
+                        <input type="text" name="param3" id="goodsname" onclick="javascript:GoodsPopUpShow();"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Переглянути"/></td>
+                </tr>
+            </table>
+        </form>
     </div>
     <div id="tabs-4">
-        Детальний пошук контактів<br /><br />
+        Детальний пошук контактів<br/><br/>
     </div>
     <div id="tabs-5">
-        <li /> <a href="/excel">Вигрузити всіх суб'єктів господарювання до EXCEL</a>
+        <li/>
+        <a href="/excel">Вигрузити всіх суб'єктів господарювання до EXCEL</a>
+    </div>
+</div>
+
+<div class="b-popup" id="popup1">
+
+    <div class="b-popup-content" id="setloc_popup">
+        <select id="my_selecttop1" name="my_selecttop" onchange="looplocationdown(2)">
+            <c:forEach items="${locationTop}" var="locationTop">
+                <option value="${locationTop.id}">${locationTop.name}</option>
+            </c:forEach>
+        </select><br/>
+        <div id="LocationType2"></div>
+        <div id="LocationType3"></div>
+        <div id="LocationType4"></div>
+        <div id="LocationType5"></div>
+        <div id="LocationType6"></div>
+        <a href="javascript:LocPopUpHide()">Додати адресу</a>
+    </div>
+
+</div>
+<div class="b-popup" id="popup4">
+    ${ex}<br/>
+    <div class="b-popup-content" id="setgoods_popup">
+        <select id="goods_selecttop1" name="goods_selecttop" onchange="loopgoodsdown(2)">
+            <option value="">Всі групи товару</option>
+            <option value="0">Групи товару не вказані</option>
+            <c:forEach items="${goodsTop}" var="goodsTop">
+                <option value="${goodsTop.treemark}">${goodsTop.name}</option>
+            </c:forEach>
+        </select><br/>
+        <div id="GoodsType2"></div>
+        <div id="GoodsType3"></div>
+        <div id="GoodsType4"></div>
+        <div id="GoodsType5"></div>
+        <a href="javascript:GoodsPopUpHide()">Додати групу товарів</a>
     </div>
 </div>

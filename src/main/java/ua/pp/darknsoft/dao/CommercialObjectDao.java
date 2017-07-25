@@ -24,6 +24,8 @@ public interface CommercialObjectDao {
     List<CommercialObject> getCommObjByAdressAndGroupOfGoods(CommercialObject comobj, String goods_catalog_link,
                                                              int total, int pageid);
 
+    List<CommercialObject> getCommObjByAdressWithOutGroupOfGoods(CommercialObject comobj, int total, int pageid);
+
     void addGoodsToCommObj(GoodsOfCommObj goods);
 
     List<GoodsOfCommObj> getCommObjGoodsByCommObjlink(long comm_obj_link);

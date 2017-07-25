@@ -193,7 +193,16 @@ public class MainController {
             uiModel.addAttribute("utimeList",utimeList);
             uiModel.addAttribute("unitList",unitList);
         }catch (Exception ex){
-            redirectAttributes.addFlashAttribute("ex", "StructureCatalog "+ex);
+            redirectAttributes.addFlashAttribute("ex", "Search structure and utime "+ex);
+            return myRdrct(httpServletRequest) + "/message";
+        }
+        try{
+            uiModel.addAttribute("locationTop", catalogDao.getLocationTop());
+            uiModel.addAttribute("goodsTop", catalogDao.getGoodsTop());
+            uiModel.addAttribute("riskList",catalogDao.getDegreeRiskCatalog());
+            uiModel.addAttribute("typeList",commercialObjectDao.getCommObjType());
+        }catch (Exception ex){
+            redirectAttributes.addFlashAttribute("ex", "Catalog "+ex);
             return myRdrct(httpServletRequest) + "/message";
         }
         return "search";

@@ -742,7 +742,7 @@ public class MasterController {
             return "Error: " + ex;
         }
 
-        html = "<select id=\"my_selecttop" + (level) + "\" onchange=\"loopgoodsdown(" + (level + 1) + ")\">" + option + "</select>";
+        html = "<select id=\"goods_selecttop" + (level) + "\" onchange=\"loopgoodsdown(" + (level + 1) + ")\">" + option + "</select>";
 
         return html;
     }

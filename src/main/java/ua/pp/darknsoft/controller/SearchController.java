@@ -215,7 +215,7 @@ public class SearchController {
     @RequestMapping(value = "/viewslistcommobj/{pageid}", method = RequestMethod.GET)
     public String viewsListCommObj(@PathVariable int pageid, @RequestParam(defaultValue = "1") String param0,
                                    @RequestParam(defaultValue = "-1") String param1, @RequestParam(defaultValue = "-1") String param2,
-                                   @RequestParam(defaultValue = "-1") String param3,
+                                   @RequestParam(defaultValue = "-1") String param3,@RequestParam(defaultValue = "-1") String param4,
                                    Model uiModel, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
         // param0 = a_place_of_reg - String
         // param1 = degree_risk_link - int
@@ -238,7 +238,7 @@ public class SearchController {
             comobj.setA_place_of_reg(param0);
             comobj.setDegree_risk_link(Integer.parseInt(param1));
             comobj.setObj_type(Integer.parseInt(param2));
-            if(param3.equals("0")) comobjList = commercialObjectDao.getCommObjByAdressAndGroupOfGoods(comobj,param3,total,pageid1);
+            if(param3.equals("0")) comobjList = commercialObjectDao.getCommObjByAdressWithOutGroupOfGoods(comobj,total,pageid1);
             else comobjList = commercialObjectDao.getCommObjByAdressAndGroupOfGoods(comobj,param3,total,pageid1);
             uiModel.addAttribute("comobjList",comobjList);
         } catch (Exception ex) {
@@ -253,7 +253,7 @@ public class SearchController {
         uiModel.addAttribute("param1", param1);
         uiModel.addAttribute("param2", param2);
         uiModel.addAttribute("param3", param3);
-
+        uiModel.addAttribute("param4", param4);
         uiModel.addAttribute("total_page", "NAN");
 
         if (comobjList.isEmpty()) {

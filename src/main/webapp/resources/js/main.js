@@ -126,11 +126,13 @@ function looplocationdown(level) {
         $("#LocationType2").load("/ajax_select_loc", aj);
         $("#LocationType3").html("");
         $("#LocationType4").html("");
+        $("#LocationType5").html("");
     }
     if (level == 3) {
         var aj = "treemark=" + $("#my_selecttop2 option:selected").val() + "&nlevel=3";
         $("#LocationType3").load("/ajax_select_loc", aj);
         $("#LocationType4").html("");
+        $("#LocationType5").html("");
     }
     if (level == 4) {
         var aj = "treemark=" + $("#my_selecttop3 option:selected").val() + "&nlevel=4";
@@ -293,39 +295,39 @@ function GoodsPopUpShow() {
 var count_goods = 1;
 function GoodsPopUpHide() {
 
-    if (count_goods == 1) $("#goodsname").val($("#my_selecttop1 option:selected").val());
+    if (count_goods == 1) $("#goodsname").val($("#goods_selecttop1 option:selected").val());
     if (count_goods == 2) {
-        if ($("#my_selecttop2 option:selected").val().length > 1) {
-            $("#goodsname").val($("#my_selecttop2 option:selected").val());
+        if ($("#goods_selecttop2 option:selected").val().length > 1) {
+            $("#goodsname").val($("#goods_selecttop2 option:selected").val());
         } else {
-            $("#goodsname").val($("#my_selecttop1 option:selected").val());
+            $("#goodsname").val($("#goods_selecttop1 option:selected").val());
         }
     }
     ;
     if (count_goods == 3) {
-        if ($("#my_selecttop3 option:selected").val().length > 1) {
-            $("#goodsname").val($("#my_selecttop3 option:selected").val());
+        if ($("#goods_selecttop3 option:selected").val().length > 1) {
+            $("#goodsname").val($("#goods_selecttop3 option:selected").val());
         } else {
-            $("#goodsname").val($("#my_selecttop2 option:selected").val());
+            $("#goodsname").val($("#goods_selecttop2 option:selected").val());
         }
     }
     ;
     if (count_goods == 4) {
-        if ($("#my_selecttop4 option:selected").val().length > 1) {
-            $("#goodsname").val($("#my_selecttop4 option:selected").val());
+        if ($("#goods_selecttop4 option:selected").val().length > 1) {
+            $("#goodsname").val($("#goods_selecttop4 option:selected").val());
         }
         else {
-            $("#goodsname").val($("#my_selecttop3 option:selected").val());
+            $("#goodsname").val($("#goods_selecttop3 option:selected").val());
         }
 
     }
     ;
     if (count_goods == 5) {
-        if ($("#my_selecttop5 option:selected").val().length > 1) {
-            $("#goodsname").val($("#my_selecttop5 option:selected").val());
+        if ($("#goods_selecttop5 option:selected").val().length > 1) {
+            $("#goodsname").val($("#goods_selecttop5 option:selected").val());
         }
         else {
-            $("#goodsname").val($("#my_selecttop4 option:selected").val());
+            $("#goodsname").val($("#goods_selecttop4 option:selected").val());
         }
 
     }
@@ -335,22 +337,22 @@ function GoodsPopUpHide() {
 function loopgoodsdown(level) {
     count_goods = level;
     if (level == 2) {
-        var aj = "treemark=" + $("#my_selecttop1 option:selected").val() + "&nlevel=2";
+        var aj = "treemark=" + $("#goods_selecttop1 option:selected").val() + "&nlevel=2";
         $("#GoodsType2").load("/ajax_select_goods", aj);
         $("#GoodsType3").html("");
         $("#GoodsType4").html("");
     }
     if (level == 3) {
-        var aj = "treemark=" + $("#my_selecttop2 option:selected").val() + "&nlevel=3";
+        var aj = "treemark=" + $("#goods_selecttop2 option:selected").val() + "&nlevel=3";
         $("#GoodsType3").load("/ajax_select_goods", aj);
         $("#GoodsType4").html("");
     }
     if (level == 4) {
-        var aj = "treemark=" + $("#my_selecttop3 option:selected").val() + "&nlevel=4";
+        var aj = "treemark=" + $("#goods_selecttop3 option:selected").val() + "&nlevel=4";
         $("#GoodsType4").load("/ajax_select_goods", aj);
     }
     if (level == 5) {
-        var aj = "treemark=" + $("#my_selecttop4 option:selected").val() + "&nlevel=5";
+        var aj = "treemark=" + $("#goods_selecttop4 option:selected").val() + "&nlevel=5";
         $("#GoodsType5").load("/ajax_select_goods", aj);
     }
 };

@@ -65,7 +65,7 @@
                     </td>
                 </tr>
             </table>
-            <p class="spec"><a href="http://localhost:8080/show_ufop?id=${comobjList.ufop_link}#tabs-2/" class="rm">Див.
+            <p class="spec"><a href="/show_ufop?id=${comobjList.ufop_link}#tabs-2/" class="rm">Див.
                 деталі</a></p>
         </div>
         <div class="clr"></div>
@@ -83,20 +83,20 @@
     ${ex}
     <p class="pages">
         <small>Page ${page_id} of ${total_page}</small>
-        <a href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}">&laquo;</a>
-        <a href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}">${page_id-1}</a><span>${page_id}</span>
+        <a href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}&param4=${param4}">&laquo;</a>
+        <a href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}&param4=${param4}">${page_id-1}</a><span>${page_id}</span>
     </p>
 </c:if>
 
 <c:if test="${not empty comobjList and pageid !=1}">
     <p class="pages">
         <small>Page ${page_id} of ${total_page}</small>
-        <a href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}">&laquo;</a><a
-            href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}">${page_id-1}</a>
+        <a href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}&param4=${param4}">&laquo;</a><a
+            href="/${viewslistlink}/${page_id-1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}&param4=${param4}">${page_id-1}</a>
         <span>${page_id}</span> <a
-            href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}">${page_id+1}</a>
+            href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}&param4=${param4}">${page_id+1}</a>
         <a
-                href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}">&raquo;</a>
+                href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}&param4=${param4}">&raquo;</a>
     </p>
 </c:if>
 <c:if test="${not empty comobjList and pageid ==1}">
@@ -104,7 +104,7 @@
         <small>Page ${page_id} of ${total_page}</small>
 
         <span>${page_id}</span> <a
-            href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}">${page_id+1}</a>
-        <a href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}">&raquo;</a>
+            href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}&param4=${param4}">${page_id+1}</a>
+        <a href="/${viewslistlink}/${page_id+1}${getparam}/?param0=${param0}&param1=${param1}&param2=${param2}&param3=${param3}&param4=${param4}">&raquo;</a>
     </p>
 </c:if>
