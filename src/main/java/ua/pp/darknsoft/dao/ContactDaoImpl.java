@@ -35,6 +35,7 @@ public class ContactDaoImpl implements ContactDao, Serializable {
     SelectContactByOrganizationLink contactByOrganizationLink;
     SelectContactById selectContactById;
     UpdateContact updateContact;
+    SelectContactByUserId selectContactByUserId;
 
     @Resource(name = "dataSource")
     public void setDataSource(DataSource dataSource) {
@@ -46,6 +47,7 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         this.contactByOrganizationLink = new SelectContactByOrganizationLink(dataSource);
         this.selectContactById = new SelectContactById(dataSource);
         this.updateContact = new UpdateContact(dataSource);
+        this.selectContactByUserId = new SelectContactByUserId(dataSource);
     }
 
     @Override
@@ -76,6 +78,13 @@ public class ContactDaoImpl implements ContactDao, Serializable {
         Map<String, Object> bind = new HashMap<>();
         bind.put("username", username);
         Contact contact = selectContactByUserName.executeByNamedParam(bind).get(0);
+        return contact;
+    }
+    @Override
+    public Contact getContactByUserId(int user_id) {
+        Map<String, Object> bind = new HashMap<>();
+        bind.put("id", user_id);
+        Contact contact = selectContactByUserId.executeByNamedParam(bind).get(0);
         return contact;
     }
 

@@ -8,12 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.pp.darknsoft.dao.CatalogDao;
+import ua.pp.darknsoft.dao.ContactDao;
 import ua.pp.darknsoft.dao.UserDao;
 import ua.pp.darknsoft.dao.WorkTimeDao;
-import ua.pp.darknsoft.entity.CauseCatalog;
-import ua.pp.darknsoft.entity.OverUser;
-import ua.pp.darknsoft.entity.User;
-import ua.pp.darknsoft.entity.WorkTime;
+import ua.pp.darknsoft.entity.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -33,6 +31,8 @@ public class WorkTimeController {
     WorkTimeDao workTimeDao;
     @Autowired
     UserDao userDao;
+    @Autowired
+    ContactDao contactDao;
 
 
 
@@ -118,9 +118,11 @@ public class WorkTimeController {
         try {
             ld_f = dtf.format(LocalDate.parse(date));
             ld_l = ld_f;
+            uiModel.addAttribute("dateparam","&datestart="+date+"&datestop="+LocalDate.parse(date).plusDays(1));
         } catch (Exception ex) {
             ld_f = dtf.format(localDate);
             ld_l = dtf.format(localDate);
+            uiModel.addAttribute("dateparam","");
         }
 
         String scheme = httpServletRequest.getScheme() + "://";
@@ -132,6 +134,7 @@ public class WorkTimeController {
             uiModel.addAttribute("mySubdivision", userDao.getUserStructureNameByUserName(user));
             uiModel.addAttribute("worktime", workTimeDao.getMySlavesWorkTimeDesc(user, ld_f + " 00:00:00.00001", ld_l + " 23:59:59.00001", null));
             uiModel.addAttribute("searchdate", ld_f);
+
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return rdrct + "/message";
@@ -201,6 +204,9 @@ public class WorkTimeController {
             workTime.setUser_link(Integer.parseInt(id));
             workTime.setS_user_accepted_link(user);
             workTime.setUser_name(userDao.getUserNameById(Integer.parseInt(id)));
+            Contact contact = contactDao.getContactByUserId(Integer.parseInt(id));
+            String pib = contact.getLast_name() + " "+contact.getFirst_name();
+            if(contact.getPatronymic_name()!=null) pib=pib+" "+contact.getPatronymic_name();
             Map<Integer, String> causes = new HashMap<>();
             List<WorkTime> wtList = workTimeDao.getMyWorkWorkTimeDESC(workTime.getUser_name(),1);
             if (wtList.isEmpty()) {
@@ -218,8 +224,8 @@ public class WorkTimeController {
                 }
             }
             uiModel.addAttribute("worktime", workTimeDao.getWTUserDetail(Integer.parseInt(id), datestart, datestop));
-            uiModel.addAttribute("wt_user", "id: " + id + " За період від: " + datestart + " до: " + datestop);
-            uiModel.addAttribute("title", "РОБОЧИЙ ЧАС КОРИСТУВАЧА "+workTime.getUser_name());
+            uiModel.addAttribute("wt_user", "id: " + id + "<br />Логін: "+workTime.getUser_name()+"<br /> ПІБ: "+pib);
+            uiModel.addAttribute("title", "РОБОЧИЙ ЧАС КОРИСТУВАЧА З "+datestart+" ПО "+datestop);
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", ex);
             return myRdrct(httpServletRequest) + "/message";
@@ -266,10 +272,10 @@ public class WorkTimeController {
             List<OverUser> userList = userDao.getUsersByStructureLink(param1);
             for (int i = 0; i <= userList.size() - 1; i++) {
                 if (userList.get(i).getWorkTime().getType_of_action() == 0) {
-                    html = html + "<font color=\"red\"> Користувач: " + userList.get(i).getCt_ln() + " " + userList.get(i).getCt_fn() + " - відсутній з " + userList.get(i).getWorkTime().getDatereg().toString().split("\\.")[0] + " по причині: " + userList.get(i).getWorkTime().getS_cause_link() + "</font><br />";
+                    html = html + "<font color=\"red\"> Користувач: <a href=\"/acceptwt_detail?id="+userList.get(i).getId()+"\">" + userList.get(i).getCt_ln() + " " + userList.get(i).getCt_fn() + "</a> - відсутній з " + userList.get(i).getWorkTime().getDatereg().toString().split("\\.")[0] + " по причині: " + userList.get(i).getWorkTime().getS_cause_link() + "</font><br />";
                 }
                 if (userList.get(i).getWorkTime().getType_of_action() == 1) {
-                    html = html + "<font color=\"green\"> Користувач: " + userList.get(i).getCt_ln() + " " + userList.get(i).getCt_fn() + " - присутній з " + userList.get(i).getWorkTime().getDatereg().toString().split("\\.")[0] + " по причині: " + userList.get(i).getWorkTime().getS_cause_link() + "</font><br />";
+                    html = html + "<font color=\"green\"> Користувач: <a href=\"/acceptwt_detail?id=" + userList.get(i).getId() + "\">" + userList.get(i).getCt_ln() + " " + userList.get(i).getCt_fn() + "</a> - присутній з " + userList.get(i).getWorkTime().getDatereg().toString().split("\\.")[0] + " по причині: " + userList.get(i).getWorkTime().getS_cause_link() + "</font><br />";
                 }
                 if (userList.get(i).getWorkTime().getType_of_action() == 2) {
                     html = html + "<font color=\"gray\"> Користувач: " + userList.get(i).getCt_ln() + " " + userList.get(i).getCt_fn() + " - місце знаходження не встановлено по причині: " + userList.get(i).getWorkTime().getS_cause_link() + "</font><br />";

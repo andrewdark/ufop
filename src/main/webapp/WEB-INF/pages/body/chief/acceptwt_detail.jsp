@@ -12,29 +12,45 @@
     <h2><span>${title}</span></h2>
     <div class="clr"></div>
     <div class="post_content_wide">
-        <h3> ${wt_user} </h3>
 
-        <c:if test="${p_or_e}">
-            <h3> Користувач ${command.user_name} знаходиться на робочому місці</h3>
-            <form:form action="/acceptwt_detailpost" method="post">
-                <form:hidden path="user_link"/>
-                <form:hidden path="user_name"/>
-                <form:hidden path="s_user_accepted_link"/>
-                <form:select path="cause_link" items="${causes}"/><input type="submit" value="Завершити" />
-            </form:form>
-        </c:if>
+        <table width="100%">
+            <caption>
+                <c:if test="${p_or_e}">
+                    <h3>Користувач ${command.user_name} знаходиться на робочому місці</h3>
+                </c:if>
 
-        <c:if test="${not p_or_e}">
-            <h3> Користувач ${command.user_name} відсутній на робочому місці</h3>
-        </c:if>
+                <c:if test="${not p_or_e}">
+                    <h3> Користувач ${command.user_name} відсутній на робочому місці</h3>
+                </c:if>
+            </caption>
+            <tr>
+                <td>
+                    <h3> ${wt_user} </h3>
+                </td>
+                <td align="center" valign="top">
+                    <c:if test="${p_or_e}">
+                        <form:form action="/acceptwt_detailpost" method="post">
+                            <form:hidden path="user_link"/>
+                            <form:hidden path="user_name"/>
+                            <form:hidden path="s_user_accepted_link"/>
+                            <form:select path="cause_link" items="${causes}"/>&nbsp;
+                            <input type="submit" value="Завершити роботу"/>
+                        </form:form>
+                    </c:if>
+                </td>
+            </tr>
+        </table>
 
+        <br/><br/>
         <c:if test="${not empty worktime}">
             <table width="100%">
                 <caption>
                     ДЕТАЛЬНИЙ РОЗКЛАД РОБОЧОГО ЧАСУ
                 </caption>
                 <tr>
-                    <th></th><th>Час</th><th>Причина</th>
+                    <th></th>
+                    <th>Час</th>
+                    <th>Причина</th>
                 </tr>
                 <c:forEach var="worktime" items="${worktime}">
                     <tr>

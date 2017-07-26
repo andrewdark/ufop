@@ -9,9 +9,9 @@ import java.time.LocalDate;
 public class OverUser extends User implements Serializable{
     private WorkTime workTime;
 
-    private String ct_fn;
-    private String ct_ln;
-    private String ct_pn;
+    private String ct_fn; //First name
+    private String ct_ln; //Last name
+    private String ct_pn; //Patronymic name
 
     private String cct_name;
 

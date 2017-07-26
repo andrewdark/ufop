@@ -16,6 +16,8 @@ public interface ContactDao {
 
     Contact getContactByName(String username);
 
+    Contact getContactByUserId(int user_id);
+
     long insert(Contact contact);
 
     String getContactByRntc(String rntc);
