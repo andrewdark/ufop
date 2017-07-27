@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 import ua.pp.darknsoft.entity.CheckEventSupplemented;
+import ua.pp.darknsoft.entity.LocationCatalog;
 import ua.pp.darknsoft.entity.Ufop;
 import static ua.pp.darknsoft.support.StaticMethod.*;
 import javax.servlet.http.HttpServletRequest;
@@ -59,6 +60,7 @@ public class ExcelDocument extends AbstractExcelView {
 
         //Get data from model
         List<Ufop> ufops_list = (List<Ufop>) model.get("modelObject");
+
         int rowCount = 1;
         for (Ufop ufop : ufops_list) {
             HSSFRow row = excelSheet.createRow(rowCount++);
@@ -66,7 +68,7 @@ public class ExcelDocument extends AbstractExcelView {
             row.getCell(0).setCellStyle(styleCell);
             row.createCell(1).setCellValue(repairHtml(ufop.getUfop_name()));
             row.getCell(1).setCellStyle(styleCell);
-            row.createCell(2).setCellValue("x");
+            row.createCell(2).setCellValue(ufop.getA_place_of_reg()+" "+adresBuild(ufop));
             row.getCell(2).setCellStyle(styleCell);
             row.createCell(3).setCellValue(ufop.getUfop_code());
             row.getCell(3).setCellStyle(styleCell);
@@ -107,6 +109,14 @@ public class ExcelDocument extends AbstractExcelView {
         header.getCell(7).setCellStyle(styleHeader);
         header.createCell(8).setCellValue("Найменування органу державного нагляду  (контролю)");
         header.getCell(8).setCellStyle(styleHeader);
+    }
+
+    private static String adresBuild(Ufop ufop){
+        String adr = "";
+        if(!ufop.getN_place_of_reg().isEmpty())adr="Дім: "+ufop.getN_place_of_reg()+" ";
+        if(!ufop.getB_place_of_reg().isEmpty())adr=adr+"Корпус: "+ufop.getB_place_of_reg()+" ";
+        if(!ufop.getF_place_of_reg().isEmpty())adr=adr+"Квартира: "+ufop.getF_place_of_reg();
+        return adr;
     }
 
 }

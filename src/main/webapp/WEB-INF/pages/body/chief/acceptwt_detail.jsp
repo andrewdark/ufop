@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrew
@@ -55,7 +56,7 @@
                 <c:forEach var="worktime" items="${worktime}">
                     <tr>
                         <td>${worktime.user_name} </td>
-                        <td>${worktime.datereg} </td>
+                        <td>${fn:substring (worktime.datereg,0,19)} </td>
                         <td>${worktime.s_cause_link} </td>
 
                     </tr>

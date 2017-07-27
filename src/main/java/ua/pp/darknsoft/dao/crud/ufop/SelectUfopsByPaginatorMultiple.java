@@ -33,9 +33,9 @@ public class SelectUfopsByPaginatorMultiple extends MappingSqlQuery<Ufop> {
         ufop.setUfop_name(resultSet.getString("ufop_name"));
         ufop.setUfop_code(resultSet.getString("ufop_code"));
         ufop.setA_place_of_reg(resultSet.getString("a_place_of_reg"));
-        ufop.setA_place_of_reg(resultSet.getString("n_place_of_reg"));
-        ufop.setA_place_of_reg(resultSet.getString("f_place_of_reg"));
-        ufop.setA_place_of_reg(resultSet.getString("b_place_of_reg"));
+        ufop.setN_place_of_reg(resultSet.getString("n_place_of_reg"));
+        ufop.setF_place_of_reg(resultSet.getString("f_place_of_reg"));
+        ufop.setB_place_of_reg(resultSet.getString("b_place_of_reg"));
         ufop.setSeries_of_passport(resultSet.getString("series_of_passport"));
         ufop.setNumber_of_passport(resultSet.getString("number_of_passport"));
         ufop.setScreator_link(resultSet.getString("username"));
