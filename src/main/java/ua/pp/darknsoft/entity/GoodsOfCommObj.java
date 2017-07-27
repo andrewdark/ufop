@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 23.03.2017.
  */
@@ -30,7 +30,7 @@ public class GoodsOfCommObj {
     }
 
     public void setGoods_catalog_link(String goods_catalog_link) {
-        this.goods_catalog_link = goods_catalog_link;
+        this.goods_catalog_link = rejectHtml(goods_catalog_link);
     }
 
     public String getName() {
@@ -38,6 +38,6 @@ public class GoodsOfCommObj {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = rejectHtml(name);
     }
 }

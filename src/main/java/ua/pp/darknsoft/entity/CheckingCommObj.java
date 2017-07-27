@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Dark on 26.03.2017.
  */
@@ -44,5 +44,5 @@ public class CheckingCommObj {
 
     public String getComm_obj_name() { return comm_obj_name; }
 
-    public void setComm_obj_name(String comm_obj_name) { this.comm_obj_name = comm_obj_name; }
+    public void setComm_obj_name(String comm_obj_name) { this.comm_obj_name = rejectHtml(comm_obj_name); }
 }

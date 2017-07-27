@@ -1,7 +1,7 @@
 package ua.pp.darknsoft.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import static ua.pp.darknsoft.support.StaticMethod.*;
 
 /**
  * Created by Dark on 11.01.2017.
@@ -28,7 +28,7 @@ public class OverUser extends User implements Serializable{
     }
 
     public void setCt_fn(String ct_fn) {
-        this.ct_fn = ct_fn;
+        this.ct_fn = rejectHtml(ct_fn);
     }
 
     public String getCt_ln() {
@@ -36,7 +36,7 @@ public class OverUser extends User implements Serializable{
     }
 
     public void setCt_ln(String ct_ln) {
-        this.ct_ln = ct_ln;
+        this.ct_ln = rejectHtml(ct_ln);
     }
 
     public String getCt_pn() {
@@ -44,7 +44,7 @@ public class OverUser extends User implements Serializable{
     }
 
     public void setCt_pn(String ct_pn) {
-        this.ct_pn = ct_pn;
+        this.ct_pn = rejectHtml(ct_pn);
     }
 
     public String getCct_name() {
@@ -52,6 +52,6 @@ public class OverUser extends User implements Serializable{
     }
 
     public void setCct_name(String cct_name) {
-        this.cct_name = cct_name;
+        this.cct_name = rejectHtml(cct_name);
     }
 }

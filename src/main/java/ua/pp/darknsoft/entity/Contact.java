@@ -3,7 +3,7 @@ package ua.pp.darknsoft.entity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.sql.Date;
+import static ua.pp.darknsoft.support.StaticMethod.*;
 
 /**
  * Created by Andrew on 30.01.2017.
@@ -54,7 +54,7 @@ public class Contact {
     }
 
     public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+        this.first_name = rejectHtml(first_name);
     }
 
     public String getLast_name() {
@@ -62,7 +62,7 @@ public class Contact {
     }
 
     public void setLast_name(String last_name) {
-        this.last_name = last_name;
+        this.last_name = rejectHtml(last_name);
     }
 
     public String getPatronymic_name() {
@@ -70,7 +70,7 @@ public class Contact {
     }
 
     public void setPatronymic_name(String patronymic_name) {
-        this.patronymic_name = patronymic_name;
+        this.patronymic_name = rejectHtml(patronymic_name);
     }
 
     public String getRntc() {
@@ -78,7 +78,7 @@ public class Contact {
     }
 
     public void setRntc(String rntc) {
-        this.rntc = rntc;
+        this.rntc = rejectHtml(rntc);
     }
 
     public String getSeries_of_passport() {
@@ -86,7 +86,7 @@ public class Contact {
     }
 
     public void setSeries_of_passport(String series_of_passport) {
-        this.series_of_passport = series_of_passport;
+        this.series_of_passport = rejectHtml(series_of_passport);
     }
 
     public String getNumber_of_passport() {
@@ -94,7 +94,7 @@ public class Contact {
     }
 
     public void setNumber_of_passport(String number_of_passport) {
-        this.number_of_passport = number_of_passport;
+        this.number_of_passport = rejectHtml(number_of_passport);
     }
 
     public String getA_stay_address() {
@@ -102,7 +102,7 @@ public class Contact {
     }
 
     public void setA_stay_address(String a_stay_address) {
-        this.a_stay_address = a_stay_address;
+        this.a_stay_address = rejectHtml(a_stay_address);
     }
 
     public String getN_stay_address() {
@@ -110,7 +110,7 @@ public class Contact {
     }
 
     public void setN_stay_address(String n_stay_address) {
-        this.n_stay_address = n_stay_address;
+        this.n_stay_address = rejectHtml(n_stay_address);
     }
 
     public String getF_stay_address() {
@@ -118,7 +118,7 @@ public class Contact {
     }
 
     public void setF_stay_address(String f_stay_address) {
-        this.f_stay_address = f_stay_address;
+        this.f_stay_address = rejectHtml(f_stay_address);
     }
 
     public String getB_stay_address() {
@@ -126,7 +126,7 @@ public class Contact {
     }
 
     public void setB_stay_address(String b_stay_address) {
-        this.b_stay_address = b_stay_address;
+        this.b_stay_address = rejectHtml(b_stay_address);
     }
 
     public String getTel() {
@@ -134,7 +134,7 @@ public class Contact {
     }
 
     public void setTel(String tel) {
-        this.tel = tel;
+        this.tel = rejectHtml(tel);
     }
 
     public String getFax() {
@@ -142,7 +142,7 @@ public class Contact {
     }
 
     public void setFax(String fax) {
-        this.fax = fax;
+        this.fax = rejectHtml(fax);
     }
 
     public String getEmail() {
@@ -150,7 +150,7 @@ public class Contact {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = rejectHtml(email);
     }
 
     public Timestamp getDatereg() {
@@ -166,7 +166,7 @@ public class Contact {
     }
 
     public void setCreator_link(String creator_link) {
-        this.creator_link = creator_link;
+        this.creator_link = rejectHtml(creator_link);
     }
 
     public String getBirthday() {
@@ -174,7 +174,7 @@ public class Contact {
     }
 
     public void setBirthday(String birthday) {
-        this.birthday = birthday;
+        this.birthday = rejectHtml(birthday);
     }
 
     public long getOrganization() {
@@ -190,7 +190,7 @@ public class Contact {
     }
 
     public void setPosition(String position) {
-        this.position = position;
+        this.position = rejectHtml(position);
     }
 
     public String getDescription() {
@@ -198,7 +198,7 @@ public class Contact {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = rejectHtml(description);
     }
 
     public String getSorganization() {
@@ -206,6 +206,6 @@ public class Contact {
     }
 
     public void setSorganization(String sorganization) {
-        this.sorganization = sorganization;
+        this.sorganization = rejectHtml(sorganization);
     }
 }

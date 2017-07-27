@@ -1,7 +1,7 @@
 package ua.pp.darknsoft.entity;
 
 import java.util.List;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 30.03.2017.
  */

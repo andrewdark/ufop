@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Dark on 26.03.2017.
  */
@@ -33,7 +33,7 @@ public class CheckingGroupOfGoods {
     }
 
     public void setGoods_catalog_link(String goods_catalog_link) {
-        this.goods_catalog_link = goods_catalog_link;
+        this.goods_catalog_link = rejectHtml(goods_catalog_link);
     }
 
     public boolean isChecking() {
@@ -61,6 +61,6 @@ public class CheckingGroupOfGoods {
     }
 
     public void setS_goods_catalog_link(String s_goods_catalog_link) {
-        this.s_goods_catalog_link = s_goods_catalog_link;
+        this.s_goods_catalog_link = rejectHtml(s_goods_catalog_link);
     }
 }

@@ -1,7 +1,7 @@
 package ua.pp.darknsoft.entity;
 
 import java.sql.Timestamp;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 09.03.2017.
  */
@@ -61,7 +61,7 @@ public class Ufop {
     }
 
     public void setSeries_of_passport(String series_of_passport) {
-        this.series_of_passport = series_of_passport;
+        this.series_of_passport = rejectHtml(series_of_passport);
     }
 
     public String getNumber_of_passport() {
@@ -141,7 +141,7 @@ public class Ufop {
     }
 
     public void setScreator_link(String screator_link) {
-        this.screator_link = screator_link;
+        this.screator_link = rejectHtml(screator_link);
     }
 
     public int getUfop_nav() { return ufop_nav; }
@@ -153,19 +153,8 @@ public class Ufop {
     }
 
     public void setLast_event(String last_event) {
-        this.last_event = last_event;
+        this.last_event = rejectHtml(last_event);
     }
 
-    private String rejectHtml(String input) {
-        String output = "";
-        if (input == null) return "";
-        else {
-            input = input.replaceAll("<", "&lt;");
-            input = input.replaceAll(">", "&gt;");
-            input = input.replaceAll("\'", "&rsquo;");
-            output = input.replaceAll("\"", "&quot;");
-            return output;
-        }
 
-    }
 }

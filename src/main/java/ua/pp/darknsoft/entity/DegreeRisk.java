@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 08.02.2017.
  */
@@ -20,6 +20,6 @@ public class DegreeRisk {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = rejectHtml(title);
     }
 }

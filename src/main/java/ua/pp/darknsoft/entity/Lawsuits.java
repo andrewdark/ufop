@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 29.03.2017.
  */
@@ -41,7 +41,7 @@ public class Lawsuits {
     }
 
     public void setFiled_date(String filed_date) {
-        this.filed_date = filed_date;
+        this.filed_date = rejectHtml(filed_date);
     }
 
     public int getResult_link() {
@@ -57,7 +57,7 @@ public class Lawsuits {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = rejectHtml(description);
     }
 
     public String getSresult_link() {
@@ -65,6 +65,6 @@ public class Lawsuits {
     }
 
     public void setSresult_link(String sresult_link) {
-        this.sresult_link = sresult_link;
+        this.sresult_link = rejectHtml(sresult_link);
     }
 }

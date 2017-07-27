@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 16.01.2017.
  */
@@ -22,7 +22,7 @@ public class LocationType {
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = rejectHtml(type);
     }
 
     public String getNote() {
@@ -30,7 +30,7 @@ public class LocationType {
     }
 
     public void setNote(String note) {
-        this.note = note;
+        this.note = rejectHtml(note);
     }
 
     public short getLevel() {

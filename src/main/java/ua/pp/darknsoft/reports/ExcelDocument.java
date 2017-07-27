@@ -10,7 +10,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 import ua.pp.darknsoft.entity.CheckEventSupplemented;
 import ua.pp.darknsoft.entity.Ufop;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -64,7 +64,7 @@ public class ExcelDocument extends AbstractExcelView {
             HSSFRow row = excelSheet.createRow(rowCount++);
             row.createCell(0).setCellValue(rowCount-1);
             row.getCell(0).setCellStyle(styleCell);
-            row.createCell(1).setCellValue(rejectHtml(ufop.getUfop_name()));
+            row.createCell(1).setCellValue(repairHtml(ufop.getUfop_name()));
             row.getCell(1).setCellStyle(styleCell);
             row.createCell(2).setCellValue("x");
             row.getCell(2).setCellStyle(styleCell);
@@ -108,16 +108,5 @@ public class ExcelDocument extends AbstractExcelView {
         header.createCell(8).setCellValue("Найменування органу державного нагляду  (контролю)");
         header.getCell(8).setCellStyle(styleHeader);
     }
-    private String rejectHtml(String input) {
-        String output = "";
-        if (input == null) return "";
-        else {
-            input = input.replaceAll("&lt;", "<");
-            input = input.replaceAll("&gt;", ">");
-            input = input.replaceAll("&rsquo;", "\'");
-            output = input.replaceAll("&quot;", "\"");
-            return output;
-        }
 
-    }
 }

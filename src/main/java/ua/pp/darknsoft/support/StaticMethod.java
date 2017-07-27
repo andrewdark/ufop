@@ -15,4 +15,27 @@ public class StaticMethod {
         String rdrct = "redirect:" + scheme + serverName + serverPort;
         return rdrct;
     }
+    public static String rejectHtml(String input) {
+        String output = "";
+        if (input == null) return "";
+        else {
+            input = input.replaceAll("<", "&lt;");
+            input = input.replaceAll(">", "&gt;");
+            input = input.replaceAll("\'", "&rsquo;");
+            output = input.replaceAll("\"", "&quot;");
+            return output;
+        }
+    }
+
+    public static String repairHtml(String input) {
+        String output = "";
+        if (input == null) return "";
+        else {
+            input = input.replaceAll("&lt;", "<");
+            input = input.replaceAll("&gt;", ">");
+            input = input.replaceAll("&rsquo;", "\'");
+            output = input.replaceAll("&quot;", "\"");
+            return output;
+        }
+    }
 }

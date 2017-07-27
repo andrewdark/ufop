@@ -1,7 +1,7 @@
 package ua.pp.darknsoft.entity;
 
 import java.sql.Timestamp;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 29.05.2017.
  */
@@ -46,7 +46,7 @@ public class Inspectors {
     }
 
     public void setUser_name(String user_name) {
-        this.user_name = user_name;
+        this.user_name = rejectHtml(user_name);
     }
 
     public String getStructure_link() {
@@ -54,7 +54,7 @@ public class Inspectors {
     }
 
     public void setStructure_link(String structure_link) {
-        this.structure_link = structure_link;
+        this.structure_link = rejectHtml(structure_link);
     }
 
     public boolean isAccepted() {
@@ -86,7 +86,7 @@ public class Inspectors {
     }
 
     public void setCreator_name(String creator_name) {
-        this.creator_name = creator_name;
+        this.creator_name = rejectHtml(creator_name);
     }
 
     public String getStructure_name() {
@@ -94,6 +94,6 @@ public class Inspectors {
     }
 
     public void setStructure_name(String structure_name) {
-        this.structure_name = structure_name;
+        this.structure_name = rejectHtml(structure_name);
     }
 }

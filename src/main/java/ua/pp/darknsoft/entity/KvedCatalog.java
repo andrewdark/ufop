@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 30.01.2017.
  */
@@ -24,7 +24,7 @@ public class KvedCatalog {
     }
 
     public void setTreemark(String treemark) {
-        this.treemark = treemark;
+        this.treemark = rejectHtml(treemark);
     }
 
     public String getLabel() {
@@ -32,7 +32,7 @@ public class KvedCatalog {
     }
 
     public void setLabel(String label) {
-        this.label = label;
+        this.label = rejectHtml(label);
     }
 
     public String getName() {
@@ -40,7 +40,7 @@ public class KvedCatalog {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = rejectHtml(name);
     }
 
     public String getDescription() {
@@ -48,7 +48,7 @@ public class KvedCatalog {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = rejectHtml(description);
     }
 
     public int getNlevel() { return nlevel; }

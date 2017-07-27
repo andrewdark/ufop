@@ -2,7 +2,7 @@ package ua.pp.darknsoft.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Dark on 11.01.2017.
  */
@@ -87,10 +87,10 @@ public class User implements Serializable{
     }
 
     public void setStructure_link(String structure_link) {
-        this.structure_link = structure_link;
+        this.structure_link = rejectHtml(structure_link);
     }
 
     public String getRole_name() { return role_name; }
 
-    public void setRole_name(String role_name) { this.role_name = role_name; }
+    public void setRole_name(String role_name) { this.role_name = rejectHtml(role_name); }
 }

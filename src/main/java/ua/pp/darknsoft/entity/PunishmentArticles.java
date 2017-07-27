@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 29.03.2017.
  */
@@ -32,7 +32,7 @@ public class PunishmentArticles {
     }
 
     public void setArticles_law_link(String articles_law_link) {
-        this.articles_law_link = articles_law_link;
+        this.articles_law_link = rejectHtml(articles_law_link);
     }
 
     public boolean isAdditionalinformation() {
@@ -56,6 +56,6 @@ public class PunishmentArticles {
     }
 
     public void setCaption(String caption) {
-        this.caption = caption;
+        this.caption = rejectHtml(caption);
     }
 }

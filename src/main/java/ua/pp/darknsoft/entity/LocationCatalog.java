@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 30.01.2017.
  */
@@ -25,7 +25,7 @@ public class LocationCatalog {
     }
 
     public void setLtree(String ltree) {
-        this.ltree = ltree;
+        this.ltree = rejectHtml(ltree);
     }
 
     public String getName() {
@@ -33,7 +33,7 @@ public class LocationCatalog {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = rejectHtml(name);
     }
 
     public int getType() {
@@ -46,14 +46,14 @@ public class LocationCatalog {
 
     public String getStype() { return stype; }
 
-    public void setStype(String stype) { this.stype = stype; }
+    public void setStype(String stype) { this.stype = rejectHtml(stype); }
 
     public String getNote() {
         return note;
     }
 
     public void setNote(String note) {
-        this.note = note;
+        this.note = rejectHtml(note);
     }
 
     public int getNlevel() { return nlevel; }

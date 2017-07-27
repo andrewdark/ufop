@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 29.03.2017.
  */
@@ -42,7 +42,7 @@ public class Precaution {
     }
 
     public void setDecision_number(String decision_number) {
-        this.decision_number = decision_number;
+        this.decision_number = rejectHtml(decision_number);
     }
 
     public String getService_date() {
@@ -51,7 +51,7 @@ public class Precaution {
 
     public void setService_date(String service_date) {
         if(service_date.isEmpty())this.service_date = "0001-01-01";
-        else this.service_date = service_date;
+        else this.service_date = rejectHtml(service_date);
     }
 
     public String getPlan_date() {
@@ -60,7 +60,7 @@ public class Precaution {
 
     public void setPlan_date(String plan_date) {
         if(plan_date.isEmpty()) this.plan_date = "0001-01-01";
-        else this.plan_date = plan_date;
+        else this.plan_date = rejectHtml(plan_date);
     }
 
     public String getFact_date() {
@@ -69,7 +69,7 @@ public class Precaution {
 
     public void setFact_date(String fact_date) {
         if(fact_date.isEmpty()) this.fact_date = "0001-01-01";
-        else this.fact_date = fact_date;
+        else this.fact_date = rejectHtml(fact_date);
     }
 
     public String getPrecaution_name() {
@@ -77,6 +77,6 @@ public class Precaution {
     }
 
     public void setPrecaution_name(String precaution_name) {
-        this.precaution_name = precaution_name;
+        this.precaution_name = rejectHtml(precaution_name);
     }
 }

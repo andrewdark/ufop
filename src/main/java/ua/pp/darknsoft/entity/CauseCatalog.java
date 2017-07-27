@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 27.02.2017.
  */
@@ -29,6 +29,6 @@ public class CauseCatalog {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = rejectHtml(name);
     }
 }

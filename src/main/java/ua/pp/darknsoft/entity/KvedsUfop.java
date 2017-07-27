@@ -1,7 +1,7 @@
 package ua.pp.darknsoft.entity;
 
 import java.sql.Timestamp;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 09.03.2017.
  */
@@ -44,7 +44,7 @@ public class KvedsUfop {
     }
 
     public void setKved_catalog_link(String kved_catalog_link) {
-        this.kved_catalog_link = kved_catalog_link;
+        this.kved_catalog_link = rejectHtml(kved_catalog_link);
     }
 
     public Timestamp getDatereg() {
@@ -60,7 +60,7 @@ public class KvedsUfop {
     }
 
     public void setCreator_link(String creator_link) {
-        this.creator_link = creator_link;
+        this.creator_link = rejectHtml(creator_link);
     }
 
     public String getKved_catalog_label() {
@@ -68,7 +68,7 @@ public class KvedsUfop {
     }
 
     public void setKved_catalog_label(String kved_catalog_label) {
-        this.kved_catalog_label = kved_catalog_label;
+        this.kved_catalog_label = rejectHtml(kved_catalog_label);
     }
 
     public String getKved_catalog_name() {
@@ -76,6 +76,6 @@ public class KvedsUfop {
     }
 
     public void setKved_catalog_name(String kved_catalog_name) {
-        this.kved_catalog_name = kved_catalog_name;
+        this.kved_catalog_name = rejectHtml(kved_catalog_name);
     }
 }

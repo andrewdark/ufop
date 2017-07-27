@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 16.02.2017.
  */
@@ -20,6 +20,6 @@ public class Role {
     }
 
     public void setRole_name(String role_name) {
-        this.role_name = role_name;
+        this.role_name = rejectHtml(role_name);
     }
 }

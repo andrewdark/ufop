@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Dark on 26.03.2017.
  */
@@ -30,7 +30,7 @@ public class OffenseArticles {
     }
 
     public void setArticles_law_link(String articles_law_link) {
-        this.articles_law_link = articles_law_link;
+        this.articles_law_link = rejectHtml(articles_law_link);
     }
 
     public String getCaption() {
@@ -38,6 +38,6 @@ public class OffenseArticles {
     }
 
     public void setCaption(String caption) {
-        this.caption = caption;
+        this.caption = rejectHtml(caption);
     }
 }

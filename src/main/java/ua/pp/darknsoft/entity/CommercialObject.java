@@ -2,7 +2,7 @@ package ua.pp.darknsoft.entity;
 
 import java.sql.Timestamp;
 import java.util.List;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 09.03.2017.
  */
@@ -32,7 +32,7 @@ public class CommercialObject {
 
     public String getS_degree_risk_link() { return s_degree_risk_link; }
 
-    public void setS_degree_risk_link(String s_degree_risk_link) { this.s_degree_risk_link = s_degree_risk_link; }
+    public void setS_degree_risk_link(String s_degree_risk_link) { this.s_degree_risk_link = rejectHtml(s_degree_risk_link); }
 
     public long getId() {
         return id;
@@ -63,7 +63,7 @@ public class CommercialObject {
     }
 
     public void setObj_name(String obj_name) {
-        this.obj_name = obj_name;
+        this.obj_name = rejectHtml(obj_name);
     }
 
     public String getA_place_of_reg() {
@@ -71,7 +71,7 @@ public class CommercialObject {
     }
 
     public void setA_place_of_reg(String a_place_of_reg) {
-        this.a_place_of_reg = a_place_of_reg;
+        this.a_place_of_reg = rejectHtml(a_place_of_reg);
     }
 
     public String getN_place_of_reg() {
@@ -79,7 +79,7 @@ public class CommercialObject {
     }
 
     public void setN_place_of_reg(String n_place_of_reg) {
-        this.n_place_of_reg = n_place_of_reg;
+        this.n_place_of_reg = rejectHtml(n_place_of_reg);
     }
 
     public String getF_place_of_reg() {
@@ -87,7 +87,7 @@ public class CommercialObject {
     }
 
     public void setF_place_of_reg(String f_place_of_reg) {
-        this.f_place_of_reg = f_place_of_reg;
+        this.f_place_of_reg = rejectHtml(f_place_of_reg);
     }
 
     public String getB_place_of_reg() {
@@ -95,7 +95,7 @@ public class CommercialObject {
     }
 
     public void setB_place_of_reg(String b_place_of_reg) {
-        this.b_place_of_reg = b_place_of_reg;
+        this.b_place_of_reg = rejectHtml(b_place_of_reg);
     }
 
     public Timestamp getDatereg() {
@@ -111,7 +111,7 @@ public class CommercialObject {
     }
 
     public void setCreator_link(String creator_link) {
-        this.creator_link = creator_link;
+        this.creator_link = rejectHtml(creator_link);
     }
 
     public String getDescription() {
@@ -119,7 +119,7 @@ public class CommercialObject {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = rejectHtml(description);
     }
 
     public String getS_obj_type() {
@@ -127,7 +127,7 @@ public class CommercialObject {
     }
 
     public void setS_obj_type(String s_obj_type) {
-        this.s_obj_type = s_obj_type;
+        this.s_obj_type = rejectHtml(s_obj_type);
     }
 
     public List<LocationCatalog> getLocationCatalog() {

@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 29.03.2017.
  */
@@ -21,7 +21,7 @@ public class PrecautionCatalog {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = rejectHtml(name);
     }
 
     public String getDescription() {
@@ -29,6 +29,6 @@ public class PrecautionCatalog {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = rejectHtml(description);
     }
 }

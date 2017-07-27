@@ -1,5 +1,5 @@
 package ua.pp.darknsoft.entity;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 09.03.2017.
  */
@@ -31,7 +31,7 @@ public class BasicGroupOfGoodsCatalog {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = rejectHtml(name);
     }
 
     public short getDegree_of_a_risk_link() {
@@ -47,6 +47,6 @@ public class BasicGroupOfGoodsCatalog {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = rejectHtml(description);
     }
 }

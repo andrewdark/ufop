@@ -3,7 +3,7 @@ package ua.pp.darknsoft.entity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 
 /**
  * Created by Dark on 26.03.2017.

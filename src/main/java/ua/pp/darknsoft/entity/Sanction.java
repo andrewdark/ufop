@@ -1,7 +1,7 @@
 package ua.pp.darknsoft.entity;
 
 import java.math.BigDecimal;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 29.03.2017.
  */
@@ -50,7 +50,7 @@ public class Sanction {
     }
 
     public void setSanction_number(String sanction_number) {
-        this.sanction_number = sanction_number;
+        this.sanction_number = rejectHtml(sanction_number);
     }
 
     public String getArticles_law_link() {
@@ -58,7 +58,7 @@ public class Sanction {
     }
 
     public void setArticles_law_link(String articles_law_link) {
-        this.articles_law_link = articles_law_link;
+        this.articles_law_link = rejectHtml(articles_law_link);
     }
 
     public String getArticles_law_caption() {
@@ -66,7 +66,7 @@ public class Sanction {
     }
 
     public void setArticles_law_caption(String articles_law_caption) {
-        this.articles_law_caption = articles_law_caption;
+        this.articles_law_caption = rejectHtml(articles_law_caption);
     }
 
     public boolean isAdditionalinformation() {
@@ -82,7 +82,7 @@ public class Sanction {
     }
 
     public void setCaption(String caption) {
-        this.caption = caption;
+        this.caption = rejectHtml(caption);
     }
 
     public int getNav() {
@@ -102,7 +102,7 @@ public class Sanction {
     }
 
     public void setCreator_link(String creator_link) {
-        this.creator_link = creator_link;
+        this.creator_link = rejectHtml(creator_link);
     }
 
     public String getCharged_amount_str() {
@@ -110,12 +110,12 @@ public class Sanction {
     }
 
     public void setCharged_amount_str(String charged_amount_str) {
-        this.charged_amount_str = charged_amount_str;
+        this.charged_amount_str = rejectHtml(charged_amount_str);
     }
 
     public void setService_date(String service_date) {
         if (service_date.isEmpty()) this.service_date = "0001-01-01";
-        else this.service_date = service_date;
+        else this.service_date = rejectHtml(service_date);
     }
 
     public String getPlan_date() {
@@ -124,7 +124,7 @@ public class Sanction {
 
     public void setPlan_date(String plan_date) {
         if (plan_date.isEmpty()) this.plan_date = "0001-01-01";
-        else this.plan_date = plan_date;
+        else this.plan_date = rejectHtml(plan_date);
     }
 
     public String getFact_date() {
@@ -133,7 +133,7 @@ public class Sanction {
 
     public void setFact_date(String fact_date) {
         if (fact_date.isEmpty()) this.fact_date = "0001-01-01";
-        else this.fact_date = fact_date;
+        else this.fact_date = rejectHtml(fact_date);
     }
 
 

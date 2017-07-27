@@ -1,5 +1,7 @@
 package ua.pp.darknsoft.entity;
 
+import static ua.pp.darknsoft.support.StaticMethod.*;
+
 /**
  * Created by Dark on 26.03.2017.
  */
@@ -15,6 +17,7 @@ public class ArticlesLawCatalog {
     private String description;
     private String head1;
     private String head2;
+
     public long getId() {
         return id;
     }
@@ -28,7 +31,7 @@ public class ArticlesLawCatalog {
     }
 
     public void setTreemark(String treemark) {
-        this.treemark = treemark;
+        this.treemark = rejectHtml(treemark);
     }
 
     public String getCaption() {
@@ -36,7 +39,7 @@ public class ArticlesLawCatalog {
     }
 
     public void setCaption(String caption) {
-        this.caption = caption;
+        this.caption = rejectHtml(caption);
     }
 
     public String getArticle() {
@@ -44,7 +47,7 @@ public class ArticlesLawCatalog {
     }
 
     public void setArticle(String article) {
-        this.article = article;
+        this.article = rejectHtml(article);
     }
 
     public String getPunishable() {
@@ -52,7 +55,7 @@ public class ArticlesLawCatalog {
     }
 
     public void setPunishable(String punishable) {
-        this.punishable = punishable;
+        this.punishable = rejectHtml(punishable);
     }
 
     public String getPenalty() {
@@ -60,7 +63,7 @@ public class ArticlesLawCatalog {
     }
 
     public void setPenalty(String penalty) {
-        this.penalty = penalty;
+        this.penalty = rejectHtml(penalty);
     }
 
     public String getLink() {
@@ -68,7 +71,7 @@ public class ArticlesLawCatalog {
     }
 
     public void setLink(String link) {
-        this.link = link;
+        this.link = rejectHtml(link);
     }
 
     public boolean isIs_active() {
@@ -84,7 +87,7 @@ public class ArticlesLawCatalog {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = rejectHtml(description);
     }
 
     public String getHead1() {
@@ -92,7 +95,7 @@ public class ArticlesLawCatalog {
     }
 
     public void setHead1(String head1) {
-        this.head1 = head1;
+        this.head1 = rejectHtml(head1);
     }
 
     public String getHead2() {
@@ -100,6 +103,6 @@ public class ArticlesLawCatalog {
     }
 
     public void setHead2(String head2) {
-        this.head2 = head2;
+        this.head2 = rejectHtml(head2);
     }
 }

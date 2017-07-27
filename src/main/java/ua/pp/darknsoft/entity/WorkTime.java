@@ -1,7 +1,7 @@
 package ua.pp.darknsoft.entity;
 
 import java.sql.Timestamp;
-
+import static ua.pp.darknsoft.support.StaticMethod.*;
 /**
  * Created by Andrew on 27.02.2017.
  */
@@ -87,7 +87,7 @@ public class WorkTime {
     }
 
     public void setS_cause_link(String s_cause_link) {
-        this.s_cause_link = s_cause_link;
+        this.s_cause_link = rejectHtml(s_cause_link);
     }
 
     public String getS_user_accepted_link() {
@@ -95,7 +95,7 @@ public class WorkTime {
     }
 
     public void setS_user_accepted_link(String s_user_accepted_link) {
-        this.s_user_accepted_link = s_user_accepted_link;
+        this.s_user_accepted_link = rejectHtml(s_user_accepted_link);
     }
 
     public String getUser_name() {
@@ -103,6 +103,6 @@ public class WorkTime {
     }
 
     public void setUser_name(String user_name) {
-        this.user_name = user_name;
+        this.user_name = rejectHtml(user_name);
     }
 }

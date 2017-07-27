@@ -1,8 +1,7 @@
 package ua.pp.darknsoft.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
+import static ua.pp.darknsoft.support.StaticMethod.*;
 
 /**
  * Created by Dark on 26.03.2017.
@@ -55,7 +54,7 @@ public class CheckEvent {
 
     public void setEvent_date_begin(String event_date_begin) {
         if (event_date_begin.isEmpty()) this.event_date_begin = "0001-01-01";
-        else this.event_date_begin = event_date_begin;
+        else this.event_date_begin = rejectHtml(event_date_begin);
     }
 
     public String getEvent_date_end() {
@@ -64,7 +63,7 @@ public class CheckEvent {
 
     public void setEvent_date_end(String event_date_end) {
         if (event_date_end.isEmpty()) this.event_date_end = "0001-01-01";
-        else this.event_date_end = event_date_end;
+        else this.event_date_end = rejectHtml(event_date_end);
     }
 
     public int getCheck_type() {
@@ -88,7 +87,7 @@ public class CheckEvent {
     }
 
     public void setEvent_result(String event_result) {
-        this.event_result = event_result;
+        this.event_result = rejectHtml(event_result);
     }
 
     public int getCheck_sampling() {
@@ -112,7 +111,7 @@ public class CheckEvent {
     }
 
     public void setCreator_link(String creator_link) {
-        this.creator_link = creator_link;
+        this.creator_link = rejectHtml(creator_link);
     }
 
     public int getStructure_catalog_link() {
@@ -136,7 +135,7 @@ public class CheckEvent {
     }
 
     public void setEvent_number(String event_number) {
-        this.event_number = event_number;
+        this.event_number = rejectHtml(event_number);
     }
 
     public boolean isChecking() { return checking; }
@@ -148,6 +147,6 @@ public class CheckEvent {
     }
 
     public void setStructure_catalog_name(String structure_catalog_name) {
-        this.structure_catalog_name = structure_catalog_name;
+        this.structure_catalog_name = rejectHtml(structure_catalog_name);
     }
 }
