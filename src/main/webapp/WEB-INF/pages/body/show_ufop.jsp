@@ -129,7 +129,7 @@
 
             </tr>
             <c:forEach items="${co_list}" var="co">
-                <tr class="border_bottom">
+                <tr>
                     <td>${co.obj_name}</td>
                     <td>${co.s_obj_type}</td>
                     <td>${co.s_degree_risk_link}</td>
@@ -162,6 +162,7 @@
                     </td>
 
                 </tr>
+                <tr><td colspan="5"><hr /></td></tr>
             </c:forEach>
         </table>
     </div>

@@ -11,27 +11,36 @@
 <div class="clr"></div>
 
 <ul id="menu">
-    <li><div>Перегляд</div>
+    <li><div>Суб'єкти господарювання</div>
         <ul>
-            <li><div><a href="/viewslisti/1">Фізична особа підприємець</a></div></li>
-            <li><div><a href="/viewsliste/1">Юридична особа</a></div></li>
-            <li><div>Комерційні об'єкти</div></li>
+            <li><div>Переглянути</div>
+                <ul>
+                    <li><div><a href="/viewslisti/1">Фізична&nbsp;особа підприємець</a></div></li>
+                    <li><div><a href="/viewsliste/1">Юридична&nbsp;особа</a></div></li>
+                </ul>
+            </li>
+            <li><div><a href="/addufop">Створити нового</a></div></li>
+
         </ul>
     </li>
-    <li><div>Реєстрація</div>
+    <li><div>Комерційні об'єкти</div>
         <ul>
-            <li><div><a href="/searchufop">Комерційні об'єкти</a></div></li>
-            <li><div><a href="/addufop">Фіз\Юр особа підприємець</a></div></li>
+            <li><div>Переглянути</div></li>
+            <li><div><a href="/searchufop">Створити новий</a></div></li>
+        </ul>
+    </li>
+    <li><div>Перевірки</div>
+        <ul>
+            <li><div><a href="/searchufop">Плановий захід</a></div></li>
+            <li><div>Позаплановий захід</div></li>
         </ul>
     </li>
     <li class="ui-state-disabled"><div>Звернення громадян</div>
         <ul>
-
             <li><div>Реєстрація</div></li>
             <li><div>Пошук</div></li>
         </ul>
     </li>
-    <li class="ui-state-disabled"><div>Планові заходи</div></li>
     <li><div>Модуль кадри</div>
         <ul>
             <li><div class="ui-state-disabled">УПРАВЛІННЯ</div>
