@@ -827,7 +827,6 @@ public class EventController {
         }
         try {
             uiModel.addAttribute("articlesTop", catalogDao.getArticleTop());
-
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("ex", "/addsanctions <br />" + ex);
             return myRdrct(httpServletRequest) + "/message";
