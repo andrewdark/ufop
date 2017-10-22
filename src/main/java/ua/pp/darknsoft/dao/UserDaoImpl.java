@@ -64,7 +64,7 @@ public class UserDaoImpl implements UserDao, Serializable {
         return selectUser.executeByNamedParam(paramMap);
     }
 
-    @PreAuthorize(value = "authenticated")
+
     public void updateUser(User user) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("username", user.getUsername().toLowerCase());

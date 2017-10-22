@@ -810,13 +810,11 @@ public class EventController {
 
             if (sanction == null && !id.equals("0")) {
                 sanction = checkEventDao.getSanctionById(Long.parseLong(id)).get(0);
-
             }
             uiModel.addAttribute("checkEvent", checkEventDao.getCheckEventById(sanction.getCheck_event_link()).get(0));
             sanction.setArticles_law_link(sanction.getArticles_law_caption());
             sanction.setCharged_amount_str(sanction.getCharged_amount().toString());
             //uiModel.addAttribute("sanction", sanction);
-
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такої перевірки не знайдено");
             return "message";
@@ -826,6 +824,13 @@ public class EventController {
         } catch (Exception ex) {
             uiModel.addAttribute("ex", "METHOD: editsanction <br />"+ex);
             return "message";
+        }
+        try {
+            uiModel.addAttribute("articlesTop", catalogDao.getArticleTop());
+
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("ex", "/addsanctions <br />" + ex);
+            return myRdrct(httpServletRequest) + "/message";
         }
         uiModel.addAttribute("title", "Редагування санкції");
         uiModel.addAttribute("actionlink", "/editsanctionpost");
