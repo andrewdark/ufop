@@ -43,6 +43,8 @@ public class EventController {
     @Autowired
     SanctionValidator sanctionValidator;
     @Autowired
+    SanctionEditValidator sanctionEditValidator;
+    @Autowired
     LawSuitsValidator lawSuitsValidator;
     @Autowired
     OffenseArticlesValidator offenseArticlesValidator;
@@ -804,17 +806,14 @@ public class EventController {
     @PreAuthorize(value = "isAuthenticated()")
     @RequestMapping(value = "editsanction", method = RequestMethod.GET)
     public String editSanction(@RequestParam(defaultValue = "0") String id, Model uiModel, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
-        Sanction sanction = (Sanction) uiModel.asMap().get("sanction");
-
+        //Sanction sanction = (Sanction) uiModel.asMap().get("sanction");
+        Sanction sanction = null;
         try {
-
-            if (sanction == null && !id.equals("0")) {
+            if (sanction == null) {
                 sanction = checkEventDao.getSanctionById(Long.parseLong(id)).get(0);
             }
             uiModel.addAttribute("checkEvent", checkEventDao.getCheckEventById(sanction.getCheck_event_link()).get(0));
-            sanction.setArticles_law_link(sanction.getArticles_law_caption());
             sanction.setCharged_amount_str(sanction.getCharged_amount().toString());
-            //uiModel.addAttribute("sanction", sanction);
         } catch (IndexOutOfBoundsException ex) {
             uiModel.addAttribute("ex", "Такої перевірки не знайдено");
             return "message";
@@ -846,7 +845,7 @@ public class EventController {
                                    HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
                                    BindingResult bindingResult) {
 
-        sanctionValidator.validate(sanction, bindingResult);
+        sanctionEditValidator.validate(sanction, bindingResult);
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("b1", bindingResult);
             redirectAttributes.addFlashAttribute("sanction", sanction);

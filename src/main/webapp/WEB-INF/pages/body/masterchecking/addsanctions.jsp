@@ -43,7 +43,7 @@
                         <tr>
                             <td><form:label path="articles_law_link">Виберіть статтю</form:label></td>
                             <td><form:input path="articles_law_link" id="articles"
-                                            onclick="javascript:ArticlesPopUpShow();"/></td>
+                                            onclick="javascript:ArticlesPopUpShow();"/> ${command.articles_law_caption}</td>
                             <td><span class="error"><form:errors path="articles_law_link"/></span></td>
                         </tr>
                         <tr>
